@@ -6,6 +6,7 @@ import { useFavoritesStore } from '../stores/favoritesStore';
 import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
 import TranscriptView from './TranscriptView';
+import Waveform from './Waveform';
 
 function fmt(t: number) { const m=Math.floor(t/60); return `${m}:${Math.floor(t%60).toString().padStart(2,'0')}`; }
 
@@ -39,12 +40,6 @@ export default function PlayerBar() {
   const isWord = isC && mode.clip.note === 'word';
   const title = hasContent ? (isL ? mode.lesson.title : isWord ? mode.clip.text : `"${mode.clip.text}"`) : '未在播放';
   const sub = hasContent ? (isL ? mode.lesson.subtitle : mode.clip.lessonTitle) : '选择音频开始练习';
-  const cs = isC ? mode.clip.startTime : 0;
-  const ce = isC ? mode.clip.endTime : dur;
-  // Always show full audio progress
-  const pct = dur > 0 ? (cur / dur) * 100 : 0;
-  const clipStartPct = isC && dur > 0 ? (cs / dur) * 100 : 0;
-  const clipEndPct = isC && dur > 0 ? (ce / dur) * 100 : 0;
   const dTime = cur;
   const dDur = dur;
   const li = LOOP[loop];
@@ -114,24 +109,17 @@ export default function PlayerBar() {
           WebkitBackdropFilter: 'blur(40px) saturate(180%)',
           borderTop: '1px solid rgba(255,255,255,0.06)',
         }}>
-        {/* Progress bar — always full audio */}
-        <div className={`relative h-0.5 bg-white/[0.06] transition-all ${hasContent ? 'cursor-pointer group/progress hover:h-[3px]' : ''}`}
-          onClick={e => {
-            if (!hasContent) return;
-            e.stopPropagation();
-            const r=e.currentTarget.getBoundingClientRect();
-            seek((e.clientX-r.left)/r.width*dur);
-          }}>
-          {/* Clip range highlight */}
-          {isC && (
-            <div className="absolute inset-y-0 bg-white/[0.06]" style={{left:`${clipStartPct}%`,width:`${clipEndPct-clipStartPct}%`}}/>
+        {/* Waveform visualization */}
+        <div className="px-4 pt-1.5">
+          {hasContent && (isL || isC) && (
+            <Waveform
+              lessonId={isL ? mode.lesson.id : mode.clip.lessonId}
+              currentTime={cur}
+              duration={dur}
+              onSeek={seek}
+              height={36}
+            />
           )}
-          {/* Playback position */}
-          <div className="absolute inset-y-0 left-0 h-full transition-all duration-75" style={{
-            width: `${Math.min(100,Math.max(0,pct))}%`,
-            background: hasContent ? 'linear-gradient(90deg, #fa2d48, #ff6b7f)' : 'transparent',
-            boxShadow: hasContent ? '0 0 8px rgba(250,45,72,0.4)' : 'none',
-          }}/>
         </div>
 
         <div className="flex items-center gap-3 px-4 py-2.5 max-w-screen-xl mx-auto">

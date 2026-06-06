@@ -1,9 +1,12 @@
 import { create } from 'zustand';
 import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
-import { postPlayHistory } from '../lib/api';
+import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio } from '../lib/audioEngine';
+import { trackPlay, flushTrack, setLessonInfoProvider } from '../lib/playTracking';
 
-/* ── Read settings defaults from localStorage ── */
+export { getAudio, preloadLessonAudio };
+
+/* ── Settings defaults ── */
 function getSettingDefault(key: string, fallback: number): number {
   try {
     const raw = localStorage.getItem('app-settings');
@@ -13,71 +16,6 @@ function getSettingDefault(key: string, fallback: number): number {
     }
   } catch {}
   return fallback;
-}
-
-/* ── Singleton audio element ── */
-let _audio: HTMLAudioElement | null = null;
-export function getAudio(): HTMLAudioElement {
-  if (!_audio) {
-    _audio = new Audio();
-    _audio.preload = 'auto';
-  }
-  return _audio;
-}
-
-/* ── Preload pool ── */
-const _preloadPool = new Map<string, HTMLAudioElement>();
-export function preloadLessonAudio(lessonIds: string[]) {
-  for (const id of lessonIds) {
-    if (_preloadPool.has(id)) continue;
-    const el = new Audio();
-    el.preload = 'auto';
-    el.src = `/api/lessons/${id}/audio`;
-    el.load();
-    el.volume = 0;
-    _preloadPool.set(id, el);
-  }
-}
-
-/* ── Helpers ── */
-let _currentSrc = '';
-let _trackStart = 0;
-
-function flushTrack() {
-  if (_trackStart === 0) return;
-  const elapsed = Math.round((Date.now() - _trackStart) / 1000);
-  _trackStart = 0;
-  if (elapsed < 1) return;
-  const m = useAudioStore.getState().mode;
-  if (m.kind === 'lesson') {
-    postPlayHistory({audio_id:m.lesson.id,audio_title:m.lesson.title,duration_seconds:elapsed}).catch(()=>{});
-  }
-}
-
-function switchSource(lessonId: string): boolean {
-  const url = `/api/lessons/${lessonId}/audio`;
-  if (_currentSrc === url) return false;
-  flushTrack();
-  _currentSrc = url;
-  getAudio().src = url;
-  getAudio().load();
-  return true;
-}
-
-function waitForReady(a: HTMLAudioElement, fn: () => void) {
-  if (a.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) fn();
-  else {
-    const onReady = () => { a.removeEventListener('canplay', onReady); fn(); };
-    a.addEventListener('canplay', onReady);
-  }
-}
-
-function findSentenceIndex(lesson: ListeningLesson | null, time: number): number {
-  if (!lesson) return -1;
-  for (let i = lesson.transcript.length - 1; i >= 0; i--) {
-    if (time >= lesson.transcript[i].start - 0.05) return i;
-  }
-  return 0;
 }
 
 /* ── State ── */
@@ -116,6 +54,13 @@ interface AudioState {
 
 const LOOP_ORDER: LoopMode[] = ['all', 'sentence', 'clip'];
 
+// Provide lesson info for play tracking
+setLessonInfoProvider(() => {
+  const m = useAudioStore.getState().mode;
+  if (m.kind === 'lesson') return { id: m.lesson.id, title: m.lesson.title };
+  return null;
+});
+
 export const useAudioStore = create<AudioState>((set, get) => {
   const audio = getAudio();
 
@@ -124,16 +69,14 @@ export const useAudioStore = create<AudioState>((set, get) => {
     const { mode, loopMode, loopTarget, loopCount } = state;
     const t = audio.currentTime;
 
-    // ── Loop enforcement ──
+    // Loop enforcement
     if (mode.kind === 'clip') {
       const clip = mode.clip;
       if (t >= clip.endTime) {
         if (loopCount + 1 < loopTarget) {
-          // Loop: seek back to clip start
           audio.currentTime = clip.startTime;
           set({ loopCount: loopCount + 1 });
         } else {
-          // Done: pause at end
           audio.pause();
           audio.currentTime = clip.endTime;
           set({ isPlaying: false });
@@ -141,26 +84,19 @@ export const useAudioStore = create<AudioState>((set, get) => {
         return;
       }
     } else if (mode.kind === 'lesson' && loopMode === 'sentence') {
-      const sentences = mode.lesson.transcript;
       const idx = findSentenceIndex(mode.lesson, t);
-      if (idx >= 0 && idx < sentences.length) {
-        const sent = sentences[idx];
-        if (t >= sent.end) {
-          audio.currentTime = sent.start;
-        }
+      if (idx >= 0 && idx < mode.lesson.transcript.length) {
+        const sent = mode.lesson.transcript[idx];
+        if (t >= sent.end) audio.currentTime = sent.start;
       }
     }
 
-    // Track sentence index
     let sentenceIdx = -1;
-    if (mode.kind === 'lesson') {
-      sentenceIdx = findSentenceIndex(mode.lesson, t);
-    } else if (mode.kind === 'clip' && mode.lesson) {
-      sentenceIdx = findSentenceIndex(mode.lesson, t);
-    }
+    if (mode.kind === 'lesson') sentenceIdx = findSentenceIndex(mode.lesson, t);
+    else if (mode.kind === 'clip' && mode.lesson) sentenceIdx = findSentenceIndex(mode.lesson, t);
     set({ currentTime: t, currentSentenceIndex: sentenceIdx });
 
-    // Save playback position every 5 seconds (throttled)
+    // Save position every 5 seconds
     if (mode.kind === 'lesson' && Math.floor(t) % 5 === 0 && t > 0.5) {
       useSettingsStore.getState().savePosition(mode.lesson.id, t);
     }
@@ -168,30 +104,17 @@ export const useAudioStore = create<AudioState>((set, get) => {
 
   audio.addEventListener('loadedmetadata', () => set({ duration: audio.duration, isLoading: false }));
   audio.addEventListener('canplay', () => set({ isLoading: false }));
-  audio.addEventListener('play', () => {
-    set({ isPlaying: true });
-    _trackStart = Date.now();
-  });
-  audio.addEventListener('pause', () => {
-    set({ isPlaying: false });
-    flushTrack();
-  });
-  audio.addEventListener('ended', () => {
-    set({ isPlaying: false });
-    flushTrack();
-  });
+  audio.addEventListener('play', () => { set({ isPlaying: true }); trackPlay(); });
+  audio.addEventListener('pause', () => { set({ isPlaying: false }); flushTrack(); });
+  audio.addEventListener('ended', () => { set({ isPlaying: false }); flushTrack(); });
+
   let waitTimer: ReturnType<typeof setTimeout> | null = null;
   audio.addEventListener('waiting', () => {
-    // Debounce: only show loading after 200ms of actual buffering
     waitTimer = setTimeout(() => set({ isLoading: true }), 200);
   });
   audio.addEventListener('canplay', () => {
     if (waitTimer) { clearTimeout(waitTimer); waitTimer = null; }
     set({ isLoading: false });
-  });
-  audio.addEventListener('play', () => {
-    if (waitTimer) { clearTimeout(waitTimer); waitTimer = null; }
-    set({ isPlaying: true, isLoading: false });
   });
 
   return {
@@ -207,22 +130,22 @@ export const useAudioStore = create<AudioState>((set, get) => {
     currentSentenceIndex: -1,
 
     playLesson: (lesson) => {
-      const switched = switchSource(lesson.id);
+      const switched = switchSource(lesson.id, flushTrack);
       if (switched) set({ isLoading: true });
-      set({ mode: { kind: 'lesson', lesson }, loopCount: 0 });
+      set({ mode: { kind: 'lesson', lesson }, loopCount: 0, playbackRate: getSettingDefault('defaultSpeed', 1) });
       waitForReady(getAudio(), () => getAudio().play());
     },
 
     viewLesson: (lesson) => {
-      const switched = switchSource(lesson.id);
+      const switched = switchSource(lesson.id, flushTrack);
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'lesson', lesson }, loopCount: 0 });
     },
 
     playClip: (clip, contextLesson?) => {
-      const switched = switchSource(clip.lessonId);
+      const switched = switchSource(clip.lessonId, flushTrack);
       if (switched) set({ isLoading: true });
-      set({ mode: { kind: 'clip', clip, lesson: contextLesson ?? null }, loopCount: 0, loopMode: 'clip' });
+      set({ mode: { kind: 'clip', clip, lesson: contextLesson ?? null }, loopCount: 0, loopMode: 'clip', playbackRate: getSettingDefault('defaultSpeed', 1) });
       waitForReady(getAudio(), () => {
         getAudio().currentTime = clip.startTime;
         getAudio().play();
@@ -230,12 +153,10 @@ export const useAudioStore = create<AudioState>((set, get) => {
     },
 
     viewClip: (clip, contextLesson?) => {
-      const switched = switchSource(clip.lessonId);
+      const switched = switchSource(clip.lessonId, flushTrack);
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'clip', clip, lesson: contextLesson ?? null }, loopCount: 0, loopMode: 'clip' });
-      waitForReady(getAudio(), () => {
-        getAudio().currentTime = clip.startTime;
-      });
+      waitForReady(getAudio(), () => { getAudio().currentTime = clip.startTime; });
     },
 
     togglePlay: () => {
@@ -264,23 +185,18 @@ export const useAudioStore = create<AudioState>((set, get) => {
     jumpToPrevSentence: () => {
       const { mode } = get();
       if (mode.kind !== 'lesson') return;
-      const sentences = mode.lesson.transcript;
       const curIdx = findSentenceIndex(mode.lesson, getAudio().currentTime);
       const targetIdx = Math.max(0, curIdx - 1);
-      const targetTime = sentences[targetIdx].start;
-      getAudio().currentTime = targetTime;
-      // If currently playing, keep playing
+      getAudio().currentTime = mode.lesson.transcript[targetIdx].start;
       if (!getAudio().paused) getAudio().play();
     },
 
     jumpToNextSentence: () => {
       const { mode } = get();
       if (mode.kind !== 'lesson') return;
-      const sentences = mode.lesson.transcript;
       const curIdx = findSentenceIndex(mode.lesson, getAudio().currentTime);
-      const targetIdx = Math.min(sentences.length - 1, curIdx + 1);
-      const targetTime = sentences[targetIdx].start;
-      getAudio().currentTime = targetTime;
+      const targetIdx = Math.min(mode.lesson.transcript.length - 1, curIdx + 1);
+      getAudio().currentTime = mode.lesson.transcript[targetIdx].start;
       if (!getAudio().paused) getAudio().play();
     },
 
@@ -304,6 +220,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
 
     clearMode: () => {
       getAudio().pause();
+      flushTrack();
       set({ mode: { kind: 'empty' }, loopCount: 0, isLoading: false, loopMode: 'all' });
     },
   };
