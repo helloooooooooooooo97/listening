@@ -1,3 +1,5 @@
+export type LoopMode = 'all' | 'sentence' | 'clip';
+
 export interface TranscriptWord {
   id: string;
   text: string;

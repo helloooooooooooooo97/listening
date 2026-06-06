@@ -2,25 +2,69 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
-    font-family: system-ui, -apple-system, sans-serif;
+    @apply text-white/90 antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+    background: #000;
   }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
 }
 
 @layer components {
+  /* ── Frosted glass ── */
+  .glass {
+    background: rgba(28, 28, 30, 0.85);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+  }
+  .glass-light {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* ── Transcript ── */
   .transcript-line {
-    @apply cursor-pointer rounded-lg px-4 py-3 transition-colors;
+    @apply cursor-pointer rounded-2xl px-5 py-3 transition-all duration-300;
+    border-left: 2px solid transparent;
+    background: rgba(255,255,255,0.03);
   }
   .transcript-line:hover {
-    @apply bg-blue-50;
+    background: rgba(255,255,255,0.06);
   }
   .transcript-line.active {
-    @apply bg-blue-100 ring-1 ring-blue-300;
+    background: rgba(250, 45, 72, 0.12);
+    border-left-color: #fa2d48;
   }
   .transcript-word {
-    @apply inline rounded-sm px-0.5 transition-colors;
+    @apply inline rounded-md px-0.5 transition-all duration-150;
   }
   .transcript-word.active {
-    @apply bg-yellow-300 text-black;
+    background: #fa2d48;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(250,45,72,0.4);
   }
+  .transcript-word.selected {
+    background: rgba(250, 45, 72, 0.25);
+  }
+
+  /* ── Animations ── */
+  @keyframes slide-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .animate-fade-in { animation: fade-in 0.5s ease-out; }
+  .animate-scale-in { animation: scale-in 0.3s ease-out; }
 }

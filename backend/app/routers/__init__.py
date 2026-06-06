@@ -3,9 +3,15 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 
-from services import get_audio_path, get_lesson, list_lessons
+from services import get_audio_path, get_lesson, get_stats, list_lessons
 
 router = APIRouter(prefix="/api/lessons", tags=["lessons"])
+
+
+@router.get("/stats")
+def get_lesson_stats():
+    """Return global stats including unique word count."""
+    return get_stats()
 
 
 @router.get("/")

@@ -56,6 +56,34 @@ def get_audio_path(lesson_id: str) -> Path | None:
     return audio_path
 
 
+def get_stats() -> dict:
+    """Return stats including unique word count across all lessons."""
+    all_words: set[str] = set()
+    total_sentences = 0
+    lesson_count = 0
+
+    if not LESSONS_DIR.exists():
+        return {"lessonCount": 0, "totalSentences": 0, "uniqueWords": 0}
+
+    for json_file in sorted(LESSONS_DIR.glob("*.json")):
+        try:
+            lesson = _load_lesson(json_file)
+            lesson_count += 1
+            total_sentences += len(lesson.transcript)
+            for w in lesson.words:
+                word = w.text.strip().lower()
+                if word and word not in {".", ",", "!", "?", ";", ":", "-", "\"", "'", "—"}:
+                    all_words.add(word)
+        except Exception:
+            continue
+
+    return {
+        "lessonCount": lesson_count,
+        "totalSentences": total_sentences,
+        "uniqueWords": len(all_words),
+    }
+
+
 def _load_lesson(json_file: Path) -> ListeningLesson:
     data = json.loads(json_file.read_text(encoding="utf-8"))
     return ListeningLesson(**data)
