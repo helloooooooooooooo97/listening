@@ -143,6 +143,71 @@ def dictation_records(limit: int = Query(default=100, ge=1, le=500)):
     return {"audios": result}
 
 
+@router.get("/audio-detail/{audio_id}")
+@locked
+def audio_detail(audio_id: str):
+    """Per-audio learning stats for the playback page."""
+    conn = get_conn()
+    from services import get_lesson
+    lesson = get_lesson(audio_id)
+
+    total_words = len(lesson.words) if lesson else 0
+    total_sentences = len(lesson.transcript) if lesson else 0
+    duration_seconds = lesson.duration if lesson else 0
+
+    # Known words — count words that appear in word_progress
+    known_words = 0
+    if lesson:
+        known_set = {r["word"] for r in conn.execute("SELECT word FROM word_progress WHERE known=1").fetchall()}
+        known_words = sum(1 for w in lesson.words if w.text.strip().lower() in known_set)
+
+    # Listening stats
+    row = conn.execute(
+        "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE audio_id=?", [audio_id]
+    ).fetchone()
+    listening_seconds = int(row[0]) if row else 0
+
+    # Dictation stats
+    row = conn.execute(
+        "SELECT COUNT(*), COALESCE(AVG(score),0) FROM dictation_history WHERE audio_id=?", [audio_id]
+    ).fetchone()
+    dictation_count = row[0] if row else 0
+    dictation_avg_score = round(row[1], 1) if row else 0
+
+    # Progress
+    row = conn.execute(
+        "SELECT * FROM audio_progress WHERE audio_id=?", [audio_id]
+    ).fetchone()
+    completed = bool(row["completed"]) if row else False
+    last_position = row["last_position"] if row else 0
+
+    # Clips count
+    row = conn.execute("SELECT COUNT(*) FROM clips WHERE audio_id=?", [audio_id]).fetchone()
+    clips_count = row[0] if row else 0
+
+    # Last practiced date
+    row = conn.execute(
+        "SELECT MAX(created_at) FROM dictation_history WHERE audio_id=?", [audio_id]
+    ).fetchone()
+    last_practiced = row[0] if row and row[0] else ""
+
+    return {
+        "audio_id": audio_id,
+        "title": lesson.title if lesson else "",
+        "total_words": total_words,
+        "total_sentences": total_sentences,
+        "duration_seconds": duration_seconds,
+        "known_words": known_words,
+        "listening_seconds": listening_seconds,
+        "dictation_avg_score": dictation_avg_score,
+        "dictation_count": dictation_count,
+        "completed": completed,
+        "clips_count": clips_count,
+        "last_position": last_position,
+        "last_practiced": last_practiced,
+    }
+
+
 @router.get("/audio-progress")
 @locked
 def audio_progress():

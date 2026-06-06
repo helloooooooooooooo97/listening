@@ -7,6 +7,7 @@ import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
 import TranscriptView from './TranscriptView';
 import Waveform from './Waveform';
+import AudioStatsBar from './AudioStatsBar';
 
 function fmt(t: number) { const m=Math.floor(t/60); return `${m}:${Math.floor(t%60).toString().padStart(2,'0')}`; }
 
@@ -74,6 +75,9 @@ export default function PlayerBar() {
             <div className="w-6"/>
           </div>
 
+          {/* Audio Stats */}
+          <AudioStatsBar audioId={lesson.id} />
+
           {/* Lyrics */}
           <div className="flex-1 overflow-y-auto px-6">
             <div className="max-w-xl mx-auto py-8">
@@ -110,14 +114,14 @@ export default function PlayerBar() {
           borderTop: '1px solid rgba(255,255,255,0.06)',
         }}>
         {/* Waveform visualization */}
-        <div className="px-4 pt-1.5">
+        <div className="px-4 pt-0.5">
           {hasContent && (isL || isC) && (
             <Waveform
               lessonId={isL ? mode.lesson.id : mode.clip.lessonId}
               currentTime={cur}
               duration={dur}
               onSeek={seek}
-              height={36}
+              height={20}
             />
           )}
         </div>

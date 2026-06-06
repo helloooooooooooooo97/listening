@@ -109,6 +109,29 @@ export function getOverview(): Promise<Overview> {
   return get<Overview>('/api/stats/overview');
 }
 
+// ── Audio Detail Stats ──
+
+export interface AudioDetailStats {
+  audio_id: string;
+  title: string;
+  total_words: number;
+  total_sentences: number;
+  duration_seconds: number;
+  known_words: number;
+  listening_seconds: number;
+  dictation_avg_score: number;
+  dictation_count: number;
+  completed: boolean;
+  clips_count: number;
+  last_position: number;
+  last_practiced: string;
+}
+
+export function getAudioDetailStats(audioId: string): Promise<AudioDetailStats> {
+  return get<AudioDetailStats>(`/api/stats/audio-detail/${encodeURIComponent(audioId)}`);
+}
+}
+
 export interface DailyDay { date: string; seconds: number; }
 
 export function getDailyTime(days: number): Promise<{ days: DailyDay[] }> {
