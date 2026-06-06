@@ -1,6 +1,7 @@
 """SQLite database — single connection with thread-safe locking."""
 from __future__ import annotations
 
+import functools
 import sqlite3
 import threading
 from pathlib import Path
@@ -25,6 +26,7 @@ def get_conn() -> sqlite3.Connection:
 
 def locked(fn):
     """Decorator: acquire the DB lock before calling the endpoint."""
+    @functools.wraps(fn)
     def wrapper(*args, **kwargs):
         with _lock:
             return fn(*args, **kwargs)
@@ -104,5 +106,17 @@ def init_db():
         );
         CREATE INDEX IF NOT EXISTS idx_wo_word ON word_occurrences(word);
         CREATE INDEX IF NOT EXISTS idx_wo_audio ON word_occurrences(audio_id);
+
+        -- 收藏
+        CREATE TABLE IF NOT EXISTS favorites (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            item_id TEXT NOT NULL,
+            item_type TEXT NOT NULL CHECK(item_type IN ('audio','clip','word')),
+            title TEXT NOT NULL DEFAULT '',
+            subtitle TEXT DEFAULT '',
+            extra_data TEXT DEFAULT '{}',
+            created_at TEXT DEFAULT (datetime('now'))
+        );
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_fav_item ON favorites(item_id, item_type);
     """)
     conn.commit()

@@ -1,7 +1,13 @@
 .PHONY: backend frontend dev build clean clear restart install
 
 # 默认目标：同时启动前后端
-dev: backend frontend
+dev:
+	@echo "🔧 启动后端 API → http://localhost:8000"
+	@echo "   API 文档 → http://localhost:8000/docs"
+	@cd backend/app && NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 ../.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --reload &
+	@sleep 1
+	@echo "🎨 启动前端 → http://localhost:5173"
+	@cd frontend && NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 npm run dev
 
 # 启动后端 API 服务器
 backend:
@@ -38,13 +44,13 @@ clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null
 	find . -type f -name '*.pyc' -delete 2>/dev/null
 
-# 清空数据库（删除所有听写记录、播放历史、学习进度、片段收藏等）
+# 清空数据库
 clear:
 	@echo "⚠️  即将清空数据库: backend/data/audio.db"
-	@rm -f backend/data/audio.db backend/data/app.db backend/data/english.db
+	@rm -f backend/data/audio.db
 	@echo "✅ 数据库已删除，重启后端将自动重建空数据库"
 
-# 重启服务（杀死旧进程后重新启动）
+# 重启服务（杀掉旧进程后重新启动）
 restart:
 	@echo "🔄 停止旧进程..."
 	@lsof -ti:8000 | xargs kill -9 2>/dev/null || true

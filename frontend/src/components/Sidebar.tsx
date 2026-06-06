@@ -1,6 +1,6 @@
-import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag, HiCog6Tooth, HiChartBar, HiPencilSquare } from 'react-icons/hi2';
+import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag, HiCog6Tooth, HiChartBar, HiPencilSquare, HiHeart } from 'react-icons/hi2';
 
-export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'stats' | 'dictation' | 'recent' | 'settings';
+export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'stats' | 'dictation' | 'favorites' | 'recent' | 'settings';
 
 interface Props {
   activeSection: NavSection;
@@ -8,9 +8,10 @@ interface Props {
   lessonCount: number;
   clipsCount: number;
   wordCount: number;
+  favCount: number;
 }
 
-export default function Sidebar({ activeSection, onSectionChange, lessonCount, clipsCount, wordCount }: Props) {
+export default function Sidebar({ activeSection, onSectionChange, lessonCount, clipsCount, wordCount, favCount }: Props) {
 
   return (
     <aside className="w-52 flex-shrink-0 flex flex-col h-full glass border-r border-white/[0.06] select-none">
@@ -58,6 +59,13 @@ export default function Sidebar({ activeSection, onSectionChange, lessonCount, c
             activeSection==='stats' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
           }`}>
           <HiChartBar size={15} /> 统计
+        </div>
+        <div onClick={() => onSectionChange('favorites')}
+          className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${
+            activeSection==='favorites' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
+          }`}>
+          <HiHeart size={15} /> 收藏
+          <span className="ml-auto text-[10px] text-white/20">{favCount}</span>
         </div>
         <div onClick={() => onSectionChange('dictation')}
           className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${

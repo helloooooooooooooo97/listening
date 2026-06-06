@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { HiMagnifyingGlass, HiPlay, HiCheck, HiBarsArrowDown } from 'react-icons/hi2';
+import { HiMagnifyingGlass, HiPlay, HiCheck, HiBarsArrowDown, HiHeart } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
+import { useFavoritesStore } from '../stores/favoritesStore';
 import { getWords, getKnownWords, setWordKnown, type WordItem } from '../lib/api';
 
 function fmtTime(s: number) { const m=Math.floor(s/60); return `${m}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
@@ -18,6 +19,8 @@ export default function WordsView() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [offset, setOffset] = useState(0);
   const [sortMode, setSortMode] = useState<SortMode>('freq-desc');
+  const favToggle = useFavoritesStore(s => s.toggle);
+  const isFav = useFavoritesStore(s => s.isFav);
   const [selected, setSelected] = useState<WordItem | null>(null);
   const [knownWords, setKnownWords] = useState<Set<string>>(new Set());
 
@@ -133,21 +136,24 @@ export default function WordsView() {
             <>
               <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
                 {words.map(w => (
-                  <button key={w.word}
-                    onClick={() => setSelected(w)}
-                    className={`rounded-lg px-3 py-1.5 transition-all duration-200 cursor-pointer text-[13px] flex items-center justify-between gap-1 ${
+                  <div key={w.word}
+                    className={`rounded-lg px-3 py-1.5 transition-all duration-200 cursor-pointer text-[13px] flex items-center justify-between gap-1 group ${
                       selected?.word===w.word
                         ? 'bg-[#fa2d48]/15 ring-1 ring-[#fa2d48]/30 text-white'
                         : 'bg-white/[0.02] text-white/60 hover:bg-white/[0.05] hover:text-white/80'
                     }`}>
-                    <span className="truncate">{w.word}</span>
+                    <span className="truncate flex-1" onClick={() => setSelected(w)}>{w.word}</span>
                     <span className="text-[10px] text-white/20 flex-shrink-0 flex items-center gap-0.5">
+                      <button onClick={e=>{e.stopPropagation();favToggle({item_id:w.word,item_type:'word',title:w.word,subtitle:`${w.count}次`});}}
+                        className={`transition-colors cursor-pointer ${isFav(w.word,'word') ? 'text-[#fa2d48]' : 'text-white/10 opacity-0 group-hover:opacity-100 hover:text-white/30'}`}>
+                        <HiHeart size={10} />
+                      </button>
                       {w.count}
                       {knownWords.has(w.word) && (
                         <HiCheck size={10} className="text-emerald-400" />
                       )}
                     </span>
-                  </button>
+                  </div>
                 ))}
               </div>
               {/* Loader trigger */}

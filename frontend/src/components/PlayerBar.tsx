@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronUp, HiChevronDown, HiPencil, HiTag } from 'react-icons/hi2';
+import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronUp, HiChevronDown, HiPencil, HiTag, HiHeart } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useDictationStore } from '../stores/dictationStore';
+import { useFavoritesStore } from '../stores/favoritesStore';
 import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
 import TranscriptView from './TranscriptView';
@@ -49,6 +50,13 @@ export default function PlayerBar() {
   const li = LOOP[loop];
   const dictation = useDictationStore();
   const isDictating = dictation.active;
+  const favToggle = useFavoritesStore(s => s.toggle);
+  const isFav = useFavoritesStore(s => s.isFav);
+
+  const favId = isL ? mode.lesson.id : isC ? mode.clip.id : '';
+  const favType = isL ? 'audio' : isC ? 'clip' : null;
+  const favTitle = mode.kind === 'empty' ? '' : title;
+  const favSub = mode.kind === 'empty' ? '' : sub;
 
   return (
     <>
@@ -177,6 +185,13 @@ export default function PlayerBar() {
 
           {/* Right */}
           <div className="w-52 flex items-center justify-end gap-3 text-[11px]">
+            {hasContent && favType && favId && (
+              <button onClick={e=>{e.stopPropagation();favToggle({item_id:favId,item_type:favType,title:favTitle,subtitle:favSub,extra_data:favType==='clip'?JSON.stringify({lessonId:mode.clip.lessonId,start:mode.clip.startTime,end:mode.clip.endTime}):'{}'});}}
+                className={`transition-colors cursor-pointer ${isFav(favId,favType) ? 'text-[#fa2d48]' : 'text-white/20 hover:text-white/50'}`}
+                title="收藏">
+                <HiHeart size={14} />
+              </button>
+            )}
             {hasContent && (
               <>
                 {isL && (

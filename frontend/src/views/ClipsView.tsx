@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { HiBookmark, HiMagnifyingGlass, HiTrash } from 'react-icons/hi2';
+import { HiBookmark, HiMagnifyingGlass, HiTrash, HiHeart } from 'react-icons/hi2';
 import type { AudioClip } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
+import { useFavoritesStore } from '../stores/favoritesStore';
 
 interface Props {
   clips: AudioClip[];
@@ -13,6 +14,8 @@ function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',
 export default function ClipsView({ clips, onDeleteClip }: Props) {
   const [search, setSearch] = useState('');
   const playClip = useAudioStore(s => s.playClip);
+  const favToggle = useFavoritesStore(s => s.toggle);
+  const isFav = useFavoritesStore(s => s.isFav);
   const q = search.toLowerCase();
   const fC = clips.filter(c => c.text.toLowerCase().includes(q) || c.note.toLowerCase().includes(q) || c.lessonTitle.toLowerCase().includes(q));
 
@@ -60,8 +63,14 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
                                 {clip.note&&<span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-white/[0.04] text-white/40">{clip.note}</span>}
                               </div>
                             </div>
-                            <button onClick={e=>{e.stopPropagation();onDeleteClip(clip.id);}}
-                              className="text-white/10 hover:text-[#fa2d48] transition-colors opacity-0 group-hover:opacity-100"><HiTrash size={13}/></button>
+                            <div className="flex items-center gap-1">
+                              <button onClick={e=>{e.stopPropagation();favToggle({item_id:clip.id,item_type:'clip',title:clip.text||clip.lessonTitle,subtitle:clip.lessonTitle,extra_data:JSON.stringify({lessonId:clip.lessonId,start:clip.startTime,end:clip.endTime})});}}
+                                className={`p-1.5 rounded-lg transition-colors cursor-pointer ${isFav(clip.id,'clip') ? 'text-[#fa2d48]' : 'text-white/10 opacity-0 group-hover:opacity-100 hover:text-white/30'}`}>
+                                <HiHeart size={13} />
+                              </button>
+                              <button onClick={e=>{e.stopPropagation();onDeleteClip(clip.id);}}
+                                className="text-white/10 hover:text-[#fa2d48] transition-colors opacity-0 group-hover:opacity-100"><HiTrash size={13}/></button>
+                            </div>
                           </div>
                         </div>
                       );

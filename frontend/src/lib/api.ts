@@ -174,6 +174,40 @@ export interface WordItem {
   lessons: { id: string; title: string; occurrences: number[] }[];
 }
 
+// ── Favorites ──
+
+export interface FavoriteItem {
+  id: number;
+  item_id: string;
+  item_type: 'audio' | 'clip' | 'word';
+  title: string;
+  subtitle: string;
+  extra_data: string;
+  created_at: string;
+}
+
+export function getFavorites(): Promise<FavoriteItem[]> {
+  return get<FavoriteItem[]>('/api/favorites/');
+}
+
+export function addFavorite(data: {
+  item_id: string;
+  item_type: string;
+  title: string;
+  subtitle?: string;
+  extra_data?: string;
+}): Promise<FavoriteItem | { ok: false; error: string }> {
+  return post('/api/favorites/', data);
+}
+
+export function removeFavorite(id: number): Promise<{ ok: boolean }> {
+  return fetch(`/api/favorites/${id}`, { method: 'DELETE' }).then(r => r.json());
+}
+
+export function removeFavoriteByItem(item_type: string, item_id: string): Promise<{ ok: boolean }> {
+  return fetch(`/api/favorites/by-item/${item_type}/${encodeURIComponent(item_id)}`, { method: 'DELETE' }).then(r => r.json());
+}
+
 export function getWords(params: {
   q?: string;
   sort?: string;

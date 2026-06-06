@@ -1,6 +1,7 @@
-import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock } from 'react-icons/hi2';
+import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiHeart } from 'react-icons/hi2';
 import type { AudioClip, LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
+import { useFavoritesStore } from '../stores/favoritesStore';
 import { getLessonById } from '../lib/api';
 
 interface Props {
@@ -16,6 +17,8 @@ function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',
 export default function HomeView({ search, onSearchChange, lessons, clips, uniqueWords }: Props) {
   const playLesson = useAudioStore(s => s.playLesson);
   const playClip = useAudioStore(s => s.playClip);
+  const favToggle = useFavoritesStore(s => s.toggle);
+  const isFav = useFavoritesStore(s => s.isFav);
   const q = search.toLowerCase();
   const fL = lessons.filter(l => l.title.toLowerCase().includes(q) || l.subtitle.toLowerCase().includes(q));
   const fC = clips.filter(c => c.text.toLowerCase().includes(q) || c.note.toLowerCase().includes(q) || c.lessonTitle.toLowerCase().includes(q));
@@ -61,18 +64,25 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
             <h2 className="text-lg font-bold text-white tracking-tight">音频</h2>
           </div>
           {fL.length===0 ? <p className="text-white/15 text-sm py-4">{q?'无匹配音频':'暂无音频'}</p> : (
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-              {fL.slice(0,6).map(l=>(
-                <div key={l.id} onClick={()=>getLessonById(l.id).then(d=>playLesson(d))}
-                  className="group cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-white/[0.04]">
-                  <div className="w-full aspect-square rounded-md flex items-center justify-center mb-2" style={{background:'linear-gradient(135deg,#2a1020,#1a0a10)'}}>
-                    <span className="text-white/20 group-hover:text-white/40 transition-colors"><HiMusicalNote size={20}/></span>
+            <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2">
+              {fL.slice(0,8).map(l=> {
+                const fav = isFav(l.id, 'audio');
+                return (
+                  <div key={l.id} onClick={()=>getLessonById(l.id).then(d=>playLesson(d))}
+                    className="group cursor-pointer rounded-lg p-1.5 transition-all duration-200 hover:bg-white/[0.04]">
+                    <div className="w-full aspect-square rounded-md flex items-center justify-center mb-1 relative" style={{background:'linear-gradient(135deg,#2a1020,#1a0a10)'}}>
+                      <span className="text-white/20 group-hover:text-white/40 transition-colors"><HiMusicalNote size={18}/></span>
+                      <button onClick={e=>{e.stopPropagation();favToggle({item_id:l.id,item_type:'audio',title:l.title,subtitle:l.subtitle});}}
+                        className={`absolute top-1.5 right-1.5 p-1 rounded-full transition-colors cursor-pointer ${fav ? 'text-[#fa2d48]' : 'text-white/15 opacity-0 group-hover:opacity-100 hover:text-white/40'}`}>
+                        <HiHeart size={14} />
+                      </button>
+                    </div>
+                    <p className="text-[10px] font-semibold text-white/80 truncate">{l.title}</p>
+                    <p className="text-[9px] text-white/30 truncate">{l.subtitle}</p>
+                    <span className="inline-block mt-0.5 text-[8px] font-medium px-1 py-0.5 rounded bg-white/[0.05] text-white/35">{l.level}</span>
                   </div>
-                  <p className="text-[11px] font-semibold text-white/80 truncate">{l.title}</p>
-                  <p className="text-[10px] text-white/30 truncate mt-0.5">{l.subtitle}</p>
-                  <span className="inline-block mt-1 text-[9px] font-medium px-1 py-0.5 rounded bg-white/[0.05] text-white/35">{l.level}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

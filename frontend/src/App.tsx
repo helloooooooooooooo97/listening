@@ -10,11 +10,14 @@ import ContentPanel from './components/ContentPanel';
 import PlayerBar from './components/PlayerBar';
 import ToastContainer from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
+import { useFavoritesStore } from './stores/favoritesStore';
 
 function AppContent() {
   const [lessons, setLessons] = useState<LessonSummary[]>([]);
   const [wordCount, setWordCount] = useState(0);
   const clips = useClipsStore(s => s.clips);
+  const favItems = useFavoritesStore(s => s.items);
+  const loadFavorites = useFavoritesStore(s => s.loadFavorites);
   const removeClip = useClipsStore(s => s.removeClip);
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,7 +27,7 @@ function AppContent() {
   // Map path to section
   const pathToSection = (path: string): NavSection => {
     const seg = path.split('/')[1] || 'home';
-    const valid: NavSection[] = ['home','courses','clips','words','stats','dictation','recent','settings'];
+    const valid: NavSection[] = ['home','courses','clips','words','stats','favorites','dictation','recent','settings'];
     return valid.includes(seg as NavSection) ? (seg as NavSection) : 'home';
   };
   const activeSection = pathToSection(location.pathname);
@@ -37,6 +40,7 @@ function AppContent() {
       .then(s => setWordCount(s.uniqueWords))
       .catch(() => {});
     useClipsStore.getState().loadClips();
+    loadFavorites();
   }, []);
 
   const handleDeleteClip = (id: string) => {
@@ -53,12 +57,14 @@ function AppContent() {
         lessonCount={lessons.length}
         clipsCount={clips.length}
         wordCount={wordCount}
+        favCount={favItems.length}
       />
       <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-16">
         <ContentPanel
           activeSection={activeSection}
           lessons={lessons}
           clips={clips}
+          wordCount={wordCount}
           onDeleteClip={handleDeleteClip}
         />
       </main>
