@@ -71,8 +71,11 @@ def get_stats() -> dict:
             lesson_count += 1
             total_sentences += len(lesson.transcript)
             for w in lesson.words:
+                import re
                 word = w.text.strip().lower()
-                if word and word not in {".", ",", "!", "?", ";", ":", "-", "\"", "'", "—"}:
+                word = re.sub(r'^[.,!?;:\-"' "'—]+", '', word)
+                word = re.sub(r'[.,!?;:\-"' "'—]+$", '', word)
+                if word:
                     all_words.add(word)
         except Exception:
             continue

@@ -12,6 +12,7 @@ import ToastContainer from './components/Toast';
 export default function App() {
   const [activeSection, setActiveSection] = useState<NavSection>('home');
   const [lessons, setLessons] = useState<LessonSummary[]>([]);
+  const [wordCount, setWordCount] = useState(0);
   const clips = useClipsStore(s => s.clips);
   const removeClip = useClipsStore(s => s.removeClip);
 
@@ -21,6 +22,10 @@ export default function App() {
     fetch('/api/lessons/')
       .then(r => r.json())
       .then((data: LessonSummary[]) => { setLessons(data); preloadLessonAudio(data.map(l => l.id)); })
+      .catch(() => {});
+    fetch('/api/lessons/stats')
+      .then(r => r.json())
+      .then(s => setWordCount(s.uniqueWords))
       .catch(() => {});
   }, []);
 
@@ -35,7 +40,9 @@ export default function App() {
       <Sidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}
+        lessonCount={lessons.length}
         clipsCount={clips.length}
+        wordCount={wordCount}
       />
       <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-16">
         <ContentPanel

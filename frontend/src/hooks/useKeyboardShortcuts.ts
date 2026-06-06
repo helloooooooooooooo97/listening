@@ -31,11 +31,13 @@ export function useKeyboardShortcuts() {
       switch (e.key) {
         case 'ArrowLeft':
           e.preventDefault();
-          seekRelative(-5);
+          if (e.shiftKey) seekRelative(-5);
+          else jumpToPrevSentence();
           break;
         case 'ArrowRight':
           e.preventDefault();
-          seekRelative(5);
+          if (e.shiftKey) seekRelative(5);
+          else jumpToNextSentence();
           break;
         case 'ArrowUp':
           e.preventDefault();

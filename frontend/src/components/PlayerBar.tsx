@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronUp, HiChevronDown } from 'react-icons/hi2';
+import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronUp, HiChevronDown, HiPencil, HiTag } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
+import { useDictationStore } from '../stores/dictationStore';
 import type { LoopMode } from '../types/lesson';
 import TranscriptView from './TranscriptView';
 
@@ -24,7 +25,6 @@ export default function PlayerBar() {
   const loopT = useAudioStore(s=>s.loopTarget);
   const toggle = useAudioStore(s=>s.togglePlay);
   const seek = useAudioStore(s=>s.seek);
-  const seekR = useAudioStore(s=>s.seekRelative);
   const prevS = useAudioStore(s=>s.jumpToPrevSentence);
   const nextS = useAudioStore(s=>s.jumpToNextSentence);
   const setRate = useAudioStore(s=>s.setRate);
@@ -34,21 +34,29 @@ export default function PlayerBar() {
   const isL = mode.kind==='lesson';
   const isC = mode.kind==='clip';
   const hasContent = mode.kind !== 'empty';
-  const title = hasContent ? (isL ? mode.lesson.title : `"${mode.clip.text}"`) : '未在播放';
+  const isWord = isC && mode.clip.note === 'word';
+  const title = hasContent ? (isL ? mode.lesson.title : isWord ? mode.clip.text : `"${mode.clip.text}"`) : '未在播放';
   const sub = hasContent ? (isL ? mode.lesson.subtitle : mode.clip.lessonTitle) : '选择课程开始练习';
   const cs = isC ? mode.clip.startTime : 0;
   const ce = isC ? mode.clip.endTime : dur;
-  const cd = isC ? ce-cs : dur;
-  const pct = hasContent ? (isC ? (cd>0?((cur-cs)/cd)*100:0) : (dur>0?(cur/dur)*100:0)) : 0;
-  const dTime = isC ? Math.max(0,cur-cs) : cur;
-  const dDur = isC ? cd : dur;
+  // Always show full audio progress
+  const pct = dur > 0 ? (cur / dur) * 100 : 0;
+  const clipStartPct = isC && dur > 0 ? (cs / dur) * 100 : 0;
+  const clipEndPct = isC && dur > 0 ? (ce / dur) * 100 : 0;
+  const dTime = cur;
+  const dDur = dur;
   const li = LOOP[loop];
+  const dictation = useDictationStore();
+  const isDictating = dictation.active;
 
   return (
     <>
       {/* ── Fullscreen Lyrics Overlay ── */}
-      {expanded && hasContent && mode.kind==='lesson' && (
-        <div className="fixed inset-0 z-50 flex flex-col animate-fade-in" style={{ background: 'linear-gradient(180deg, #1a0a14 0%, #0a0a0b 100%)' }}>
+      {expanded && hasContent && (mode.kind==='lesson' || (mode.kind==='clip' && mode.lesson)) && (() => {
+        const lesson = mode.kind==='lesson' ? mode.lesson : mode.kind==='clip' ? mode.lesson! : null;
+        if (!lesson) return null;
+        return (
+        <div className="fixed bottom-0 left-52 right-0 top-0 z-50 flex flex-col animate-fade-in" style={{ background: 'linear-gradient(180deg, #1a0a14 0%, #0a0a0b 100%)' }}>
           {/* Header */}
           <div className="flex-shrink-0 flex items-center justify-between px-6 py-4">
             <button onClick={()=>setExpanded(false)}
@@ -56,8 +64,8 @@ export default function PlayerBar() {
               <HiChevronDown size={24}/>
             </button>
             <div className="text-center">
-              <p className="text-[13px] font-semibold text-white">{mode.lesson.title}</p>
-              <p className="text-[11px] text-white/40">{mode.lesson.subtitle}</p>
+              <p className="text-[13px] font-semibold text-white">{lesson.title}</p>
+              <p className="text-[11px] text-white/40">{lesson.subtitle}</p>
             </div>
             <div className="w-6"/>
           </div>
@@ -66,10 +74,10 @@ export default function PlayerBar() {
           <div className="flex-1 overflow-y-auto px-6">
             <div className="max-w-xl mx-auto py-8">
               <TranscriptView
-                lessonId={mode.lesson.id}
-                lessonTitle={mode.lesson.title}
-                lines={mode.lesson.transcript}
-                words={mode.lesson.words}
+                lessonId={lesson.id}
+                lessonTitle={lesson.title}
+                lines={lesson.transcript}
+                words={lesson.words}
                 currentTime={cur}
                 onSeek={seek}
               />
@@ -79,34 +87,38 @@ export default function PlayerBar() {
           {/* Mini controls at bottom of lyrics */}
           <div className="flex-shrink-0 flex items-center justify-center gap-4 px-6 py-6">
             <button onClick={prevS} className="text-white/40 hover:text-white/80 transition-colors cursor-pointer"><HiBackward size={20}/></button>
-            <button onClick={()=>seekR(-5)} className="text-white/30 hover:text-white/70 transition-colors cursor-pointer text-[13px] font-medium">-5s</button>
             <button onClick={toggle}
               className="w-14 h-14 flex items-center justify-center rounded-full bg-white text-black transition-all cursor-pointer hover:scale-105 active:scale-95">
               {playing ? <HiPause size={24}/> : <HiPlay size={24}/>}
             </button>
-            <button onClick={()=>seekR(5)} className="text-white/30 hover:text-white/70 transition-colors cursor-pointer text-[13px] font-medium">+5s</button>
             <button onClick={nextS} className="text-white/40 hover:text-white/80 transition-colors cursor-pointer"><HiForward size={20}/></button>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* ── Bottom Player Bar (always visible) ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40"
+      <div className="fixed bottom-0 left-52 right-0 z-40"
         style={{
           background: 'rgba(28, 28, 30, 0.95)',
           backdropFilter: 'blur(40px) saturate(180%)',
           WebkitBackdropFilter: 'blur(40px) saturate(180%)',
           borderTop: '1px solid rgba(255,255,255,0.06)',
         }}>
-        {/* Progress bar */}
-        <div className={`h-0.5 bg-white/[0.06] transition-all ${hasContent ? 'cursor-pointer group/progress hover:h-[3px]' : ''}`}
+        {/* Progress bar — always full audio */}
+        <div className={`relative h-0.5 bg-white/[0.06] transition-all ${hasContent ? 'cursor-pointer group/progress hover:h-[3px]' : ''}`}
           onClick={e => {
             if (!hasContent) return;
             e.stopPropagation();
             const r=e.currentTarget.getBoundingClientRect();
-            seek(isC?cs+(e.clientX-r.left)/r.width*cd:(e.clientX-r.left)/r.width*dur);
+            seek((e.clientX-r.left)/r.width*dur);
           }}>
-          <div className="h-full transition-all duration-75" style={{
+          {/* Clip range highlight */}
+          {isC && (
+            <div className="absolute inset-y-0 bg-white/[0.06]" style={{left:`${clipStartPct}%`,width:`${clipEndPct-clipStartPct}%`}}/>
+          )}
+          {/* Playback position */}
+          <div className="absolute inset-y-0 left-0 h-full transition-all duration-75" style={{
             width: `${Math.min(100,Math.max(0,pct))}%`,
             background: hasContent ? 'linear-gradient(90deg, #fa2d48, #ff6b7f)' : 'transparent',
             boxShadow: hasContent ? '0 0 8px rgba(250,45,72,0.4)' : 'none',
@@ -116,11 +128,24 @@ export default function PlayerBar() {
         <div className="flex items-center gap-3 px-4 py-2.5 max-w-screen-xl mx-auto">
           {/* Artwork + Info — click to expand lyrics */}
           <div className="w-52 min-w-0 flex items-center gap-3"
-            onClick={() => { if (hasContent && isL) setExpanded(!expanded); }}
-            style={{ cursor: hasContent && isL ? 'pointer' : 'default' }}>
+            onClick={() => {
+              if (isL) { setExpanded(!expanded); }
+              else if (isC) {
+                // For clips, load the full lesson transcript before expanding
+                if (!mode.lesson) {
+                  fetch(`/api/lessons/${mode.clip.lessonId}`).then(r=>r.json()).then(l => {
+                    useAudioStore.getState().setContextLesson(l);
+                    setExpanded(true);
+                  });
+                } else {
+                  setExpanded(!expanded);
+                }
+              }
+            }}
+            style={{ cursor: (isL || isC) ? 'pointer' : 'default' }}>
             <div className={`w-11 h-11 rounded-lg flex items-center justify-center text-white flex-shrink-0 shadow-lg transition-opacity ${hasContent ? 'opacity-100' : 'opacity-30'}`}
-              style={{ background: isC ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #fa2d48, #c0392b)' }}>
-              {isC ? <HiBookmark size={18}/> : <HiMusicalNote size={18}/>}
+              style={{ background: isWord ? 'linear-gradient(135deg, #8b5cf6, #6d28d9)' : isC ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #fa2d48, #c0392b)' }}>
+              {isWord ? <HiTag size={18}/> : isC ? <HiBookmark size={18}/> : <HiMusicalNote size={18}/>}
             </div>
             <div className="min-w-0">
               <p className={`text-[13px] font-semibold truncate ${hasContent ? 'text-white' : 'text-white/25'}`}>{title}</p>
@@ -130,11 +155,7 @@ export default function PlayerBar() {
 
           {/* Center controls */}
           <div className="flex-1 flex items-center justify-center gap-3">
-            {isL && <button onClick={e=>{e.stopPropagation();prevS();}} className="text-white/40 hover:text-white/80 transition-colors cursor-pointer" title="上一句"><HiBackward size={15}/></button>}
-            <button onClick={e=>{e.stopPropagation();seekR(isC?-2:-5);}} title="后退5秒"
-              className={`w-8 h-8 flex items-center justify-center rounded-full transition-all cursor-pointer ${hasContent ? 'text-white/40 hover:text-white/80 hover:bg-white/[0.06]' : 'text-white/10 cursor-default'}`}>
-              <HiBackward size={16}/>
-            </button>
+            {(isL || isC) && <button onClick={e=>{e.stopPropagation();prevS();}} className="text-white/40 hover:text-white/80 transition-colors cursor-pointer" title="上一句"><HiBackward size={15}/></button>}
 
             <button onClick={e=>{e.stopPropagation();toggle();}}
               disabled={!hasContent || loading}
@@ -150,17 +171,20 @@ export default function PlayerBar() {
                 : <span className={hasContent ? 'text-black' : 'text-white/10'}><HiPlay size={20}/></span>}
             </button>
 
-            <button onClick={e=>{e.stopPropagation();seekR(isC?2:5);}} title="前进5秒"
-              className={`w-8 h-8 flex items-center justify-center rounded-full transition-all cursor-pointer ${hasContent ? 'text-white/40 hover:text-white/80 hover:bg-white/[0.06]' : 'text-white/10 cursor-default'}`}>
-              <HiForward size={16}/>
-            </button>
-            {isL && <button onClick={e=>{e.stopPropagation();nextS();}} className="text-white/40 hover:text-white/80 transition-colors cursor-pointer" title="下一句"><HiForward size={15}/></button>}
+            {(isL || isC) && <button onClick={e=>{e.stopPropagation();nextS();}} className="text-white/40 hover:text-white/80 transition-colors cursor-pointer" title="下一句"><HiForward size={15}/></button>}
           </div>
 
           {/* Right */}
           <div className="w-52 flex items-center justify-end gap-3 text-[11px]">
             {hasContent && (
               <>
+                {isL && (
+                  <button onClick={e=>{e.stopPropagation();isDictating?dictation.reset():dictation.start();}}
+                    className={`transition-colors cursor-pointer ${isDictating ? 'text-[#fa2d48]' : 'text-white/35 hover:text-white/70'}`}
+                    title={isDictating ? '退出听写' : '听写模式'}>
+                    <HiPencil size={14}/>
+                  </button>
+                )}
                 <button onClick={e=>{e.stopPropagation();cycleLoop();}} className="text-white/35 hover:text-white/70 transition-colors cursor-pointer" title={`循环模式: ${LOOP[loop].label}`}>{li.icon}</button>
                 <span className="text-white/20">|</span>
                 <span className="font-mono tabular-nums text-white/50 font-medium">{fmt(dTime)}</span>
@@ -181,7 +205,7 @@ export default function PlayerBar() {
                 </>}
               </>
             )}
-            {isL && (
+            {(isL || isC) && (
               <button onClick={e=>{e.stopPropagation();setExpanded(!expanded);}}
                 className="ml-1 text-white/25 hover:text-white/60 transition-colors cursor-pointer">
                 {expanded ? <HiChevronDown size={16}/> : <HiChevronUp size={16}/>}

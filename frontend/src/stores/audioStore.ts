@@ -144,9 +144,19 @@ export const useAudioStore = create<AudioState>((set, get) => {
   audio.addEventListener('play', () => set({ isPlaying: true }));
   audio.addEventListener('pause', () => set({ isPlaying: false }));
   audio.addEventListener('ended', () => set({ isPlaying: false }));
-  audio.addEventListener('waiting', () => set({ isLoading: true }));
-  audio.addEventListener('seeking', () => set({ isLoading: true }));
-  audio.addEventListener('seeked', () => set({ isLoading: false }));
+  let waitTimer: ReturnType<typeof setTimeout> | null = null;
+  audio.addEventListener('waiting', () => {
+    // Debounce: only show loading after 200ms of actual buffering
+    waitTimer = setTimeout(() => set({ isLoading: true }), 200);
+  });
+  audio.addEventListener('canplay', () => {
+    if (waitTimer) { clearTimeout(waitTimer); waitTimer = null; }
+    set({ isLoading: false });
+  });
+  audio.addEventListener('play', () => {
+    if (waitTimer) { clearTimeout(waitTimer); waitTimer = null; }
+    set({ isPlaying: true, isLoading: false });
+  });
 
   return {
     mode: { kind: 'empty' },

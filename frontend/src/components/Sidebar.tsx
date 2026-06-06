@@ -1,14 +1,16 @@
-import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag } from 'react-icons/hi2';
+import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag, HiCog6Tooth } from 'react-icons/hi2';
 
-export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'recent';
+export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'recent' | 'settings';
 
 interface Props {
   activeSection: NavSection;
   onSectionChange: (s: NavSection) => void;
+  lessonCount: number;
   clipsCount: number;
+  wordCount: number;
 }
 
-export default function Sidebar({ activeSection, onSectionChange, clipsCount }: Props) {
+export default function Sidebar({ activeSection, onSectionChange, lessonCount, clipsCount, wordCount }: Props) {
 
   return (
     <aside className="w-52 flex-shrink-0 flex flex-col h-full glass border-r border-white/[0.06] select-none">
@@ -35,32 +37,42 @@ export default function Sidebar({ activeSection, onSectionChange, clipsCount }: 
             activeSection==='courses' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
           }`}>
           <HiBookOpen size={15} /> 课程
+          <span className="ml-auto text-[10px] text-white/20">{lessonCount}</span>
         </div>
         <div onClick={() => onSectionChange('clips')}
           className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${
             activeSection==='clips' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
           }`}>
           <HiBookmark size={15} /> 片段
-          {clipsCount > 0 && <span className="ml-auto text-[10px] text-white/20">{clipsCount}</span>}
+          <span className="ml-auto text-[10px] text-white/20">{clipsCount}</span>
         </div>
         <div onClick={() => onSectionChange('words')}
           className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${
             activeSection==='words' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
           }`}>
           <HiTag size={15} /> 单词
+          <span className="ml-auto text-[10px] text-white/20">{wordCount}</span>
         </div>
         <div onClick={() => onSectionChange('recent')}
           className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${
             activeSection==='recent' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
           }`}>
           <HiClock size={15} /> 最近播放
+          <span className="ml-auto text-[10px] text-white/20">{lessonCount}</span>
         </div>
       </nav>
 
-      <div className="flex-shrink-0 mx-5 my-3 border-t border-white/[0.05]" />
-
       {/* Spacer */}
       <div className="flex-1" />
+
+      <div className="flex-shrink-0 px-2 pb-4">
+        <div onClick={() => onSectionChange('settings')}
+          className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${
+            activeSection==='settings' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
+          }`}>
+          <HiCog6Tooth size={15} /> 设置
+        </div>
+      </div>
     </aside>
   );
 }

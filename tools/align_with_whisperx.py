@@ -19,11 +19,14 @@ import tempfile
 from pathlib import Path
 
 
+WHISPERX_BIN = Path(__file__).resolve().parent.parent / ".venv-whisperx" / "bin" / "whisperx"
+
+
 def run_whisperx(audio: Path, model: str, language: str, device: str) -> dict:
     with tempfile.TemporaryDirectory(prefix="whisperx-") as tmp:
         output_dir = Path(tmp)
         command = [
-            "whisperx",
+            str(WHISPERX_BIN),
             str(audio),
             "--model",
             model,
@@ -38,7 +41,8 @@ def run_whisperx(audio: Path, model: str, language: str, device: str) -> dict:
             "--compute_type",
             "int8" if device == "cpu" else "float16",
         ]
-        subprocess.run(command, check=True)
+        env = {**__import__("os").environ, "HF_HUB_OFFLINE": "1"}
+        subprocess.run(command, check=True, env=env)
 
         output_json = output_dir / f"{audio.stem}.json"
         if not output_json.exists():
