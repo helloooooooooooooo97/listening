@@ -1,4 +1,4 @@
-"""SQLite database using Python's built-in sqlite3 module."""
+"""SQLite database — singleton connection for the process lifetime."""
 from __future__ import annotations
 
 import sqlite3
@@ -7,16 +7,22 @@ from pathlib import Path
 DB_PATH = Path(__file__).resolve().parent.parent / "data" / "audio.db"
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
+_conn: sqlite3.Connection | None = None
+
 
 def get_conn() -> sqlite3.Connection:
-    conn = sqlite3.connect(str(DB_PATH))
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA journal_mode=WAL")
-    conn.execute("PRAGMA foreign_keys=ON")
-    return conn
+    """Return the singleton database connection, creating it if needed."""
+    global _conn
+    if _conn is None:
+        _conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
+        _conn.row_factory = sqlite3.Row
+        _conn.execute("PRAGMA journal_mode=WAL")
+        _conn.execute("PRAGMA foreign_keys=ON")
+    return _conn
 
 
 def init_db():
+    """Create tables if they don't exist. Called once at startup."""
     conn = get_conn()
     conn.executescript("""
         -- 片段收藏
@@ -90,4 +96,3 @@ def init_db():
         CREATE INDEX IF NOT EXISTS idx_wo_audio ON word_occurrences(audio_id);
     """)
     conn.commit()
-    conn.close()

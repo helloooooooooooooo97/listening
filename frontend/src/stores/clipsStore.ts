@@ -1,8 +1,20 @@
 import { create } from 'zustand';
 import type { AudioClip } from '../types/lesson';
+import { getClips, createClip as apiCreateClip, deleteClip as apiDeleteClip } from '../lib/api';
 
-function apiClipsToAudioClips(items: any[]): AudioClip[] {
-  return items.map(c => ({
+interface ClipApiRow {
+  id: number;
+  audio_id: string;
+  audio_title: string;
+  start_time: number;
+  end_time: number;
+  text: string;
+  note: string;
+  created_at: string;
+}
+
+function toAudioClip(c: ClipApiRow): AudioClip {
+  return {
     id: String(c.id),
     lessonId: c.audio_id,
     lessonTitle: c.audio_title,
@@ -13,39 +25,33 @@ function apiClipsToAudioClips(items: any[]): AudioClip[] {
     text: c.text,
     note: c.note || '',
     createdAt: c.created_at || '',
-  }));
+  };
 }
 
 async function fetchClips(): Promise<AudioClip[]> {
   try {
-    const r = await fetch('/api/clips/');
-    const data = await r.json();
-    return apiClipsToAudioClips(data);
+    const data = await getClips();
+    return data.map(toAudioClip);
   } catch { return []; }
 }
 
-async function createClip(clip: Omit<AudioClip, 'id' | 'createdAt'>): Promise<AudioClip | null> {
+async function createClipRemote(clip: Omit<AudioClip, 'id' | 'createdAt'>): Promise<AudioClip | null> {
   try {
-    const r = await fetch('/api/clips/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        audio_id: clip.lessonId,
-        audio_title: clip.lessonTitle,
-        start_time: clip.startTime,
-        end_time: clip.endTime,
-        text: clip.text,
-        note: clip.note,
-      }),
+    const data = await apiCreateClip({
+      audio_id: clip.lessonId,
+      audio_title: clip.lessonTitle,
+      start_time: clip.startTime,
+      end_time: clip.endTime,
+      text: clip.text,
+      note: clip.note,
     });
-    const data = await r.json();
-    return apiClipsToAudioClips([data])[0];
+    return toAudioClip(data as unknown as ClipApiRow);
   } catch { return null; }
 }
 
-async function deleteClipApi(id: string): Promise<boolean> {
+async function deleteClipRemote(id: string): Promise<boolean> {
   try {
-    await fetch(`/api/clips/${id}`, { method: 'DELETE' });
+    await apiDeleteClip(id);
     return true;
   } catch { return false; }
 }
@@ -70,7 +76,7 @@ export const useClipsStore = create<ClipsState>((set, get) => ({
   },
 
   addClip: async (clip) => {
-    const newClip = await createClip(clip);
+    const newClip = await createClipRemote(clip);
     if (newClip) {
       set(s => ({ clips: [newClip, ...s.clips] }));
     }
@@ -78,7 +84,7 @@ export const useClipsStore = create<ClipsState>((set, get) => ({
   },
 
   removeClip: async (id) => {
-    await deleteClipApi(id);
+    await deleteClipRemote(id);
     set(s => ({ clips: s.clips.filter(c => c.id !== id) }));
   },
 

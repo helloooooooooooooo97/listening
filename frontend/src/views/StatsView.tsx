@@ -1,24 +1,6 @@
 import { useState, useEffect } from 'react';
 import { HiClock, HiBookOpen, HiPencil, HiBookmark, HiAcademicCap, HiArrowTrendingUp, HiArrowTrendingDown } from 'react-icons/hi2';
-
-interface Overview {
-  total_listening_seconds: number;
-  completed_audios: number;
-  total_audios: number;
-  avg_dictation_score: number;
-  dictation_total_sentences: number;
-  words_mastered: number;
-  total_words: number;
-  clips_count: number;
-  streak_days: number;
-  today_seconds: number;
-  yesterday_seconds: number;
-}
-
-interface DailyDay { date: string; seconds: number; }
-interface DictationScore { date: string; audio: string; score: number; }
-interface AudioProgress { id: string; title: string; completed: boolean; last_position: number; total_seconds: number; dictation_score: number | null; }
-interface Activity { type: string; time: string; detail: string; }
+import { getOverview, getDailyTime, getDictationTrend, getAudioProgress, getRecentActivity, type Overview, type DailyDay, type DictationScore, type AudioProgress, type Activity } from '../lib/api';
 
 function Skeleton({ className = '' }: { className?: string }) {
   return <div className={`animate-pulse bg-white/[0.04] rounded-lg ${className}`} />;
@@ -237,15 +219,15 @@ export default function StatsView() {
   const [activityLoading, setActivityLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/stats/overview').then(r=>r.json()).then(setOverview).finally(()=>setOverviewLoading(false));
-    fetch('/api/stats/dictation-trend?limit=20').then(r=>r.json()).then(d=>setTrend(d.scores)).finally(()=>setTrendLoading(false));
-    fetch('/api/stats/audio-progress').then(r=>r.json()).then(d=>setAudioProgress(d.audios)).finally(()=>setProgressLoading(false));
-    fetch('/api/stats/recent-activity?limit=15').then(r=>r.json()).then(d=>setActivities(d.activities)).finally(()=>setActivityLoading(false));
+    getOverview().then(setOverview).finally(()=>setOverviewLoading(false));
+    getDictationTrend().then(d=>setTrend(d.scores)).finally(()=>setTrendLoading(false));
+    getAudioProgress().then(d=>setAudioProgress(d.audios)).finally(()=>setProgressLoading(false));
+    getRecentActivity().then(d=>setActivities(d.activities)).finally(()=>setActivityLoading(false));
   }, []);
 
   useEffect(() => {
     setDailyLoading(true);
-    fetch(`/api/stats/daily-time?days=${tab==='7d'?7:30}`).then(r=>r.json()).then(d=>setDailyTime(d.days)).finally(()=>setDailyLoading(false));
+    getDailyTime(tab==='7d'?7:30).then(d=>setDailyTime(d.days)).finally(()=>setDailyLoading(false));
   }, [tab]);
 
   return (

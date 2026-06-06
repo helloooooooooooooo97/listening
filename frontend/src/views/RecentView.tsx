@@ -1,6 +1,7 @@
 import { HiMusicalNote, HiClock } from 'react-icons/hi2';
-import type { LessonSummary, ListeningLesson } from '../types/lesson';
+import type { LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
+import { getLessonById } from '../lib/api';
 
 interface Props {
   lessons: LessonSummary[];
@@ -26,7 +27,7 @@ export default function RecentView({ lessons }: Props) {
         ) : (
           <div className="space-y-1">
             {lessons.slice(0,20).map((l,i)=>(
-              <div key={l.id} onClick={()=>fetch(`/api/lessons/${l.id}`).then(r=>r.json()).then((d:ListeningLesson)=>playLesson(d))}
+              <div key={l.id} onClick={()=>getLessonById(l.id).then(d=>playLesson(d))}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer hover:bg-white/[0.03] transition-colors group">
                 <span className="text-[12px] text-white/15 tabular-nums w-5">{i+1}</span>
                 <div className="w-9 h-9 rounded flex items-center justify-center flex-shrink-0" style={{background:'linear-gradient(135deg,#1a0a14,#0a0a0b)'}}>

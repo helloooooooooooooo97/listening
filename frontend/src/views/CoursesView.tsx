@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { HiMusicalNote, HiMagnifyingGlass } from 'react-icons/hi2';
-import type { LessonSummary, ListeningLesson } from '../types/lesson';
+import type { LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
+import { getLessonById } from '../lib/api';
 
 interface Props {
   lessons: LessonSummary[];
@@ -45,7 +46,7 @@ export default function CoursesView({ lessons }: Props) {
               </div>
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5">
                 {items.map(l=>(
-                  <div key={l.id} onClick={()=>fetch(`/api/lessons/${l.id}`).then(r=>r.json()).then((d:ListeningLesson)=>playLesson(d))}
+                  <div key={l.id} onClick={()=>getLessonById(l.id).then(d=>playLesson(d))}
                     className="group cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-white/[0.04]">
                     <div className="w-full aspect-square rounded-md flex items-center justify-center mb-1.5"
                       style={{ background: category.includes('IELTS') ? 'linear-gradient(135deg, #1a1a2e, #0d0d1a)' : 'linear-gradient(135deg, #2a1020, #1a0a10)' }}>

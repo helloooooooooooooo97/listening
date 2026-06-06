@@ -41,7 +41,6 @@ def add_dictation(data: DictationCreate):
             [data.audio_id, data.audio_title, data.score],
         )
     conn.commit()
-    conn.close()
     return {"ok": True}
 
 
@@ -55,7 +54,6 @@ class PlayCreate(BaseModel):
 def list_history():
     conn = get_conn()
     rows = conn.execute("SELECT * FROM play_history ORDER BY played_at DESC LIMIT 100").fetchall()
-    conn.close()
     return [dict(r) for r in rows]
 
 
@@ -79,7 +77,6 @@ def add_history(data: PlayCreate):
             [data.audio_id, data.audio_title, data.duration_seconds],
         )
     conn.commit()
-    conn.close()
     return {"ok": True}
 
 
@@ -92,7 +89,6 @@ class WordKnownUpdate(BaseModel):
 def list_word_progress():
     conn = get_conn()
     rows = conn.execute("SELECT word FROM word_progress WHERE known=1").fetchall()
-    conn.close()
     return [r["word"] for r in rows]
 
 
@@ -104,5 +100,4 @@ def set_word_known(data: WordKnownUpdate):
         [data.word, 1 if data.known else 0],
     )
     conn.commit()
-    conn.close()
     return {"ok": True}

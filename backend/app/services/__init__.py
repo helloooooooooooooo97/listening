@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from models import LessonSummary, ListeningLesson
@@ -81,7 +82,6 @@ def get_stats() -> dict:
             lesson_count += 1
             total_sentences += len(lesson.transcript)
             for w in lesson.words:
-                import re
                 word = w.text.strip().lower()
                 word = re.sub(r'^[.,!?;:\-"' "'—]+", '', word)
                 word = re.sub(r'[.,!?;:\-"' "'—]+$", '', word)

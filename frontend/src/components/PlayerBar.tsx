@@ -3,6 +3,7 @@ import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiAr
 import { useAudioStore } from '../stores/audioStore';
 import { useDictationStore } from '../stores/dictationStore';
 import type { LoopMode } from '../types/lesson';
+import { getLessonById } from '../lib/api';
 import TranscriptView from './TranscriptView';
 
 function fmt(t: number) { const m=Math.floor(t/60); return `${m}:${Math.floor(t%60).toString().padStart(2,'0')}`; }
@@ -133,7 +134,7 @@ export default function PlayerBar() {
               else if (isC) {
                 // For clips, load the full lesson transcript before expanding
                 if (!mode.lesson) {
-                  fetch(`/api/lessons/${mode.clip.lessonId}`).then(r=>r.json()).then(l => {
+                  getLessonById(mode.clip.lessonId).then(l => {
                     useAudioStore.getState().setContextLesson(l);
                     setExpanded(true);
                   });

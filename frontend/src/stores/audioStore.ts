@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
+import { postPlayHistory } from '../lib/api';
 
 /* ── Singleton audio element ── */
 let _audio: HTMLAudioElement | null = null;
@@ -37,10 +38,7 @@ function flushTrack() {
   if (elapsed < 1) return;
   const m = useAudioStore.getState().mode;
   if (m.kind === 'lesson') {
-    fetch('/api/progress/play-history', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({audio_id:m.lesson.id,audio_title:m.lesson.title,duration_seconds:elapsed}),
-    }).catch(()=>{});
+    postPlayHistory({audio_id:m.lesson.id,audio_title:m.lesson.title,duration_seconds:elapsed}).catch(()=>{});
   }
 }
 

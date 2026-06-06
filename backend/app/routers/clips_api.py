@@ -22,7 +22,6 @@ class ClipCreate(BaseModel):
 def list_clips():
     conn = get_conn()
     rows = conn.execute("SELECT * FROM clips ORDER BY created_at DESC").fetchall()
-    conn.close()
     return [dict(r) for r in rows]
 
 
@@ -35,7 +34,6 @@ def create_clip(data: ClipCreate):
     )
     conn.commit()
     row = conn.execute("SELECT * FROM clips WHERE id=?", [cur.lastrowid]).fetchone()
-    conn.close()
     return dict(row)
 
 
@@ -44,5 +42,4 @@ def delete_clip(clip_id: int):
     conn = get_conn()
     conn.execute("DELETE FROM clips WHERE id=?", [clip_id])
     conn.commit()
-    conn.close()
     return {"ok": True}

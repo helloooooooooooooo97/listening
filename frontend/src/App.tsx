@@ -4,10 +4,12 @@ import type { LessonSummary } from './types/lesson';
 import { useClipsStore } from './stores/clipsStore';
 import { useAudioStore, preloadLessonAudio } from './stores/audioStore';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
-import Sidebar from './components/Sidebar';
+import { getLessons, getLessonStats } from './lib/api';
+import Sidebar, { type NavSection } from './components/Sidebar';
 import ContentPanel from './components/ContentPanel';
 import PlayerBar from './components/PlayerBar';
 import ToastContainer from './components/Toast';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function AppContent() {
   const [lessons, setLessons] = useState<LessonSummary[]>([]);
@@ -20,20 +22,18 @@ function AppContent() {
   useKeyboardShortcuts();
 
   // Map path to section
-  const pathToSection = (path: string) => {
+  const pathToSection = (path: string): NavSection => {
     const seg = path.split('/')[1] || 'home';
-    const valid = ['home','courses','clips','words','stats','dictation','recent','settings'];
-    return valid.includes(seg) ? seg : 'home';
+    const valid: NavSection[] = ['home','courses','clips','words','stats','dictation','recent','settings'];
+    return valid.includes(seg as NavSection) ? (seg as NavSection) : 'home';
   };
   const activeSection = pathToSection(location.pathname);
 
   useEffect(() => {
-    fetch('/api/lessons/')
-      .then(r => r.json())
-      .then((data: LessonSummary[]) => { setLessons(data); preloadLessonAudio(data.map(l => l.id)); })
+    getLessons()
+      .then(data => { setLessons(data); preloadLessonAudio(data.map(l => l.id)); })
       .catch(() => {});
-    fetch('/api/lessons/stats')
-      .then(r => r.json())
+    getLessonStats()
       .then(s => setWordCount(s.uniqueWords))
       .catch(() => {});
     useClipsStore.getState().loadClips();
@@ -48,7 +48,7 @@ function AppContent() {
   return (
     <div className="h-screen flex overflow-hidden bg-black">
       <Sidebar
-        activeSection={activeSection as any}
+        activeSection={activeSection}
         onSectionChange={(s) => navigate(`/${s === 'home' ? '' : s}`)}
         lessonCount={lessons.length}
         clipsCount={clips.length}
@@ -56,7 +56,7 @@ function AppContent() {
       />
       <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-16">
         <ContentPanel
-          activeSection={activeSection as any}
+          activeSection={activeSection}
           lessons={lessons}
           clips={clips}
           onDeleteClip={handleDeleteClip}
@@ -70,10 +70,12 @@ function AppContent() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/*" element={<AppContent />} />
-      </Routes>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/*" element={<AppContent />} />
+        </Routes>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }

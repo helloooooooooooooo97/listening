@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { HiCheck, HiXMark, HiPlay, HiArrowRight, HiArrowLeft, HiForward, HiChevronDown } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useDictationStore } from '../stores/dictationStore';
+import { postDictation } from '../lib/api';
 
 export default function DictationView() {
   const mode = useAudioStore(s => s.mode);
@@ -68,14 +69,11 @@ export default function DictationView() {
       setTimeout(() => {
         const state = useDictationStore.getState();
         const latestScore = state.scores[state.scores.length-1] || 0;
-        fetch('/api/progress/dictation', {
-          method: 'POST', headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({
-            audio_id: mode.lesson!.id, audio_title: mode.lesson!.title,
-            sentence_index: sentenceIndex, score: latestScore,
-            user_input: userInput.trim(),
-            expected_text: expectedJoined,
-          }),
+        postDictation({
+          audio_id: mode.lesson!.id, audio_title: mode.lesson!.title,
+          sentence_index: sentenceIndex, score: latestScore,
+          user_input: userInput.trim(),
+          expected_text: expectedJoined,
         }).catch(()=>{});
       }, 100);
     }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { AudioClip, LessonSummary } from '../types/lesson';
 import { useDictationStore } from '../stores/dictationStore';
+import { getLessonStats } from '../lib/api';
 import HomeView from '../views/HomeView';
 import CoursesView from '../views/CoursesView';
 import ClipsView from '../views/ClipsView';
@@ -24,8 +25,7 @@ export default function ContentPanel({ activeSection, lessons, clips, onDeleteCl
   const [uniqueWords, setUniqueWords] = useState(0);
 
   useEffect(() => {
-    fetch('/api/lessons/stats')
-      .then(r => r.json())
+    getLessonStats()
       .then(s => setUniqueWords(s.uniqueWords))
       .catch(() => {});
   }, [lessons]);

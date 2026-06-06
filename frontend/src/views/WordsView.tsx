@@ -2,12 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { HiMagnifyingGlass, HiPlay, HiCheck, HiBarsArrowDown } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
-
-interface WordItem {
-  word: string;
-  count: number;
-  lessons: { id: string; title: string; occurrences: number[] }[];
-}
+import { getWords, getKnownWords, setWordKnown, type WordItem } from '../lib/api';
 
 function fmtTime(s: number) { const m=Math.floor(s/60); return `${m}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
 
@@ -28,8 +23,7 @@ export default function WordsView() {
 
   // Load known words from API
   useEffect(() => {
-    fetch('/api/progress/words')
-      .then(r => r.json())
+    getKnownWords()
       .then(words => setKnownWords(new Set(words)))
       .catch(() => {});
   }, []);
@@ -42,10 +36,7 @@ export default function WordsView() {
     if (off === 0) setLoading(true);
     else setLoadingMore(true);
     const order = sm === 'freq-asc' ? 'asc' : 'desc';
-    const params = new URLSearchParams({ sort: 'freq', order, limit: String(PAGE_SIZE), offset: String(off) });
-    if (query) params.set('q', query);
-    fetch(`/api/words?${params}`)
-      .then(r => r.json())
+    getWords({ sort: 'freq', order, limit: PAGE_SIZE, offset: off, q: query || undefined })
       .then(data => {
         setWords(prev => append ? [...prev, ...data.words] : data.words);
         setTotal(data.total);
@@ -87,11 +78,7 @@ export default function WordsView() {
       return next;
     });
     // Sync to backend
-    fetch('/api/progress/words', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ word, known }),
-    }).catch(() => {});
+    setWordKnown(word, known).catch(() => {});
   };
 
   const handlePlayAt = (lessonId: string, lessonTitle: string, word: string, time: number) => {

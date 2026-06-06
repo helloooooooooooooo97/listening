@@ -89,3 +89,19 @@ Total files to convert: 27
 
 [20/27] Converting: ielts-c16-t3 (Cambridge IELTS 16 Listening Test 3) ...
   Start: Sat Jun  6 15:59:46 CST 2026
+  ✓ Done in 4m 43s: ielts-c16-t3
+
+[21/27] Converting: ielts-c16-t4 (Cambridge IELTS 16 Listening Test 4) ...
+  Start: Sat Jun  6 16:04:29 CST 2026
+  ✓ Done in 4m 15s: ielts-c16-t4
+
+[22/27] Converting: ielts-c17-t2 (Cambridge IELTS 17 Listening Test 2) ...
+  Start: Sat Jun  6 16:08:44 CST 2026
+  ✓ Done in 3m 56s: ielts-c17-t2
+
+[23/27] Converting: ielts-c17-t4 (Cambridge IELTS 17 Listening Test 4) ...
+  Start: Sat Jun  6 16:12:40 CST 2026
+  ✓ Done in 4m 45s: ielts-c17-t4
+
+[24/27] Converting: ielts-c18-t2 (Cambridge IELTS 18 Listening Test 2) ...
+  Start: Sat Jun  6 16:17:25 CST 2026

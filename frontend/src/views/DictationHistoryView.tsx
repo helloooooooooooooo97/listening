@@ -2,24 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { HiPencilSquare, HiPlay, HiChevronDown, HiChevronUp } from 'react-icons/hi2';
 import type { ListeningLesson, AudioClip } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
-
-interface DictRecord {
-  id: number;
-  sentence_index: number;
-  score: number;
-  user_input: string;
-  expected_text: string;
-  created_at: string;
-}
-
-interface AudioGroup {
-  audio_id: string;
-  audio_title: string;
-  avg_score: number;
-  total_sentences: number;
-  last_practiced: string;
-  records: DictRecord[];
-}
+import { getDictationRecords, getLessonById, type AudioGroup } from '../lib/api';
 
 export default function DictationHistoryView() {
   const [groups, setGroups] = useState<AudioGroup[]>([]);
@@ -33,8 +16,7 @@ export default function DictationHistoryView() {
   const playSentence = async (audioId: string, sentenceIndex: number) => {
     let lesson = audioCache.current[audioId];
     if (!lesson) {
-      const res = await fetch(`/api/lessons/${audioId}`);
-      lesson = await res.json();
+      lesson = await getLessonById(audioId);
       audioCache.current[audioId] = lesson;
     }
     const transcript = lesson.transcript;
@@ -59,8 +41,7 @@ export default function DictationHistoryView() {
   };
 
   useEffect(() => {
-    fetch('/api/stats/dictation-records?limit=500')
-      .then(r => r.json())
+    getDictationRecords(500)
       .then(data => {
         setGroups(data.audios || []);
         setLoading(false);
@@ -141,9 +122,8 @@ export default function DictationHistoryView() {
                     <button
                       onClick={e => {
                         e.stopPropagation();
-                        fetch(`/api/lessons/${g.audio_id}`)
-                          .then(r => r.json())
-                          .then((l: ListeningLesson) => playLesson(l));
+                        getLessonById(g.audio_id)
+                          .then((l) => playLesson(l));
                       }}
                       className="w-9 h-9 rounded-full flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.08] text-white/30 hover:text-white/60 transition-colors cursor-pointer flex-shrink-0"
                       title="播放此音频"

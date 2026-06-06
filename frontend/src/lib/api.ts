@@ -1,0 +1,192 @@
+/** Centralized API client — all fetch calls in one place with typed responses. */
+
+import type { AudioClip, LessonSummary, ListeningLesson } from '../types/lesson';
+
+// ── Helpers ──
+
+async function get<T>(url: string): Promise<T> {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(await r.text().catch(() => r.statusText));
+  return r.json();
+}
+
+async function post<T>(url: string, body: unknown): Promise<T> {
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!r.ok) throw new Error(await r.text().catch(() => r.statusText));
+  return r.json();
+}
+
+async function del(url: string): Promise<void> {
+  const r = await fetch(url, { method: 'DELETE' });
+  if (!r.ok) throw new Error(await r.text().catch(() => r.statusText));
+}
+
+// ── Lessons ──
+
+export function getLessons(): Promise<LessonSummary[]> {
+  return get<LessonSummary[]>('/api/lessons/');
+}
+
+export function getLessonById(id: string): Promise<ListeningLesson> {
+  return get<ListeningLesson>(`/api/lessons/${id}`);
+}
+
+export function getLessonStats(): Promise<{ lessonCount: number; totalSentences: number; uniqueWords: number }> {
+  return get('/api/lessons/stats');
+}
+
+// ── Clips ──
+
+export function getClips(): Promise<AudioClip[]> {
+  return get<AudioClip[]>('/api/clips/');
+}
+
+export function createClip(clip: {
+  audio_id: string;
+  audio_title: string;
+  start_time: number;
+  end_time: number;
+  text: string;
+  note: string;
+}): Promise<AudioClip> {
+  return post<AudioClip>('/api/clips/', clip);
+}
+
+export function deleteClip(id: string): Promise<void> {
+  return del(`/api/clips/${id}`);
+}
+
+// ── Progress ──
+
+export function postDictation(data: {
+  audio_id: string;
+  audio_title: string;
+  sentence_index: number;
+  score: number;
+  user_input: string;
+  expected_text: string;
+}): Promise<{ ok: boolean }> {
+  return post('/api/progress/dictation', data);
+}
+
+export function postPlayHistory(data: {
+  audio_id: string;
+  audio_title: string;
+  duration_seconds: number;
+}): Promise<{ ok: boolean }> {
+  return post('/api/progress/play-history', data);
+}
+
+export function getKnownWords(): Promise<string[]> {
+  return get<string[]>('/api/progress/words');
+}
+
+export function setWordKnown(word: string, known: boolean): Promise<{ ok: boolean }> {
+  return post('/api/progress/words', { word, known });
+}
+
+// ── Stats ──
+
+export interface Overview {
+  total_listening_seconds: number;
+  completed_audios: number;
+  total_audios: number;
+  avg_dictation_score: number;
+  dictation_total_sentences: number;
+  words_mastered: number;
+  total_words: number;
+  clips_count: number;
+  streak_days: number;
+  today_seconds: number;
+  yesterday_seconds: number;
+}
+
+export function getOverview(): Promise<Overview> {
+  return get<Overview>('/api/stats/overview');
+}
+
+export interface DailyDay { date: string; seconds: number; }
+
+export function getDailyTime(days: number): Promise<{ days: DailyDay[] }> {
+  return get(`/api/stats/daily-time?days=${days}`);
+}
+
+export interface DictationScore { date: string; audio: string; score: number; }
+
+export function getDictationTrend(limit = 20): Promise<{ scores: DictationScore[] }> {
+  return get(`/api/stats/dictation-trend?limit=${limit}`);
+}
+
+export interface DictRecord {
+  id: number;
+  sentence_index: number;
+  score: number;
+  user_input: string;
+  expected_text: string;
+  created_at: string;
+}
+
+export interface AudioGroup {
+  audio_id: string;
+  audio_title: string;
+  avg_score: number;
+  total_sentences: number;
+  last_practiced: string;
+  records: DictRecord[];
+}
+
+export function getDictationRecords(limit = 500): Promise<{ audios: AudioGroup[] }> {
+  return get(`/api/stats/dictation-records?limit=${limit}`);
+}
+
+export interface AudioProgress {
+  id: string;
+  title: string;
+  completed: boolean;
+  last_position: number;
+  total_seconds: number;
+  dictation_score: number | null;
+}
+
+export function getAudioProgress(): Promise<{ audios: AudioProgress[] }> {
+  return get('/api/stats/audio-progress');
+}
+
+export interface Activity {
+  type: string;
+  time: string;
+  detail: string;
+}
+
+export function getRecentActivity(limit = 15): Promise<{ activities: Activity[] }> {
+  return get(`/api/stats/recent-activity?limit=${limit}`);
+}
+
+// ── Words ──
+
+export interface WordItem {
+  word: string;
+  count: number;
+  lessons: { id: string; title: string; occurrences: number[] }[];
+}
+
+export function getWords(params: {
+  q?: string;
+  sort?: string;
+  order?: string;
+  limit?: number;
+  offset?: number;
+} = {}): Promise<{ total: number; words: WordItem[] }> {
+  const sp = new URLSearchParams();
+  if (params.q) sp.set('q', params.q);
+  if (params.sort) sp.set('sort', params.sort);
+  if (params.order) sp.set('order', params.order);
+  if (params.limit) sp.set('limit', String(params.limit));
+  if (params.offset) sp.set('offset', String(params.offset));
+  const qs = sp.toString();
+  return get(`/api/words${qs ? `?${qs}` : ''}`);
+}

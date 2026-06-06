@@ -1,6 +1,7 @@
 import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock } from 'react-icons/hi2';
-import type { AudioClip, LessonSummary, ListeningLesson } from '../types/lesson';
+import type { AudioClip, LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
+import { getLessonById } from '../lib/api';
 
 interface Props {
   search: string;
@@ -62,7 +63,7 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
           {fL.length===0 ? <p className="text-white/15 text-sm py-4">{q?'无匹配音频':'暂无音频'}</p> : (
             <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
               {fL.slice(0,6).map(l=>(
-                <div key={l.id} onClick={()=>fetch(`/api/lessons/${l.id}`).then(r=>r.json()).then((d:ListeningLesson)=>playLesson(d))}
+                <div key={l.id} onClick={()=>getLessonById(l.id).then(d=>playLesson(d))}
                   className="group cursor-pointer rounded-lg p-2 transition-all duration-200 hover:bg-white/[0.04]">
                   <div className="w-full aspect-square rounded-md flex items-center justify-center mb-2" style={{background:'linear-gradient(135deg,#2a1020,#1a0a10)'}}>
                     <span className="text-white/20 group-hover:text-white/40 transition-colors"><HiMusicalNote size={20}/></span>

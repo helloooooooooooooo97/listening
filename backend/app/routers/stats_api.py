@@ -23,38 +23,38 @@ def overview():
     words_mastered = conn.execute("SELECT COUNT(*) FROM word_progress WHERE known=1").fetchone()[0]
     clips_count = conn.execute("SELECT COUNT(*) FROM clips").fetchone()[0]
 
-    # Today
+    # Today & yesterday
     today = datetime.now().strftime("%Y-%m-%d")
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     today_sec = conn.execute(
         "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at)=?", [today]
     ).fetchone()[0]
-
-    # Yesterday for comparison
-    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     yesterday_sec = conn.execute(
         "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at)=?", [yesterday]
     ).fetchone()[0]
 
-    # Streak
+    # Streak — single query for all active dates
+    active_dates = set()
+    rows = conn.execute(
+        "SELECT DISTINCT date(played_at) FROM play_history WHERE date(played_at) > date('now', '-365 days')"
+    ).fetchall()
+    for r in rows:
+        active_dates.add(r[0])
+
     streak = 0
     d = datetime.now()
-    while True:
-        day = d.strftime("%Y-%m-%d")
-        sec = conn.execute("SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at)=?", [day]).fetchone()[0]
-        if sec > 0:
-            streak += 1
-            d -= timedelta(days=1)
-        else:
-            break
+    while d.strftime("%Y-%m-%d") in active_dates:
+        streak += 1
+        d -= timedelta(days=1)
 
+    # Total words — from occurrences table if populated, else scan lesson JSONs
     total_words = 0
     try:
-        wc = conn.execute("SELECT COUNT(*) FROM word_occurrences").fetchone()[0]
+        wc = conn.execute("SELECT COUNT(DISTINCT word) FROM word_occurrences").fetchone()[0]
         if wc > 0:
             total_words = wc
     except Exception:
         pass
-    # Fallback: count unique words from audio files if occurrences table empty
     if total_words == 0:
         try:
             from services import LESSONS_DIR, _load_lesson
@@ -67,12 +67,10 @@ def overview():
         except Exception:
             pass
 
-    conn.close()
-
     return {
         "total_listening_seconds": total_sec,
         "completed_audios": completed,
-        "total_audios": max(total_audios, 16),
+        "total_audios": max(total_audios, len(list(LESSONS_DIR.glob("*.json")))) if 'LESSONS_DIR' in dir() else max(total_audios, 0),
         "avg_dictation_score": round(avg_score, 1),
         "dictation_total_sentences": dict_sentences,
         "words_mastered": words_mastered,
@@ -95,7 +93,6 @@ def daily_time(days: int = Query(default=7, ge=1, le=90)):
             "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at)=?", [day]
         ).fetchone()[0]
         result.append({"date": day, "seconds": sec})
-    conn.close()
     return {"days": result}
 
 
@@ -106,22 +103,20 @@ def dictation_trend(limit: int = Query(default=20, ge=1, le=100)):
     rows = conn.execute(
         "SELECT audio_title, score, created_at FROM dictation_history ORDER BY created_at DESC LIMIT ?", [limit]
     ).fetchall()
-    conn.close()
     return {"scores": [{"date": r["created_at"][:10], "audio": r["audio_title"], "score": r["score"]} for r in rows][::-1]}
 
 
 @router.get("/dictation-records")
 def dictation_records(limit: int = Query(default=100, ge=1, le=500)):
-    """Detailed dictation records grouped by audio for the side panel."""
+    """Detailed dictation records grouped by audio."""
     conn = get_conn()
     rows = conn.execute(
         "SELECT id, audio_id, audio_title, sentence_index, score, user_input, expected_text, created_at "
         "FROM dictation_history ORDER BY created_at DESC LIMIT ?", [limit]
     ).fetchall()
-    conn.close()
 
     # Group by audio
-    groups: dict[str, list] = {}
+    groups: dict[str, dict] = {}
     for r in rows:
         key = f"{r['audio_id']}|{r['audio_title']}"
         if key not in groups:
@@ -135,7 +130,6 @@ def dictation_records(limit: int = Query(default=100, ge=1, le=500)):
             "created_at": r["created_at"],
         })
 
-    # Calculate average per audio and sort by most recent
     result = []
     for g in groups.values():
         scores = [r["score"] for r in g["records"]]
@@ -153,7 +147,6 @@ def audio_progress():
     """Audio completion progress list."""
     conn = get_conn()
     rows = conn.execute("SELECT * FROM audio_progress ORDER BY updated_at DESC").fetchall()
-    conn.close()
     return {
         "audios": [
             {
@@ -174,7 +167,6 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
     conn = get_conn()
     activities = []
 
-    # Play history
     plays = conn.execute(
         "SELECT audio_title, duration_seconds, played_at FROM play_history ORDER BY played_at DESC LIMIT ?", [limit]
     ).fetchall()
@@ -184,7 +176,6 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
             "detail": f"学习了 {r['audio_title']} ({int(r['duration_seconds'])}秒)",
         })
 
-    # Dictation
     dicts = conn.execute(
         "SELECT audio_title, score, created_at FROM dictation_history ORDER BY created_at DESC LIMIT ?", [limit]
     ).fetchall()
@@ -194,7 +185,6 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
             "detail": f"完成听写 {r['audio_title']} ({r['score']}%)",
         })
 
-    # Clips
     clip_rows = conn.execute(
         "SELECT audio_title, text, created_at FROM clips ORDER BY created_at DESC LIMIT ?", [limit]
     ).fetchall()
@@ -204,7 +194,6 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
             "detail": f"收藏片段: {r['text'][:40]}...",
         })
 
-    # Word progress
     words = conn.execute(
         "SELECT word, reviewed_at FROM word_progress WHERE known=1 ORDER BY reviewed_at DESC LIMIT ?", [limit]
     ).fetchall()
@@ -214,8 +203,5 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
             "detail": f"掌握单词 '{r['word']}'",
         })
 
-    conn.close()
-
-    # Sort by time desc
     activities.sort(key=lambda x: x["time"], reverse=True)
     return {"activities": activities[:limit]}
