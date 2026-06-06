@@ -1,0 +1,1320 @@
+{
+  "id": "north-wind-sun",
+  "title": "The North Wind and The Sun",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 78.541,
+  "audioFileName": "north-wind-sun.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.203,
+      "end": 2.303,
+      "text": "This is a Libra-Vox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 2.863,
+      "end": 5.584,
+      "text": "All Libra-Vox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 6.264,
+      "end": 12.225,
+      "text": "For more information, or to volunteer, please visit librivox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 13.685,
+      "end": 14.786,
+      "text": "Aesip's Fables.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 15.786,
+      "end": 17.566,
+      "text": "The North Wind and the Sun.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 19.586,
+      "end": 25.427,
+      "text": "A dispute arose between the North Wind and the Sun, each claiming that he was stronger than the other.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 26.328,
+      "end": 29.108,
+      "text": "At last they agreed to try their powers upon a traveler.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 29.673,
+      "end": 32.196,
+      "text": "to see which could soon strip him of his cloak.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 33.177,
+      "end": 46.672,
+      "text": "The Northwind had the first try, and gathering up all his force for the attack, he came whirling furiously down upon the man, and caught up his cloak as though he would rest it from him by one single effort.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 47.588,
+      "end": 51.469,
+      "text": "But the harder he blew, the more closely the man wrapped it round himself.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 52.049,
+      "end": 53.589,
+      "text": "Then came the turn of the sun.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 54.23,
+      "end": 61.371,
+      "text": "At first he beamed gently upon the traveler, who soon unclassed his cloak, and walked on with it hanging loosely about his shoulders.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 62.311,
+      "end": 71.834,
+      "text": "Then he shone forth in his full strength, and the man, before he had gone many steps, was glad to throw his cloak right off and complete his journey more lightly clad.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 72.834,
+      "end": 74.994,
+      "text": "Persuasion is better than force.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 76.015,
+      "end": 77.355,
+      "text": "End of the North Wind",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 77.976,
+      "end": 78.541,
+      "text": "and the sun.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.203,
+      "end": 0.483
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.843,
+      "end": 0.943
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 0.983,
+      "end": 1.003
+    },
+    {
+      "id": "w-0003",
+      "text": "Libra-Vox",
+      "start": 1.083,
+      "end": 1.723
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 1.763,
+      "end": 2.303
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 2.863,
+      "end": 3.003
+    },
+    {
+      "id": "w-0006",
+      "text": "Libra-Vox",
+      "start": 3.063,
+      "end": 3.644
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 3.664,
+      "end": 4.224
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.404,
+      "end": 4.504
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.524,
+      "end": 4.584
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 4.624,
+      "end": 4.704
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 4.784,
+      "end": 5.124
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.164,
+      "end": 5.584
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.264,
+      "end": 6.404
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.464,
+      "end": 6.684
+    },
+    {
+      "id": "w-0015",
+      "text": "information,",
+      "start": 6.744,
+      "end": 7.444
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.944,
+      "end": 8.044
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.064,
+      "end": 8.104
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.324,
+      "end": 9.005
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.545,
+      "end": 9.845
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.905,
+      "end": 10.285
+    },
+    {
+      "id": "w-0021",
+      "text": "librivox.org.",
+      "start": 10.625,
+      "end": 12.225
+    },
+    {
+      "id": "w-0022",
+      "text": "Aesip's",
+      "start": 13.685,
+      "end": 14.065
+    },
+    {
+      "id": "w-0023",
+      "text": "Fables.",
+      "start": 14.245,
+      "end": 14.786
+    },
+    {
+      "id": "w-0024",
+      "text": "The",
+      "start": 15.786,
+      "end": 15.886
+    },
+    {
+      "id": "w-0025",
+      "text": "North",
+      "start": 15.946,
+      "end": 16.226
+    },
+    {
+      "id": "w-0026",
+      "text": "Wind",
+      "start": 16.326,
+      "end": 16.626
+    },
+    {
+      "id": "w-0027",
+      "text": "and",
+      "start": 16.986,
+      "end": 17.106
+    },
+    {
+      "id": "w-0028",
+      "text": "the",
+      "start": 17.126,
+      "end": 17.186
+    },
+    {
+      "id": "w-0029",
+      "text": "Sun.",
+      "start": 17.266,
+      "end": 17.566
+    },
+    {
+      "id": "w-0030",
+      "text": "A",
+      "start": 19.586,
+      "end": 19.626
+    },
+    {
+      "id": "w-0031",
+      "text": "dispute",
+      "start": 19.686,
+      "end": 20.246
+    },
+    {
+      "id": "w-0032",
+      "text": "arose",
+      "start": 20.366,
+      "end": 20.787
+    },
+    {
+      "id": "w-0033",
+      "text": "between",
+      "start": 20.907,
+      "end": 21.247
+    },
+    {
+      "id": "w-0034",
+      "text": "the",
+      "start": 21.267,
+      "end": 21.327
+    },
+    {
+      "id": "w-0035",
+      "text": "North",
+      "start": 21.407,
+      "end": 21.667
+    },
+    {
+      "id": "w-0036",
+      "text": "Wind",
+      "start": 21.727,
+      "end": 21.947
+    },
+    {
+      "id": "w-0037",
+      "text": "and",
+      "start": 22.007,
+      "end": 22.087
+    },
+    {
+      "id": "w-0038",
+      "text": "the",
+      "start": 22.127,
+      "end": 22.187
+    },
+    {
+      "id": "w-0039",
+      "text": "Sun,",
+      "start": 22.247,
+      "end": 22.527
+    },
+    {
+      "id": "w-0040",
+      "text": "each",
+      "start": 23.247,
+      "end": 23.427
+    },
+    {
+      "id": "w-0041",
+      "text": "claiming",
+      "start": 23.507,
+      "end": 23.927
+    },
+    {
+      "id": "w-0042",
+      "text": "that",
+      "start": 23.967,
+      "end": 24.067
+    },
+    {
+      "id": "w-0043",
+      "text": "he",
+      "start": 24.127,
+      "end": 24.187
+    },
+    {
+      "id": "w-0044",
+      "text": "was",
+      "start": 24.227,
+      "end": 24.347
+    },
+    {
+      "id": "w-0045",
+      "text": "stronger",
+      "start": 24.407,
+      "end": 24.827
+    },
+    {
+      "id": "w-0046",
+      "text": "than",
+      "start": 24.867,
+      "end": 25.007
+    },
+    {
+      "id": "w-0047",
+      "text": "the",
+      "start": 25.027,
+      "end": 25.127
+    },
+    {
+      "id": "w-0048",
+      "text": "other.",
+      "start": 25.207,
+      "end": 25.427
+    },
+    {
+      "id": "w-0049",
+      "text": "At",
+      "start": 26.328,
+      "end": 26.408
+    },
+    {
+      "id": "w-0050",
+      "text": "last",
+      "start": 26.448,
+      "end": 26.728
+    },
+    {
+      "id": "w-0051",
+      "text": "they",
+      "start": 26.768,
+      "end": 26.908
+    },
+    {
+      "id": "w-0052",
+      "text": "agreed",
+      "start": 26.968,
+      "end": 27.308
+    },
+    {
+      "id": "w-0053",
+      "text": "to",
+      "start": 27.368,
+      "end": 27.428
+    },
+    {
+      "id": "w-0054",
+      "text": "try",
+      "start": 27.488,
+      "end": 27.668
+    },
+    {
+      "id": "w-0055",
+      "text": "their",
+      "start": 27.708,
+      "end": 27.848
+    },
+    {
+      "id": "w-0056",
+      "text": "powers",
+      "start": 27.888,
+      "end": 28.248
+    },
+    {
+      "id": "w-0057",
+      "text": "upon",
+      "start": 28.308,
+      "end": 28.528
+    },
+    {
+      "id": "w-0058",
+      "text": "a",
+      "start": 28.568,
+      "end": 28.608
+    },
+    {
+      "id": "w-0059",
+      "text": "traveler.",
+      "start": 28.668,
+      "end": 29.108
+    },
+    {
+      "id": "w-0060",
+      "text": "to",
+      "start": 29.673,
+      "end": 29.753
+    },
+    {
+      "id": "w-0061",
+      "text": "see",
+      "start": 29.793,
+      "end": 29.933
+    },
+    {
+      "id": "w-0062",
+      "text": "which",
+      "start": 29.993,
+      "end": 30.214
+    },
+    {
+      "id": "w-0063",
+      "text": "could",
+      "start": 30.274,
+      "end": 30.434
+    },
+    {
+      "id": "w-0064",
+      "text": "soon",
+      "start": 30.514,
+      "end": 30.854
+    },
+    {
+      "id": "w-0065",
+      "text": "strip",
+      "start": 30.935,
+      "end": 31.235
+    },
+    {
+      "id": "w-0066",
+      "text": "him",
+      "start": 31.295,
+      "end": 31.415
+    },
+    {
+      "id": "w-0067",
+      "text": "of",
+      "start": 31.535,
+      "end": 31.615
+    },
+    {
+      "id": "w-0068",
+      "text": "his",
+      "start": 31.655,
+      "end": 31.775
+    },
+    {
+      "id": "w-0069",
+      "text": "cloak.",
+      "start": 31.856,
+      "end": 32.196
+    },
+    {
+      "id": "w-0070",
+      "text": "The",
+      "start": 33.177,
+      "end": 33.257
+    },
+    {
+      "id": "w-0071",
+      "text": "Northwind",
+      "start": 33.297,
+      "end": 33.878
+    },
+    {
+      "id": "w-0072",
+      "text": "had",
+      "start": 33.938,
+      "end": 34.058
+    },
+    {
+      "id": "w-0073",
+      "text": "the",
+      "start": 34.098,
+      "end": 34.178
+    },
+    {
+      "id": "w-0074",
+      "text": "first",
+      "start": 34.218,
+      "end": 34.499
+    },
+    {
+      "id": "w-0075",
+      "text": "try,",
+      "start": 34.519,
+      "end": 34.959
+    },
+    {
+      "id": "w-0076",
+      "text": "and",
+      "start": 35.56,
+      "end": 35.68
+    },
+    {
+      "id": "w-0077",
+      "text": "gathering",
+      "start": 35.74,
+      "end": 36.281
+    },
+    {
+      "id": "w-0078",
+      "text": "up",
+      "start": 36.381,
+      "end": 36.481
+    },
+    {
+      "id": "w-0079",
+      "text": "all",
+      "start": 36.601,
+      "end": 36.741
+    },
+    {
+      "id": "w-0080",
+      "text": "his",
+      "start": 36.781,
+      "end": 36.901
+    },
+    {
+      "id": "w-0081",
+      "text": "force",
+      "start": 36.961,
+      "end": 37.202
+    },
+    {
+      "id": "w-0082",
+      "text": "for",
+      "start": 37.222,
+      "end": 37.322
+    },
+    {
+      "id": "w-0083",
+      "text": "the",
+      "start": 37.342,
+      "end": 37.442
+    },
+    {
+      "id": "w-0084",
+      "text": "attack,",
+      "start": 37.482,
+      "end": 37.842
+    },
+    {
+      "id": "w-0085",
+      "text": "he",
+      "start": 38.263,
+      "end": 38.343
+    },
+    {
+      "id": "w-0086",
+      "text": "came",
+      "start": 38.403,
+      "end": 38.623
+    },
+    {
+      "id": "w-0087",
+      "text": "whirling",
+      "start": 38.703,
+      "end": 39.184
+    },
+    {
+      "id": "w-0088",
+      "text": "furiously",
+      "start": 39.424,
+      "end": 40.125
+    },
+    {
+      "id": "w-0089",
+      "text": "down",
+      "start": 40.185,
+      "end": 40.445
+    },
+    {
+      "id": "w-0090",
+      "text": "upon",
+      "start": 40.505,
+      "end": 40.746
+    },
+    {
+      "id": "w-0091",
+      "text": "the",
+      "start": 40.786,
+      "end": 40.866
+    },
+    {
+      "id": "w-0092",
+      "text": "man,",
+      "start": 40.906,
+      "end": 41.166
+    },
+    {
+      "id": "w-0093",
+      "text": "and",
+      "start": 41.847,
+      "end": 41.967
+    },
+    {
+      "id": "w-0094",
+      "text": "caught",
+      "start": 42.067,
+      "end": 42.327
+    },
+    {
+      "id": "w-0095",
+      "text": "up",
+      "start": 42.388,
+      "end": 42.468
+    },
+    {
+      "id": "w-0096",
+      "text": "his",
+      "start": 42.508,
+      "end": 42.628
+    },
+    {
+      "id": "w-0097",
+      "text": "cloak",
+      "start": 42.688,
+      "end": 42.968
+    },
+    {
+      "id": "w-0098",
+      "text": "as",
+      "start": 43.309,
+      "end": 43.389
+    },
+    {
+      "id": "w-0099",
+      "text": "though",
+      "start": 43.429,
+      "end": 43.609
+    },
+    {
+      "id": "w-0100",
+      "text": "he",
+      "start": 43.629,
+      "end": 43.709
+    },
+    {
+      "id": "w-0101",
+      "text": "would",
+      "start": 43.729,
+      "end": 43.889
+    },
+    {
+      "id": "w-0102",
+      "text": "rest",
+      "start": 43.969,
+      "end": 44.27
+    },
+    {
+      "id": "w-0103",
+      "text": "it",
+      "start": 44.31,
+      "end": 44.41
+    },
+    {
+      "id": "w-0104",
+      "text": "from",
+      "start": 44.47,
+      "end": 44.67
+    },
+    {
+      "id": "w-0105",
+      "text": "him",
+      "start": 44.75,
+      "end": 44.89
+    },
+    {
+      "id": "w-0106",
+      "text": "by",
+      "start": 45.191,
+      "end": 45.351
+    },
+    {
+      "id": "w-0107",
+      "text": "one",
+      "start": 45.491,
+      "end": 45.651
+    },
+    {
+      "id": "w-0108",
+      "text": "single",
+      "start": 45.831,
+      "end": 46.232
+    },
+    {
+      "id": "w-0109",
+      "text": "effort.",
+      "start": 46.372,
+      "end": 46.672
+    },
+    {
+      "id": "w-0110",
+      "text": "But",
+      "start": 47.588,
+      "end": 47.688
+    },
+    {
+      "id": "w-0111",
+      "text": "the",
+      "start": 47.728,
+      "end": 47.808
+    },
+    {
+      "id": "w-0112",
+      "text": "harder",
+      "start": 47.868,
+      "end": 48.168
+    },
+    {
+      "id": "w-0113",
+      "text": "he",
+      "start": 48.208,
+      "end": 48.288
+    },
+    {
+      "id": "w-0114",
+      "text": "blew,",
+      "start": 48.348,
+      "end": 48.628
+    },
+    {
+      "id": "w-0115",
+      "text": "the",
+      "start": 49.008,
+      "end": 49.108
+    },
+    {
+      "id": "w-0116",
+      "text": "more",
+      "start": 49.148,
+      "end": 49.308
+    },
+    {
+      "id": "w-0117",
+      "text": "closely",
+      "start": 49.388,
+      "end": 49.909
+    },
+    {
+      "id": "w-0118",
+      "text": "the",
+      "start": 49.969,
+      "end": 50.049
+    },
+    {
+      "id": "w-0119",
+      "text": "man",
+      "start": 50.089,
+      "end": 50.269
+    },
+    {
+      "id": "w-0120",
+      "text": "wrapped",
+      "start": 50.329,
+      "end": 50.589
+    },
+    {
+      "id": "w-0121",
+      "text": "it",
+      "start": 50.629,
+      "end": 50.669
+    },
+    {
+      "id": "w-0122",
+      "text": "round",
+      "start": 50.729,
+      "end": 50.989
+    },
+    {
+      "id": "w-0123",
+      "text": "himself.",
+      "start": 51.029,
+      "end": 51.469
+    },
+    {
+      "id": "w-0124",
+      "text": "Then",
+      "start": 52.049,
+      "end": 52.309
+    },
+    {
+      "id": "w-0125",
+      "text": "came",
+      "start": 52.369,
+      "end": 52.589
+    },
+    {
+      "id": "w-0126",
+      "text": "the",
+      "start": 52.629,
+      "end": 52.689
+    },
+    {
+      "id": "w-0127",
+      "text": "turn",
+      "start": 52.749,
+      "end": 53.009
+    },
+    {
+      "id": "w-0128",
+      "text": "of",
+      "start": 53.029,
+      "end": 53.089
+    },
+    {
+      "id": "w-0129",
+      "text": "the",
+      "start": 53.149,
+      "end": 53.209
+    },
+    {
+      "id": "w-0130",
+      "text": "sun.",
+      "start": 53.289,
+      "end": 53.589
+    },
+    {
+      "id": "w-0131",
+      "text": "At",
+      "start": 54.23,
+      "end": 54.31
+    },
+    {
+      "id": "w-0132",
+      "text": "first",
+      "start": 54.35,
+      "end": 54.61
+    },
+    {
+      "id": "w-0133",
+      "text": "he",
+      "start": 54.65,
+      "end": 54.73
+    },
+    {
+      "id": "w-0134",
+      "text": "beamed",
+      "start": 54.77,
+      "end": 55.01
+    },
+    {
+      "id": "w-0135",
+      "text": "gently",
+      "start": 55.09,
+      "end": 55.47
+    },
+    {
+      "id": "w-0136",
+      "text": "upon",
+      "start": 55.55,
+      "end": 55.77
+    },
+    {
+      "id": "w-0137",
+      "text": "the",
+      "start": 55.81,
+      "end": 55.87
+    },
+    {
+      "id": "w-0138",
+      "text": "traveler,",
+      "start": 55.91,
+      "end": 56.35
+    },
+    {
+      "id": "w-0139",
+      "text": "who",
+      "start": 56.79,
+      "end": 56.93
+    },
+    {
+      "id": "w-0140",
+      "text": "soon",
+      "start": 56.99,
+      "end": 57.21
+    },
+    {
+      "id": "w-0141",
+      "text": "unclassed",
+      "start": 57.27,
+      "end": 57.77
+    },
+    {
+      "id": "w-0142",
+      "text": "his",
+      "start": 57.81,
+      "end": 57.91
+    },
+    {
+      "id": "w-0143",
+      "text": "cloak,",
+      "start": 57.95,
+      "end": 58.25
+    },
+    {
+      "id": "w-0144",
+      "text": "and",
+      "start": 58.651,
+      "end": 58.751
+    },
+    {
+      "id": "w-0145",
+      "text": "walked",
+      "start": 58.791,
+      "end": 59.071
+    },
+    {
+      "id": "w-0146",
+      "text": "on",
+      "start": 59.251,
+      "end": 59.351
+    },
+    {
+      "id": "w-0147",
+      "text": "with",
+      "start": 59.411,
+      "end": 59.571
+    },
+    {
+      "id": "w-0148",
+      "text": "it",
+      "start": 59.591,
+      "end": 59.631
+    },
+    {
+      "id": "w-0149",
+      "text": "hanging",
+      "start": 59.711,
+      "end": 59.991
+    },
+    {
+      "id": "w-0150",
+      "text": "loosely",
+      "start": 60.031,
+      "end": 60.411
+    },
+    {
+      "id": "w-0151",
+      "text": "about",
+      "start": 60.471,
+      "end": 60.671
+    },
+    {
+      "id": "w-0152",
+      "text": "his",
+      "start": 60.731,
+      "end": 60.811
+    },
+    {
+      "id": "w-0153",
+      "text": "shoulders.",
+      "start": 60.871,
+      "end": 61.371
+    },
+    {
+      "id": "w-0154",
+      "text": "Then",
+      "start": 62.311,
+      "end": 62.511
+    },
+    {
+      "id": "w-0155",
+      "text": "he",
+      "start": 62.551,
+      "end": 62.652
+    },
+    {
+      "id": "w-0156",
+      "text": "shone",
+      "start": 62.712,
+      "end": 62.972
+    },
+    {
+      "id": "w-0157",
+      "text": "forth",
+      "start": 63.032,
+      "end": 63.292
+    },
+    {
+      "id": "w-0158",
+      "text": "in",
+      "start": 63.332,
+      "end": 63.372
+    },
+    {
+      "id": "w-0159",
+      "text": "his",
+      "start": 63.432,
+      "end": 63.552
+    },
+    {
+      "id": "w-0160",
+      "text": "full",
+      "start": 63.652,
+      "end": 63.952
+    },
+    {
+      "id": "w-0161",
+      "text": "strength,",
+      "start": 63.992,
+      "end": 64.332
+    },
+    {
+      "id": "w-0162",
+      "text": "and",
+      "start": 64.772,
+      "end": 64.852
+    },
+    {
+      "id": "w-0163",
+      "text": "the",
+      "start": 64.892,
+      "end": 64.952
+    },
+    {
+      "id": "w-0164",
+      "text": "man,",
+      "start": 65.012,
+      "end": 65.272
+    },
+    {
+      "id": "w-0165",
+      "text": "before",
+      "start": 65.632,
+      "end": 65.912
+    },
+    {
+      "id": "w-0166",
+      "text": "he",
+      "start": 65.952,
+      "end": 65.992
+    },
+    {
+      "id": "w-0167",
+      "text": "had",
+      "start": 66.032,
+      "end": 66.112
+    },
+    {
+      "id": "w-0168",
+      "text": "gone",
+      "start": 66.152,
+      "end": 66.352
+    },
+    {
+      "id": "w-0169",
+      "text": "many",
+      "start": 66.392,
+      "end": 66.612
+    },
+    {
+      "id": "w-0170",
+      "text": "steps,",
+      "start": 66.672,
+      "end": 67.013
+    },
+    {
+      "id": "w-0171",
+      "text": "was",
+      "start": 67.453,
+      "end": 67.593
+    },
+    {
+      "id": "w-0172",
+      "text": "glad",
+      "start": 67.653,
+      "end": 67.973
+    },
+    {
+      "id": "w-0173",
+      "text": "to",
+      "start": 68.013,
+      "end": 68.093
+    },
+    {
+      "id": "w-0174",
+      "text": "throw",
+      "start": 68.133,
+      "end": 68.333
+    },
+    {
+      "id": "w-0175",
+      "text": "his",
+      "start": 68.393,
+      "end": 68.473
+    },
+    {
+      "id": "w-0176",
+      "text": "cloak",
+      "start": 68.533,
+      "end": 68.773
+    },
+    {
+      "id": "w-0177",
+      "text": "right",
+      "start": 68.853,
+      "end": 69.093
+    },
+    {
+      "id": "w-0178",
+      "text": "off",
+      "start": 69.253,
+      "end": 69.393
+    },
+    {
+      "id": "w-0179",
+      "text": "and",
+      "start": 69.753,
+      "end": 69.853
+    },
+    {
+      "id": "w-0180",
+      "text": "complete",
+      "start": 69.893,
+      "end": 70.233
+    },
+    {
+      "id": "w-0181",
+      "text": "his",
+      "start": 70.273,
+      "end": 70.353
+    },
+    {
+      "id": "w-0182",
+      "text": "journey",
+      "start": 70.413,
+      "end": 70.733
+    },
+    {
+      "id": "w-0183",
+      "text": "more",
+      "start": 70.773,
+      "end": 70.933
+    },
+    {
+      "id": "w-0184",
+      "text": "lightly",
+      "start": 70.993,
+      "end": 71.374
+    },
+    {
+      "id": "w-0185",
+      "text": "clad.",
+      "start": 71.434,
+      "end": 71.834
+    },
+    {
+      "id": "w-0186",
+      "text": "Persuasion",
+      "start": 72.834,
+      "end": 73.594
+    },
+    {
+      "id": "w-0187",
+      "text": "is",
+      "start": 73.774,
+      "end": 73.854
+    },
+    {
+      "id": "w-0188",
+      "text": "better",
+      "start": 73.934,
+      "end": 74.294
+    },
+    {
+      "id": "w-0189",
+      "text": "than",
+      "start": 74.354,
+      "end": 74.514
+    },
+    {
+      "id": "w-0190",
+      "text": "force.",
+      "start": 74.594,
+      "end": 74.994
+    },
+    {
+      "id": "w-0191",
+      "text": "End",
+      "start": 76.015,
+      "end": 76.235
+    },
+    {
+      "id": "w-0192",
+      "text": "of",
+      "start": 76.435,
+      "end": 76.535
+    },
+    {
+      "id": "w-0193",
+      "text": "the",
+      "start": 76.575,
+      "end": 76.675
+    },
+    {
+      "id": "w-0194",
+      "text": "North",
+      "start": 76.735,
+      "end": 77.015
+    },
+    {
+      "id": "w-0195",
+      "text": "Wind",
+      "start": 77.115,
+      "end": 77.355
+    },
+    {
+      "id": "w-0196",
+      "text": "and",
+      "start": 77.976,
+      "end": 78.077
+    },
+    {
+      "id": "w-0197",
+      "text": "the",
+      "start": 78.137,
+      "end": 78.218
+    },
+    {
+      "id": "w-0198",
+      "text": "sun.",
+      "start": 78.299,
+      "end": 78.541
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+# Python virtual environment
+.venv/
+.venv-whisperx/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/build/
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Audio files (large binary files — track separately if needed)
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.flac
+*.ogg
+*.wma
+
+# WhisperX / Model files
+*.bin
+*.pt
+*.onnx
+models/
+
+# Claude
+.claude/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log

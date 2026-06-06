@@ -1,0 +1,50 @@
+.PHONY: backend frontend dev build clean install
+
+# 默认目标：同时启动前后端
+dev: backend frontend
+
+# 启动后端 API 服务器
+backend:
+	@echo "🔧 启动后端 API → http://localhost:8000"
+	@echo "   API 文档 → http://localhost:8000/docs"
+	cd backend/app && NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 ../.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+# 启动前端开发服务器
+frontend:
+	@echo "🎨 启动前端 → http://localhost:5173"
+	cd frontend && NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1 npm run dev
+
+# 安装所有依赖
+install: install-backend install-frontend
+
+install-backend:
+	@echo "📦 安装后端依赖..."
+	python3 -m venv backend/.venv
+	backend/.venv/bin/pip install -r backend/requirements.txt
+
+install-frontend:
+	@echo "📦 安装前端依赖..."
+	cd frontend && npm install
+
+# 前端构建
+build:
+	@echo "🏗️  构建前端..."
+	cd frontend && npm run build
+
+# 清理构建产物
+clean:
+	@echo "🧹 清理..."
+	rm -rf frontend/dist
+	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null
+	find . -type f -name '*.pyc' -delete 2>/dev/null
+
+# 帮助
+help:
+	@echo "英语听力 App — 开发命令"
+	@echo ""
+	@echo "  make dev      同时启动后端和前端（默认）"
+	@echo "  make backend  仅启动后端 API"
+	@echo "  make frontend 仅启动前端"
+	@echo "  make install  安装所有依赖"
+	@echo "  make build    构建前端生产版本"
+	@echo "  make clean    清理构建产物"
