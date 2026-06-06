@@ -4,7 +4,7 @@ import { useSettingsStore } from './settingsStore';
 
 /* ── Singleton audio element ── */
 let _audio: HTMLAudioElement | null = null;
-function getAudio(): HTMLAudioElement {
+export function getAudio(): HTMLAudioElement {
   if (!_audio) {
     _audio = new Audio();
     _audio.preload = 'auto';
@@ -28,9 +28,26 @@ export function preloadLessonAudio(lessonIds: string[]) {
 
 /* ── Helpers ── */
 let _currentSrc = '';
+let _trackStart = 0;
+
+function flushTrack() {
+  if (_trackStart === 0) return;
+  const elapsed = Math.round((Date.now() - _trackStart) / 1000);
+  _trackStart = 0;
+  if (elapsed < 1) return;
+  const m = useAudioStore.getState().mode;
+  if (m.kind === 'lesson') {
+    fetch('/api/progress/play-history', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({audio_id:m.lesson.id,audio_title:m.lesson.title,duration_seconds:elapsed}),
+    }).catch(()=>{});
+  }
+}
+
 function switchSource(lessonId: string): boolean {
   const url = `/api/lessons/${lessonId}/audio`;
   if (_currentSrc === url) return false;
+  flushTrack();
   _currentSrc = url;
   getAudio().src = url;
   getAudio().load();
@@ -141,9 +158,18 @@ export const useAudioStore = create<AudioState>((set, get) => {
 
   audio.addEventListener('loadedmetadata', () => set({ duration: audio.duration, isLoading: false }));
   audio.addEventListener('canplay', () => set({ isLoading: false }));
-  audio.addEventListener('play', () => set({ isPlaying: true }));
-  audio.addEventListener('pause', () => set({ isPlaying: false }));
-  audio.addEventListener('ended', () => set({ isPlaying: false }));
+  audio.addEventListener('play', () => {
+    set({ isPlaying: true });
+    _trackStart = Date.now();
+  });
+  audio.addEventListener('pause', () => {
+    set({ isPlaying: false });
+    flushTrack();
+  });
+  audio.addEventListener('ended', () => {
+    set({ isPlaying: false });
+    flushTrack();
+  });
   let waitTimer: ReturnType<typeof setTimeout> | null = null;
   audio.addEventListener('waiting', () => {
     // Debounce: only show loading after 200ms of actual buffering

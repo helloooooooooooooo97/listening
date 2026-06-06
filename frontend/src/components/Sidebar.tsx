@@ -1,6 +1,6 @@
-import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag, HiCog6Tooth } from 'react-icons/hi2';
+import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag, HiCog6Tooth, HiChartBar, HiPencilSquare } from 'react-icons/hi2';
 
-export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'recent' | 'settings';
+export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'stats' | 'dictation' | 'recent' | 'settings';
 
 interface Props {
   activeSection: NavSection;
@@ -36,7 +36,7 @@ export default function Sidebar({ activeSection, onSectionChange, lessonCount, c
           className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${
             activeSection==='courses' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
           }`}>
-          <HiBookOpen size={15} /> 课程
+          <HiBookOpen size={15} /> 音频
           <span className="ml-auto text-[10px] text-white/20">{lessonCount}</span>
         </div>
         <div onClick={() => onSectionChange('clips')}
@@ -52,6 +52,18 @@ export default function Sidebar({ activeSection, onSectionChange, lessonCount, c
           }`}>
           <HiTag size={15} /> 单词
           <span className="ml-auto text-[10px] text-white/20">{wordCount}</span>
+        </div>
+        <div onClick={() => onSectionChange('stats')}
+          className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${
+            activeSection==='stats' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
+          }`}>
+          <HiChartBar size={15} /> 统计
+        </div>
+        <div onClick={() => onSectionChange('dictation')}
+          className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${
+            activeSection==='dictation' ? 'text-white bg-white/[0.08]' : 'text-white/45 hover:text-white/75'
+          }`}>
+          <HiPencilSquare size={15} /> 听写记录
         </div>
         <div onClick={() => onSectionChange('recent')}
           className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer transition-colors ${

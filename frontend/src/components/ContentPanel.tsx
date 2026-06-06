@@ -8,6 +8,8 @@ import WordsView from '../views/WordsView';
 import RecentView from '../views/RecentView';
 import DictationView from '../views/DictationView';
 import SettingsView from '../views/SettingsView';
+import StatsView from '../views/StatsView';
+import DictationHistoryView from '../views/DictationHistoryView';
 import type { NavSection } from './Sidebar';
 
 interface Props {
@@ -43,7 +45,11 @@ export default function ContentPanel({ activeSection, lessons, clips, onDeleteCl
     case 'clips':
       return <ClipsView clips={clips} onDeleteClip={onDeleteClip} />;
     case 'words':
-      return <WordsView lessons={lessons} />;
+      return <WordsView />;
+    case 'stats':
+      return <StatsView />;
+    case 'dictation':
+      return <DictationHistoryView />;
     case 'recent':
       return <RecentView lessons={lessons} />;
     case 'settings':

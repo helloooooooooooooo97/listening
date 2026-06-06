@@ -45,6 +45,7 @@ export interface LessonSummary {
   id: string;
   title: string;
   subtitle: string;
+  category: string;
   level: string;
   duration: number;
   audioFileName: string;

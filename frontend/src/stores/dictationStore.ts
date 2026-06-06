@@ -16,6 +16,9 @@ interface DictationState {
 
   start: () => void;
   nextSentence: () => void;
+  prevSentence: () => void;
+  goToSentence: (idx: number) => void;
+  skip: () => void;
   setInput: (v: string) => void;
   submit: (expectedWords: string[]) => void;
   reset: () => void;
@@ -32,6 +35,27 @@ export const useDictationStore = create<DictationState>((set, get) => ({
   start: () => set({ active: true, sentenceIndex: 0, results: [], scores: [], phase: 'typing', userInput: '' }),
 
   nextSentence: () => set(s => ({ sentenceIndex: s.sentenceIndex + 1, phase: 'typing', userInput: '', results: [] })),
+
+  prevSentence: () => set(s => {
+    if (s.sentenceIndex <= 0) return {};
+    // Remove last score when going back
+    const newScores = s.scores.slice(0, -1);
+    return { sentenceIndex: s.sentenceIndex - 1, phase: 'typing', userInput: '', results: [], scores: newScores };
+  }),
+
+  goToSentence: (idx: number) => set(s => {
+    // Keep scores only up to the sentences before the target
+    const newScores = s.scores.slice(0, idx);
+    return { sentenceIndex: idx, phase: 'typing', userInput: '', results: [], scores: newScores };
+  }),
+
+  skip: () => set(s => ({
+    scores: [...s.scores, 0],
+    sentenceIndex: s.sentenceIndex + 1,
+    phase: 'typing',
+    userInput: '',
+    results: [],
+  })),
 
   setInput: (v) => set({ userInput: v }),
 

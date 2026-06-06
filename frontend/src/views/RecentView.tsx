@@ -21,7 +21,7 @@ export default function RecentView({ lessons }: Props) {
           <div className="text-center py-16">
             <HiClock size={40} className="text-white/10 mx-auto mb-4"/>
             <p className="text-white/20 text-sm">还没有播放记录</p>
-            <p className="text-white/10 text-xs mt-1">选择课程开始播放后会自动记录</p>
+            <p className="text-white/10 text-xs mt-1">选择音频开始播放后会自动记录</p>
           </div>
         ) : (
           <div className="space-y-1">

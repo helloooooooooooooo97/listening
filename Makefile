@@ -1,4 +1,4 @@
-.PHONY: backend frontend dev build clean install
+.PHONY: backend frontend dev build clean clear install
 
 # 默认目标：同时启动前后端
 dev: backend frontend
@@ -38,6 +38,12 @@ clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null
 	find . -type f -name '*.pyc' -delete 2>/dev/null
 
+# 清空数据库（删除所有听写记录、播放历史、学习进度、片段收藏等）
+clear:
+	@echo "⚠️  即将清空数据库: backend/data/audio.db"
+	@rm -f backend/data/audio.db backend/data/app.db backend/data/english.db
+	@echo "✅ 数据库已删除，重启后端将自动重建空数据库"
+
 # 帮助
 help:
 	@echo "英语听力 App — 开发命令"
@@ -48,3 +54,4 @@ help:
 	@echo "  make install  安装所有依赖"
 	@echo "  make build    构建前端生产版本"
 	@echo "  make clean    清理构建产物"
+	@echo "  make clear    清空数据库（删除所有记录）"

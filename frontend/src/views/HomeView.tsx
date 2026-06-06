@@ -23,20 +23,24 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
   return (
     <div className="h-full flex flex-col bg-[#0a0a0b] overflow-hidden">
       <div className="flex-shrink-0 px-8 pt-12 pb-8" style={{ background: 'linear-gradient(180deg, #1a0a14 0%, #0d0d10 100%)' }}>
-        <h1 className="text-3xl font-extrabold text-white tracking-tight mb-2">欢迎回来</h1>
-        <p className="text-white/30 text-sm mb-6">继续你的英语听力练习</p>
-        <div className="relative max-w-xl">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20"><HiMagnifyingGlass size={16} /></span>
-          <input type="text" placeholder="全局搜索课程、片段..." value={search} onChange={e=>onSearchChange(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 text-[14px] bg-white/[0.06] border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#fa2d48]/30 text-white placeholder:text-white/20" />
+        <div className="flex items-end justify-between gap-8">
+          <div>
+            <h1 className="text-3xl font-extrabold text-white tracking-tight mb-2">欢迎回来</h1>
+            <p className="text-white/30 text-sm">继续你的英语听力练习</p>
+          </div>
+          <div className="relative w-80">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20"><HiMagnifyingGlass size={16} /></span>
+            <input type="text" placeholder="搜索音频、片段..." value={search} onChange={e=>onSearchChange(e.target.value)}
+              className="w-full pl-11 pr-4 py-3 text-[14px] bg-white/[0.06] border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#fa2d48]/30 text-white placeholder:text-white/20" />
+          </div>
         </div>
-        {q && <p className="text-[12px] text-white/30 mt-3">找到 {fL.length} 节课程 · {fC.length} 个片段</p>}
+        {q && <p className="text-[12px] text-white/30 mt-3">找到 {fL.length} 个音频 · {fC.length} 个片段</p>}
       </div>
       <div className="flex-1 overflow-y-auto px-8 py-6 space-y-8">
         {!q && (
           <div className="grid grid-cols-5 gap-4">
             {[
-              { label: '课程', value: lessons.length, icon: HiBookOpen, color: '#fa2d48' },
+              { label: '音频', value: lessons.length, icon: HiBookOpen, color: '#fa2d48' },
               { label: '片段', value: clips.length, icon: HiBookmark, color: '#10b981' },
               { label: '句子', value: lessons.reduce((a,l)=>a+l.sentenceCount,0), icon: HiClock, color: '#f59e0b' },
               { label: '单词', value: uniqueWords, icon: HiMagnifyingGlass, color: '#8b5cf6' },
@@ -53,9 +57,9 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
         )}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-white tracking-tight">课程</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">音频</h2>
           </div>
-          {fL.length===0 ? <p className="text-white/15 text-sm py-4">{q?'无匹配课程':'暂无课程'}</p> : (
+          {fL.length===0 ? <p className="text-white/15 text-sm py-4">{q?'无匹配音频':'暂无音频'}</p> : (
             <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
               {fL.slice(0,6).map(l=>(
                 <div key={l.id} onClick={()=>fetch(`/api/lessons/${l.id}`).then(r=>r.json()).then((d:ListeningLesson)=>playLesson(d))}

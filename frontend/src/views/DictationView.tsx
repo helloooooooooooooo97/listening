@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { HiCheck, HiXMark, HiPlay, HiArrowRight } from 'react-icons/hi2';
+import { useEffect, useRef, useState } from 'react';
+import { HiCheck, HiXMark, HiPlay, HiArrowRight, HiArrowLeft, HiForward, HiChevronDown } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useDictationStore } from '../stores/dictationStore';
 
@@ -19,6 +19,9 @@ export default function DictationView() {
   const setInput = useDictationStore(s => s.setInput);
   const submit = useDictationStore(s => s.submit);
   const nextSentence = useDictationStore(s => s.nextSentence);
+  const prevSentence = useDictationStore(s => s.prevSentence);
+  const goToSentence = useDictationStore(s => s.goToSentence);
+  const skip = useDictationStore(s => s.skip);
   const reset = useDictationStore(s => s.reset);
 
   if (!active || mode.kind !== 'lesson') return null;
@@ -57,8 +60,28 @@ export default function DictationView() {
   };
 
   const handleSubmit = () => {
-    if (userInput.trim()) submit(expectedWords);
+    if (userInput.trim()) {
+      submit(expectedWords);
+      // Track dictation to backend
+      const sentenceText = currentSentence.text;
+      const expectedJoined = expectedWords.join(' ');
+      setTimeout(() => {
+        const state = useDictationStore.getState();
+        const latestScore = state.scores[state.scores.length-1] || 0;
+        fetch('/api/progress/dictation', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({
+            audio_id: mode.lesson!.id, audio_title: mode.lesson!.title,
+            sentence_index: sentenceIndex, score: latestScore,
+            user_input: userInput.trim(),
+            expected_text: expectedJoined,
+          }),
+        }).catch(()=>{});
+      }, 100);
+    }
   };
+
+  const [showSelector, setShowSelector] = useState(false);
 
   // Auto-play once when entering a new sentence
   useEffect(() => {
@@ -86,12 +109,67 @@ export default function DictationView() {
       <div className="flex-shrink-0 px-6 py-4 flex items-center justify-between border-b border-white/[0.04]">
         <div>
           <h2 className="text-lg font-bold text-white">听写模式</h2>
-          <p className="text-white/25 text-xs mt-0.5">
-            第 {sentenceIndex + 1}/{sentences.length} 句
-            {avgScore !== null && <span className="ml-2">· 均分 {avgScore}%</span>}
-          </p>
+          {/* Sentence selector */}
+          <div className="relative mt-1">
+            <button
+              onClick={() => setShowSelector(!showSelector)}
+              className="flex items-center gap-1.5 text-white/35 hover:text-white/60 transition-colors cursor-pointer text-xs"
+            >
+              第 {sentenceIndex + 1}/{sentences.length} 句
+              <HiChevronDown size={10} className={`transition-transform ${showSelector ? 'rotate-180' : ''}`} />
+              {avgScore !== null && <span className="text-white/15">· 均分 {avgScore}%</span>}
+            </button>
+            {showSelector && (
+              <div className="absolute top-full left-0 mt-1 w-72 max-h-64 overflow-y-auto bg-[#1a1a1d] border border-white/[0.08] rounded-xl shadow-2xl z-50 py-1 animate-scale-in">
+                {sentences.map((s, i) => {
+                  const done = scores[i] !== undefined;
+                  const sScore = scores[i];
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => { goToSentence(i); setShowSelector(false); }}
+                      className={`w-full text-left px-4 py-2 text-xs flex items-center gap-3 transition-colors cursor-pointer ${
+                        i === sentenceIndex
+                          ? 'bg-[#fa2d48]/10 text-white'
+                          : 'text-white/40 hover:bg-white/[0.04] hover:text-white/70'
+                      }`}
+                    >
+                      <span className={`w-6 h-5 rounded flex items-center justify-center text-[10px] font-mono flex-shrink-0 ${
+                        done
+                          ? sScore! >= 80 ? 'bg-emerald-500/20 text-emerald-400' : sScore! >= 50 ? 'bg-amber-500/20 text-amber-400' : 'bg-red-500/20 text-red-400'
+                          : 'bg-white/[0.04] text-white/20'
+                      }`}>
+                        {done ? `${sScore}%` : i + 1}
+                      </span>
+                      <span className="truncate">{s.text.slice(0, 50)}{s.text.length > 50 ? '...' : ''}</span>
+                      {done && sScore! < 50 && <span className="ml-auto text-[10px] text-red-400/50">需复习</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
-        <button onClick={reset} className="px-3 py-1.5 text-xs text-white/40 hover:text-white/70 transition-colors cursor-pointer rounded-lg hover:bg-white/[0.04]">退出</button>
+        <div className="flex items-center gap-2">
+          {/* Sentence nav arrows */}
+          <button
+            onClick={prevSentence}
+            disabled={sentenceIndex <= 0}
+            className="w-7 h-7 rounded-lg flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-white/40 hover:text-white/70"
+            title="上一句"
+          >
+            <HiArrowLeft size={14} />
+          </button>
+          <button
+            onClick={nextSentence}
+            disabled={sentenceIndex >= sentences.length - 1}
+            className="w-7 h-7 rounded-lg flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-white/40 hover:text-white/70"
+            title="下一句"
+          >
+            <HiArrowRight size={14} />
+          </button>
+          <button onClick={reset} className="px-3 py-1.5 text-xs text-white/40 hover:text-white/70 transition-colors cursor-pointer rounded-lg hover:bg-white/[0.04]">退出</button>
+        </div>
       </div>
 
       <div className="flex-1 flex items-center justify-center px-8">
@@ -110,11 +188,18 @@ export default function DictationView() {
                 onKeyDown={e => { if (e.key === 'Enter') handleSubmit(); }}
                 placeholder="输入你听到的内容..."
                 className="w-full px-4 py-3 text-lg bg-white/[0.04] border border-white/[0.06] rounded-xl text-white placeholder:text-white/15 focus:outline-none focus:ring-2 focus:ring-[#fa2d48]/30"/>
-              <button onClick={handleSubmit}
-                disabled={!userInput.trim()}
-                className="mt-3 w-full py-2.5 bg-[#fa2d48] hover:bg-[#fb5b6e] disabled:bg-white/[0.04] disabled:text-white/15 text-white font-semibold rounded-full text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5">
-                提交 <HiArrowRight size={14}/>
-              </button>
+              <div className="mt-3 flex gap-2">
+                <button onClick={handleSubmit}
+                  disabled={!userInput.trim()}
+                  className="flex-1 py-2.5 bg-[#fa2d48] hover:bg-[#fb5b6e] disabled:bg-white/[0.04] disabled:text-white/15 text-white font-semibold rounded-full text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5">
+                  提交 <HiArrowRight size={14}/>
+                </button>
+                <button onClick={() => skip()}
+                  className="px-4 py-2.5 bg-white/[0.04] hover:bg-white/[0.08] text-white/30 hover:text-white/50 rounded-full text-sm transition-colors cursor-pointer flex items-center gap-1"
+                  title="跳过此句（记0分）">
+                  <HiForward size={14}/> 跳过
+                </button>
+              </div>
             </div>
           )}
 
@@ -140,7 +225,12 @@ export default function DictationView() {
                   </span>
                 ))}
               </div>
-              <div className="flex gap-3 justify-center">
+              <div className="flex gap-3 justify-center flex-wrap">
+                <button onClick={prevSentence}
+                  disabled={sentenceIndex <= 0}
+                  className="px-4 py-2 bg-white/[0.04] text-white/40 rounded-full text-sm hover:bg-white/[0.08] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer flex items-center gap-1.5">
+                  <HiArrowLeft size={14}/> 上一句
+                </button>
                 <button onClick={handlePlaySentence}
                   className="px-4 py-2 bg-white/[0.04] text-white/60 rounded-full text-sm hover:bg-white/[0.08] transition-colors cursor-pointer flex items-center gap-1.5">
                   <HiPlay size={14}/> 重听

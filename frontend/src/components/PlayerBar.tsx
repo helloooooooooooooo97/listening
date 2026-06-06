@@ -36,7 +36,7 @@ export default function PlayerBar() {
   const hasContent = mode.kind !== 'empty';
   const isWord = isC && mode.clip.note === 'word';
   const title = hasContent ? (isL ? mode.lesson.title : isWord ? mode.clip.text : `"${mode.clip.text}"`) : '未在播放';
-  const sub = hasContent ? (isL ? mode.lesson.subtitle : mode.clip.lessonTitle) : '选择课程开始练习';
+  const sub = hasContent ? (isL ? mode.lesson.subtitle : mode.clip.lessonTitle) : '选择音频开始练习';
   const cs = isC ? mode.clip.startTime : 0;
   const ce = isC ? mode.clip.endTime : dur;
   // Always show full audio progress

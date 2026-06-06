@@ -13,3 +13,79 @@ Total files to convert: 27
 ========================================
 [1/27] Converting: ielts-c09-t2 (Cambridge IELTS 09 Listening Test 2) ...
   Start: Sat Jun  6 14:06:16 CST 2026
+  ✓ Done in 4m 11s: ielts-c09-t2
+
+[2/27] Converting: ielts-c09-t3 (Cambridge IELTS 09 Listening Test 3) ...
+  Start: Sat Jun  6 14:10:27 CST 2026
+  ✓ Done in 4m 12s: ielts-c09-t3
+
+[3/27] Converting: ielts-c10-t1 (Cambridge IELTS 10 Listening Test 1) ...
+  Start: Sat Jun  6 14:14:39 CST 2026
+  ✓ Done in 4m 33s: ielts-c10-t1
+
+[4/27] Converting: ielts-c10-t2 (Cambridge IELTS 10 Listening Test 2) ...
+  Start: Sat Jun  6 14:19:12 CST 2026
+  ✓ Done in 5m 37s: ielts-c10-t2
+
+[5/27] Converting: ielts-c11-t1 (Cambridge IELTS 11 Listening Test 1) ...
+  Start: Sat Jun  6 14:24:49 CST 2026
+  ✓ Done in 7m 20s: ielts-c11-t1
+
+[6/27] Converting: ielts-c11-t3 (Cambridge IELTS 11 Listening Test 3) ...
+  Start: Sat Jun  6 14:32:09 CST 2026
+  ✓ Done in 6m 13s: ielts-c11-t3
+
+[7/27] Converting: ielts-c11-t4 (Cambridge IELTS 11 Listening Test 4) ...
+  Start: Sat Jun  6 14:38:22 CST 2026
+  ✓ Done in 7m 6s: ielts-c11-t4
+
+[8/27] Converting: ielts-c12-t1 (Cambridge IELTS 12 Listening Test 1) ...
+  Start: Sat Jun  6 14:45:28 CST 2026
+  ✓ Done in 5m 54s: ielts-c12-t1
+
+[9/27] Converting: ielts-c12-t2 (Cambridge IELTS 12 Listening Test 2) ...
+  Start: Sat Jun  6 14:51:22 CST 2026
+  ✓ Done in 6m 16s: ielts-c12-t2
+
+[10/27] Converting: ielts-c12-t3 (Cambridge IELTS 12 Listening Test 3) ...
+  Start: Sat Jun  6 14:57:38 CST 2026
+  ✓ Done in 6m 49s: ielts-c12-t3
+
+[11/27] Converting: ielts-c12-t4 (Cambridge IELTS 12 Listening Test 4) ...
+  Start: Sat Jun  6 15:04:27 CST 2026
+  ✓ Done in 8m 3s: ielts-c12-t4
+
+[12/27] Converting: ielts-c13-t3 (Cambridge IELTS 13 Listening Test 3) ...
+  Start: Sat Jun  6 15:12:30 CST 2026
+  ✓ Done in 5m 36s: ielts-c13-t3
+
+[13/27] Converting: ielts-c14-t1 (Cambridge IELTS 14 Listening Test 1) ...
+  Start: Sat Jun  6 15:18:06 CST 2026
+  ✓ Done in 7m 41s: ielts-c14-t1
+
+[14/27] Converting: ielts-c14-t2 (Cambridge IELTS 14 Listening Test 2) ...
+  Start: Sat Jun  6 15:25:47 CST 2026
+  ✓ Done in 9m 27s: ielts-c14-t2
+
+[15/27] Converting: ielts-c14-t3 (Cambridge IELTS 14 Listening Test 3) ...
+  Start: Sat Jun  6 15:35:14 CST 2026
+  ✓ Done in 4m 22s: ielts-c14-t3
+
+[16/27] Converting: ielts-c14-t4 (Cambridge IELTS 14 Listening Test 4) ...
+  Start: Sat Jun  6 15:39:36 CST 2026
+  ✓ Done in 5m 37s: ielts-c14-t4
+
+[17/27] Converting: ielts-c15-t2 (Cambridge IELTS 15 Listening Test 2) ...
+  Start: Sat Jun  6 15:45:13 CST 2026
+  ✓ Done in 5m 42s: ielts-c15-t2
+
+[18/27] Converting: ielts-c15-t3 (Cambridge IELTS 15 Listening Test 3) ...
+  Start: Sat Jun  6 15:50:55 CST 2026
+  ✓ Done in 4m 47s: ielts-c15-t3
+
+[19/27] Converting: ielts-c16-t1 (Cambridge IELTS 16 Listening Test 1) ...
+  Start: Sat Jun  6 15:55:42 CST 2026
+  ✓ Done in 4m 4s: ielts-c16-t1
+
+[20/27] Converting: ielts-c16-t3 (Cambridge IELTS 16 Listening Test 3) ...
+  Start: Sat Jun  6 15:59:46 CST 2026

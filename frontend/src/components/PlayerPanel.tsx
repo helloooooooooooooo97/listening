@@ -45,7 +45,7 @@ export default function PlayerPanel() {
             <HiMusicalNote size={36} />
           </div>
           <p className="text-white/80 text-xl font-bold tracking-tight">欢迎使用听力练习</p>
-          <p className="text-white/30 text-sm mt-2">从左侧选择课程</p>
+          <p className="text-white/30 text-sm mt-2">从左侧选择音频</p>
           <p className="text-white/15 text-xs mt-6">点击底部播放栏可展开歌词</p>
         </div>
       </div>
@@ -65,7 +65,7 @@ export default function PlayerPanel() {
               <HiMusicalNote size={56} />
             </div>
             <div className="flex-1 min-w-0 pb-1">
-              <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-2">课程</p>
+              <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] mb-2">音频</p>
               <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-tight">{lesson.title}</h1>
               <p className="text-sm text-white/40 mt-1.5">{lesson.subtitle}</p>
               <div className="flex items-center gap-3 mt-3">

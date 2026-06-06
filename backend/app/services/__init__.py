@@ -8,6 +8,15 @@ from models import LessonSummary, ListeningLesson
 LESSONS_DIR = Path(__file__).resolve().parent.parent / "data" / "lessons"
 
 
+def _derive_category(lesson: ListeningLesson) -> str:
+    sub = lesson.subtitle.lower()
+    if 'ielts' in sub or 'cambridge ielts' in sub:
+        return 'IELTS'
+    if 'aesop' in sub or 'fable' in sub or 'fable' in lesson.title.lower():
+        return "Aesop's Fables"
+    return 'Other'
+
+
 def list_lessons() -> list[LessonSummary]:
     """Return a summary list of all available lessons."""
     summaries: list[LessonSummary] = []
@@ -22,6 +31,7 @@ def list_lessons() -> list[LessonSummary]:
                     id=lesson.id,
                     title=lesson.title,
                     subtitle=lesson.subtitle,
+                    category=_derive_category(lesson),
                     level=lesson.level,
                     duration=lesson.duration,
                     audioFileName=lesson.audioFileName,
