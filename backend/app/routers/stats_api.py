@@ -5,12 +5,17 @@ from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Query
 
-from database import get_conn
+from database import get_conn, locked
+from services import LESSONS_DIR, _load_lesson
 
 router = APIRouter(prefix="/api/stats", tags=["stats"])
 
+# Count audio JSON files once at module load
+_audio_file_count: int = len(list(LESSONS_DIR.glob("*.json"))) if LESSONS_DIR.exists() else 0
+
 
 @router.get("/overview")
+@locked
 def overview():
     """Top-level stats cards."""
     conn = get_conn()
@@ -34,12 +39,10 @@ def overview():
     ).fetchone()[0]
 
     # Streak — single query for all active dates
-    active_dates = set()
     rows = conn.execute(
         "SELECT DISTINCT date(played_at) FROM play_history WHERE date(played_at) > date('now', '-365 days')"
     ).fetchall()
-    for r in rows:
-        active_dates.add(r[0])
+    active_dates = {r[0] for r in rows}
 
     streak = 0
     d = datetime.now()
@@ -47,7 +50,7 @@ def overview():
         streak += 1
         d -= timedelta(days=1)
 
-    # Total words — from occurrences table if populated, else scan lesson JSONs
+    # Total words — from occurrences table, else scan lesson JSONs
     total_words = 0
     try:
         wc = conn.execute("SELECT COUNT(DISTINCT word) FROM word_occurrences").fetchone()[0]
@@ -57,12 +60,7 @@ def overview():
         pass
     if total_words == 0:
         try:
-            from services import LESSONS_DIR, _load_lesson
-            all_w = set()
-            for f in LESSONS_DIR.glob("*.json"):
-                lesson = _load_lesson(f)
-                for w in lesson.words:
-                    all_w.add(w.text.strip().lower())
+            all_w = {w.text.strip().lower() for f in LESSONS_DIR.glob("*.json") for w in _load_lesson(f).words}
             total_words = len(all_w)
         except Exception:
             pass
@@ -70,7 +68,7 @@ def overview():
     return {
         "total_listening_seconds": total_sec,
         "completed_audios": completed,
-        "total_audios": max(total_audios, len(list(LESSONS_DIR.glob("*.json")))) if 'LESSONS_DIR' in dir() else max(total_audios, 0),
+        "total_audios": max(total_audios, _audio_file_count),
         "avg_dictation_score": round(avg_score, 1),
         "dictation_total_sentences": dict_sentences,
         "words_mastered": words_mastered,
@@ -83,6 +81,7 @@ def overview():
 
 
 @router.get("/daily-time")
+@locked
 def daily_time(days: int = Query(default=7, ge=1, le=90)):
     """Daily listening time for bar chart."""
     conn = get_conn()
@@ -97,6 +96,7 @@ def daily_time(days: int = Query(default=7, ge=1, le=90)):
 
 
 @router.get("/dictation-trend")
+@locked
 def dictation_trend(limit: int = Query(default=20, ge=1, le=100)):
     """Dictation score trend for line chart."""
     conn = get_conn()
@@ -107,6 +107,7 @@ def dictation_trend(limit: int = Query(default=20, ge=1, le=100)):
 
 
 @router.get("/dictation-records")
+@locked
 def dictation_records(limit: int = Query(default=100, ge=1, le=500)):
     """Detailed dictation records grouped by audio."""
     conn = get_conn()
@@ -143,6 +144,7 @@ def dictation_records(limit: int = Query(default=100, ge=1, le=500)):
 
 
 @router.get("/audio-progress")
+@locked
 def audio_progress():
     """Audio completion progress list."""
     conn = get_conn()
@@ -162,6 +164,7 @@ def audio_progress():
 
 
 @router.get("/recent-activity")
+@locked
 def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
     """Recent activity feed for timeline."""
     conn = get_conn()

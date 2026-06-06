@@ -4,7 +4,7 @@ from __future__ import annotations
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from database import get_conn
+from database import get_conn, locked
 
 router = APIRouter(prefix="/api/clips", tags=["clips"])
 
@@ -19,6 +19,7 @@ class ClipCreate(BaseModel):
 
 
 @router.get("/")
+@locked
 def list_clips():
     conn = get_conn()
     rows = conn.execute("SELECT * FROM clips ORDER BY created_at DESC").fetchall()
@@ -26,6 +27,7 @@ def list_clips():
 
 
 @router.post("/", status_code=201)
+@locked
 def create_clip(data: ClipCreate):
     conn = get_conn()
     cur = conn.execute(
@@ -38,6 +40,7 @@ def create_clip(data: ClipCreate):
 
 
 @router.delete("/{clip_id}")
+@locked
 def delete_clip(clip_id: int):
     conn = get_conn()
     conn.execute("DELETE FROM clips WHERE id=?", [clip_id])

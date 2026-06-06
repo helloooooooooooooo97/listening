@@ -1,9 +1,14 @@
-import { HiMinus, HiPlus, HiClock, HiSpeakerWave } from 'react-icons/hi2';
+import { HiMinus, HiPlus, HiClock, HiSpeakerWave, HiPlay, HiArrowPath } from 'react-icons/hi2';
 import { useSettingsStore } from '../stores/settingsStore';
+
+const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2.0];
+const LOOP_COUNTS = [1, 2, 3, 5, 8, 10];
 
 export default function SettingsView() {
   const settings = useSettingsStore(s => s.settings);
   const setOffset = useSettingsStore(s => s.setWordPlayOffset);
+  const setSpeed = useSettingsStore(s => s.setDefaultSpeed);
+  const setLoopCount = useSettingsStore(s => s.setDefaultLoopCount);
 
   return (
     <div className="h-full flex flex-col bg-[#0a0a0b] overflow-hidden">
@@ -11,7 +16,55 @@ export default function SettingsView() {
         <h1 className="text-2xl font-extrabold text-white tracking-tight">设置</h1>
       </div>
       <div className="flex-1 overflow-y-auto px-8 py-6">
-        <div className="max-w-lg space-y-6">
+        <div className="max-w-lg mx-auto space-y-6">
+
+          {/* Default playback speed */}
+          <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.03)' }}>
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <HiPlay size={16} className="text-white/30" />
+              默认播放速度
+            </h3>
+            <p className="text-[12px] text-white/30 mt-1 mb-4">播放片段、单词和听写句子时的默认速度</p>
+            <div className="flex items-center gap-1 flex-wrap">
+              {SPEEDS.map(s => (
+                <button
+                  key={s}
+                  onClick={() => setSpeed(s)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                    settings.defaultSpeed === s
+                      ? 'bg-[#fa2d48]/20 text-[#fa2d48]'
+                      : 'text-white/40 hover:bg-white/[0.04] hover:text-white/70'
+                  }`}
+                >
+                  {s}x
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Default loop count */}
+          <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.03)' }}>
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <HiArrowPath size={16} className="text-white/30" />
+              默认重复次数
+            </h3>
+            <p className="text-[12px] text-white/30 mt-1 mb-4">播放片段、单词和听写句子时的默认循环次数</p>
+            <div className="flex items-center gap-1 flex-wrap">
+              {LOOP_COUNTS.map(n => (
+                <button
+                  key={n}
+                  onClick={() => setLoopCount(n)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                    settings.defaultLoopCount === n
+                      ? 'bg-[#fa2d48]/20 text-[#fa2d48]'
+                      : 'text-white/40 hover:bg-white/[0.04] hover:text-white/70'
+                  }`}
+                >
+                  {n}次
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Word playback offset */}
           <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.03)' }}>

@@ -4,13 +4,22 @@ const KEY = 'playback-memory';
 const SETTINGS_KEY = 'app-settings';
 
 interface AppSettings {
-  wordPlayOffset: number; // seconds before/after word timestamp
+  wordPlayOffset: number;   // seconds before/after word timestamp
+  defaultSpeed: number;     // default playback rate (0.5 - 2.0)
+  defaultLoopCount: number; // default clip/word/sentence loop count (1 - 10)
 }
+
+const DEFAULTS: AppSettings = {
+  wordPlayOffset: 2,
+  defaultSpeed: 1,
+  defaultLoopCount: 3,
+};
 
 function loadSettings(): AppSettings {
   try {
-    return JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{"wordPlayOffset":2}');
-  } catch { return { wordPlayOffset: 2 }; }
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+    return { ...DEFAULTS, ...saved };
+  } catch { return { ...DEFAULTS }; }
 }
 
 function saveSettings(s: AppSettings) {
@@ -42,6 +51,8 @@ interface SettingsState {
   getPosition: (lessonId: string) => Memory | null;
   clearPosition: (lessonId: string) => void;
   setWordPlayOffset: (offset: number) => void;
+  setDefaultSpeed: (speed: number) => void;
+  setDefaultLoopCount: (count: number) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
@@ -71,6 +82,22 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   setWordPlayOffset: (offset) => {
     set((s) => {
       const updated = { ...s.settings, wordPlayOffset: offset };
+      saveSettings(updated);
+      return { settings: updated };
+    });
+  },
+
+  setDefaultSpeed: (speed) => {
+    set((s) => {
+      const updated = { ...s.settings, defaultSpeed: speed };
+      saveSettings(updated);
+      return { settings: updated };
+    });
+  },
+
+  setDefaultLoopCount: (count) => {
+    set((s) => {
+      const updated = { ...s.settings, defaultLoopCount: count };
       saveSettings(updated);
       return { settings: updated };
     });

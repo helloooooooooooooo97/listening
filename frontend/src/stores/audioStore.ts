@@ -3,6 +3,18 @@ import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
 import { postPlayHistory } from '../lib/api';
 
+/* ── Read settings defaults from localStorage ── */
+function getSettingDefault(key: string, fallback: number): number {
+  try {
+    const raw = localStorage.getItem('app-settings');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (typeof parsed[key] === 'number') return parsed[key];
+    }
+  } catch {}
+  return fallback;
+}
+
 /* ── Singleton audio element ── */
 let _audio: HTMLAudioElement | null = null;
 export function getAudio(): HTMLAudioElement {
@@ -188,9 +200,9 @@ export const useAudioStore = create<AudioState>((set, get) => {
     duration: 0,
     isPlaying: false,
     isLoading: false,
-    playbackRate: 1,
+    playbackRate: getSettingDefault('defaultSpeed', 1),
     loopMode: 'all',
-    loopTarget: 3,
+    loopTarget: getSettingDefault('defaultLoopCount', 3),
     loopCount: 0,
     currentSentenceIndex: -1,
 

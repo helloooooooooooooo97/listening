@@ -105,3 +105,15 @@ Total files to convert: 27
 
 [24/27] Converting: ielts-c18-t2 (Cambridge IELTS 18 Listening Test 2) ...
   Start: Sat Jun  6 16:17:25 CST 2026
+  ✓ Done in 4m 57s: ielts-c18-t2
+
+[25/27] Converting: ielts-c19-t2 (Cambridge IELTS 19 Listening Test 2) ...
+  Start: Sat Jun  6 16:22:22 CST 2026
+  ✓ Done in 5m 34s: ielts-c19-t2
+
+[26/27] Converting: ielts-c19-t3 (Cambridge IELTS 19 Listening Test 3) ...
+  Start: Sat Jun  6 16:27:56 CST 2026
+  ✓ Done in 7m 14s: ielts-c19-t3
+
+[27/27] Converting: ielts-c19-t4 (Cambridge IELTS 19 Listening Test 4) ...
+  Start: Sat Jun  6 16:35:10 CST 2026

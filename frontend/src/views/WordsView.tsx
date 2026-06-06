@@ -124,27 +124,29 @@ export default function WordsView() {
         </div>
         <div className="flex-1 overflow-y-auto px-6 pb-8">
           {loading ? (
-            <div className="flex flex-wrap gap-1.5">
+            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
               {Array.from({length: 40}).map((_,i)=>(
-                <div key={i} className="h-8 w-20 rounded-lg bg-white/[0.03] animate-pulse" style={{animationDelay:`${i*20}ms`}}/>
+                <div key={i} className="h-8 rounded-lg bg-white/[0.03] animate-pulse" style={{animationDelay:`${i*20}ms`}}/>
               ))}
             </div>
           ) : (
             <>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
                 {words.map(w => (
                   <button key={w.word}
                     onClick={() => setSelected(w)}
-                    className={`rounded-lg px-3 py-1.5 transition-all duration-200 cursor-pointer text-[13px] ${
+                    className={`rounded-lg px-3 py-1.5 transition-all duration-200 cursor-pointer text-[13px] flex items-center justify-between gap-1 ${
                       selected?.word===w.word
                         ? 'bg-[#fa2d48]/15 ring-1 ring-[#fa2d48]/30 text-white'
                         : 'bg-white/[0.02] text-white/60 hover:bg-white/[0.05] hover:text-white/80'
                     }`}>
-                    {w.word}
-                    <span className="text-[10px] text-white/20 ml-1.5">{w.count}</span>
-                    {knownWords.has(w.word) && (
-                      <HiCheck size={10} className="inline ml-0.5 text-emerald-400" />
-                    )}
+                    <span className="truncate">{w.word}</span>
+                    <span className="text-[10px] text-white/20 flex-shrink-0 flex items-center gap-0.5">
+                      {w.count}
+                      {knownWords.has(w.word) && (
+                        <HiCheck size={10} className="text-emerald-400" />
+                      )}
+                    </span>
                   </button>
                 ))}
               </div>

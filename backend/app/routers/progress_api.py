@@ -4,7 +4,7 @@ from __future__ import annotations
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from database import get_conn
+from database import get_conn, locked
 
 router = APIRouter(prefix="/api", tags=["progress"])
 
@@ -20,6 +20,7 @@ class DictationCreate(BaseModel):
 
 
 @router.post("/progress/dictation", status_code=201)
+@locked
 def add_dictation(data: DictationCreate):
     conn = get_conn()
     conn.execute(
@@ -51,6 +52,7 @@ class PlayCreate(BaseModel):
 
 
 @router.get("/progress/play-history")
+@locked
 def list_history():
     conn = get_conn()
     rows = conn.execute("SELECT * FROM play_history ORDER BY played_at DESC LIMIT 100").fetchall()
@@ -58,6 +60,7 @@ def list_history():
 
 
 @router.post("/progress/play-history", status_code=201)
+@locked
 def add_history(data: PlayCreate):
     conn = get_conn()
     conn.execute(
@@ -86,6 +89,7 @@ class WordKnownUpdate(BaseModel):
 
 
 @router.get("/progress/words")
+@locked
 def list_word_progress():
     conn = get_conn()
     rows = conn.execute("SELECT word FROM word_progress WHERE known=1").fetchall()
@@ -93,6 +97,7 @@ def list_word_progress():
 
 
 @router.post("/progress/words")
+@locked
 def set_word_known(data: WordKnownUpdate):
     conn = get_conn()
     conn.execute(

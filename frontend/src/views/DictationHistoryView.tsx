@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { HiPencilSquare, HiPlay, HiChevronDown, HiChevronUp } from 'react-icons/hi2';
 import type { ListeningLesson, AudioClip } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
+import { useSettingsStore } from '../stores/settingsStore';
 import { getDictationRecords, getLessonById, type AudioGroup } from '../lib/api';
 
 export default function DictationHistoryView() {
@@ -11,6 +12,7 @@ export default function DictationHistoryView() {
   const playLesson = useAudioStore(s => s.playLesson);
   const playClip = useAudioStore(s => s.playClip);
   const setLoopTarget = useAudioStore(s => s.setLoopTarget);
+  const defaultLoopCount = useSettingsStore(s => s.settings.defaultLoopCount);
   const audioCache = useRef<Record<string, ListeningLesson>>({});
 
   const playSentence = async (audioId: string, sentenceIndex: number) => {
@@ -36,7 +38,7 @@ export default function DictationHistoryView() {
       endWordId: '',
       createdAt: '',
     };
-    setLoopTarget(1);
+    setLoopTarget(defaultLoopCount);
     playClip(sentenceClip, lesson);
   };
 

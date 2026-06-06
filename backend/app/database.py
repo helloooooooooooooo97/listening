@@ -1,17 +1,19 @@
-"""SQLite database — singleton connection for the process lifetime."""
+"""SQLite database — single connection with thread-safe locking."""
 from __future__ import annotations
 
 import sqlite3
+import threading
 from pathlib import Path
 
 DB_PATH = Path(__file__).resolve().parent.parent / "data" / "audio.db"
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 _conn: sqlite3.Connection | None = None
+_lock = threading.Lock()
 
 
 def get_conn() -> sqlite3.Connection:
-    """Return the singleton database connection, creating it if needed."""
+    """Return the singleton connection (not thread-safe by itself — use the lock)."""
     global _conn
     if _conn is None:
         _conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
@@ -19,6 +21,14 @@ def get_conn() -> sqlite3.Connection:
         _conn.execute("PRAGMA journal_mode=WAL")
         _conn.execute("PRAGMA foreign_keys=ON")
     return _conn
+
+
+def locked(fn):
+    """Decorator: acquire the DB lock before calling the endpoint."""
+    def wrapper(*args, **kwargs):
+        with _lock:
+            return fn(*args, **kwargs)
+    return wrapper
 
 
 def init_db():
