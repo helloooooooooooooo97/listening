@@ -38,6 +38,7 @@ export interface AudioClip {
   endTime: number;
   text: string;
   note: string;
+  color: string;
   createdAt: string;
 }
 

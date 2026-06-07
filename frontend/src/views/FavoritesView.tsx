@@ -71,7 +71,7 @@ export default function FavoritesView() {
         const data = JSON.parse(item.extra_data || '{}');
         const lessonId = data.lessonId || item.item_id;
         const lesson = await getLessonById(lessonId);
-        playClip({ id: item.item_id, lessonId, lessonTitle: lesson.title, startWordId: '', endWordId: '', startTime: data.start || 0, endTime: data.end || 0, text: item.subtitle || '', note: '', createdAt: '' }, lesson);
+        playClip({ id: item.item_id, lessonId, lessonTitle: lesson.title, startWordId: '', endWordId: '', startTime: data.start || 0, endTime: data.end || 0, text: item.subtitle || '', note: '', color: '#facc15', createdAt: '' }, lesson);
       }
     } catch (e) { console.error('播放收藏失败', e); }
   };

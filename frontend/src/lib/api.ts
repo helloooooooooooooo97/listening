@@ -52,6 +52,7 @@ export function createClip(clip: {
   end_time: number;
   text: string;
   note: string;
+  color?: string;
 }): Promise<AudioClip> {
   return post<AudioClip>('/api/clips/', clip);
 }

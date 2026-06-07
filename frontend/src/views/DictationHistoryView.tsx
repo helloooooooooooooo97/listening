@@ -33,7 +33,7 @@ export default function DictationHistoryView() {
       startTime: sentence.start,
       endTime: sentence.end,
       text: sentence.text,
-      note: '',
+      note: '', color: '#facc15',
       startWordId: '',
       endWordId: '',
       createdAt: '',

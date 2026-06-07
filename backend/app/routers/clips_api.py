@@ -16,6 +16,7 @@ class ClipCreate(BaseModel):
     end_time: float
     text: str
     note: str = ""
+    color: str = "#facc15"
 
 
 @router.get("/")
@@ -31,8 +32,8 @@ def list_clips():
 def create_clip(data: ClipCreate):
     conn = get_conn()
     cur = conn.execute(
-        "INSERT INTO clips (audio_id, audio_title, start_time, end_time, text, note) VALUES (?,?,?,?,?,?)",
-        [data.audio_id, data.audio_title, data.start_time, data.end_time, data.text, data.note],
+        "INSERT INTO clips (audio_id, audio_title, start_time, end_time, text, note, color) VALUES (?,?,?,?,?,?,?)",
+        [data.audio_id, data.audio_title, data.start_time, data.end_time, data.text, data.note, data.color],
     )
     conn.commit()
     row = conn.execute("SELECT * FROM clips WHERE id=?", [cur.lastrowid]).fetchone()

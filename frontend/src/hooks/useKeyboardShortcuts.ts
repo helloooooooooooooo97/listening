@@ -83,7 +83,7 @@ export function useKeyboardShortcuts() {
                 startTime: sent.start,
                 endTime: sent.end,
                 text: words.map((w) => w.text).join(' '),
-                note: '',
+                note: '', color: '#facc15',
               });
               addToast('已保存当前句子为片段', 'success');
             }

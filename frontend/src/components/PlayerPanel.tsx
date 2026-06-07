@@ -137,7 +137,7 @@ export default function PlayerPanel() {
                       e.stopPropagation();
                       const ws = lesson.words.filter(w => w.start >= line.start - 0.05 && w.end <= line.end + 0.05);
                       if (ws.length > 0) {
-                        addClip({ lessonId: lesson.id, lessonTitle: lesson.title, startWordId: ws[0].id, endWordId: ws[ws.length-1].id, startTime: line.start, endTime: line.end, text: ws.map(w => w.text).join(' '), note: '' });
+                        addClip({ lessonId: lesson.id, lessonTitle: lesson.title, startWordId: ws[0].id, endWordId: ws[ws.length-1].id, startTime: line.start, endTime: line.end, text: ws.map(w => w.text).join(' '), note: '', color: '#facc15' });
                         addToast('已保存句子为片段', 'success');
                       }
                     }} className="text-tertiary hover:text-[var(--accent)] transition-colors opacity-0 group-hover:opacity-100 cursor-pointer" title="保存句子">

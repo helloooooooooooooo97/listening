@@ -24,7 +24,6 @@ export default function PlayerBar() {
   const [speedPop, setSpeedPop] = useState<number | null>(null);
   const [speedOpen, setSpeedOpen] = useState(false);
   const [loopOpen, setLoopOpen] = useState(false);
-  const [panelSentence, setPanelSentence] = useState<number | undefined>(undefined);
   const mode = useAudioStore(s=>s.mode);
   const cur = useAudioStore(s=>s.currentTime);
   const dur = useAudioStore(s=>s.duration);
@@ -105,8 +104,7 @@ export default function PlayerBar() {
                 lesson={lesson}
                 currentTime={cur}
                 onSeek={seek}
-                onOpenDictation={(sentenceIdx) => setPanelSentence(sentenceIdx)}
-                highlightSentence={panelSentence}
+                onOpenDictation={() => {}}
               />
             </div>
           </div>

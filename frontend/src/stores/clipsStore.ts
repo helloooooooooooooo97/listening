@@ -10,6 +10,7 @@ interface ClipApiRow {
   end_time: number;
   text: string;
   note: string;
+  color: string;
   created_at: string;
 }
 
@@ -24,6 +25,7 @@ function toAudioClip(c: ClipApiRow): AudioClip {
     endTime: c.end_time,
     text: c.text,
     note: c.note || '',
+    color: c.color || '#facc15',
     createdAt: c.created_at || '',
   };
 }
@@ -49,6 +51,7 @@ async function createClipRemote(clip: Omit<AudioClip, 'id' | 'createdAt'>): Prom
       end_time: clip.endTime,
       text: clip.text,
       note: clip.note,
+      color: clip.color,
     });
     return toAudioClip(data as unknown as ClipApiRow);
   } catch { return null; }
@@ -67,7 +70,7 @@ interface ClipsState {
   loadClips: () => Promise<void>;
   addClip: (clip: Omit<AudioClip, 'id' | 'createdAt'>) => Promise<AudioClip | null>;
   removeClip: (id: string) => Promise<void>;
-  updateClip: (id: string, patch: Partial<Pick<AudioClip, 'note' | 'text'>>) => void;
+  updateClip: (id: string, patch: Partial<Pick<AudioClip, 'note' | 'text' | 'color'>>) => void;
   getClipsByLesson: (lessonId: string) => AudioClip[];
 }
 

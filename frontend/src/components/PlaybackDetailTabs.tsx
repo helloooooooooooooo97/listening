@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { HiBookmark, HiHeart, HiPencil, HiPlay, HiTag } from 'react-icons/hi2';
+import { HiBookmark, HiHeart, HiPencil, HiPlay, HiTag, HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
 import { useAudioStore } from '../stores/audioStore';
@@ -12,7 +12,6 @@ type SideTab = 'clips' | 'dictation' | 'favorites';
 interface Props {
   lesson: ListeningLesson;
   currentTime: number;
-  highlightSentence?: number;
   onSeek: (time: number) => void;
   onOpenDictation: (sentenceIndex: number) => void;
 }
@@ -33,16 +32,19 @@ function fmtDate(iso: string) {
 export default function PlaybackDetailTabs({
   lesson,
   currentTime,
-  highlightSentence,
   onSeek,
   onOpenDictation,
 }: Props) {
   const [sideTab, setSideTab] = useState<SideTab>('clips');
   const [dictGroups, setDictGroups] = useState<AudioGroup[]>([]);
   const [loadingDictation, setLoadingDictation] = useState(false);
+  const [hoveredClipId, setHoveredClipId] = useState<string | null>(null);
+  const [collapsed, setCollapsed] = useState(false);
   const clips = useClipsStore(s => s.clips);
   const favItems = useFavoritesStore(s => s.items);
   const playClip = useAudioStore(s => s.playClip);
+  const audioMode = useAudioStore(s => s.mode);
+  const activeClipId = audioMode.kind === 'clip' ? audioMode.clip.id : null;
 
   const lessonClips = useMemo(
     () => clips.filter(c => c.lessonId === lesson.id),
@@ -83,7 +85,7 @@ export default function PlaybackDetailTabs({
   );
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+    <div className={`grid gap-6 ${collapsed ? 'lg:grid-cols-[minmax(0,1fr)_48px]' : 'lg:grid-cols-[minmax(0,1fr)_360px]'} transition-all duration-300`}>
       <section className="min-w-0">
         <TranscriptView
           lessonId={lesson.id}
@@ -93,18 +95,36 @@ export default function PlaybackDetailTabs({
           currentTime={currentTime}
           onSeek={onSeek}
           onOpenDictation={onOpenDictation}
+          hoveredClipId={hoveredClipId}
+          activeClipId={activeClipId}
         />
       </section>
 
-      <aside className="min-w-0 lg:sticky lg:top-4 lg:self-start">
-        <div className="rounded-xl border border-[var(--border-secondary)] overflow-hidden bg-[var(--bg-primary)]">
-          <div className="flex border-b border-[var(--border-secondary)] p-1">
-            <SideTabButton active={sideTab === 'clips'} icon={<HiBookmark size={13} />} label="片段" count={lessonClips.length} onClick={() => setSideTab('clips')} />
-            <SideTabButton active={sideTab === 'dictation'} icon={<HiPencil size={13} />} label="听写" count={dictationRecords.length} onClick={() => setSideTab('dictation')} />
-            <SideTabButton active={sideTab === 'favorites'} icon={<HiHeart size={13} />} label="收藏" count={lessonFavs.length} onClick={() => setSideTab('favorites')} />
+      <aside className={`min-w-0 lg:sticky lg:top-4 lg:self-start transition-all duration-300 ${collapsed ? 'max-lg:hidden' : ''}`}>
+        {collapsed ? (
+          /* Collapsed: icon-only tabs */
+          <div className="rounded-xl border border-[var(--border-secondary)] overflow-hidden bg-[var(--bg-primary)]">
+            <button onClick={() => setCollapsed(false)}
+              className="w-full p-1.5 flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer border-b border-[var(--border-secondary)]">
+              <HiChevronLeft size={14} />
+            </button>
+            <SideTabIcon active={sideTab === 'clips'} icon={<HiBookmark size={14} />} onClick={() => setSideTab('clips')} />
+            <SideTabIcon active={sideTab === 'dictation'} icon={<HiPencil size={14} />} onClick={() => setSideTab('dictation')} />
+            <SideTabIcon active={sideTab === 'favorites'} icon={<HiHeart size={14} />} onClick={() => setSideTab('favorites')} />
           </div>
-
-          <div className="max-h-[calc(100vh-220px)] overflow-y-auto divide-y divide-[var(--border-secondary)]">
+        ) : (
+          /* Expanded: full sidebar */
+          <div className="rounded-xl border border-[var(--border-secondary)] overflow-hidden bg-[var(--bg-primary)]">
+            <div className="flex border-b border-[var(--border-secondary)] p-1">
+              <SideTabButton active={sideTab === 'clips'} icon={<HiBookmark size={13} />} label="片段" count={lessonClips.length} onClick={() => setSideTab('clips')} />
+              <SideTabButton active={sideTab === 'dictation'} icon={<HiPencil size={13} />} label="听写" count={dictationRecords.length} onClick={() => setSideTab('dictation')} />
+              <SideTabButton active={sideTab === 'favorites'} icon={<HiHeart size={13} />} label="收藏" count={lessonFavs.length} onClick={() => setSideTab('favorites')} />
+              <button onClick={() => setCollapsed(true)}
+                className="px-1.5 text-tertiary hover:text-secondary transition-colors cursor-pointer flex-shrink-0">
+                <HiChevronRight size={13} />
+              </button>
+            </div>
+            <div className="max-h-[calc(100vh-220px)] overflow-y-auto divide-y divide-[var(--border-secondary)]">
             {sideTab === 'dictation' && (
               loadingDictation ? (
                 <div className="flex items-center justify-center py-16">
@@ -116,8 +136,11 @@ export default function PlaybackDetailTabs({
                 dictationRecords.map((r: DictRecord) => (
                   <button
                     key={r.id}
-                    onClick={() => onOpenDictation(r.sentence_index)}
-                    className={`w-full text-left px-5 py-3 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer ${highlightSentence === r.sentence_index ? 'bg-[var(--accent-soft)]' : ''}`}
+                    onClick={() => {
+                      const sent = lesson.transcript[r.sentence_index];
+                      if (sent) onSeek(sent.start);
+                    }}
+                    className={`w-full text-left px-5 py-3 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer`}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-medium text-secondary">句子 {r.sentence_index + 1}</span>
@@ -142,14 +165,20 @@ export default function PlaybackDetailTabs({
                 <p className="text-center text-tertiary text-sm py-16">暂无片段</p>
               ) : lessonClips.map((clip: AudioClip) => {
                 const d = clip.endTime - clip.startTime;
+                const isActive = activeClipId === clip.id;
+                const isHovered = hoveredClipId === clip.id;
                 return (
                   <button
                     key={clip.id}
-                    onClick={() => playClip(clip, lesson)}
-                    className="w-full text-left px-5 py-3 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-start gap-3"
+                    onClick={() => { onSeek(clip.startTime); playClip(clip, lesson); }}
+                    onMouseEnter={() => setHoveredClipId(clip.id)}
+                    onMouseLeave={() => setHoveredClipId(null)}
+                    className={`w-full text-left px-5 py-3 transition-colors cursor-pointer flex items-start gap-3 ${
+                      isActive ? 'bg-[var(--accent-soft)]' : isHovered ? 'bg-[var(--bg-hover)]' : 'hover:bg-[var(--bg-hover)]'
+                    }`}
                   >
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: 'var(--clip-gradient)' }}>
-                      <HiBookmark size={13} className="text-tertiary" />
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: clip.color + '20', border: `1px solid ${clip.color}40` }}>
+                      <HiBookmark size={13} style={{ color: clip.color }} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
@@ -171,7 +200,19 @@ export default function PlaybackDetailTabs({
               lessonFavs.length === 0 ? (
                 <p className="text-center text-tertiary text-sm py-16">暂无收藏</p>
               ) : lessonFavs.map(item => (
-                <div key={item.id} className="px-5 py-3 flex items-center gap-3">
+                <div key={item.id}
+                  onClick={() => {
+                    if (item.item_type === 'word') {
+                      const w = lesson.words.find(w => w.text.toLowerCase() === item.item_id.toLowerCase());
+                      if (w) onSeek(w.start);
+                    } else if (item.item_type === 'clip') {
+                      try {
+                        const d = JSON.parse(item.extra_data || '{}');
+                        if (d.lessonId === lesson.id) onSeek(d.start || 0);
+                      } catch {}
+                    }
+                  }}
+                  className="px-5 py-3 flex items-center gap-3 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: item.item_type === 'word' ? 'var(--word-gradient)' : 'var(--clip-gradient)' }}>
                     {item.item_type === 'word' ? <HiTag size={13} className="text-primary" /> : <HiBookmark size={13} className="text-tertiary" />}
                   </div>
@@ -181,12 +222,23 @@ export default function PlaybackDetailTabs({
                   </div>
                   <HiHeart size={13} className="text-[var(--accent)] flex-shrink-0" />
                 </div>
-              ))
-            )}
+              )))}
           </div>
-        </div>
+          </div>
+        )}
       </aside>
     </div>
+  );
+}
+
+function SideTabIcon({ active, icon, onClick }: { active: boolean; icon: React.ReactNode; onClick: () => void }) {
+  return (
+    <button onClick={onClick}
+      className={`w-full p-2.5 flex items-center justify-center transition-colors cursor-pointer ${
+        active ? 'bg-[var(--bg-active)] text-primary' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+      }`}>
+      {icon}
+    </button>
   );
 }
 

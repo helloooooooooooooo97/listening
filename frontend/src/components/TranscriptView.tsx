@@ -13,11 +13,14 @@ interface Props {
   lines: TranscriptLine[]; words: TranscriptWord[];
   currentTime: number; onSeek: (t: number) => void;
   onOpenDictation?: (sentenceIdx: number) => void;
+  hoveredClipId?: string | null;
+  activeClipId?: string | null;
+  flashSentence?: number | null;
 }
 
 interface WordSelection { startWord: TranscriptWord; endWord: TranscriptWord; }
 
-export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation }: Props) {
+export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId }: Props) {
   const activeLineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const addClip = useClipsStore(s => s.addClip);
@@ -28,6 +31,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const [pendingAnchor, setPendingAnchor] = useState<TranscriptWord | null>(null);
   const [showToolbar, setShowToolbar] = useState(false);
   const [clipNote, setClipNote] = useState('');
+  const [clipColor, setClipColor] = useState('#facc15');
   const [knownWords, setKnownWords] = useState<Set<string>>(new Set());
   const [sentenceScores, setSentenceScores] = useState<SentenceDictation[]>([]);
   const isFav = useFavoritesStore(s => s.isFav);
@@ -101,9 +105,9 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     const si=getWordIndex(selection.startWord.id), ei=getWordIndex(selection.endWord.id);
     if(si===-1||ei===-1) return;
     const sw=words.slice(si,ei+1);
-    addClip({lessonId,lessonTitle,startWordId:selection.startWord.id,endWordId:selection.endWord.id,startTime:selection.startWord.start,endTime:selection.endWord.end,text:sw.map(w=>w.text).join(' '),note:clipNote.trim()});
+    addClip({lessonId,lessonTitle,startWordId:selection.startWord.id,endWordId:selection.endWord.id,startTime:selection.startWord.start,endTime:selection.endWord.end,text:sw.map(w=>w.text).join(' '),note:clipNote.trim(),color:clipColor});
     addToast('片段已保存','success');
-    setSelection(null); setShowToolbar(false); setClipNote('');
+    setSelection(null); setShowToolbar(false); setClipNote(''); setClipColor('#facc15');
   };
 
   const handleCancelSelection = () => { setSelection(null); setShowToolbar(false); setClipNote(''); };
@@ -127,8 +131,10 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   // Clips data for this lesson
   const allClips = useClipsStore(s => s.clips);
   const lessonClips = useMemo(() => allClips.filter(c => c.lessonId === lessonId), [allClips, lessonId]);
-  const wordClipCount = (wordStart: number, wordEnd: number) =>
-    lessonClips.filter(c => wordStart >= c.startTime - 0.1 && wordEnd <= c.endTime + 0.1).length;
+  const wordClipInfo = (wordStart: number, wordEnd: number) => {
+    const covering = lessonClips.filter(c => wordStart >= c.startTime - 0.1 && wordEnd <= c.endTime + 0.1);
+    return { count: covering.length, color: covering[0]?.color || '#facc15' };
+  };
 
   const isWordSelected = (id: string) => {
     if(!selection) return false;
@@ -155,6 +161,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
       startWordId: clip.startWordId,
       endWordId: clip.endWordId,
       createdAt: clip.createdAt,
+      color: clip.color || '#facc15',
     };
     setLoopTarget(defaultLoopCount);
     playClip(lineClip, contextLesson);
@@ -191,13 +198,24 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
               top: rect ? rect.bottom + 6 : 100,
             }}>
             <div className="rounded-lg px-3 py-2 shadow-2xl flex items-center gap-2" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)' }}>
-              <HiBookmark size={13} className="text-[var(--accent)] flex-shrink-0" />
-              <span className="text-xs text-secondary truncate max-w-[100px]">{selection.startWord.text}...{selection.endWord.text}</span>
+              <HiBookmark size={13} className="flex-shrink-0" style={{ color: clipColor }} />
+              <span className="text-xs text-secondary truncate max-w-[80px]">{selection.startWord.text}...{selection.endWord.text}</span>
+              {/* Color circles */}
+              <div className="flex items-center gap-1">
+                {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
+                  <button key={c} onClick={e => { e.stopPropagation(); setClipColor(c); }}
+                    className="w-4 h-4 rounded-full border-2 transition-transform cursor-pointer hover:scale-125"
+                    style={{
+                      backgroundColor: c,
+                      borderColor: clipColor === c ? 'var(--text-primary)' : 'transparent',
+                    }} />
+                ))}
+              </div>
               <span className="text-tertiary">|</span>
-              <input type="text" placeholder="添加备注..." value={clipNote}
+              <input type="text" placeholder="备注..." value={clipNote}
                 onChange={e => setClipNote(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') handleSaveClip(); if (e.key === 'Escape') handleCancelSelection(); }}
-                className="w-28 text-xs text-secondary bg-transparent border-0 outline-none placeholder:text-tertiary" />
+                className="w-20 text-xs text-secondary bg-transparent border-0 outline-none placeholder:text-tertiary" />
               <button onClick={handleSaveClip} className="px-2 py-0.5 text-xs font-medium bg-[var(--accent)] on-accent rounded-md hover:bg-[var(--accent-hover)] transition-colors cursor-pointer whitespace-nowrap">保存</button>
               <button onClick={handleCancelSelection} className="text-tertiary hover:text-secondary transition-colors cursor-pointer text-xs">✕</button>
             </div>
@@ -224,14 +242,25 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                 {lineWords.length>0
                   ? lineWords.map((word, wordIdx) => {
                       const sel=isWordSelected(word.id);
-                      const cc = wordClipCount(word.start, word.end);
+                      const ci = wordClipInfo(word.start, word.end);
                       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-                      const clipAlpha = Math.min((isLight ? 0.12 : 0.06) * cc, isLight ? 0.3 : 0.2);
+                      let clipAlpha = Math.min((isLight ? 0.12 : 0.06) * ci.count, isLight ? 0.3 : 0.2);
+                      // Boost opacity for hovered/active clip
+                      const boostedClip = lessonClips.find(c =>
+                        c.id === hoveredClipId || c.id === activeClipId
+                      );
+                      if (boostedClip && word.start >= boostedClip.startTime - 0.1 && word.end <= boostedClip.endTime + 0.1) {
+                        clipAlpha = Math.max(clipAlpha, isLight ? 0.28 : 0.22);
+                      }
                       const isKnown = knownWords.has(word.text.toLowerCase());
                       const isFavorited = isFav(word.text.toLowerCase(), 'word');
                       const isWrong = wrongIdxMap.get(lineIdx)?.has(wordIdx) ?? false;
-                      // Show the clip play button only once, on the clip's anchor word.
                       const anchoredClip = clipByAnchorWordId.get(word.id);
+                      const hexToRgb = (hex: string) => {
+                        const m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+                        return m ? `${parseInt(m[1],16)},${parseInt(m[2],16)},${parseInt(m[3],16)}` : '250,204,21';
+                      };
+                      const clipRgb = hexToRgb(ci.color);
                       return (
                         <span key={word.id} data-word-id={word.id}
                           onMouseDown={e=>handleWordMouseDown(word,e)}
@@ -241,9 +270,9 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                             word.id===activeWordId&&!selection ? 'active' : sel ? 'selected' : 'hover:bg-[var(--bg-hover)]'
                           }`}
                           style={{
-                            ...(cc > 0 ? { background: `rgba(250,204,21,${clipAlpha})`, borderRadius: 0 } : {}),
+                            ...(ci.count > 0 ? { background: `rgba(${clipRgb},${clipAlpha})`, borderRadius: 0 } : {}),
                             ...(isKnown ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
-                            ...(isWrong ? { textDecoration: 'underline wavy rgba(239,68,68,0.6)', textUnderlineOffset: '2px' } : cc > 0 ? { borderBottom: '1px solid rgba(250,204,21,0.4)' } : {}),
+                            ...(isWrong ? { textDecoration: 'underline wavy rgba(239,68,68,0.6)', textUnderlineOffset: '2px' } : ci.count > 0 ? { borderBottom: `1px solid rgba(${clipRgb},0.4)` } : {}),
                           }}>
                           {/* Clip play button at the start of each clip */}
                           {anchoredClip && (

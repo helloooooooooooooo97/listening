@@ -46,6 +46,7 @@ def init_db():
             end_time REAL NOT NULL,
             text TEXT NOT NULL,
             note TEXT DEFAULT '',
+            color TEXT DEFAULT '#facc15',
             created_at TEXT DEFAULT (datetime('now'))
         );
         CREATE INDEX IF NOT EXISTS idx_clips_audio ON clips(audio_id);
@@ -119,4 +120,9 @@ def init_db():
         );
         CREATE UNIQUE INDEX IF NOT EXISTS idx_fav_item ON favorites(item_id, item_type);
     """)
+    # Migration: add color column if not exists (for existing databases)
+    try:
+        conn.execute("ALTER TABLE clips ADD COLUMN color TEXT DEFAULT '#facc15'")
+    except sqlite3.OperationalError:
+        pass  # column already exists
     conn.commit()

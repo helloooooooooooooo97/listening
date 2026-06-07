@@ -86,7 +86,7 @@ export default function WordsView() {
   const handlePlayAt = (lessonId: string, lessonTitle: string, word: string, time: number) => {
     const st = Math.max(0, time - wordOffset);
     const et = time + wordOffset;
-    viewClip({ id: '', lessonId, lessonTitle, startWordId: '', endWordId: '', startTime: st, endTime: et, text: word, note: 'word', createdAt: '' });
+    viewClip({ id: '', lessonId, lessonTitle, startWordId: '', endWordId: '', startTime: st, endTime: et, text: word, note: 'word', color: '#facc15', createdAt: '' });
     setTimeout(() => togglePlay(), 200);
   };
 
