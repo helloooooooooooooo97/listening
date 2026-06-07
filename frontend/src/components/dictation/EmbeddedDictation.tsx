@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 import { useAudioStore } from '../../stores/audioStore';
 import { useDictationStore } from '../../stores/dictationStore';
@@ -7,7 +7,7 @@ import type { ListeningLesson } from '../../types/lesson';
 import SentenceSelector from './SentenceSelector';
 import TypingPhase from './TypingPhase';
 import FeedbackPhase from './FeedbackPhase';
-import CompletionScreen from './CompletionScreen';
+import DictationOverview from './DictationOverview';
 
 interface Props {
   lesson: ListeningLesson;
@@ -18,6 +18,7 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const isPlaying = useAudioStore(s => s.isPlaying);
   const currentTime = useAudioStore(s => s.currentTime);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [overviewMode, setOverviewMode] = useState(false);
 
   const active = useDictationStore(s => s.active);
   const sentenceIndex = useDictationStore(s => s.sentenceIndex);
@@ -37,8 +38,23 @@ export default function EmbeddedDictation({ lesson }: Props) {
 
   const sentences = lesson.transcript;
   const currentSentence = sentences[sentenceIndex];
-  if (!currentSentence) {
-    return <CompletionScreen scores={scores} onReset={reset} />;
+
+  // Show overview when all done or user toggles it
+  if (overviewMode || !currentSentence) {
+    return (
+      <DictationOverview
+        lesson={lesson}
+        scores={scores}
+        onRetrySentence={(idx) => {
+          goToSentence(idx);
+          setOverviewMode(false);
+        }}
+        onClose={() => {
+          if (!currentSentence) reset(); // all done, exit
+          else setOverviewMode(false); // go back to current sentence
+        }}
+      />
+    );
   }
 
   const sentenceWords = lesson.words.filter(
@@ -134,6 +150,14 @@ export default function EmbeddedDictation({ lesson }: Props) {
           avgScore={avgScore}
           onGoToSentence={goToSentence}
         />
+
+        {/* Overview button */}
+        {scores.length > 0 && (
+          <button onClick={() => setOverviewMode(!overviewMode)}
+            className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">
+            {overviewMode ? '返回听写' : '查看全部结果'}
+          </button>
+        )}
       </div>
     </div>
   );
