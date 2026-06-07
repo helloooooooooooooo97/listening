@@ -34,35 +34,15 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const skip = useDictationStore(s => s.skip);
   const reset = useDictationStore(s => s.reset);
 
-  if (!active) return null;
-
   const sentences = lesson.transcript;
   const currentSentence = sentences[sentenceIndex];
-
-  // Show overview when all done or user toggles it
-  if (overviewMode || !currentSentence) {
-    return (
-      <DictationOverview
-        lesson={lesson}
-        scores={scores}
-        onRetrySentence={(idx) => {
-          goToSentence(idx);
-          setOverviewMode(false);
-        }}
-        onClose={() => {
-          if (!currentSentence) reset(); // all done, exit
-          else setOverviewMode(false); // go back to current sentence
-        }}
-      />
-    );
-  }
-
-  const sentenceWords = lesson.words.filter(
-    w => w.start >= currentSentence.start - 0.05 && w.end <= currentSentence.end + 0.05
-  );
+  const sentenceWords = currentSentence
+    ? lesson.words.filter(w => w.start >= currentSentence.start - 0.05 && w.end <= currentSentence.end + 0.05)
+    : [];
   const expectedWords = sentenceWords.map(w => w.text);
 
   const handlePlaySentence = () => {
+    if (!currentSentence) return;
     seek(currentSentence.start);
     setTimeout(() => useAudioStore.getState().togglePlay(), 150);
   };
@@ -81,7 +61,9 @@ export default function EmbeddedDictation({ lesson }: Props) {
     }, 100);
   };
 
+  // ALL hooks must be called unconditionally, before any return
   useEffect(() => {
+    if (!currentSentence) return;
     seek(currentSentence.start);
     setTimeout(() => useAudioStore.getState().togglePlay(), 150);
   }, [sentenceIndex]);
@@ -94,6 +76,26 @@ export default function EmbeddedDictation({ lesson }: Props) {
   }, [currentTime, isPlaying, currentSentence]);
 
   const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+
+  // ── Now conditional rendering ──
+  if (!active) return null;
+
+  if (overviewMode || !currentSentence) {
+    return (
+      <DictationOverview
+        lesson={lesson}
+        scores={scores}
+        onRetrySentence={(idx) => {
+          goToSentence(idx);
+          setOverviewMode(false);
+        }}
+        onClose={() => {
+          if (!currentSentence) reset();
+          else setOverviewMode(false);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="h-full flex flex-col items-center justify-center px-6">
