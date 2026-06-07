@@ -10,6 +10,7 @@ export default function SettingsView() {
   const setOffset = useSettingsStore(s => s.setWordPlayOffset);
   const setSpeed = useSettingsStore(s => s.setDefaultSpeed);
   const setLoopCount = useSettingsStore(s => s.setDefaultLoopCount);
+  const setDailyGoal = useSettingsStore(s => s.setDailyGoalMinutes);
   const themeMode = useThemeStore(s => s.mode);
   const toggleTheme = useThemeStore(s => s.toggle);
 
@@ -87,6 +88,30 @@ export default function SettingsView() {
                 <p className="text-xs text-tertiary">点击切换到 {themeMode === 'dark' ? '浅色' : '深色'} 模式</p>
               </div>
             </button>
+          </div>
+
+          {/* Daily goal */}
+          <div className="rounded-xl p-5 surface-card">
+            <h3 className="text-sm font-semibold text-primary flex items-center gap-2">
+              <HiPlay size={16} className="text-tertiary" />
+              每日学习目标
+            </h3>
+            <p className="text-xs text-tertiary mt-1 mb-3">设置每日听力时长目标，达到目标后会收到通知提醒</p>
+            <div className="flex items-center gap-3">
+              {[0, 5, 10, 15, 30, 60].map(m => (
+                <button key={m} onClick={() => setDailyGoal(m)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                    settings.dailyGoalMinutes === m
+                      ? 'bg-[var(--accent)]/20 text-[var(--accent)]'
+                      : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-tertiary)]'
+                  }`}>
+                  {m === 0 ? '关闭' : `${m}分`}
+                </button>
+              ))}
+            </div>
+            {settings.dailyGoalMinutes > 0 && (
+              <p className="text-xs text-tertiary mt-2">每天学习 {settings.dailyGoalMinutes} 分钟</p>
+            )}
           </div>
 
           {/* Word playback offset */}

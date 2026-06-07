@@ -7,12 +7,14 @@ interface AppSettings {
   wordPlayOffset: number;   // seconds before/after word timestamp
   defaultSpeed: number;     // default playback rate (0.5 - 2.0)
   defaultLoopCount: number; // default clip/word/sentence loop count (1 - 10)
+  dailyGoalMinutes: number; // daily learning goal in minutes (0 = off)
 }
 
 const DEFAULTS: AppSettings = {
   wordPlayOffset: 2,
   defaultSpeed: 1,
   defaultLoopCount: 3,
+  dailyGoalMinutes: 0,
 };
 
 function loadSettings(): AppSettings {
@@ -53,6 +55,7 @@ interface SettingsState {
   setWordPlayOffset: (offset: number) => void;
   setDefaultSpeed: (speed: number) => void;
   setDefaultLoopCount: (count: number) => void;
+  setDailyGoalMinutes: (minutes: number) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
@@ -101,5 +104,16 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
       saveSettings(updated);
       return { settings: updated };
     });
+  },
+
+  setDailyGoalMinutes: (minutes) => {
+    set((s) => {
+      const updated = { ...s.settings, dailyGoalMinutes: minutes };
+      saveSettings(updated);
+      return { settings: updated };
+    });
+    if (minutes > 0 && typeof Notification !== 'undefined' && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
   },
 }));

@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
 import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiHeart } from 'react-icons/hi2';
 import type { AudioClip, LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
-import { getLessonById } from '../lib/api';
+import { useSettingsStore } from '../stores/settingsStore';
+import { getLessonById, getOverview } from '../lib/api';
 
 interface Props {
   search: string;
@@ -19,6 +21,14 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
   const playClip = useAudioStore(s => s.playClip);
   const favToggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
+  const dailyGoal = useSettingsStore(s => s.settings.dailyGoalMinutes);
+  const [todaySeconds, setTodaySeconds] = useState(0);
+
+  useEffect(() => {
+    if (dailyGoal > 0) {
+      getOverview().then(o => setTodaySeconds(o.today_seconds)).catch(() => {});
+    }
+  }, [dailyGoal]);
   const q = search.toLowerCase();
   const fL = lessons.filter(l => l.title.toLowerCase().includes(q) || l.subtitle.toLowerCase().includes(q));
   const fC = clips.filter(c => c.text.toLowerCase().includes(q) || c.note.toLowerCase().includes(q) || c.lessonTitle.toLowerCase().includes(q));
@@ -39,6 +49,22 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
           </div>
         </div>
         {q && <p className="text-xs text-tertiary mt-3">找到 {fL.length} 个音频 · {fC.length} 个片段</p>}
+        {!q && dailyGoal > 0 && (
+          <div className="mt-4 flex items-center gap-3">
+            <div className="flex-1 h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+              <div className="h-full rounded-full transition-all duration-500" style={{
+                width: `${Math.min(100, (todaySeconds / 60 / dailyGoal) * 100)}%`,
+                background: (todaySeconds / 60) >= dailyGoal
+                  ? 'linear-gradient(90deg, #10b981, #34d399)'
+                  : 'linear-gradient(90deg, var(--accent), #ff6b7f)',
+              }} />
+            </div>
+            <span className="text-xs text-tertiary whitespace-nowrap">
+              {Math.floor(todaySeconds / 60)} / {dailyGoal} 分钟
+              {(todaySeconds / 60) >= dailyGoal && <span className="text-emerald-500 ml-1">✓ 完成</span>}
+            </span>
+          </div>
+        )}
       </div>
       <div className="flex-1 overflow-y-auto px-8 py-6 space-y-8">
         {!q && (
