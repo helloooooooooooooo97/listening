@@ -83,6 +83,35 @@ export const useAudioStore = create<AudioState>((set, get) => {
           audio.pause();
           audio.currentTime = clip.endTime;
           set({ isPlaying: false });
+          // Try to play next in queue (after clip loop is done)
+          const next = usePlaylistStore.getState().playNext();
+          if (next) {
+            if (next.kind === 'lesson') {
+              setTimeout(() => get().playLesson(next.lesson), 50);
+            } else if (next.kind === 'clip') {
+              setTimeout(() => get().playClip(next.clip, next.lesson ?? null), 50);
+            } else if (next.kind === 'sentence') {
+              setTimeout(() => {
+                get().playClip({
+                  id: `q-s-${next.lessonId}-${next.sentenceIndex}`,
+                  lessonId: next.lessonId, lessonTitle: next.lessonTitle,
+                  startWordId: '', endWordId: '',
+                  startTime: next.start, endTime: next.end,
+                  text: next.text, note: '', color: '#facc15', createdAt: '',
+                });
+              }, 50);
+            } else if (next.kind === 'word') {
+              setTimeout(() => {
+                get().playClip({
+                  id: `q-w-${next.lessonId}-${next.word}`,
+                  lessonId: next.lessonId, lessonTitle: next.lessonTitle,
+                  startWordId: '', endWordId: '',
+                  startTime: Math.max(0, next.start - 2), endTime: next.end + 2,
+                  text: next.word, note: 'word', color: '#facc15', createdAt: '',
+                });
+              }, 50);
+            }
+          }
         }
         return;
       }
