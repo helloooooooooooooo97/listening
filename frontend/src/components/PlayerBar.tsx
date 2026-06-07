@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiPencil, HiTag, HiPlusCircle, HiChevronRight } from 'react-icons/hi2';
+import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiPencil, HiTag, HiPlusCircle, HiChevronRight, HiQueueList } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useDictationStore } from '../stores/dictationStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
+import { useClipsStore } from '../stores/clipsStore';
+import { useToastStore } from '../stores/toastStore';
 import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
 import Waveform from './Waveform';
@@ -53,6 +55,7 @@ export default function PlayerBar() {
   const isDictating = dictation.active;
   const favToggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
+  const addToast = useToastStore(s => s.addToast);
 
   const favId = isL ? mode.lesson.id : isC ? mode.clip.id : '';
   const favType = isL ? 'audio' : isC ? 'clip' : null;
@@ -94,7 +97,45 @@ export default function PlayerBar() {
               <p className="text-sm font-semibold text-primary truncate">{lesson.title}</p>
               <p className="text-xs text-tertiary truncate">{lesson.subtitle}</p>
             </div>
-            <div className="w-8"/>
+            {/* Quick actions */}
+            <div className="flex items-center gap-1 flex-shrink-0">
+              <button onClick={e=>{e.stopPropagation();isDictating?dictation.reset():dictation.start();}}
+                className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors cursor-pointer ${isDictating ? 'text-[var(--accent)] bg-[var(--accent-soft)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'}`}
+                title={isDictating ? '退出听写' : '听写模式'}>
+                <HiPencil size={13} />
+              </button>
+              <button onClick={e=>{e.stopPropagation();
+                const allClips = useClipsStore.getState().getClipsByLesson(lesson.id).map(c => ({ kind: 'clip' as const, clip: c, lesson }));
+                const q = usePlaylistStore.getState();
+                q.addAllToQueue(allClips);
+                addToast(`已添加 ${allClips.length} 个片段到队列`, 'success');
+              }}
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
+                title="全部片段加入队列">
+                <HiPlusCircle size={13} />
+              </button>
+              <button onClick={e=>{e.stopPropagation();
+                const q = usePlaylistStore.getState();
+                q.cycleRepeatMode();
+                const labels: Record<string,string> = { sequential:'顺序', 'repeat-all':'全部循环', shuffle:'随机', 'repeat-one':'单曲循环' };
+                addToast(labels[q.repeatMode] || q.repeatMode, 'info');
+              }}
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
+                title="切换播放模式">
+                <HiArrowPath size={13} />
+              </button>
+              {isC && (
+                <button onClick={e=>{e.stopPropagation();
+                  const q = usePlaylistStore.getState();
+                  q.playNow({ kind: 'clip', clip: mode.clip, lesson: mode.lesson });
+                  addToast('已加入队列', 'success');
+                }}
+                  className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
+                  title="加入队列">
+                  <HiQueueList size={13} />
+                </button>
+              )}
+            </div>
           </div>
 
           {/* ── Transcript Content ── */}

@@ -111,14 +111,50 @@ export const useAudioStore = create<AudioState>((set, get) => {
   audio.addEventListener('pause', () => { set({ isPlaying: false }); flushTrack(); });
   audio.addEventListener('ended', () => {
     set({ isPlaying: false }); flushTrack();
+    const mode = usePlaylistStore.getState().repeatMode;
+    // Repeat-one: replay current item
+    if (mode === 'repeat-one') {
+      const store = useAudioStore.getState();
+      const m = store.mode;
+      if (m.kind === 'lesson') setTimeout(() => store.playLesson(m.lesson), 100);
+      else if (m.kind === 'clip') setTimeout(() => store.playClip(m.clip, m.lesson), 100);
+      return;
+    }
     // Auto-play next in queue
     const next = usePlaylistStore.getState().playNext();
     if (next) {
       if (next.kind === 'lesson') {
-        // Use setTimeout to avoid React-stuck-in-ended state
         setTimeout(() => useAudioStore.getState().playLesson(next.lesson), 100);
       } else if (next.kind === 'clip') {
         setTimeout(() => useAudioStore.getState().playClip(next.clip, next.lesson ?? null), 100);
+      } else if (next.kind === 'sentence') {
+        setTimeout(() => {
+          const store = useAudioStore.getState();
+          const clip: AudioClip = {
+            id: `queue-sent-${next.lessonId}-${next.sentenceIndex}`,
+            lessonId: next.lessonId,
+            lessonTitle: next.lessonTitle,
+            startWordId: '', endWordId: '',
+            startTime: next.start, endTime: next.end,
+            text: next.text, note: '', color: '#facc15', createdAt: '',
+          };
+          store.playClip(clip);
+        }, 100);
+      } else if (next.kind === 'word') {
+        setTimeout(() => {
+          const store = useAudioStore.getState();
+          const offset = useSettingsStore.getState().settings.wordPlayOffset || 2;
+          const clip: AudioClip = {
+            id: `queue-word-${next.lessonId}-${next.word}`,
+            lessonId: next.lessonId,
+            lessonTitle: next.lessonTitle,
+            startWordId: '', endWordId: '',
+            startTime: Math.max(0, next.start - offset),
+            endTime: next.end + offset,
+            text: next.word, note: 'word', color: '#facc15', createdAt: '',
+          };
+          store.playClip(clip);
+        }, 100);
       }
     }
   });

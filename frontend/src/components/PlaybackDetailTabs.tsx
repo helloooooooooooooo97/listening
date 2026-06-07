@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState, useRef } from 'react';
-import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray } from 'react-icons/hi2';
+import { useEffect, useMemo, useState } from 'react';
+import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlusCircle } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
 import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
+import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
 import TranscriptView from './TranscriptView';
 
@@ -42,7 +43,6 @@ export default function PlaybackDetailTabs({
   const [hoveredClipId, setHoveredClipId] = useState<string | null>(null);
   const [collapsed, setCollapsed] = useState(false);
   const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
-  const [playAll, setPlayAll] = useState(false);
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
   const [editNote, setEditNote] = useState('');
   const clips = useClipsStore(s => s.clips);
@@ -52,6 +52,8 @@ export default function PlaybackDetailTabs({
   const playClip = useAudioStore(s => s.playClip);
   const audioMode = useAudioStore(s => s.mode);
   const addToast = useToastStore(s => s.addToast);
+  const addToQueue = usePlaylistStore(s => s.addToQueue);
+  const addAllToQueue = usePlaylistStore(s => s.addAllToQueue);
   const activeClipId = audioMode.kind === 'clip' ? audioMode.clip.id : null;
 
   const lessonClips = useMemo(() => {
@@ -69,34 +71,6 @@ export default function PlaybackDetailTabs({
     }).catch(() => {});
   };
 
-  const playAllRef = useRef<{ clips: AudioClip[]; index: number } | null>(null);
-
-  // Listen for clip end to advance play-all
-  useEffect(() => {
-    const a = document.querySelector('audio');
-    if (!a || !playAll) return;
-    const onEnded = () => {
-      const state = playAllRef.current;
-      if (!state || state.index >= state.clips.length) {
-        setPlayAll(false);
-        playAllRef.current = null;
-        return;
-      }
-      playClip(state.clips[state.index], lesson);
-      state.index++;
-    };
-    a.addEventListener('ended', onEnded);
-    return () => a.removeEventListener('ended', onEnded);
-  }, [playAll, lesson, playClip]);
-
-  const handlePlayAll = () => {
-    if (playAll) { setPlayAll(false); playAllRef.current = null; return; }
-    const sorted = [...lessonClips].sort((a, b) => a.startTime - b.startTime);
-    if (sorted.length === 0) return;
-    playAllRef.current = { clips: sorted, index: 1 };
-    setPlayAll(true);
-    playClip(sorted[0], lesson);
-  };
 
   const lessonFavs = useMemo(() => favItems.filter(i =>
     i.item_type === 'word' ||
@@ -197,6 +171,12 @@ export default function PlaybackDetailTabs({
                           r.score >= 50 ? 'text-amber-500 bg-amber-500/10' :
                           'text-red-500 bg-red-500/10'
                         }`}>{r.score}%</span>
+                        <span onClick={e => { e.stopPropagation();
+                          const sent = lesson.transcript[r.sentence_index];
+                          if (sent) addToQueue({ kind: 'sentence', lessonId: lesson.id, lessonTitle: lesson.title, sentenceIndex: r.sentence_index, start: sent.start, end: sent.end, text: sent.text });
+                          addToast('句子已加入队列', 'success');
+                        }}
+                          className="text-[10px] text-blue-400 hover:underline cursor-pointer" title="加入队列">➕</span>
                         {r.score < 80 && (
                           <span onClick={e => { e.stopPropagation(); onOpenDictation(r.sentence_index); }}
                             className="text-[10px] text-[var(--accent)] hover:underline cursor-pointer">复练</span>
@@ -218,16 +198,20 @@ export default function PlaybackDetailTabs({
                 <p className="text-center text-tertiary text-sm py-16">暂无片段</p>
               ) : (
                 <>
-                  {/* Toolbar: sort, play all, export */}
+                  {/* Toolbar: sort, add all to queue, export */}
                   <div className="flex items-center gap-1 px-4 py-2 border-b border-[var(--border-secondary)]">
                     <button onClick={() => setClipSort(s => s === 'time' ? 'date' : 'time')}
                       className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1">
                       {clipSort === 'time' ? '按时间' : '按日期'}
                     </button>
                     <div className="flex-1" />
-                    <button onClick={handlePlayAll}
-                      className={`text-xs px-2 py-1 rounded transition-colors cursor-pointer ${playAll ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-tertiary hover:text-secondary'}`}>
-                      {playAll ? '停止' : '▶ 连续播放'}
+                    <button onClick={() => {
+                      const items = lessonClips.map(c => ({ kind: 'clip' as const, clip: c, lesson }));
+                      addAllToQueue(items);
+                      addToast(`已添加 ${items.length} 个片段到队列`, 'success');
+                    }}
+                      className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1 flex items-center gap-1">
+                      <HiPlusCircle size={11} /> 全部入队
                     </button>
                     <button onClick={handleExportClips}
                       className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1 flex items-center gap-1">
@@ -280,6 +264,10 @@ export default function PlaybackDetailTabs({
                       </button>
                       {/* More actions */}
                       <div className="relative flex-shrink-0 flex items-center gap-1">
+                        <button onClick={e => { e.stopPropagation(); addToQueue({ kind: 'clip', clip, lesson }); addToast('已加入队列', 'success'); }}
+                          className="text-tertiary hover:text-blue-400 transition-colors cursor-pointer p-1" title="加入队列">
+                          <HiPlusCircle size={11} />
+                        </button>
                         <button onClick={e => { e.stopPropagation(); setEditingClipId(clip.id); setEditNote(clip.note || ''); }}
                           className="text-tertiary hover:text-secondary transition-colors cursor-pointer p-1">
                           <HiPencil size={11} />
