@@ -163,6 +163,7 @@ export default function PlaybackDetailTabs({
           hoveredClipId={hoveredClipId}
           activeClipId={activeClipId}
           activeTab={sideTab}
+          dictationWordResults={dictationBySentence.map(s => s.wordResults)}
         />
       </section>
 

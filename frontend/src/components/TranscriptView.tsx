@@ -17,6 +17,7 @@ interface Props {
   activeClipId?: string | null;
   flashSentence?: number | null;
   activeTab?: 'clips' | 'dictation' | 'favorites';
+  dictationWordResults?: (import('../stores/dictationStore').WordResult[] | null)[];
 }
 
 interface ContextMenu {
@@ -26,7 +27,7 @@ interface ContextMenu {
 
 interface WordSelection { startWord: TranscriptWord; endWord: TranscriptWord; }
 
-export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId, activeTab }: Props) {
+export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId, activeTab, dictationWordResults }: Props) {
   const activeLineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const addClip = useClipsStore(s => s.addClip);
@@ -195,15 +196,6 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     return m;
   }, [sentenceScores]);
 
-  // Build wrong indices lookup: sentenceIndex → Set<wordIndex>
-  const wrongIdxMap = useMemo(() => {
-    const m = new Map<number, Set<number>>();
-    for (const sd of sentenceScores) {
-      m.set(sd.index, new Set(sd.wrong_indices));
-    }
-    return m;
-  }, [sentenceScores]);
-
   // Clips data for this lesson
   const allClips = useClipsStore(s => s.clips);
   const lessonClips = useMemo(() => allClips.filter(c => c.lessonId === lessonId), [allClips, lessonId]);
@@ -265,6 +257,26 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const showClips = !activeTab || activeTab === 'clips';
   const showDictation = !activeTab || activeTab === 'dictation';
   const showFavs = !activeTab || activeTab === 'favorites';
+
+  // Build dictation word status map: sentenceIndex → (wordIndex → status)
+  const dictWordStatus = useMemo(() => {
+    if (!showDictation || !dictationWordResults) return null;
+    const map = new Map<number, Map<number, string>>();
+    for (let si = 0; si < dictationWordResults.length; si++) {
+      const results = dictationWordResults[si];
+      if (!results) continue;
+      const wordMap = new Map<number, string>();
+      let correctIdx = 0;
+      for (const r of results) {
+        if (r.status === 'correct') { wordMap.set(correctIdx, 'correct'); correctIdx++; }
+        else if (r.status === 'wrong') { wordMap.set(correctIdx, 'wrong'); correctIdx++; }
+        else if (r.status === 'missing') { wordMap.set(correctIdx, 'missing'); correctIdx++; }
+        // extras don't map to expected words
+      }
+      map.set(si, wordMap);
+    }
+    return map;
+  }, [showDictation, dictationWordResults]);
 
   return (
     <div ref={containerRef} className="relative">
@@ -335,13 +347,17 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                       }
                       const isKnown = knownWords.has(word.text.toLowerCase());
                       const isFavorited = isFav(word.text.toLowerCase(), 'word');
-                      const isWrong = wrongIdxMap.get(lineIdx)?.has(wordIdx) ?? false;
                       const anchoredClip = clipByAnchorWordId.get(word.id);
                       const hexToRgb = (hex: string) => {
                         const m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
                         return m ? `${parseInt(m[1],16)},${parseInt(m[2],16)},${parseInt(m[3],16)}` : '250,204,21';
                       };
                       const clipRgb = hexToRgb(ci.color);
+                      // Dictation word status
+                      const dwStatus = dictWordStatus?.get(lineIdx)?.get(wordIdx);
+                      const isDictCorrect = dwStatus === 'correct';
+                      const isDictWrong = dwStatus === 'wrong';
+                      const isDictMissing = dwStatus === 'missing';
                       return (
                         <span key={word.id} data-word-id={word.id}
                           onMouseDown={e=>handleWordMouseDown(word,e)}
@@ -353,9 +369,12 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                             word.id===activeWordId&&!selection ? 'active' : sel ? 'selected' : 'hover:bg-[var(--bg-hover)]'
                           }`}
                           style={{
-                            ...(showClips && ci.count > 0 ? { background: `rgba(${clipRgb},${clipAlpha})`, borderRadius: 0 } : {}),
-                            ...(showFavs && isKnown ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
-                            ...(showDictation && isWrong ? { textDecoration: 'underline wavy rgba(239,68,68,0.6)', textUnderlineOffset: '2px' } : showClips && ci.count > 0 ? { borderBottom: `1px solid rgba(${clipRgb},0.4)` } : {}),
+                            ...(showDictation && isDictCorrect ? { background: 'rgba(52,211,153,0.12)', borderRadius: 2 } : {}),
+                            ...(showDictation && isDictWrong ? { background: 'rgba(239,68,68,0.12)', borderRadius: 2, textDecoration: 'underline wavy rgba(239,68,68,0.5)', textUnderlineOffset: '2px' } : {}),
+                            ...(showDictation && isDictMissing ? { background: 'rgba(239,68,68,0.06)', borderRadius: 2, fontStyle: 'italic', color: 'var(--text-tertiary)' } : {}),
+                            ...(!showDictation && showClips && ci.count > 0 ? { background: `rgba(${clipRgb},${clipAlpha})`, borderRadius: 0 } : {}),
+                            ...(showFavs && isKnown && !showDictation ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
+                            ...(showClips && ci.count > 0 && !showDictation ? { borderBottom: `1px solid rgba(${clipRgb},0.4)` } : {}),
                           }}>
                           {/* Clip play button at the start of each clip */}
                           {showClips && anchoredClip && (
