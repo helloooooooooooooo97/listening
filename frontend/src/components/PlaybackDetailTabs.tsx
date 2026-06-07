@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
@@ -69,18 +69,33 @@ export default function PlaybackDetailTabs({
     }).catch(() => {});
   };
 
-  const handlePlayAll = () => {
-    if (playAll) { setPlayAll(false); return; }
-    setPlayAll(true);
-    const sorted = [...lessonClips].sort((a, b) => a.startTime - b.startTime);
-    let idx = 0;
-    const playNext = () => {
-      if (idx >= sorted.length) { setPlayAll(false); return; }
-      playClip(sorted[idx], lesson);
-      idx++;
+  const playAllRef = useRef<{ clips: AudioClip[]; index: number } | null>(null);
+
+  // Listen for clip end to advance play-all
+  useEffect(() => {
+    const a = document.querySelector('audio');
+    if (!a || !playAll) return;
+    const onEnded = () => {
+      const state = playAllRef.current;
+      if (!state || state.index >= state.clips.length) {
+        setPlayAll(false);
+        playAllRef.current = null;
+        return;
+      }
+      playClip(state.clips[state.index], lesson);
+      state.index++;
     };
-    // Listen for clip end via audio store — simplified: play with delay
-    playNext();
+    a.addEventListener('ended', onEnded);
+    return () => a.removeEventListener('ended', onEnded);
+  }, [playAll, lesson, playClip]);
+
+  const handlePlayAll = () => {
+    if (playAll) { setPlayAll(false); playAllRef.current = null; return; }
+    const sorted = [...lessonClips].sort((a, b) => a.startTime - b.startTime);
+    if (sorted.length === 0) return;
+    playAllRef.current = { clips: sorted, index: 1 };
+    setPlayAll(true);
+    playClip(sorted[0], lesson);
   };
 
   const lessonFavs = useMemo(() => favItems.filter(i =>
