@@ -216,6 +216,15 @@ export default function PlayerBar() {
                 <span className="text-tertiary">/</span>
                 <span className="font-mono tabular-nums text-tertiary">{fmt(dDur)}</span>
 
+                {/* Volume */}
+                <div className="relative flex items-center group">
+                  <button onClick={e => { e.stopPropagation(); const a = document.querySelector('audio'); if (a) a.volume = a.volume === 0 ? 1 : 0; }}
+                    className="text-tertiary hover:text-secondary transition-colors cursor-pointer">🔈</button>
+                  <input type="range" min="0" max="1" step="0.1" defaultValue="1"
+                    onChange={e => { const a = document.querySelector('audio'); if (a) { a.volume = parseFloat(e.target.value); localStorage.setItem('app-volume', e.target.value); }}}
+                    className="w-0 group-hover:w-16 transition-all duration-200 h-1 accent-[var(--accent)] cursor-pointer opacity-0 group-hover:opacity-100" />
+                </div>
+
                 {/* Speed dropdown */}
                 <div className="relative speed-dropdown">
                   <button

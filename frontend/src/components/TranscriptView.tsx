@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from 'react';
-import { HiBookmark, HiPlay } from 'react-icons/hi2';
+import { HiBookmark, HiPlay, HiCheck, HiHeart, HiMagnifyingGlass } from 'react-icons/hi2';
 import type { TranscriptLine, TranscriptWord, AudioClip } from '../types/lesson';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useToastStore } from '../stores/toastStore';
-import { useAudioStore } from '../stores/audioStore';
+import { useAudioStore, getAudio } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
-import { getKnownWords, getDictationSentences, type SentenceDictation } from '../lib/api';
+import { getKnownWords, getDictationSentences, setWordKnown, type SentenceDictation } from '../lib/api';
 
 interface Props {
   lessonId: string; lessonTitle: string;
@@ -17,6 +17,13 @@ interface Props {
   activeClipId?: string | null;
   flashSentence?: number | null;
 }
+
+interface ContextMenu {
+  x: number; y: number;
+  word: TranscriptWord;
+}
+
+function fmt(t: number) { const m = Math.floor(t / 60); return `${m}:${Math.floor(t % 60).toString().padStart(2, '0')}`; }
 
 interface WordSelection { startWord: TranscriptWord; endWord: TranscriptWord; }
 
@@ -34,7 +41,13 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const [clipColor, setClipColor] = useState('#facc15');
   const [knownWords, setKnownWords] = useState<Set<string>>(new Set());
   const [sentenceScores, setSentenceScores] = useState<SentenceDictation[]>([]);
+  const [ctxMenu, setCtxMenu] = useState<ContextMenu | null>(null);
+  const [focusedSentence, setFocusedSentence] = useState<number>(-1);
+  const [autoScroll, setAutoScroll] = useState(true);
+  const [abLoop, setAbLoop] = useState<{ a: number; b: number | null } | null>(null);
+  const [fontSize, setFontSize] = useState<'sm' | 'base' | 'lg'>('base');
   const isFav = useFavoritesStore(s => s.isFav);
+  const favToggle = useFavoritesStore(s => s.toggle);
   const playClip = useAudioStore(s => s.playClip);
   const setLoopTarget = useAudioStore(s => s.setLoopTarget);
   const defaultLoopCount = useSettingsStore(s => s.settings.defaultLoopCount);
@@ -55,7 +68,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   // Smooth scroll only when active line changes and is outside visible area
   const prevActiveRef = useRef(activeLineIndex);
   useLayoutEffect(() => {
-    if (activeLineIndex === prevActiveRef.current) return;
+    if (!autoScroll || activeLineIndex === prevActiveRef.current) return;
     prevActiveRef.current = activeLineIndex;
     const el = activeLineRef.current;
     if (!el || !containerRef.current) return;
@@ -66,7 +79,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     if (!isVisible) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [activeLineIndex]);
+  }, [activeLineIndex, autoScroll]);
 
   const getWordIndex = (id: string) => words.findIndex(w=>w.id===id);
 
@@ -91,10 +104,77 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     }
   }, [selection]);
 
+  // ── Context menu ──
+  const handleWordContextMenu = useCallback((e: React.MouseEvent, word: TranscriptWord) => {
+    e.preventDefault();
+    setCtxMenu({ x: e.clientX, y: e.clientY, word });
+  }, []);
+
+  const closeContextMenu = useCallback(() => setCtxMenu(null), []);
+
+  useEffect(() => {
+    if (!ctxMenu) return;
+    const close = () => setCtxMenu(null);
+    document.addEventListener('click', close);
+    document.addEventListener('scroll', close, true);
+    return () => {
+      document.removeEventListener('click', close);
+      document.removeEventListener('scroll', close, true);
+    };
+  }, [ctxMenu]);
+
+  // ── Double-click to toggle known ──
+  const handleWordDoubleClick = useCallback((word: TranscriptWord) => {
+    const text = word.text.toLowerCase();
+    const known = knownWords.has(text);
+    setKnownWords(prev => {
+      const next = new Set(prev);
+      if (known) next.delete(text); else next.add(text);
+      return next;
+    });
+    setWordKnown(text, !known).catch(() => {});
+  }, [knownWords]);
+
+  // ── Keyboard navigation ──
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (ctxMenu) {
+        if (e.key === 'Escape') setCtxMenu(null);
+        return;
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setFocusedSentence(prev => {
+          const next = Math.min(lines.length - 1, prev + 1);
+          const el = document.querySelector(`[data-sentence-idx="${next}"]`);
+          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return next;
+        });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setFocusedSentence(prev => {
+          const next = Math.max(0, prev - 1);
+          const el = document.querySelector(`[data-sentence-idx="${next}"]`);
+          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return next;
+        });
+      } else if (e.key === 'Enter' && focusedSentence >= 0) {
+        e.preventDefault();
+        onSeek(lines[focusedSentence].start);
+      } else if (e.key === 'Escape') {
+        setFocusedSentence(-1);
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [lines, focusedSentence, ctxMenu, onSeek]);
+
+  // ── Clear selection on outside click ──
   useEffect(() => {
     const onClick=(e:MouseEvent)=>{
       const target = e.target as HTMLElement;
-      if (target.closest('.clip-toolbar')) return;
+      if (target.closest('.clip-toolbar') || target.closest('.ctx-menu')) return;
       setSelection(null); setShowToolbar(false); setClipNote('');
     };
     document.addEventListener('mousedown',onClick); return ()=>document.removeEventListener('mousedown',onClick);
@@ -224,13 +304,48 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
       })()}
 
       <div className="space-y-1" onMouseUp={handleMouseUp}>
+        {/* Toolbar: auto-scroll, A-B loop, seek, font size */}
+        <div className="flex items-center gap-2 px-1 pb-2 flex-wrap">
+          <button onClick={() => setAutoScroll(!autoScroll)}
+            className={`text-xs px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
+              autoScroll ? 'text-tertiary hover:text-secondary' : 'text-[var(--accent)] bg-[var(--accent-soft)]'
+            }`} title="自动滚动">📌</button>
+
+          <button onClick={() => {
+            if (abLoop) { setAbLoop(null); return; }
+            setAbLoop({ a: currentTime, b: null });
+          }} className={`text-xs px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
+            abLoop ? 'text-[var(--accent)] bg-[var(--accent-soft)]' : 'text-tertiary hover:text-secondary'
+          }`} title="A-B 循环">{abLoop ? 'AB' : 'A-B'}</button>
+          {abLoop && !abLoop.b && (
+            <button onClick={() => setAbLoop(prev => prev ? { ...prev, b: currentTime } : null)}
+              className="text-xs px-1.5 py-0.5 rounded bg-[var(--accent)]/10 text-[var(--accent)] cursor-pointer" title="设置 B 点">设 B ({fmt(currentTime)})</button>
+          )}
+          {abLoop?.b && (
+            <span className="text-[10px] text-[var(--accent)]">{fmt(abLoop.a)}–{fmt(abLoop.b)}</span>
+          )}
+
+          <span className="text-tertiary">|</span>
+          <button onClick={() => onSeek(Math.max(0, currentTime - 5))}
+            className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer" title="后退5秒">⏪ 5s</button>
+          <button onClick={() => onSeek(currentTime + 10)}
+            className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer" title="前进10秒">10s &gt;&gt;</button>
+
+          <div className="flex-1" />
+          <button onClick={() => setFontSize(f => f === 'base' ? 'lg' : f === 'lg' ? 'sm' : 'base')}
+            className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-1" title="切换字号">
+            {fontSize === 'sm' ? 'A⁻' : fontSize === 'lg' ? 'A⁺' : 'A'}
+          </button>
+        </div>
+
         {lines.map((line, lineIdx) => {
           const isActive = lineIdx===activeLineIndex;
           const lineWords = words.filter(w=>w.start>=line.start-0.05&&w.end<=line.end+0.05);
           const sentData = sentenceDictMap.get(lineIdx);
           return (
             <div key={line.id} ref={isActive?activeLineRef:null}
-              className={`transcript-line ${isActive?'active':''} flex items-start gap-4 px-4 py-2.5`}
+              data-sentence-idx={lineIdx}
+              className={`transcript-line ${isActive?'active':''} ${focusedSentence===lineIdx?'ring-1 ring-[var(--accent)]/30 rounded-lg':''} flex items-start gap-4 px-4 py-2.5`}
               onClick={()=>onSeek(line.start)}>
               {/* Line number + timestamp */}
               <div className="flex-shrink-0 flex items-center gap-2 pt-0.5 text-sm font-mono text-tertiary select-none">
@@ -238,7 +353,9 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                 <span className="w-12 text-left text-tertiary">{Math.floor(line.start/60)}:{Math.floor(line.start%60).toString().padStart(2,'0')}</span>
               </div>
               {/* Words */}
-              <p className="flex-1 text-base leading-relaxed text-secondary select-none">
+              <p className={`flex-1 leading-relaxed text-secondary select-none ${
+                fontSize === 'sm' ? 'text-sm' : fontSize === 'lg' ? 'text-lg' : 'text-base'
+              }`}>
                 {lineWords.length>0
                   ? lineWords.map((word, wordIdx) => {
                       const sel=isWordSelected(word.id);
@@ -266,6 +383,8 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                           onMouseDown={e=>handleWordMouseDown(word,e)}
                           onMouseEnter={()=>handleWordMouseEnter(word)}
                           onClick={e => { e.stopPropagation(); if (!selection) onSeek(word.start); }}
+                          onContextMenu={e => handleWordContextMenu(e, word)}
+                          onDoubleClick={() => handleWordDoubleClick(word)}
                           className={`transcript-word cursor-pointer ${
                             word.id===activeWordId&&!selection ? 'active' : sel ? 'selected' : 'hover:bg-[var(--bg-hover)]'
                           }`}
@@ -307,6 +426,53 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
           );
         })}
       </div>
+
+      {/* Context Menu */}
+      {ctxMenu && (
+        <div className="ctx-menu fixed z-[100] rounded-xl shadow-2xl border border-[var(--border-primary)] overflow-hidden animate-scale-in"
+          style={{
+            left: Math.min(ctxMenu.x, window.innerWidth - 200),
+            top: Math.min(ctxMenu.y, window.innerHeight - 220),
+            background: 'var(--glass-bg)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+          }}>
+          <button onClick={() => {
+            const a = getAudio();
+            const savedCurrent = a.currentTime;
+            a.currentTime = ctxMenu.word.start;
+            if (a.paused) { a.play(); setTimeout(() => { a.pause(); a.currentTime = savedCurrent; }, 800); }
+            else { setTimeout(() => { a.currentTime = savedCurrent; }, 800); }
+            closeContextMenu();
+          }} className="w-full text-left px-4 py-2.5 text-xs text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-center gap-2">
+            <HiPlay size={12} className="text-tertiary"/> 播放此词
+          </button>
+          <button onClick={() => {
+            handleWordDoubleClick(ctxMenu.word);
+            closeContextMenu();
+          }} className={`w-full text-left px-4 py-2.5 text-xs transition-colors cursor-pointer flex items-center gap-2 ${
+            knownWords.has(ctxMenu.word.text.toLowerCase()) ? 'text-emerald-400 hover:bg-[var(--bg-hover)]' : 'text-secondary hover:bg-[var(--bg-hover)]'
+          }`}>
+            <HiCheck size={12} className={knownWords.has(ctxMenu.word.text.toLowerCase()) ? 'text-emerald-400' : 'text-tertiary'} />
+            {knownWords.has(ctxMenu.word.text.toLowerCase()) ? '取消掌握' : '标记掌握'}
+          </button>
+          <button onClick={() => {
+            favToggle({ item_id: ctxMenu.word.text.toLowerCase(), item_type: 'word', title: ctxMenu.word.text, subtitle: '' });
+            closeContextMenu();
+          }} className={`w-full text-left px-4 py-2.5 text-xs transition-colors cursor-pointer flex items-center gap-2 ${
+            isFav(ctxMenu.word.text.toLowerCase(), 'word') ? 'text-[var(--accent)] hover:bg-[var(--bg-hover)]' : 'text-secondary hover:bg-[var(--bg-hover)]'
+          }`}>
+            <HiHeart size={12} className={isFav(ctxMenu.word.text.toLowerCase(), 'word') ? 'text-[var(--accent)]' : 'text-tertiary'} />
+            {isFav(ctxMenu.word.text.toLowerCase(), 'word') ? '取消收藏' : '收藏单词'}
+          </button>
+          <button onClick={() => {
+            window.open(`https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(ctxMenu.word.text.toLowerCase())}`, '_blank');
+            closeContextMenu();
+          }} className="w-full text-left px-4 py-2.5 text-xs text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-center gap-2">
+            <HiMagnifyingGlass size={12} className="text-tertiary"/> 查词典
+          </button>
+        </div>
+      )}
     </div>
   );
 }

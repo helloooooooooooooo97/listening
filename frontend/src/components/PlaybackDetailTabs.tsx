@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { HiBookmark, HiHeart, HiPencil, HiPlay, HiTag, HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
+import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
 import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
+import { useToastStore } from '../stores/toastStore';
 import TranscriptView from './TranscriptView';
 
 type SideTab = 'clips' | 'dictation' | 'favorites';
@@ -40,16 +41,47 @@ export default function PlaybackDetailTabs({
   const [loadingDictation, setLoadingDictation] = useState(false);
   const [hoveredClipId, setHoveredClipId] = useState<string | null>(null);
   const [collapsed, setCollapsed] = useState(false);
+  const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
+  const [playAll, setPlayAll] = useState(false);
+  const [editingClipId, setEditingClipId] = useState<string | null>(null);
+  const [editNote, setEditNote] = useState('');
   const clips = useClipsStore(s => s.clips);
+  const removeClip = useClipsStore(s => s.removeClip);
+  const updateClip = useClipsStore(s => s.updateClip);
   const favItems = useFavoritesStore(s => s.items);
   const playClip = useAudioStore(s => s.playClip);
   const audioMode = useAudioStore(s => s.mode);
+  const addToast = useToastStore(s => s.addToast);
   const activeClipId = audioMode.kind === 'clip' ? audioMode.clip.id : null;
 
-  const lessonClips = useMemo(
-    () => clips.filter(c => c.lessonId === lesson.id),
-    [clips, lesson.id]
-  );
+  const lessonClips = useMemo(() => {
+    const filtered = clips.filter(c => c.lessonId === lesson.id);
+    if (clipSort === 'date') return [...filtered].sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+    return [...filtered].sort((a, b) => a.startTime - b.startTime);
+  }, [clips, lesson.id, clipSort]);
+
+  const handleExportClips = () => {
+    const text = lessonClips.map(c =>
+      `[${fmt(c.startTime)}-${fmt(c.endTime)}] ${c.text}${c.note ? ' (' + c.note + ')' : ''}`
+    ).join('\n');
+    navigator.clipboard.writeText(text).then(() => {
+      addToast(`已复制 ${lessonClips.length} 个片段`, 'success');
+    }).catch(() => {});
+  };
+
+  const handlePlayAll = () => {
+    if (playAll) { setPlayAll(false); return; }
+    setPlayAll(true);
+    const sorted = [...lessonClips].sort((a, b) => a.startTime - b.startTime);
+    let idx = 0;
+    const playNext = () => {
+      if (idx >= sorted.length) { setPlayAll(false); return; }
+      playClip(sorted[idx], lesson);
+      idx++;
+    };
+    // Listen for clip end via audio store — simplified: play with delay
+    playNext();
+  };
 
   const lessonFavs = useMemo(() => favItems.filter(i =>
     i.item_type === 'word' ||
@@ -144,11 +176,17 @@ export default function PlaybackDetailTabs({
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-medium text-secondary">句子 {r.sentence_index + 1}</span>
-                      <span className={`text-xs font-mono font-semibold px-1.5 py-0.5 rounded ${
-                        r.score >= 80 ? 'text-emerald-500 bg-emerald-500/10' :
-                        r.score >= 50 ? 'text-amber-500 bg-amber-500/10' :
-                        'text-red-500 bg-red-500/10'
-                      }`}>{r.score}%</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`text-xs font-mono font-semibold px-1.5 py-0.5 rounded ${
+                          r.score >= 80 ? 'text-emerald-500 bg-emerald-500/10' :
+                          r.score >= 50 ? 'text-amber-500 bg-amber-500/10' :
+                          'text-red-500 bg-red-500/10'
+                        }`}>{r.score}%</span>
+                        {r.score < 80 && (
+                          <span onClick={e => { e.stopPropagation(); onOpenDictation(r.sentence_index); }}
+                            className="text-[10px] text-[var(--accent)] hover:underline cursor-pointer">复练</span>
+                        )}
+                      </div>
                     </div>
                     {r.user_input && <p className="text-sm text-secondary mb-1">{r.user_input}</p>}
                     {r.expected_text && r.user_input && r.score < 100 && (
@@ -163,37 +201,92 @@ export default function PlaybackDetailTabs({
             {sideTab === 'clips' && (
               lessonClips.length === 0 ? (
                 <p className="text-center text-tertiary text-sm py-16">暂无片段</p>
-              ) : lessonClips.map((clip: AudioClip) => {
-                const d = clip.endTime - clip.startTime;
-                const isActive = activeClipId === clip.id;
-                const isHovered = hoveredClipId === clip.id;
-                return (
-                  <button
-                    key={clip.id}
-                    onClick={() => { onSeek(clip.startTime); playClip(clip, lesson); }}
-                    onMouseEnter={() => setHoveredClipId(clip.id)}
-                    onMouseLeave={() => setHoveredClipId(null)}
-                    className={`w-full text-left px-5 py-3 transition-colors cursor-pointer flex items-start gap-3 ${
-                      isActive ? 'bg-[var(--accent-soft)]' : isHovered ? 'bg-[var(--bg-hover)]' : 'hover:bg-[var(--bg-hover)]'
-                    }`}
-                  >
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: clip.color + '20', border: `1px solid ${clip.color}40` }}>
-                      <HiBookmark size={13} style={{ color: clip.color }} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-tertiary">{d.toFixed(1)}s</span>
-                        <span className="text-xs text-tertiary">{fmt(clip.startTime)} - {fmt(clip.endTime)}</span>
-                        {clip.note && <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-secondary">{clip.note}</span>}
+              ) : (
+                <>
+                  {/* Toolbar: sort, play all, export */}
+                  <div className="flex items-center gap-1 px-4 py-2 border-b border-[var(--border-secondary)]">
+                    <button onClick={() => setClipSort(s => s === 'time' ? 'date' : 'time')}
+                      className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1">
+                      {clipSort === 'time' ? '按时间' : '按日期'}
+                    </button>
+                    <div className="flex-1" />
+                    <button onClick={handlePlayAll}
+                      className={`text-xs px-2 py-1 rounded transition-colors cursor-pointer ${playAll ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-tertiary hover:text-secondary'}`}>
+                      {playAll ? '停止' : '▶ 连续播放'}
+                    </button>
+                    <button onClick={handleExportClips}
+                      className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1 flex items-center gap-1">
+                      <HiArrowDownTray size={11} /> 导出
+                    </button>
+                  </div>
+
+                  {lessonClips.map((clip: AudioClip) => {
+                    const d = clip.endTime - clip.startTime;
+                    const isActive = activeClipId === clip.id;
+                    const isHovered = hoveredClipId === clip.id;
+                    const isEditing = editingClipId === clip.id;
+                    return (
+                  <div key={clip.id}
+                    className={`transition-colors ${isActive ? 'bg-[var(--accent-soft)]' : isHovered ? 'bg-[var(--bg-hover)]' : ''}`}>
+                    <div className="flex items-start gap-3 px-5 py-3">
+                      <button
+                        onClick={() => { onSeek(clip.startTime); playClip(clip, lesson); }}
+                        onMouseEnter={() => setHoveredClipId(clip.id)}
+                        onMouseLeave={() => setHoveredClipId(null)}
+                        className="flex-1 text-left min-w-0 flex items-start gap-3 cursor-pointer"
+                      >
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: clip.color + '20', border: `1px solid ${clip.color}40` }}>
+                          <HiBookmark size={13} style={{ color: clip.color }} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          {isEditing ? (
+                            <input type="text" value={editNote}
+                              onChange={e => setEditNote(e.target.value)}
+                              onKeyDown={e => {
+                                if (e.key === 'Enter') { updateClip(clip.id, { note: editNote }); setEditingClipId(null); }
+                                if (e.key === 'Escape') setEditingClipId(null);
+                              }}
+                              onBlur={() => { if (editNote !== clip.note) updateClip(clip.id, { note: editNote }); setEditingClipId(null); }}
+                              className="w-full text-xs bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded px-2 py-1 text-secondary outline-none"
+                              autoFocus
+                              onClick={e => e.stopPropagation()}
+                            />
+                          ) : (
+                            <>
+                              <p className="text-sm text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
+                              <div className="flex items-center gap-2 mt-1">
+                                <span className="text-xs text-tertiary">{d.toFixed(1)}s</span>
+                                <span className="text-xs text-tertiary">{fmt(clip.startTime)} - {fmt(clip.endTime)}</span>
+                                {clip.note && <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-secondary">{clip.note}</span>}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </button>
+                      {/* More actions */}
+                      <div className="relative flex-shrink-0 flex items-center gap-1">
+                        <button onClick={e => { e.stopPropagation(); setEditingClipId(clip.id); setEditNote(clip.note || ''); }}
+                          className="text-tertiary hover:text-secondary transition-colors cursor-pointer p-1">
+                          <HiPencil size={11} />
+                        </button>
+                        <button onClick={e => { e.stopPropagation(); removeClip(clip.id); addToast('片段已删除', 'info'); }}
+                          className="text-tertiary hover:text-[var(--accent)] transition-colors cursor-pointer p-1">
+                          <HiTrash size={11} />
+                        </button>
                       </div>
                     </div>
-                    <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-tertiary bg-[var(--bg-tertiary)]">
-                      <HiPlay size={12} />
-                    </span>
-                  </button>
-                );
-              })
+                    {/* Color picker row */}
+                    <div className="flex items-center gap-1 px-5 pb-2 pl-16">
+                      {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
+                        <button key={c} onClick={e => { e.stopPropagation(); updateClip(clip.id, { color: c }); }}
+                          className={`w-3.5 h-3.5 rounded-full border transition-transform cursor-pointer hover:scale-125 ${clip.color === c ? 'ring-1 ring-offset-1 ring-[var(--text-primary)]' : ''}`}
+                          style={{ backgroundColor: c }} />
+                      ))}
+                    </div>
+                  </div>
+                  );})}
+                </>
+              )
             )}
 
             {sideTab === 'favorites' && (
