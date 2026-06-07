@@ -25,6 +25,7 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const userInput = useDictationStore(s => s.userInput);
   const results = useDictationStore(s => s.results);
   const scores = useDictationStore(s => s.scores);
+  const scoreDetails = useDictationStore(s => s.scoreDetails);
   const phase = useDictationStore(s => s.phase);
   const setInput = useDictationStore(s => s.setInput);
   const submit = useDictationStore(s => s.submit);
@@ -85,6 +86,7 @@ export default function EmbeddedDictation({ lesson }: Props) {
       <DictationOverview
         lesson={lesson}
         scores={scores}
+        scoreDetails={scoreDetails}
         onRetrySentence={(idx) => {
           goToSentence(idx);
           setOverviewMode(false);
@@ -154,12 +156,10 @@ export default function EmbeddedDictation({ lesson }: Props) {
         />
 
         {/* Overview button */}
-        {scores.length > 0 && (
-          <button onClick={() => setOverviewMode(!overviewMode)}
-            className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">
-            {overviewMode ? '返回听写' : '查看全部结果'}
-          </button>
-        )}
+        <button onClick={() => setOverviewMode(!overviewMode)}
+          className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">
+          {overviewMode ? '返回听写' : '查看总览'}
+        </button>
       </div>
     </div>
   );

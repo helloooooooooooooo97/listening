@@ -12,6 +12,7 @@ interface DictationState {
   userInput: string;
   results: WordResult[];
   scores: number[];
+  scoreDetails: WordResult[][];  // per-sentence word results, persisted
   phase: 'idle' | 'typing' | 'feedback';
 
   start: () => void;
@@ -31,10 +32,11 @@ export const useDictationStore = create<DictationState>((set, get) => ({
   userInput: '',
   results: [],
   scores: [],
+  scoreDetails: [],
   phase: 'idle',
 
-  start: () => set({ active: true, sentenceIndex: 0, results: [], scores: [], phase: 'typing', userInput: '' }),
-  startFrom: (idx: number) => set({ active: true, sentenceIndex: idx, results: [], scores: [], phase: 'typing', userInput: '' }),
+  start: () => set({ active: true, sentenceIndex: 0, results: [], scores: [], scoreDetails: [], phase: 'typing', userInput: '' }),
+  startFrom: (idx: number) => set({ active: true, sentenceIndex: idx, results: [], scores: [], scoreDetails: [], phase: 'typing', userInput: '' }),
 
   nextSentence: () => set(s => ({ sentenceIndex: s.sentenceIndex + 1, phase: 'typing', userInput: '', results: [] })),
 
@@ -123,12 +125,17 @@ export const useDictationStore = create<DictationState>((set, get) => ({
     }
 
     const score = expectedWords.length > 0 ? Math.round((correct / expectedWords.length) * 100) : 0;
-    set(s => ({
-      results,
-      scores: [...s.scores, score],
-      phase: 'feedback',
-    }));
+    set(s => {
+      const details = [...s.scoreDetails];
+      details[s.sentenceIndex] = results;
+      return {
+        results,
+        scores: [...s.scores, score],
+        scoreDetails: details,
+        phase: 'feedback',
+      };
+    });
   },
 
-  reset: () => set({ active: false, sentenceIndex: 0, userInput: '', results: [], scores: [], phase: 'idle' }),
+  reset: () => set({ active: false, sentenceIndex: 0, userInput: '', results: [], scores: [], scoreDetails: [], phase: 'idle' }),
 }));
