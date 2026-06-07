@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 import { useAudioStore } from '../../stores/audioStore';
 import { useDictationStore } from '../../stores/dictationStore';
@@ -7,7 +7,6 @@ import type { ListeningLesson } from '../../types/lesson';
 import SentenceSelector from './SentenceSelector';
 import TypingPhase from './TypingPhase';
 import FeedbackPhase from './FeedbackPhase';
-import DictationOverview from './DictationOverview';
 
 interface Props {
   lesson: ListeningLesson;
@@ -18,14 +17,12 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const isPlaying = useAudioStore(s => s.isPlaying);
   const currentTime = useAudioStore(s => s.currentTime);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [overviewMode, setOverviewMode] = useState(false);
 
   const active = useDictationStore(s => s.active);
   const sentenceIndex = useDictationStore(s => s.sentenceIndex);
   const userInput = useDictationStore(s => s.userInput);
   const results = useDictationStore(s => s.results);
   const scores = useDictationStore(s => s.scores);
-  const scoreDetails = useDictationStore(s => s.scoreDetails);
   const phase = useDictationStore(s => s.phase);
   const setInput = useDictationStore(s => s.setInput);
   const submit = useDictationStore(s => s.submit);
@@ -81,23 +78,7 @@ export default function EmbeddedDictation({ lesson }: Props) {
   // ── Now conditional rendering ──
   if (!active) return null;
 
-  if (overviewMode || !currentSentence) {
-    return (
-      <DictationOverview
-        lesson={lesson}
-        scores={scores}
-        scoreDetails={scoreDetails}
-        onRetrySentence={(idx) => {
-          goToSentence(idx);
-          setOverviewMode(false);
-        }}
-        onClose={() => {
-          if (!currentSentence) reset();
-          else setOverviewMode(false);
-        }}
-      />
-    );
-  }
+  if (!currentSentence) { reset(); return null; }
 
   return (
     <div className="h-full flex flex-col items-center justify-center px-6">
@@ -155,11 +136,6 @@ export default function EmbeddedDictation({ lesson }: Props) {
           onGoToSentence={goToSentence}
         />
 
-        {/* Overview button */}
-        <button onClick={() => setOverviewMode(!overviewMode)}
-          className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">
-          {overviewMode ? '返回听写' : '查看总览'}
-        </button>
       </div>
     </div>
   );
