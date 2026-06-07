@@ -67,7 +67,7 @@ export const useDictationStore = create<DictationState>((set, get) => ({
     const expLower = expectedWords.map(w => w.toLowerCase());
     const actLower = actualWords.map(w => w.toLowerCase());
 
-    // LCS — longest common subsequence
+    // LCS DP table
     const m = expLower.length, n = actLower.length;
     const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
     for (let i = 1; i <= m; i++) {
@@ -78,37 +78,47 @@ export const useDictationStore = create<DictationState>((set, get) => ({
       }
     }
 
-    // Backtrack to find matched pairs
-    const matchedExp = new Set<number>();
-    const matchedAct = new Set<number>();
-    let i = m, j = n;
-    while (i > 0 && j > 0) {
-      if (expLower[i - 1] === actLower[j - 1]) {
-        matchedExp.add(i - 1);
-        matchedAct.add(j - 1);
-        i--; j--;
-      } else if (dp[i - 1][j] >= dp[i][j - 1]) {
-        i--;
-      } else {
-        j--;
-      }
-    }
-
-    // Build results
+    // Build aligned results: walk through expected in order, pairing with actual
     const results: WordResult[] = [];
     let correct = 0;
-    for (let i = 0; i < m; i++) {
-      if (matchedExp.has(i)) {
-        results.push({ expected: expectedWords[i], actual: expectedWords[i], status: 'correct' });
+    let ei = 0, ai = 0;
+
+    while (ei < m || ai < n) {
+      if (ei < m && ai < n && expLower[ei] === actLower[ai]) {
+        // Exact match
+        results.push({ expected: expectedWords[ei], actual: actualWords[ai], status: 'correct' });
         correct++;
+        ei++; ai++;
+      } else if (ei < m && ai < n && dp[ei + 1][ai] >= dp[ei][ai + 1]) {
+        // Skip expected word (missing) — but also check if we should pair with next actual
+        // Try to align: is this expected word matched somewhere ahead?
+        let foundAt = -1;
+        for (let k = ai; k < n; k++) {
+          if (expLower[ei] === actLower[k]) { foundAt = k; break; }
+        }
+        if (foundAt >= 0 && foundAt - ai <= 2) {
+          // User has extra words before this match — mark them as extra
+          while (ai < foundAt) {
+            results.push({ expected: '', actual: actualWords[ai], status: 'extra' });
+            ai++;
+          }
+          // Now match
+          results.push({ expected: expectedWords[ei], actual: actualWords[ai], status: 'correct' });
+          correct++;
+          ei++; ai++;
+        } else {
+          // Truly missing
+          results.push({ expected: expectedWords[ei], actual: null, status: 'missing' });
+          ei++;
+        }
+      } else if (ai < n && (ei >= m || dp[ei][ai + 1] >= dp[ei + 1][ai])) {
+        // Extra word from user
+        results.push({ expected: '', actual: actualWords[ai], status: 'extra' });
+        ai++;
       } else {
-        // Find which actual word is closest or mark as missing
-        results.push({ expected: expectedWords[i], actual: null, status: 'missing' });
-      }
-    }
-    for (let j = 0; j < n; j++) {
-      if (!matchedAct.has(j)) {
-        results.push({ expected: '', actual: actualWords[j], status: 'extra' });
+        // Fallback: missing
+        if (ei < m) { results.push({ expected: expectedWords[ei], actual: null, status: 'missing' }); ei++; }
+        if (ai < n) { results.push({ expected: '', actual: actualWords[ai], status: 'extra' }); ai++; }
       }
     }
 

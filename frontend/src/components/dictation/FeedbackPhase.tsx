@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HiCheck, HiXMark, HiPlay, HiArrowLeft, HiArrowRight } from 'react-icons/hi2';
+import { HiPlay, HiArrowLeft, HiArrowRight } from 'react-icons/hi2';
 import type { WordResult } from '../../stores/dictationStore';
 
 interface Props {
@@ -34,9 +34,21 @@ export default function FeedbackPhase({ score, prevScore, results, onPrev, onNex
   const improved = prevScore !== undefined && score > prevScore;
   const worse = prevScore !== undefined && score < prevScore;
 
-  // Split results into correct vs problem words
-  const correct = results.filter(r => r.status === 'correct');
-  const problems = results.filter(r => r.status !== 'correct');
+  // Merge adjacent missing+extra into "wrong" pairs for inline display
+  const merged: WordResult[] = [];
+  for (let i = 0; i < results.length; i++) {
+    const r = results[i];
+    if (r.status === 'missing' && i + 1 < results.length && results[i + 1].status === 'extra') {
+      // User typed something wrong instead of the expected word
+      merged.push({ expected: r.expected, actual: results[i + 1].actual, status: 'wrong' });
+      i++; // skip the extra
+    } else if (r.status === 'extra' && merged.length > 0 && merged[merged.length - 1].status !== 'correct') {
+      // Lone extra — could be from an insertion, just show it
+      merged.push(r);
+    } else {
+      merged.push(r);
+    }
+  }
 
   return (
     <div className="animate-scale-in w-full flex flex-col items-center gap-4">
@@ -47,37 +59,30 @@ export default function FeedbackPhase({ score, prevScore, results, onPrev, onNex
         {worse && <span className="block text-xs text-amber-500 mt-0.5">↓ 比上次低</span>}
       </div>
 
-      {/* Expected vs actual comparison */}
-      <div className="w-full space-y-2">
-        {/* Correct words — always first */}
-        {correct.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 justify-center">
-            {correct.map((r, i) => (
-              <span key={i} className="inline-flex items-center gap-0.5 px-2 py-1 rounded-md text-sm font-medium bg-emerald-500/15 text-emerald-400 animate-scale-in"
-                style={{ animationDelay: `${i * 30}ms`, animationFillMode: 'backwards' }}>
-                <HiCheck size={12} /> {r.expected}
+      {/* Inline sentence with corrections */}
+      <p className="text-lg leading-relaxed text-center">
+        {merged.map((r, i) => {
+          if (r.status === 'correct') {
+            return <span key={i} className="text-secondary animate-scale-in" style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>{r.expected} </span>;
+          }
+          if (r.status === 'wrong') {
+            return (
+              <span key={i} className="animate-scale-in" style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
+                <span className="text-red-400 line-through">{r.actual}</span>
+                <span className="text-red-400 mx-0.5">→</span>
+                <span className="text-emerald-400 font-medium">{r.expected}</span>{' '}
               </span>
-            ))}
-          </div>
-        )}
-
-        {/* Problem words — wrong + missing + extra grouped together */}
-        {problems.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 justify-center">
-            {problems.map((r, i) => (
-              <span key={i} className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-sm font-medium animate-scale-in ${
-                r.status === 'wrong' ? 'bg-red-500/15 text-red-400' :
-                r.status === 'missing' ? 'bg-red-500/10 text-red-300/50' :
-                'bg-amber-500/15 text-amber-400'
-              }`} style={{ animationDelay: `${(correct.length + i) * 30}ms`, animationFillMode: 'backwards' }}>
-                {r.status === 'wrong' && <><HiXMark size={12} /> <span className="line-through">{r.actual}</span> → {r.expected}</>}
-                {r.status === 'missing' && <span className="italic">{r.expected}</span>}
-                {r.status === 'extra' && <><span className="line-through">{r.actual}</span></>}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
+            );
+          }
+          if (r.status === 'missing') {
+            return <span key={i} className="text-red-300/50 italic animate-scale-in" style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>{r.expected} </span>;
+          }
+          if (r.status === 'extra') {
+            return <span key={i} className="text-amber-400 line-through animate-scale-in" style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>{r.actual} </span>;
+          }
+          return null;
+        })}
+      </p>
 
       {/* Actions */}
       <div className="flex gap-2 justify-center w-full">
