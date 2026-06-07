@@ -105,25 +105,44 @@ export default function PlaybackDetailTabs({
   function computeWordResults(expected: string, actual: string): WordResult[] {
     const expLower = expected.toLowerCase().split(/\s+/);
     const actLower = actual.toLowerCase().split(/\s+/);
+    const expOrig = expected.split(/\s+/);
+    const actOrig = actual.split(/\s+/);
     const m = expLower.length, n = actLower.length;
+
+    // LCS DP
     const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
     for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) {
       dp[i][j] = expLower[i - 1] === actLower[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
     }
+
+    // Build aligned results inline (same algorithm as dictationStore.submit)
     const results: WordResult[] = [];
-    let ei = m, aj = n;
-    const matchedE = new Set<number>(), matchedA = new Set<number>();
-    while (ei > 0 && aj > 0) {
-      if (expLower[ei - 1] === actLower[aj - 1]) { matchedE.add(ei - 1); matchedA.add(aj - 1); ei--; aj--; }
-      else if (dp[ei - 1][aj] >= dp[ei][aj - 1]) ei--;
-      else aj--;
-    }
-    for (let i = 0; i < m; i++) {
-      if (matchedE.has(i)) results.push({ expected: expected.split(/\s+/)[i], actual: expected.split(/\s+/)[i], status: 'correct' });
-      else results.push({ expected: expected.split(/\s+/)[i], actual: null, status: 'missing' });
-    }
-    for (let j = 0; j < n; j++) {
-      if (!matchedA.has(j)) results.push({ expected: '', actual: actual.split(/\s+/)[j], status: 'extra' });
+    let ei = 0, ai = 0;
+    while (ei < m || ai < n) {
+      if (ei < m && ai < n && expLower[ei] === actLower[ai]) {
+        results.push({ expected: expOrig[ei], actual: actOrig[ai], status: 'correct' });
+        ei++; ai++;
+      } else if (ei < m && ai < n && dp[ei + 1][ai] >= dp[ei][ai + 1]) {
+        // Check if expected word matches something ahead
+        let foundAt = -1;
+        for (let k = ai; k < n && k - ai <= 2; k++) {
+          if (expLower[ei] === actLower[k]) { foundAt = k; break; }
+        }
+        if (foundAt >= 0) {
+          while (ai < foundAt) { results.push({ expected: '', actual: actOrig[ai], status: 'extra' }); ai++; }
+          results.push({ expected: expOrig[ei], actual: actOrig[ai], status: 'correct' });
+          ei++; ai++;
+        } else {
+          results.push({ expected: expOrig[ei], actual: null, status: 'missing' });
+          ei++;
+        }
+      } else if (ai < n && (ei >= m || dp[ei][ai + 1] >= dp[ei + 1][ai])) {
+        results.push({ expected: '', actual: actOrig[ai], status: 'extra' });
+        ai++;
+      } else {
+        if (ei < m) { results.push({ expected: expOrig[ei], actual: null, status: 'missing' }); ei++; }
+        if (ai < n) { results.push({ expected: '', actual: actOrig[ai], status: 'extra' }); ai++; }
+      }
     }
     return results;
   }
