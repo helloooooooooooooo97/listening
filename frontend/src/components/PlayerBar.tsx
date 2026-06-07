@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiPencil, HiTag, HiPlusCircle, HiChevronRight, HiQueueList } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
+import { findSentenceIndex } from '../lib/audioEngine';
 import { useDictationStore } from '../stores/dictationStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
@@ -100,7 +101,7 @@ export default function PlayerBar() {
             </div>
             {/* Quick actions */}
             <div className="flex items-center gap-1 flex-shrink-0">
-              <button onClick={e=>{e.stopPropagation();isDictating?dictation.reset():dictation.start();}}
+              <button onClick={e=>{e.stopPropagation();isDictating ? dictation.reset() : dictation.startFrom(Math.max(0, findSentenceIndex(mode.lesson, cur)));}}
                 className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors cursor-pointer ${isDictating ? 'text-[var(--accent)] bg-[var(--accent-soft)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'}`}
                 title={isDictating ? '退出听写' : '听写模式'}>
                 <HiPencil size={13} />
@@ -253,7 +254,7 @@ export default function PlayerBar() {
             {hasContent && (
               <>
                 {isL && (
-                  <button onClick={e=>{e.stopPropagation();isDictating?dictation.reset():dictation.start();}}
+                  <button onClick={e=>{e.stopPropagation();isDictating ? dictation.reset() : dictation.startFrom(Math.max(0, findSentenceIndex(mode.lesson, cur)));}}
                     className={`transition-colors cursor-pointer ${isDictating ? 'text-[var(--accent)]' : 'text-tertiary hover:text-secondary'}`}
                     title={isDictating ? '退出听写' : '听写模式'}>
                     <HiPencil size={14}/>

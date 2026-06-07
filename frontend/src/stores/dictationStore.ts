@@ -15,6 +15,7 @@ interface DictationState {
   phase: 'idle' | 'typing' | 'feedback';
 
   start: () => void;
+  startFrom: (idx: number) => void;
   nextSentence: () => void;
   prevSentence: () => void;
   goToSentence: (idx: number) => void;
@@ -33,6 +34,7 @@ export const useDictationStore = create<DictationState>((set, get) => ({
   phase: 'idle',
 
   start: () => set({ active: true, sentenceIndex: 0, results: [], scores: [], phase: 'typing', userInput: '' }),
+  startFrom: (idx: number) => set({ active: true, sentenceIndex: idx, results: [], scores: [], phase: 'typing', userInput: '' }),
 
   nextSentence: () => set(s => ({ sentenceIndex: s.sentenceIndex + 1, phase: 'typing', userInput: '', results: [] })),
 

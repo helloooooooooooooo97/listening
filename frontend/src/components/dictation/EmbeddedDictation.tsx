@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 import { useAudioStore } from '../../stores/audioStore';
 import { useDictationStore } from '../../stores/dictationStore';
 import { postDictation } from '../../lib/api';
@@ -81,13 +82,25 @@ export default function EmbeddedDictation({ lesson }: Props) {
   return (
     <div className="h-full flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-md flex flex-col items-center gap-6">
-        {/* Sentence counter — large, clear */}
-        <div className="text-center">
-          <span className="text-4xl font-bold text-primary tabular-nums">{sentenceIndex + 1}</span>
-          <span className="text-lg text-tertiary"> / {sentences.length}</span>
-          {avgScore !== null && (
-            <p className="text-xs text-tertiary mt-0.5">均分 {avgScore}%</p>
-          )}
+        {/* Sentence counter with prev/next */}
+        <div className="flex items-center gap-3">
+          <button onClick={prevSentence}
+            disabled={sentenceIndex <= 0}
+            className="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary">
+            <HiChevronLeft size={16} />
+          </button>
+          <div className="text-center min-w-[80px]">
+            <span className="text-3xl font-bold text-primary tabular-nums">{sentenceIndex + 1}</span>
+            <span className="text-sm text-tertiary"> / {sentences.length}</span>
+            {avgScore !== null && (
+              <p className="text-[10px] text-tertiary mt-0.5">均分 {avgScore}%</p>
+            )}
+          </div>
+          <button onClick={nextSentence}
+            disabled={sentenceIndex >= sentences.length - 1}
+            className="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary">
+            <HiChevronRight size={16} />
+          </button>
         </div>
 
         {/* Phase */}
