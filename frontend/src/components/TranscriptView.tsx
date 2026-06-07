@@ -23,8 +23,6 @@ interface ContextMenu {
   word: TranscriptWord;
 }
 
-function fmt(t: number) { const m = Math.floor(t / 60); return `${m}:${Math.floor(t % 60).toString().padStart(2, '0')}`; }
-
 interface WordSelection { startWord: TranscriptWord; endWord: TranscriptWord; }
 
 export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId }: Props) {
@@ -44,7 +42,6 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const [ctxMenu, setCtxMenu] = useState<ContextMenu | null>(null);
   const [focusedSentence, setFocusedSentence] = useState<number>(-1);
   const [autoScroll, setAutoScroll] = useState(true);
-  const [abLoop, setAbLoop] = useState<{ a: number; b: number | null } | null>(null);
   const [fontSize, setFontSize] = useState<'sm' | 'base' | 'lg'>('base');
   const isFav = useFavoritesStore(s => s.isFav);
   const favToggle = useFavoritesStore(s => s.toggle);
@@ -304,26 +301,12 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
       })()}
 
       <div className="space-y-1" onMouseUp={handleMouseUp}>
-        {/* Toolbar: auto-scroll, A-B loop, seek, font size */}
+        {/* Toolbar: auto-scroll, seek, font size */}
         <div className="flex items-center gap-2 px-1 pb-2 flex-wrap">
           <button onClick={() => setAutoScroll(!autoScroll)}
             className={`text-xs px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
               autoScroll ? 'text-tertiary hover:text-secondary' : 'text-[var(--accent)] bg-[var(--accent-soft)]'
             }`} title="自动滚动">📌</button>
-
-          <button onClick={() => {
-            if (abLoop) { setAbLoop(null); return; }
-            setAbLoop({ a: currentTime, b: null });
-          }} className={`text-xs px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
-            abLoop ? 'text-[var(--accent)] bg-[var(--accent-soft)]' : 'text-tertiary hover:text-secondary'
-          }`} title="A-B 循环">{abLoop ? 'AB' : 'A-B'}</button>
-          {abLoop && !abLoop.b && (
-            <button onClick={() => setAbLoop(prev => prev ? { ...prev, b: currentTime } : null)}
-              className="text-xs px-1.5 py-0.5 rounded bg-[var(--accent)]/10 text-[var(--accent)] cursor-pointer" title="设置 B 点">设 B ({fmt(currentTime)})</button>
-          )}
-          {abLoop?.b && (
-            <span className="text-[10px] text-[var(--accent)]">{fmt(abLoop.a)}–{fmt(abLoop.b)}</span>
-          )}
 
           <span className="text-tertiary">|</span>
           <button onClick={() => onSeek(Math.max(0, currentTime - 5))}
