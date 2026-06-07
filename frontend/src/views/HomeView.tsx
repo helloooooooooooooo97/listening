@@ -42,7 +42,7 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
             <h1 className="text-3xl font-extrabold text-primary tracking-tight mb-2">欢迎回来</h1>
             <p className="text-tertiary text-sm">继续你的英语听力练习</p>
           </div>
-          <div className="relative w-80">
+          <div className="relative w-full md:w-80">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-tertiary"><HiMagnifyingGlass size={16} /></span>
             <input type="text" placeholder="搜索音频、片段..." value={search} onChange={e=>onSearchChange(e.target.value)}
               className="w-full pl-11 pr-4 py-3 text-[14px] bg-[var(--bg-hover)] border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30 text-primary placeholder:text-tertiary" />
@@ -68,7 +68,7 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
       </div>
       <div className="flex-1 overflow-y-auto px-8 py-6 space-y-8">
         {!q && (
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
             {[
               { label: '音频', value: lessons.length, icon: HiBookOpen, color: '#fa2d48' },
               { label: '片段', value: clips.length, icon: HiBookmark, color: '#10b981' },

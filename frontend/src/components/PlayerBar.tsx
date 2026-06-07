@@ -161,6 +161,14 @@ export default function PlayerBar() {
             </button>
 
             {(isL || isC) && <button onClick={e=>{e.stopPropagation();nextS();}} className="text-secondary hover:text-primary transition-colors cursor-pointer" title="下一句"><HiForward size={15}/></button>}
+            {/* Lyrics expand - visible on mobile */}
+            {(isL || (isC && mode.lesson)) && (
+              <button onClick={e=>{e.stopPropagation();setExpanded(!expanded);}}
+                className="md:hidden w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-all cursor-pointer"
+                title={expanded ? '收起' : '歌词'}>
+                <HiChevronUp size={14} className={expanded ? 'rotate-180 transition-transform' : ''} />
+              </button>
+            )}
           </div>
 
           {/* Right */}

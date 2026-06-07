@@ -18,7 +18,7 @@ const TABS: { key: NavSection; label: string; icon: React.ComponentType<{ size?:
 
 export default function MobileTabBar({ activeSection, onSectionChange }: Props) {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-1.5"
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-20 flex items-center justify-around px-2 py-1.5"
       style={{
         background: 'var(--glass-bg)',
         backdropFilter: 'blur(40px) saturate(180%)',
