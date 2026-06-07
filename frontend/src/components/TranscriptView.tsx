@@ -41,8 +41,6 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const [sentenceScores, setSentenceScores] = useState<SentenceDictation[]>([]);
   const [ctxMenu, setCtxMenu] = useState<ContextMenu | null>(null);
   const [focusedSentence, setFocusedSentence] = useState<number>(-1);
-  const [autoScroll, setAutoScroll] = useState(true);
-  const [fontSize, setFontSize] = useState<'sm' | 'base' | 'lg'>('base');
   const isFav = useFavoritesStore(s => s.isFav);
   const favToggle = useFavoritesStore(s => s.toggle);
   const playClip = useAudioStore(s => s.playClip);
@@ -65,7 +63,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   // Smooth scroll only when active line changes and is outside visible area
   const prevActiveRef = useRef(activeLineIndex);
   useLayoutEffect(() => {
-    if (!autoScroll || activeLineIndex === prevActiveRef.current) return;
+    if (activeLineIndex === prevActiveRef.current) return;
     prevActiveRef.current = activeLineIndex;
     const el = activeLineRef.current;
     if (!el || !containerRef.current) return;
@@ -76,7 +74,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     if (!isVisible) {
       el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  }, [activeLineIndex, autoScroll]);
+  }, [activeLineIndex]);
 
   const getWordIndex = (id: string) => words.findIndex(w=>w.id===id);
 
@@ -301,26 +299,6 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
       })()}
 
       <div className="space-y-1" onMouseUp={handleMouseUp}>
-        {/* Toolbar: auto-scroll, seek, font size */}
-        <div className="flex items-center gap-2 px-1 pb-2 flex-wrap">
-          <button onClick={() => setAutoScroll(!autoScroll)}
-            className={`text-xs px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
-              autoScroll ? 'text-tertiary hover:text-secondary' : 'text-[var(--accent)] bg-[var(--accent-soft)]'
-            }`} title="自动滚动">📌</button>
-
-          <span className="text-tertiary">|</span>
-          <button onClick={() => onSeek(Math.max(0, currentTime - 5))}
-            className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer" title="后退5秒">⏪ 5s</button>
-          <button onClick={() => onSeek(currentTime + 10)}
-            className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer" title="前进10秒">10s &gt;&gt;</button>
-
-          <div className="flex-1" />
-          <button onClick={() => setFontSize(f => f === 'base' ? 'lg' : f === 'lg' ? 'sm' : 'base')}
-            className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-1" title="切换字号">
-            {fontSize === 'sm' ? 'A⁻' : fontSize === 'lg' ? 'A⁺' : 'A'}
-          </button>
-        </div>
-
         {lines.map((line, lineIdx) => {
           const isActive = lineIdx===activeLineIndex;
           const lineWords = words.filter(w=>w.start>=line.start-0.05&&w.end<=line.end+0.05);
@@ -336,9 +314,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                 <span className="w-12 text-left text-tertiary">{Math.floor(line.start/60)}:{Math.floor(line.start%60).toString().padStart(2,'0')}</span>
               </div>
               {/* Words */}
-              <p className={`flex-1 leading-relaxed text-secondary select-none ${
-                fontSize === 'sm' ? 'text-sm' : fontSize === 'lg' ? 'text-lg' : 'text-base'
-              }`}>
+              <p className="flex-1 text-base leading-relaxed text-secondary select-none">
                 {lineWords.length>0
                   ? lineWords.map((word, wordIdx) => {
                       const sel=isWordSelected(word.id);
