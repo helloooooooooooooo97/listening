@@ -62,23 +62,51 @@ export const useDictationStore = create<DictationState>((set, get) => ({
   submit: (expectedWords) => {
     const input = get().userInput.trim();
     const actualWords = input ? input.split(/\s+/) : [];
+    const expLower = expectedWords.map(w => w.toLowerCase());
+    const actLower = actualWords.map(w => w.toLowerCase());
+
+    // LCS — longest common subsequence
+    const m = expLower.length, n = actLower.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        dp[i][j] = expLower[i - 1] === actLower[j - 1]
+          ? dp[i - 1][j - 1] + 1
+          : Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+
+    // Backtrack to find matched pairs
+    const matchedExp = new Set<number>();
+    const matchedAct = new Set<number>();
+    let i = m, j = n;
+    while (i > 0 && j > 0) {
+      if (expLower[i - 1] === actLower[j - 1]) {
+        matchedExp.add(i - 1);
+        matchedAct.add(j - 1);
+        i--; j--;
+      } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+        i--;
+      } else {
+        j--;
+      }
+    }
+
+    // Build results
     const results: WordResult[] = [];
     let correct = 0;
-
-    // Compare expected vs actual
-    const maxLen = Math.max(expectedWords.length, actualWords.length);
-    for (let i = 0; i < maxLen; i++) {
-      const exp = expectedWords[i];
-      const act = actualWords[i];
-      if (exp && act && exp.toLowerCase() === act.toLowerCase()) {
-        results.push({ expected: exp, actual: act, status: 'correct' });
+    for (let i = 0; i < m; i++) {
+      if (matchedExp.has(i)) {
+        results.push({ expected: expectedWords[i], actual: expectedWords[i], status: 'correct' });
         correct++;
-      } else if (exp && !act) {
-        results.push({ expected: exp, actual: null, status: 'missing' });
-      } else if (!exp && act) {
-        results.push({ expected: '', actual: act, status: 'extra' });
       } else {
-        results.push({ expected: exp, actual: act, status: 'wrong' });
+        // Find which actual word is closest or mark as missing
+        results.push({ expected: expectedWords[i], actual: null, status: 'missing' });
+      }
+    }
+    for (let j = 0; j < n; j++) {
+      if (!matchedAct.has(j)) {
+        results.push({ expected: '', actual: actualWords[j], status: 'extra' });
       }
     }
 
