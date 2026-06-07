@@ -142,7 +142,7 @@ export default function PlayerBar() {
           {/* ── Content ── */}
           <div className="flex-1 overflow-y-auto px-4">
             {isDictating ? (
-              <div className="max-w-7xl mx-auto py-4">
+              <div className="max-w-7xl mx-auto py-4 h-full">
                 <EmbeddedDictation lesson={lesson} />
               </div>
             ) : (

@@ -108,7 +108,6 @@ export default function EmbeddedDictation({ lesson }: Props) {
             className="w-7 h-7 rounded-lg flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary">
             <HiArrowRight size={14} />
           </button>
-          <button onClick={reset} className="px-2.5 py-1 text-xs text-secondary hover:text-secondary transition-colors cursor-pointer rounded-lg hover:bg-[var(--bg-tertiary)]">退出</button>
         </div>
       </div>
 
