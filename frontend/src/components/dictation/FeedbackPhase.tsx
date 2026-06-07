@@ -59,30 +59,46 @@ export default function FeedbackPhase({ score, prevScore, results, onPrev, onNex
         {worse && <span className="block text-xs text-amber-500 mt-0.5">↓ 比上次低</span>}
       </div>
 
-      {/* Inline sentence with corrections */}
-      <p className="text-lg leading-relaxed text-center">
+      {/* Word blocks — inline sentence order */}
+      <div className="flex flex-wrap gap-1.5 justify-center">
         {merged.map((r, i) => {
           if (r.status === 'correct') {
-            return <span key={i} className="text-secondary animate-scale-in" style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>{r.expected} </span>;
+            return (
+              <span key={i} className="inline-flex items-center gap-0.5 px-2 py-1 rounded-md text-sm font-medium bg-emerald-500/20 text-emerald-400 animate-scale-in"
+                style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
+                {r.expected}
+              </span>
+            );
           }
           if (r.status === 'wrong') {
             return (
-              <span key={i} className="animate-scale-in" style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
-                <span className="text-red-400 line-through">{r.actual}</span>
-                <span className="text-red-400 mx-0.5">→</span>
-                <span className="text-emerald-400 font-medium">{r.expected}</span>{' '}
+              <span key={i} className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sm font-medium bg-red-500/20 text-red-400 animate-scale-in"
+                style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
+                <span className="line-through">{r.actual}</span>
+                <span>→</span>
+                <span className="text-emerald-400">{r.expected}</span>
               </span>
             );
           }
           if (r.status === 'missing') {
-            return <span key={i} className="text-red-300/50 italic animate-scale-in" style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>{r.expected} </span>;
+            return (
+              <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-red-500/10 text-red-300/50 italic animate-scale-in"
+                style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
+                {r.expected}
+              </span>
+            );
           }
           if (r.status === 'extra') {
-            return <span key={i} className="text-amber-400 line-through animate-scale-in" style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>{r.actual} </span>;
+            return (
+              <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-amber-500/20 text-amber-400 line-through animate-scale-in"
+                style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
+                {r.actual}
+              </span>
+            );
           }
           return null;
         })}
-      </p>
+      </div>
 
       {/* Actions */}
       <div className="flex gap-2 justify-center w-full">
