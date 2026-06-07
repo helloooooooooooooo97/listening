@@ -162,6 +162,7 @@ export default function PlaybackDetailTabs({
           onOpenDictation={onOpenDictation}
           hoveredClipId={hoveredClipId}
           activeClipId={activeClipId}
+          activeTab={sideTab}
         />
       </section>
 

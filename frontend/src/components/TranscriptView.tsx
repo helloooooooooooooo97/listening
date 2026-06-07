@@ -16,6 +16,7 @@ interface Props {
   hoveredClipId?: string | null;
   activeClipId?: string | null;
   flashSentence?: number | null;
+  activeTab?: 'clips' | 'dictation' | 'favorites';
 }
 
 interface ContextMenu {
@@ -25,7 +26,7 @@ interface ContextMenu {
 
 interface WordSelection { startWord: TranscriptWord; endWord: TranscriptWord; }
 
-export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId }: Props) {
+export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId, activeTab }: Props) {
   const activeLineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const addClip = useClipsStore(s => s.addClip);
@@ -261,6 +262,10 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     return m;
   }, [lessonClips, words]);
 
+  const showClips = !activeTab || activeTab === 'clips';
+  const showDictation = !activeTab || activeTab === 'dictation';
+  const showFavs = !activeTab || activeTab === 'favorites';
+
   return (
     <div ref={containerRef} className="relative">
       {showToolbar && selection && (() => {
@@ -348,26 +353,26 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                             word.id===activeWordId&&!selection ? 'active' : sel ? 'selected' : 'hover:bg-[var(--bg-hover)]'
                           }`}
                           style={{
-                            ...(ci.count > 0 ? { background: `rgba(${clipRgb},${clipAlpha})`, borderRadius: 0 } : {}),
-                            ...(isKnown ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
-                            ...(isWrong ? { textDecoration: 'underline wavy rgba(239,68,68,0.6)', textUnderlineOffset: '2px' } : ci.count > 0 ? { borderBottom: `1px solid rgba(${clipRgb},0.4)` } : {}),
+                            ...(showClips && ci.count > 0 ? { background: `rgba(${clipRgb},${clipAlpha})`, borderRadius: 0 } : {}),
+                            ...(showFavs && isKnown ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
+                            ...(showDictation && isWrong ? { textDecoration: 'underline wavy rgba(239,68,68,0.6)', textUnderlineOffset: '2px' } : showClips && ci.count > 0 ? { borderBottom: `1px solid rgba(${clipRgb},0.4)` } : {}),
                           }}>
                           {/* Clip play button at the start of each clip */}
-                          {anchoredClip && (
+                          {showClips && anchoredClip && (
                             <button onClick={e => handlePlayLineClip(e, anchoredClip)}
                               className="inline-flex items-center justify-center w-4 h-4 rounded bg-amber-500/20 text-amber-600 hover:bg-amber-500/30 hover:text-amber-700 transition-colors cursor-pointer align-middle mr-1 -mt-0.5"
                               title="播放片段">
                               <HiPlay size={8} />
                             </button>
                           )}
-                          {isFavorited && <span className="text-[var(--accent)] text-[9px] mr-px">♥</span>}
+                          {showFavs && isFavorited && <span className="text-[var(--accent)] text-[9px] mr-px">♥</span>}
                           {word.text}{' '}
                         </span>
                       );
                     })
                   : line.text}
                 {/* Sentence score badge */}
-                {sentData && sentData.count > 0 && (
+                {showDictation && sentData && sentData.count > 0 && (
                   <button
                     onClick={e => { e.stopPropagation(); onOpenDictation?.(lineIdx); }}
                     className={`inline-flex items-center ml-2 text-[11px] font-mono px-1.5 py-0.5 rounded cursor-pointer transition-colors hover:scale-105 ${
