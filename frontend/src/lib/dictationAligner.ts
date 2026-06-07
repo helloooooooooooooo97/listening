@@ -34,8 +34,9 @@ export function alignDictation(expected: string[], actual: string[]): WordResult
   }
 
   // Greedy assignment: highest score first, each word at most once
+  // Then resolve crossing pairs to maintain monotonic order
   candidates.sort((a, b) => b.s - a.s);
-  const matchEtoA = new Map<number, number>(); // expected index → actual index
+  let matchEtoA = new Map<number, number>();
   const usedE = new Set<number>();
   const usedA = new Set<number>();
 
@@ -47,38 +48,65 @@ export function alignDictation(expected: string[], actual: string[]): WordResult
     }
   }
 
-  // Build inline results in actual word order
-  const results: WordResult[] = [];
-  let ei = 0;
+  // Resolve crossings and re-match: keep monotonic matching (E order = A order)
+  const sortedByA = [...matchEtoA.entries()].sort(([, a], [, b]) => a - b);
+  matchEtoA = new Map();
+  let prevA = -1;
+  for (const [ei, aj] of sortedByA) {
+    if (aj > prevA) {
+      matchEtoA.set(ei, aj);
+      prevA = aj;
+    }
+    // else: crossing, this pair is dropped — the E word becomes available for re-match
+  }
 
-  for (let aj = 0; aj < n; aj++) {
-    if (usedA.has(aj)) {
-      // This actual word is matched — find which expected word maps to it
-      const matchedEi = [...matchEtoA.entries()].find(([, j]) => j === aj)?.[0];
-      if (matchedEi !== undefined) {
-        // Emit missing expected words before this match
-        while (ei < matchedEi) {
-          results.push({ expected: expected[ei], actual: null, status: 'missing' });
-          ei++;
-        }
-        const isExact = expClean[matchedEi] === actClean[aj];
-        results.push({
-          expected: expected[matchedEi],
-          actual: actual[aj],
-          status: isExact ? 'correct' : 'wrong',
-        });
-        ei = matchedEi + 1;
-      }
-    } else {
-      // Unmatched actual word → extra
-      results.push({ expected: '', actual: actual[aj], status: 'extra' });
+  // Re-match unmatched E words to remaining free A words
+  const usedCleanA = new Set(matchEtoA.values());
+  const usedCleanE = new Set(matchEtoA.keys());
+  const remaining = candidates.filter(c => !usedCleanE.has(c.i) && !usedCleanA.has(c.j));
+  remaining.sort((a, b) => b.s - a.s);
+  for (const { i, j } of remaining) {
+    if (!usedCleanE.has(i) && !usedCleanA.has(j)) {
+      matchEtoA.set(i, j);
+      usedCleanE.add(i);
+      usedCleanA.add(j);
     }
   }
 
-  // Remaining unmatched expected words → missing
-  while (ei < m) {
-    results.push({ expected: expected[ei], actual: null, status: 'missing' });
-    ei++;
+  // Build inline results: walk through expected words in order.
+  // For each expected word, if matched, emit unmatched actual words before the match as extras.
+  // If not matched, emit as missing.
+  const results: WordResult[] = [];
+  const matchedA = new Set(matchEtoA.values());
+  let aj = 0;
+
+  for (let ei = 0; ei < m; ei++) {
+    const matchedAj = matchEtoA.get(ei);
+    if (matchedAj !== undefined) {
+      while (aj < matchedAj) {
+        if (!matchedA.has(aj)) {
+          results.push({ expected: '', actual: actual[aj], status: 'extra' });
+        }
+        aj++;
+      }
+      const isExact = expClean[ei] === actClean[matchedAj];
+      results.push({
+        expected: expected[ei],
+        actual: actual[matchedAj],
+        status: isExact ? 'correct' : 'wrong',
+      });
+      if (matchedAj >= aj) aj = matchedAj + 1;
+    } else {
+      results.push({ expected: expected[ei], actual: null, status: 'missing' });
+    }
+  }
+
+  // Remaining unmatched actual words
+  while (aj < n) {
+    if (!matchedA.has(aj)) {
+      results.push({ expected: '', actual: actual[aj], status: 'extra' });
+    }
+    aj++;
   }
 
   return results;
