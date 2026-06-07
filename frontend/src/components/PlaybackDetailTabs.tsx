@@ -8,6 +8,7 @@ import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
 import type { WordResult } from '../stores/dictationStore';
+import WordBadges from './dictation/WordBadges';
 import TranscriptView from './TranscriptView';
 
 type SideTab = 'clips' | 'dictation' | 'favorites';
@@ -236,15 +237,7 @@ export default function PlaybackDetailTabs({
                       </div>
                       {isExpanded && wordResults && (
                         <div className="ml-9 mb-2 px-3 py-2 rounded-lg bg-[var(--bg-tertiary)]">
-                          <div className="flex flex-wrap gap-1.5">
-                            {wordResults.map((r: WordResult, i: number) => {
-                              if (r.status === 'correct') return <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-500/20 text-emerald-400">{r.expected}</span>;
-                              if (r.status === 'wrong') return <span key={i} className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-red-500/20 text-red-400"><span className="line-through">{r.actual}</span><span>→</span><span className="text-emerald-400">{r.expected}</span></span>;
-                              if (r.status === 'missing') return <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-500/10 text-red-300/50 italic">{r.expected}</span>;
-                              if (r.status === 'extra') return <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-amber-500/20 text-amber-400 line-through">{r.actual}</span>;
-                              return null;
-                            })}
-                          </div>
+                          <WordBadges results={wordResults} />
                         </div>
                       )}
                     </div>

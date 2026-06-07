@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HiPlay, HiArrowLeft, HiArrowRight } from 'react-icons/hi2';
 import type { WordResult } from '../../stores/dictationStore';
+import WordBadges from './WordBadges';
 
 interface Props {
   score: number;
@@ -34,21 +35,6 @@ export default function FeedbackPhase({ score, prevScore, results, onPrev, onNex
   const improved = prevScore !== undefined && score > prevScore;
   const worse = prevScore !== undefined && score < prevScore;
 
-  // Merge adjacent missing+extra into "wrong" pairs for inline display
-  const merged: WordResult[] = [];
-  for (let i = 0; i < results.length; i++) {
-    const r = results[i];
-    if (r.status === 'missing' && i + 1 < results.length && results[i + 1].status === 'extra') {
-      // User typed something wrong instead of the expected word
-      merged.push({ expected: r.expected, actual: results[i + 1].actual, status: 'wrong' });
-      i++; // skip the extra
-    } else if (r.status === 'extra' && merged.length > 0 && merged[merged.length - 1].status !== 'correct') {
-      // Lone extra — could be from an insertion, just show it
-      merged.push(r);
-    } else {
-      merged.push(r);
-    }
-  }
 
   return (
     <div className="animate-scale-in w-full flex flex-col items-center gap-4">
@@ -59,46 +45,7 @@ export default function FeedbackPhase({ score, prevScore, results, onPrev, onNex
         {worse && <span className="block text-xs text-amber-500 mt-0.5">↓ 比上次低</span>}
       </div>
 
-      {/* Word blocks — inline sentence order */}
-      <div className="flex flex-wrap gap-1.5 justify-center">
-        {merged.map((r, i) => {
-          if (r.status === 'correct') {
-            return (
-              <span key={i} className="inline-flex items-center gap-0.5 px-2 py-1 rounded-md text-sm font-medium bg-emerald-500/20 text-emerald-400 animate-scale-in"
-                style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
-                {r.expected}
-              </span>
-            );
-          }
-          if (r.status === 'wrong') {
-            return (
-              <span key={i} className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sm font-medium bg-red-500/20 text-red-400 animate-scale-in"
-                style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
-                <span className="line-through">{r.actual}</span>
-                <span>→</span>
-                <span className="text-emerald-400">{r.expected}</span>
-              </span>
-            );
-          }
-          if (r.status === 'missing') {
-            return (
-              <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-red-500/10 text-red-300/50 italic animate-scale-in"
-                style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
-                {r.expected}
-              </span>
-            );
-          }
-          if (r.status === 'extra') {
-            return (
-              <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-amber-500/20 text-amber-400 line-through animate-scale-in"
-                style={{ animationDelay: `${i * 40}ms`, animationFillMode: 'backwards' }}>
-                {r.actual}
-              </span>
-            );
-          }
-          return null;
-        })}
-      </div>
+      <WordBadges results={results} />
 
       {/* Actions */}
       <div className="flex gap-2 justify-center w-full">

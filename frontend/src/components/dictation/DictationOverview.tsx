@@ -3,6 +3,7 @@ import { HiPlay, HiCheck } from 'react-icons/hi2';
 import type { ListeningLesson } from '../../types/lesson';
 import type { WordResult } from '../../stores/dictationStore';
 import { useAudioStore } from '../../stores/audioStore';
+import WordBadges from './WordBadges';
 
 interface Props {
   lesson: ListeningLesson;
@@ -72,24 +73,8 @@ export default function DictationOverview({ lesson, scores, scoreDetails, onRetr
 
               {isExpanded && details && (
                 <div className="ml-9 mb-2 px-3 py-2 rounded-lg bg-[var(--bg-tertiary)]">
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    {details.map((r, i) => {
-                      if (r.status === 'correct') {
-                        return <span key={i} className="inline-flex items-center gap-0.5 px-2 py-1 rounded-md text-sm font-medium bg-emerald-500/20 text-emerald-400">{r.expected}</span>;
-                      }
-                      if (r.status === 'wrong') {
-                        return <span key={i} className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sm font-medium bg-red-500/20 text-red-400"><span className="line-through">{r.actual}</span><span>→</span><span className="text-emerald-400">{r.expected}</span></span>;
-                      }
-                      if (r.status === 'missing') {
-                        return <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-red-500/10 text-red-300/50 italic">{r.expected}</span>;
-                      }
-                      if (r.status === 'extra') {
-                        return <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium bg-amber-500/20 text-amber-400 line-through">{r.actual}</span>;
-                      }
-                      return null;
-                    })}
-                  </div>
-                  <div className="flex items-center gap-3 text-xs">
+                  <WordBadges results={details} />
+                  <div className="flex items-center gap-3 text-xs mt-2">
                     <button onClick={() => onRetrySentence(idx)}
                       className="flex items-center gap-1 text-[var(--accent)] hover:underline cursor-pointer">
                       <HiPlay size={10} /> 复练此句
