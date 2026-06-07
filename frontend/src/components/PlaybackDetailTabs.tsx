@@ -54,6 +54,7 @@ export default function PlaybackDetailTabs({
   const addToast = useToastStore(s => s.addToast);
   const addToQueue = usePlaylistStore(s => s.addToQueue);
   const addAllToQueue = usePlaylistStore(s => s.addAllToQueue);
+  const playNow = usePlaylistStore(s => s.playNow);
   const activeClipId = audioMode.kind === 'clip' ? audioMode.clip.id : null;
 
   const lessonClips = useMemo(() => {
@@ -229,7 +230,7 @@ export default function PlaybackDetailTabs({
                     className={`transition-colors ${isActive ? 'bg-[var(--accent-soft)]' : isHovered ? 'bg-[var(--bg-hover)]' : ''}`}>
                     <div className="flex items-start gap-3 px-5 py-3">
                       <button
-                        onClick={() => { onSeek(clip.startTime); playClip(clip, lesson); }}
+                        onClick={() => { onSeek(clip.startTime); playNow({ kind: 'clip', clip, lesson }); setTimeout(() => playClip(clip, lesson), 0); }}
                         onMouseEnter={() => setHoveredClipId(clip.id)}
                         onMouseLeave={() => setHoveredClipId(null)}
                         className="flex-1 text-left min-w-0 flex items-start gap-3 cursor-pointer"

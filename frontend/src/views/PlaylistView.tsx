@@ -25,10 +25,12 @@ export default function PlaylistView() {
   const currentIndex = usePlaylistStore(s => s.currentIndex);
   const repeatMode = usePlaylistStore(s => s.repeatMode);
   const cycleRepeatMode = usePlaylistStore(s => s.cycleRepeatMode);
+  const setCurrentIndex = usePlaylistStore(s => s.setCurrentIndex);
   const playLesson = useAudioStore(s => s.playLesson);
   const playClip = useAudioStore(s => s.playClip);
 
-  const handlePlay = (item: typeof queue[number]) => {
+  const handlePlay = (item: typeof queue[number], idx?: number) => {
+    if (idx !== undefined) setCurrentIndex(idx);
     if (item.kind === 'lesson') playLesson(item.lesson);
     else if (item.kind === 'clip') playClip(item.clip, item.lesson ?? null);
     else if (item.kind === 'sentence') {
@@ -102,7 +104,7 @@ export default function PlaylistView() {
                       <p className="text-xs text-tertiary truncate">{sub}</p>
                     </div>
                     {isCurrent && <span className="w-1 h-6 rounded-full bg-[var(--accent)] flex-shrink-0" />}
-                    <button onClick={() => handlePlay(item)}
+                    <button onClick={() => handlePlay(item, idx)}
                       className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100">
                       <HiPlay size={12} />
                     </button>
@@ -126,7 +128,7 @@ export default function PlaylistView() {
                     {history.slice(0, 20).map((item, idx) => (
                       <div key={idx}
                         className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors cursor-pointer group"
-                        onClick={() => handlePlay(item)}>
+                        onClick={() => handlePlay(item, idx)}>
                         <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                           style={{ background: 'var(--card-gradient)' }}>
                           <ItemIcon kind={item.kind} />

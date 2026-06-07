@@ -40,6 +40,7 @@ interface PlaylistState {
   playNext: () => QueueItem | null;
   playPrev: () => QueueItem | null;
   clearQueue: () => void;
+  setCurrentIndex: (index: number) => void;
   reorder: (fromIndex: number, toIndex: number) => void;
   addToHistory: (item: QueueItem) => void;
   setRepeatMode: (mode: RepeatMode) => void;
@@ -137,6 +138,7 @@ export const usePlaylistStore = create<PlaylistState>((set, get) => ({
     return queue[prevIdx];
   },
 
+  setCurrentIndex: (index: number) => set({ currentIndex: index }),
   clearQueue: () => set({ queue: [], currentIndex: -1 }),
 
   reorder: (fromIndex, toIndex) => {
