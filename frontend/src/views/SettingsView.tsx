@@ -1,6 +1,7 @@
 import { HiMinus, HiPlus, HiClock, HiSpeakerWave, HiPlay, HiArrowPath, HiSun, HiMoon } from 'react-icons/hi2';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useThemeStore } from '../stores/themeStore';
+import { useAudioStore } from '../stores/audioStore';
 
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2.0];
 const LOOP_COUNTS = [1, 2, 3, 5, 8, 10];
@@ -11,6 +12,7 @@ export default function SettingsView() {
   const setSpeed = useSettingsStore(s => s.setDefaultSpeed);
   const setLoopCount = useSettingsStore(s => s.setDefaultLoopCount);
   const setDailyGoal = useSettingsStore(s => s.setDailyGoalMinutes);
+  const setCurrentRate = useAudioStore(s => s.setRate);
   const themeMode = useThemeStore(s => s.mode);
   const toggleTheme = useThemeStore(s => s.toggle);
 
@@ -33,7 +35,10 @@ export default function SettingsView() {
               {SPEEDS.map(s => (
                 <button
                   key={s}
-                  onClick={() => setSpeed(s)}
+                  onClick={() => {
+                    setSpeed(s);
+                    setCurrentRate(s);
+                  }}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                     settings.defaultSpeed === s
                       ? 'bg-[#fa2d48]/20 text-[var(--accent)]'

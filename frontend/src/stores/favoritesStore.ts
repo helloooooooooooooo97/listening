@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getFavorites, addFavorite as apiAdd, removeFavorite, removeFavoriteByItem } from '../lib/api';
+import { getFavorites, addFavorite as apiAdd, removeFavorite } from '../lib/api';
 import type { FavoriteItem } from '../lib/api';
 
 interface FavoritesState {

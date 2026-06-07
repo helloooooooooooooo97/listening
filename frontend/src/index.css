@@ -132,10 +132,13 @@
     background: var(--bg-active);
   }
   .transcript-word {
-    @apply inline rounded px-0.5 transition-all duration-150;
+    @apply inline rounded px-0.5;
+    transition: background 0.2s ease-out, transform 0.2s ease-out, color 0.2s ease-out;
   }
   .transcript-word.active {
     background: var(--accent-soft);
+    transform: scale(1.04);
+    transform-origin: center;
   }
   .transcript-word.selected {
     background: rgba(250, 204, 21, 0.25);
@@ -174,5 +177,41 @@
     0%,100% { transform: translateX(0); }
     25% { transform: translateX(-4px); }
     75% { transform: translateX(4px); }
+  }
+  @keyframes speed-pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  .animate-speed-pop {
+    animation: speed-pop 0.3s ease-out;
+  }
+
+  @keyframes heart-burst {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.35); }
+    50% { transform: scale(0.9); }
+    75% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  .animate-heart-burst {
+    animation: heart-burst 0.45s ease-out;
+  }
+
+  @keyframes heart-ripple {
+    0% { box-shadow: 0 0 0 0 var(--accent); }
+    100% { box-shadow: 0 0 0 8px transparent; }
+  }
+  .animate-heart-ripple {
+    animation: heart-ripple 0.6s ease-out;
+  }
+
+  @keyframes collapse-out {
+    0% { opacity: 1; max-height: 200px; transform: scaleY(1); }
+    100% { opacity: 0; max-height: 0; transform: scaleY(0); margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; }
+  }
+  .animate-collapse-out {
+    animation: collapse-out 0.3s ease-in forwards;
+    overflow: hidden;
   }
 }

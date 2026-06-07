@@ -17,26 +17,32 @@ interface Props {
   playedColor?: string;
   unplayedColor?: string;
   selectionRange?: { start: number; end: number } | null;
+  /** Called when user drags to create a new selection range on the waveform */
+  onSelectionDrag?: (range: { start: number; end: number } | null) => void;
 }
+
+function fmt(t: number) { const m = Math.floor(t / 60); return `${m}:${Math.floor(t % 60).toString().padStart(2, '0')}`; }
 
 const HIGHLIGHT = 'rgba(250,204,21,0.5)';
 const HIGHLIGHT_BORDER = 'rgba(250,204,21,0.8)';
 
 export default function Waveform({
-  lessonId,
-  currentTime,
-  duration,
-  onSeek,
-  height = 48,
-  playedColor,
-  unplayedColor,
-  selectionRange,
+  lessonId, currentTime, duration, onSeek, height = 48,
+  playedColor, unplayedColor, selectionRange, onSelectionDrag,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const peaksRef = useRef<Float32Array | null>(null);
   const [ready, setReady] = useState(false);
   const theme = useThemeStore(s => s.mode);
+
+  // Hover & ripple state
+  const [hoverTime, setHoverTime] = useState<{ x: number; time: number } | null>(null);
+  const [ripple, setRipple] = useState<{ x: number; y: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const dragStartRef = useRef<number>(0);
+  const [dragRange, setDragRange] = useState<{ start: number; end: number } | null>(null);
+  const [thumbDragging, setThumbDragging] = useState(false);
 
   const resolvedPlayed = playedColor || cssVar('--accent', '#fa2d48');
   const resolvedUnplayed = unplayedColor || cssVar('--waveform-unplayed', 'rgba(255,255,255,0.08)');
@@ -54,7 +60,7 @@ export default function Waveform({
     canvas.style.height = `${height}px`;
   }, [height]);
 
-  // Load waveform (already cached in lib/waveform.ts)
+  // Load waveform
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
@@ -81,12 +87,15 @@ export default function Waveform({
 
   useEffect(() => {
     resizeCanvas();
-    const onResize = () => resizeCanvas();
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    const container = containerRef.current;
+    if (!container) return;
+    const observer = new ResizeObserver(() => resizeCanvas());
+    observer.observe(container);
+    return () => observer.disconnect();
   }, [resizeCanvas, ready]);
 
   // Draw
+  const displayRange = dragRange || selectionRange || null;
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -96,7 +105,6 @@ export default function Waveform({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const dpr = window.devicePixelRatio || 1;
     const w = canvas.width;
     const h = canvas.height;
     const mid = h / 2;
@@ -110,9 +118,9 @@ export default function Waveform({
 
     // Selection range
     let selStart = -1, selEnd = -1;
-    if (selectionRange && duration > 0) {
-      selStart = Math.floor((selectionRange.start / duration) * len);
-      selEnd = Math.ceil((selectionRange.end / duration) * len);
+    if (displayRange && duration > 0) {
+      selStart = Math.floor((displayRange.start / duration) * len);
+      selEnd = Math.ceil((displayRange.end / duration) * len);
     }
 
     for (let i = 0; i < len; i++) {
@@ -140,14 +148,76 @@ export default function Waveform({
       const ex = selEnd * stepX + stepX;
       ctx.beginPath(); ctx.moveTo(ex, 4); ctx.lineTo(ex, h - 4); ctx.stroke();
     }
-  }, [currentTime, duration, ready, resolvedPlayed, resolvedUnplayed, selectionRange, theme]);
+  }, [currentTime, duration, ready, resolvedPlayed, resolvedUnplayed, displayRange, theme]);
 
-  const handleClick = (e: React.MouseEvent) => {
+  const getTimeFromEvent = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const pct = x / rect.width;
-    onSeek(Math.max(0, Math.min(duration, pct * duration)));
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    return { pct, time: pct * duration };
   };
+
+  // Click: seek with ripple
+  const handleClick = (e: React.MouseEvent) => {
+    if (dragging || thumbDragging) return;
+    const { time } = getTimeFromEvent(e);
+    const rect = e.currentTarget.getBoundingClientRect();
+    const rippleX = ((e.clientX - rect.left) / rect.width) * 100;
+    setRipple({ x: rippleX, y: 50 });
+    setTimeout(() => setRipple(null), 400);
+    onSeek(Math.max(0, Math.min(duration, time)));
+  };
+
+  // Thumb drag handlers
+  const handleThumbDown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setThumbDragging(true);
+    const { time } = getTimeFromEvent(e);
+    onSeek(Math.max(0, Math.min(duration, time)));
+  };
+
+  // Mouse move: hover preview, thumb drag, or selection drag update
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const time = pct * duration;
+    setHoverTime({ x: (e.clientX - rect.left), time });
+
+    if (thumbDragging) {
+      onSeek(Math.max(0, Math.min(duration, time)));
+    } else if (dragging && onSelectionDrag) {
+      const start = dragStartRef.current;
+      const end = time;
+      if (Math.abs(end - start) > 0.1) {
+        setDragRange({ start: Math.min(start, end), end: Math.max(start, end) });
+      }
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!onSelectionDrag || thumbDragging) return;
+    const { time } = getTimeFromEvent(e);
+    dragStartRef.current = time;
+    setDragging(true);
+    setDragRange(null);
+  };
+
+  const handleMouseUp = () => {
+    if (dragging && dragRange && onSelectionDrag) {
+      onSelectionDrag(dragRange);
+    }
+    setDragging(false);
+    setDragRange(null);
+    setThumbDragging(false);
+  };
+
+  // Global mouseup cleanup
+  useEffect(() => {
+    if (!dragging && !thumbDragging) return;
+    const up = () => { setDragging(false); setDragRange(null); setThumbDragging(false); };
+    window.addEventListener('mouseup', up);
+    return () => window.removeEventListener('mouseup', up);
+  }, [dragging, thumbDragging]);
 
   return (
     <div
@@ -155,8 +225,54 @@ export default function Waveform({
       className="relative w-full cursor-pointer group"
       style={{ height }}
       onClick={handleClick}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={() => { setHoverTime(null); if (!dragging) setDragRange(null); }}
     >
       <canvas ref={canvasRef} className="rounded" />
+
+      {/* Draggable thumb */}
+      {duration > 0 && (
+        <div
+          className="absolute top-0 bottom-0 w-2 -ml-1 cursor-ew-resize z-10 group/thumb"
+          style={{ left: `${(currentTime / duration) * 100}%` }}
+          onMouseDown={handleThumbDown}
+        >
+          {/* Visible handle */}
+          <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[var(--accent)] shadow-md opacity-40 group-hover/thumb:opacity-100 group-hover:scale-110 transition-all duration-150" />
+        </div>
+      )}
+
+      {/* Hover time tooltip */}
+      {hoverTime && !dragging && (
+        <div
+          className="absolute -top-6 transform -translate-x-1/2 px-1.5 py-0.5 rounded bg-[var(--bg-secondary)] border border-[var(--border-primary)] shadow pointer-events-none z-10"
+          style={{ left: hoverTime.x }}
+        >
+          <span className="text-[10px] font-mono tabular-nums text-tertiary">{fmt(hoverTime.time)}</span>
+        </div>
+      )}
+
+      {/* Drag range tooltip */}
+      {dragRange && dragging && (
+        <div
+          className="absolute -top-6 transform -translate-x-1/2 px-1.5 py-0.5 rounded bg-amber-500/20 border border-amber-500/40 shadow pointer-events-none z-10"
+          style={{ left: hoverTime?.x || 0 }}
+        >
+          <span className="text-[10px] font-mono tabular-nums text-amber-600">
+            {fmt(dragRange.start)} – {fmt(dragRange.end)}
+          </span>
+        </div>
+      )}
+
+      {/* Click ripple */}
+      {ripple && (
+        <div
+          className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[var(--accent)]/30 pointer-events-none animate-scale-in"
+          style={{ left: `${ripple.x}%`, marginLeft: -8 }}
+        />
+      )}
     </div>
   );
 }

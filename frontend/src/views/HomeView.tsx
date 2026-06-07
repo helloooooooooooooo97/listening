@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiHeart } from 'react-icons/hi2';
+import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock } from 'react-icons/hi2';
+import HeartButton from '../components/HeartButton';
 import type { AudioClip, LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
@@ -98,10 +99,13 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
                     className="group cursor-pointer rounded-lg p-1.5 transition-all duration-200 hover:bg-[var(--bg-tertiary)]">
                     <div className="w-full aspect-square rounded-md flex items-center justify-center mb-1 relative" style={{background:'var(--card-gradient)'}}>
                       <span className="text-tertiary group-hover:text-secondary transition-colors"><HiMusicalNote size={18}/></span>
-                      <button onClick={e=>{e.stopPropagation();favToggle({item_id:l.id,item_type:'audio',title:l.title,subtitle:l.subtitle});}}
-                        className={`absolute top-1.5 right-1.5 p-1 rounded-full transition-colors cursor-pointer ${fav ? 'text-[var(--accent)]' : 'text-tertiary opacity-0 group-hover:opacity-100 hover:text-secondary'}`}>
-                        <HiHeart size={14} />
-                      </button>
+                      <div className={`absolute top-1.5 right-1.5 ${fav ? '' : 'opacity-0 group-hover:opacity-100'} transition-opacity`}>
+                        <HeartButton
+                          active={fav}
+                          onToggle={() => favToggle({item_id:l.id,item_type:'audio',title:l.title,subtitle:l.subtitle})}
+                          size={14}
+                        />
+                      </div>
                     </div>
                     <p className="text-xs font-semibold text-primary truncate">{l.title}</p>
                     <p className="text-xs text-tertiary truncate">{l.subtitle}</p>

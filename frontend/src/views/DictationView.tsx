@@ -125,7 +125,7 @@ export default function DictationView() {
           )}
           {phase === 'feedback' && (
             <FeedbackPhase
-              score={scores[scores.length - 1]}
+              score={scores[scores.length - 1] ?? 0}
               results={results}
               onPrev={prevSentence}
               onNext={nextSentence}

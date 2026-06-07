@@ -28,10 +28,15 @@ function toAudioClip(c: ClipApiRow): AudioClip {
   };
 }
 
+function normalizeClip(c: AudioClip | ClipApiRow): AudioClip {
+  if ('lessonId' in c) return c;
+  return toAudioClip(c);
+}
+
 async function fetchClips(): Promise<AudioClip[]> {
   try {
     const data = await getClips();
-    return data.map(toAudioClip);
+    return data.map(c => normalizeClip(c as AudioClip | ClipApiRow));
   } catch { return []; }
 }
 

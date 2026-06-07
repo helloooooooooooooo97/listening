@@ -64,6 +64,8 @@ setLessonInfoProvider(() => {
 
 export const useAudioStore = create<AudioState>((set, get) => {
   const audio = getAudio();
+  const initialRate = getSettingDefault('defaultSpeed', 1);
+  audio.playbackRate = initialRate;
 
   audio.addEventListener('timeupdate', () => {
     const state = get();
@@ -136,7 +138,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
     duration: 0,
     isPlaying: false,
     isLoading: false,
-    playbackRate: getSettingDefault('defaultSpeed', 1),
+    playbackRate: initialRate,
     loopMode: 'all',
     loopTarget: getSettingDefault('defaultLoopCount', 3),
     loopCount: 0,
@@ -144,49 +146,65 @@ export const useAudioStore = create<AudioState>((set, get) => {
 
     playLesson: (lesson) => {
       const switched = switchSource(lesson.id, flushTrack);
+      const rate = get().playbackRate;
       if (switched) set({ isLoading: true });
-      set({ mode: { kind: 'lesson', lesson }, loopCount: 0, playbackRate: getSettingDefault('defaultSpeed', 1) });
+      set({ mode: { kind: 'lesson', lesson }, loopCount: 0, playbackRate: rate });
       usePlaylistStore.getState().addToHistory({ kind: 'lesson', lesson });
       waitForReady(getAudio(), () => {
+        const a = getAudio();
+        a.playbackRate = rate;
         const saved = useSettingsStore.getState().getPosition(lesson.id);
         if (saved && saved.position > 5) {
-          getAudio().currentTime = saved.position;
+          a.currentTime = saved.position;
         }
-        getAudio().play();
+        a.play();
       });
     },
 
     viewLesson: (lesson) => {
       const switched = switchSource(lesson.id, flushTrack);
+      const rate = get().playbackRate;
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'lesson', lesson }, loopCount: 0 });
+      waitForReady(getAudio(), () => {
+        getAudio().playbackRate = rate;
+      });
     },
 
     playClip: (clip, contextLesson?) => {
       const switched = switchSource(clip.lessonId, flushTrack);
+      const rate = get().playbackRate;
       if (switched) set({ isLoading: true });
-      set({ mode: { kind: 'clip', clip, lesson: contextLesson ?? null }, loopCount: 0, loopMode: 'clip', playbackRate: getSettingDefault('defaultSpeed', 1) });
+      set({ mode: { kind: 'clip', clip, lesson: contextLesson ?? null }, loopCount: 0, loopMode: 'clip', playbackRate: rate });
       waitForReady(getAudio(), () => {
-        getAudio().currentTime = clip.startTime;
-        getAudio().play();
+        const a = getAudio();
+        a.playbackRate = rate;
+        a.currentTime = clip.startTime;
+        a.play();
       });
     },
 
     viewClip: (clip, contextLesson?) => {
       const switched = switchSource(clip.lessonId, flushTrack);
+      const rate = get().playbackRate;
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'clip', clip, lesson: contextLesson ?? null }, loopCount: 0, loopMode: 'clip' });
-      waitForReady(getAudio(), () => { getAudio().currentTime = clip.startTime; });
+      waitForReady(getAudio(), () => {
+        const a = getAudio();
+        a.playbackRate = rate;
+        a.currentTime = clip.startTime;
+      });
     },
 
     togglePlay: () => {
       const a = getAudio();
       if (a.paused) {
-        const { mode } = get();
+        const { mode, playbackRate } = get();
         if (mode.kind === 'clip' && a.currentTime >= mode.clip.endTime - 0.05) {
           a.currentTime = mode.clip.startTime;
           set({ loopCount: 0 });
         }
+        a.playbackRate = playbackRate;
         a.play();
       } else {
         a.pause();
@@ -234,8 +252,16 @@ export const useAudioStore = create<AudioState>((set, get) => {
     },
 
     setRate: (rate) => {
-      getAudio().playbackRate = rate;
+      const a = getAudio();
+      a.playbackRate = rate;
       set({ playbackRate: rate });
+      // Persist preference
+      try {
+        const raw = localStorage.getItem('app-settings');
+        const s = raw ? JSON.parse(raw) : {};
+        s.defaultSpeed = rate;
+        localStorage.setItem('app-settings', JSON.stringify(s));
+      } catch {}
     },
 
     cycleLoopMode: () => {

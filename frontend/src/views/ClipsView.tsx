@@ -13,11 +13,20 @@ function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',
 
 export default function ClipsView({ clips, onDeleteClip }: Props) {
   const [search, setSearch] = useState('');
+  const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
   const playClip = useAudioStore(s => s.playClip);
   const favToggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
   const q = search.toLowerCase();
   const fC = clips.filter(c => c.text.toLowerCase().includes(q) || c.note.toLowerCase().includes(q) || c.lessonTitle.toLowerCase().includes(q));
+
+  const handleDelete = (id: string) => {
+    setRemovingIds(prev => new Set(prev).add(id));
+    setTimeout(() => {
+      onDeleteClip(id);
+      setRemovingIds(prev => { const next = new Set(prev); next.delete(id); return next; });
+    }, 280);
+  };
 
   return (
     <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
@@ -51,7 +60,8 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
                       const d=clip.endTime-clip.startTime;
                       return (
                         <div key={clip.id} onClick={()=>playClip(clip)}
-                          className="group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)]" style={{background:'var(--bg-tertiary)'}}>
+                          className={`group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)] ${removingIds.has(clip.id) ? 'animate-collapse-out' : ''}`}
+                          style={{background:'var(--bg-tertiary)'}}>
                           <div className="flex items-start gap-3">
                             <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{background:'var(--clip-gradient)'}}>
                               <span className="text-tertiary group-hover:text-secondary transition-colors"><HiBookmark size={16}/></span>
@@ -68,7 +78,7 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
                                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${isFav(clip.id,'clip') ? 'text-[var(--accent)]' : 'text-tertiary opacity-0 group-hover:opacity-100 hover:text-tertiary'}`}>
                                 <HiHeart size={13} />
                               </button>
-                              <button onClick={e=>{e.stopPropagation();onDeleteClip(clip.id);}}
+                              <button onClick={e=>{e.stopPropagation();handleDelete(clip.id);}}
                                 className="text-tertiary hover:text-[var(--accent)] transition-colors opacity-0 group-hover:opacity-100"><HiTrash size={13}/></button>
                             </div>
                           </div>

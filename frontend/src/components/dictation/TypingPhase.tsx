@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { HiPlay, HiArrowRight, HiForward } from 'react-icons/hi2';
 
 interface Props {
@@ -35,7 +35,7 @@ export default function TypingPhase({ inputRef, userInput, onInputChange, onSubm
       <div className="mt-3 flex gap-2">
         <button onClick={onSubmit}
           disabled={!userInput.trim()}
-          className="flex-1 py-2.5 bg-[#fa2d48] hover:bg-[var(--accent-hover)] disabled:bg-[var(--bg-tertiary)] disabled:text-tertiary text-primary font-semibold rounded-full text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5">
+          className="flex-1 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:bg-[var(--bg-tertiary)] disabled:text-tertiary on-accent font-semibold rounded-full text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5">
           提交 <HiArrowRight size={14} />
         </button>
         <button onClick={onSkip}

@@ -1,12 +1,11 @@
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useAudioStore } from '../stores/audioStore';
-import { HiMusicalNote, HiTrash, HiPlay, HiQueueList, HiClock, HiArrowUp, HiArrowDown } from 'react-icons/hi2';
+import { HiMusicalNote, HiTrash, HiPlay, HiQueueList, HiClock } from 'react-icons/hi2';
 
 export default function PlaylistView() {
   const queue = usePlaylistStore(s => s.queue);
   const history = usePlaylistStore(s => s.history);
   const removeFromQueue = usePlaylistStore(s => s.removeFromQueue);
-  const playNext = usePlaylistStore(s => s.playNext);
   const clearQueue = usePlaylistStore(s => s.clearQueue);
   const currentIndex = usePlaylistStore(s => s.currentIndex);
   const playLesson = useAudioStore(s => s.playLesson);

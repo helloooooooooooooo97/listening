@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { HiBookmark, HiPlay } from 'react-icons/hi2';
 import type { TranscriptLine, TranscriptWord, AudioClip } from '../types/lesson';
 import { useClipsStore } from '../stores/clipsStore';
@@ -12,11 +12,12 @@ interface Props {
   lessonId: string; lessonTitle: string;
   lines: TranscriptLine[]; words: TranscriptWord[];
   currentTime: number; onSeek: (t: number) => void;
+  onOpenDictation?: (sentenceIdx: number) => void;
 }
 
 interface WordSelection { startWord: TranscriptWord; endWord: TranscriptWord; }
 
-export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek }: Props) {
+export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation }: Props) {
   const activeLineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const addClip = useClipsStore(s => s.addClip);
@@ -47,7 +48,21 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   let activeWordId: string|null = null;
   for (let i=words.length-1;i>=0;i--) { if(currentTime>=words[i].start&&currentTime<words[i].end){activeWordId=words[i].id;break;} }
 
-  useEffect(() => { if(activeLineRef.current) activeLineRef.current.scrollIntoView({behavior:'smooth',block:'center'}); }, [activeLineIndex]);
+  // Smooth scroll only when active line changes and is outside visible area
+  const prevActiveRef = useRef(activeLineIndex);
+  useLayoutEffect(() => {
+    if (activeLineIndex === prevActiveRef.current) return;
+    prevActiveRef.current = activeLineIndex;
+    const el = activeLineRef.current;
+    if (!el || !containerRef.current) return;
+    const container = containerRef.current;
+    const containerRect = container.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const isVisible = elRect.top >= containerRect.top + 80 && elRect.bottom <= containerRect.bottom - 80;
+    if (!isVisible) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [activeLineIndex]);
 
   const getWordIndex = (id: string) => words.findIndex(w=>w.id===id);
 
@@ -126,42 +141,43 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const contextLesson = audioMode.kind === 'lesson' ? audioMode.lesson :
     audioMode.kind === 'clip' ? audioMode.lesson : null;
 
-  // Play the clip at this word's position
-  const handlePlayLineClip = (e: React.MouseEvent, word: TranscriptWord) => {
+  // Play a saved clip from its single anchor button.
+  const handlePlayLineClip = (e: React.MouseEvent, clip: AudioClip) => {
     e.stopPropagation();
-    // Find the clip that covers this word
-    const clip = lessonClips.find(c => word.start >= c.startTime - 0.1 && word.end <= c.endTime + 0.1);
-    const startTime = clip ? clip.startTime : word.start;
-    const endTime = clip ? clip.endTime : word.start + 1;
     const lineClip: AudioClip = {
-      id: `clip-${lessonId}-${startTime}`,
+      id: clip.id,
       lessonId,
       lessonTitle,
-      startTime,
-      endTime,
-      text: clip?.text || word.text,
-      note: '',
-      startWordId: '', endWordId: '',
-      createdAt: '',
+      startTime: clip.startTime,
+      endTime: clip.endTime,
+      text: clip.text,
+      note: clip.note,
+      startWordId: clip.startWordId,
+      endWordId: clip.endWordId,
+      createdAt: clip.createdAt,
     };
     setLoopTarget(defaultLoopCount);
     playClip(lineClip, contextLesson);
   };
 
-  // Pre-compute which words are the exact start of a clip
-  const clipStartWords = useMemo(() => {
-    const s = new Set<string>();
+  // Anchor each clip to exactly one word, so the play button appears once per clip.
+  const clipByAnchorWordId = useMemo(() => {
+    const m = new Map<string, AudioClip>();
     for (const clip of lessonClips) {
-      const match = words.find(w => Math.abs(w.start - clip.startTime) < 0.15);
-      if (match) s.add(match.id);
+      const byStoredId = clip.startWordId
+        ? words.find(w => w.id === clip.startWordId)
+        : undefined;
+      const byTime = words.reduce<TranscriptWord | null>((best, word) => {
+        const distance = Math.abs(word.start - clip.startTime);
+        if (distance > 0.35) return best;
+        if (!best || distance < Math.abs(best.start - clip.startTime)) return word;
+        return best;
+      }, null);
+      const anchor = byStoredId ?? byTime;
+      if (anchor && !m.has(anchor.id)) m.set(anchor.id, clip);
     }
-    return s;
+    return m;
   }, [lessonClips, words]);
-
-  // Stats
-  const knownCount = words.filter(w => knownWords.has(w.text.toLowerCase())).length;
-  const favCount = words.filter(w => isFav(w.text.toLowerCase(), 'word')).length;
-  const totalDictCount = sentenceScores.reduce((a, s) => a + s.count, 0);
 
   return (
     <div ref={containerRef} className="relative">
@@ -190,13 +206,6 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
       })()}
 
       <div className="space-y-1" onMouseUp={handleMouseUp}>
-        {/* Stats bar */}
-        <div className="flex items-center justify-end gap-3 px-1 pb-2 text-xs text-tertiary">
-          {knownCount > 0 && <span className="text-emerald-500/70">✓ {knownCount} 掌握</span>}
-          {favCount > 0 && <span className="text-[var(--accent)]">♥ {favCount} 收藏</span>}
-          {lessonClips.length > 0 && <span className="text-amber-600">■ {lessonClips.length} 片段</span>}
-          {totalDictCount > 0 && <span className="text-tertiary">📝 {totalDictCount} 听写</span>}
-        </div>
         {lines.map((line, lineIdx) => {
           const isActive = lineIdx===activeLineIndex;
           const lineWords = words.filter(w=>w.start>=line.start-0.05&&w.end<=line.end+0.05);
@@ -221,8 +230,8 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                       const isKnown = knownWords.has(word.text.toLowerCase());
                       const isFavorited = isFav(word.text.toLowerCase(), 'word');
                       const isWrong = wrongIdxMap.get(lineIdx)?.has(wordIdx) ?? false;
-                      // Show play button only at the exact start of each clip
-                      const isClipStart = clipStartWords.has(word.id);
+                      // Show the clip play button only once, on the clip's anchor word.
+                      const anchoredClip = clipByAnchorWordId.get(word.id);
                       return (
                         <span key={word.id} data-word-id={word.id}
                           onMouseDown={e=>handleWordMouseDown(word,e)}
@@ -237,8 +246,8 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                             ...(isWrong ? { textDecoration: 'underline wavy rgba(239,68,68,0.6)', textUnderlineOffset: '2px' } : cc > 0 ? { borderBottom: '1px solid rgba(250,204,21,0.4)' } : {}),
                           }}>
                           {/* Clip play button at the start of each clip */}
-                          {isClipStart && (
-                            <button onClick={e => handlePlayLineClip(e, word)}
+                          {anchoredClip && (
+                            <button onClick={e => handlePlayLineClip(e, anchoredClip)}
                               className="inline-flex items-center justify-center w-4 h-4 rounded bg-amber-500/20 text-amber-600 hover:bg-amber-500/30 hover:text-amber-700 transition-colors cursor-pointer align-middle mr-1 -mt-0.5"
                               title="播放片段">
                               <HiPlay size={8} />
@@ -252,14 +261,16 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                   : line.text}
                 {/* Sentence score badge */}
                 {sentData && sentData.count > 0 && (
-                  <span className={`inline-flex items-center ml-2 text-[11px] font-mono px-1.5 py-0.5 rounded ${
-                    sentData.avg_score >= 80 ? 'text-emerald-500/70 bg-emerald-500/15' :
-                    sentData.avg_score >= 50 ? 'text-amber-500/70 bg-amber-500/15' :
-                    'text-red-500/70 bg-red-500/10'
-                  }`}
-                    title={`听写 ${sentData.count} 次 · 均分 ${sentData.avg_score}% · 最近 ${sentData.last_score}%`}>
+                  <button
+                    onClick={e => { e.stopPropagation(); onOpenDictation?.(lineIdx); }}
+                    className={`inline-flex items-center ml-2 text-[11px] font-mono px-1.5 py-0.5 rounded cursor-pointer transition-colors hover:scale-105 ${
+                      sentData.avg_score >= 80 ? 'text-emerald-500/70 bg-emerald-500/15 hover:bg-emerald-500/25' :
+                      sentData.avg_score >= 50 ? 'text-amber-500/70 bg-amber-500/15 hover:bg-amber-500/25' :
+                      'text-red-500/70 bg-red-500/10 hover:bg-red-500/20'
+                    }`}
+                    title={`听写 ${sentData.count} 次 · 均分 ${sentData.avg_score}% · 最近 ${sentData.last_score}% · 点击查看详情`}>
                     {sentData.avg_score}%
-                  </span>
+                  </button>
                 )}
               </p>
               {line.note && <p className="text-xs text-tertiary mt-1 italic">{line.note}</p>}

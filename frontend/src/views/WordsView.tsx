@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { HiMagnifyingGlass, HiPlay, HiCheck, HiBarsArrowDown, HiHeart } from 'react-icons/hi2';
+import { HiMagnifyingGlass, HiPlay, HiCheck, HiBarsArrowDown, HiHeart, HiXMark } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
@@ -80,7 +80,6 @@ export default function WordsView() {
       if (known) next.add(word); else next.delete(word);
       return next;
     });
-    // Sync to backend
     setWordKnown(word, known).catch(() => {});
   };
 
@@ -91,22 +90,18 @@ export default function WordsView() {
     setTimeout(() => togglePlay(), 200);
   };
 
-  const knownCount = knownWords.size;
   const groupedOccurrences = selected
     ? selected.lessons.reduce((acc, l) => ({ ...acc, [l.id]: { title: l.title, times: l.occurrences } }), {} as Record<string, {title:string; times:number[]}>)
     : {};
 
   return (
     <div className="h-full flex bg-[var(--bg-primary)] overflow-hidden">
-      {/* Word list */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Word list — takes full width when panel is hidden */}
+      <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${selected ? 'md:mr-96' : ''}`}>
         <div className="flex-shrink-0 px-6 pt-10 pb-4">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-2xl font-extrabold text-primary tracking-tight">单词</h1>
-              <p className="text-tertiary text-xs mt-1">
-                {total} 个单词 · 已掌握 {knownCount}
-              </p>
             </div>
             <div className="flex items-center gap-2">
               {/* Sort toggle */}
@@ -137,12 +132,13 @@ export default function WordsView() {
               <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
                 {words.map(w => (
                   <div key={w.word}
+                    onClick={() => setSelected(w)}
                     className={`rounded-lg px-3 py-1.5 transition-all duration-200 cursor-pointer text-[14px] flex items-center justify-between gap-1 group ${
                       selected?.word===w.word
                         ? 'bg-[var(--accent)]/15 ring-1 ring-[var(--accent)]/30 text-primary'
                         : 'bg-[var(--bg-tertiary)] text-secondary hover:bg-[var(--bg-tertiary)] hover:text-primary'
                     }`}>
-                    <span className="truncate flex-1" onClick={() => setSelected(w)}>{w.word}</span>
+                    <span className="truncate flex-1">{w.word}</span>
                     <span className="text-xs text-tertiary flex-shrink-0 flex items-center gap-0.5">
                       <button onClick={e=>{e.stopPropagation();favToggle({item_id:w.word,item_type:'word',title:w.word,subtitle:`${w.count}次`});}}
                         className={`transition-colors cursor-pointer ${isFav(w.word,'word') ? 'text-[var(--accent)]' : 'text-tertiary opacity-0 group-hover:opacity-100 hover:text-tertiary'}`}>
@@ -169,26 +165,39 @@ export default function WordsView() {
         </div>
       </div>
 
-      {/* Detail panel */}
-      <div className="w-96 flex-shrink-0 border-l border-[var(--border-primary)] flex flex-col overflow-hidden" style={{background: 'var(--bg-tertiary)'}}>
-        {selected ? (
-          <div className="flex flex-col h-full">
-            <div className="flex-shrink-0 px-5 pt-10 pb-4 border-b border-[var(--border-secondary)]">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h2 className="text-3xl font-bold text-primary">{selected.word}</h2>
-                  <p className="text-tertiary text-xs mt-1">出现 {selected.count} 次 · {selected.lessons.length} 节课</p>
-                </div>
+      {/* Slide-in detail panel — desktop: right side, mobile: bottom sheet */}
+      {selected && (
+        <>
+          {/* Backdrop (mobile only) */}
+          <div className="md:hidden fixed inset-0 z-40 bg-black/20" onClick={() => setSelected(null)} />
+
+          <div className={`fixed z-50 bg-[var(--bg-primary)] border-[var(--border-primary)] shadow-2xl flex flex-col overflow-hidden
+            md:right-0 md:top-0 md:bottom-0 md:w-96 md:border-l md:animate-fade-in
+            max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:max-h-[65vh] max-md:rounded-t-2xl max-md:border-t max-md:animate-slide-up`}
+          >
+            {/* Header */}
+            <div className="flex-shrink-0 flex items-start justify-between px-5 pt-10 pb-4 border-b border-[var(--border-secondary)]">
+              <div>
+                <h2 className="text-3xl font-bold text-primary">{selected.word}</h2>
+                <p className="text-tertiary text-xs mt-1">出现 {selected.count} 次 · {selected.lessons.length} 节课</p>
+              </div>
+              <div className="flex items-center gap-2">
                 <button onClick={() => toggleKnown(selected.word)}
-                  className={`mt-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
                     knownWords.has(selected.word)
                       ? 'bg-emerald-500/20 text-emerald-400'
                       : 'bg-[var(--bg-tertiary)] text-tertiary hover:text-secondary'
                   }`}>
                   {knownWords.has(selected.word) ? '✓ 已掌握' : '标记掌握'}
                 </button>
+                <button onClick={() => setSelected(null)}
+                  className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
+                  <HiXMark size={16} />
+                </button>
               </div>
             </div>
+
+            {/* Occurrences */}
             <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
               {Object.entries(groupedOccurrences).map(([lid, g]) => (
                 <div key={lid}>
@@ -208,19 +217,8 @@ export default function WordsView() {
               ))}
             </div>
           </div>
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center">
-              <p className="text-tertiary text-xs">← 点击单词查看详情</p>
-              <div className="mt-4 space-y-2 text-xs text-tertiary">
-                <p>大字 = 高频词</p>
-                <p>✓ = 已掌握</p>
-                <p>滚动加载更多</p>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 }

@@ -1,13 +1,14 @@
-import { useState } from 'react';
-import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiChevronUp, HiPencil, HiTag, HiHeart, HiPlusCircle } from 'react-icons/hi2';
+import { useState, useEffect } from 'react';
+import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiPencil, HiTag, HiPlusCircle, HiChevronRight } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useDictationStore } from '../stores/dictationStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
-import TranscriptView from './TranscriptView';
 import Waveform from './Waveform';
+import HeartButton from './HeartButton';
+import PlaybackDetailTabs from './PlaybackDetailTabs';
 
 function fmt(t: number) { const m=Math.floor(t/60); return `${m}:${Math.floor(t%60).toString().padStart(2,'0')}`; }
 
@@ -19,6 +20,11 @@ const LOOP: Record<LoopMode,{icon:React.ReactNode;label:string}> = {
 
 export default function PlayerBar() {
   const [expanded, setExpanded] = useState(false);
+  const [pressing, setPressing] = useState(false);
+  const [speedPop, setSpeedPop] = useState<number | null>(null);
+  const [speedOpen, setSpeedOpen] = useState(false);
+  const [loopOpen, setLoopOpen] = useState(false);
+  const [panelSentence, setPanelSentence] = useState<number | undefined>(undefined);
   const mode = useAudioStore(s=>s.mode);
   const cur = useAudioStore(s=>s.currentTime);
   const dur = useAudioStore(s=>s.duration);
@@ -53,6 +59,23 @@ export default function PlayerBar() {
   const favType = isL ? 'audio' : isC ? 'clip' : null;
   const favTitle = mode.kind === 'empty' ? '' : title;
   const favSub = mode.kind === 'empty' ? '' : sub;
+  const favExtraData = isC
+    ? JSON.stringify({ lessonId: mode.clip.lessonId, start: mode.clip.startTime, end: mode.clip.endTime })
+    : '{}';
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    if (!speedOpen && !loopOpen) return;
+    const close = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.speed-dropdown') && !target.closest('.loop-dropdown')) {
+        setSpeedOpen(false);
+        setLoopOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, [speedOpen, loopOpen]);
 
   return (
     <>
@@ -63,7 +86,7 @@ export default function PlayerBar() {
         return (
         <div className="fixed inset-0 z-30 flex flex-col bg-[var(--bg-primary)]" style={{ paddingBottom: 'calc(72px + env(safe-area-inset-bottom, 0px))' }}>
           {/* ── Header ── */}
-          <div className="flex-shrink-0 flex items-center justify-between px-6 py-3 border-b border-[var(--border-secondary)]">
+          <div className="flex-shrink-0 flex items-center justify-between px-4 py-3 border-b border-[var(--border-secondary)]">
             <button onClick={()=>setExpanded(false)}
               className="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
               <HiChevronDown size={20}/>
@@ -76,15 +99,14 @@ export default function PlayerBar() {
           </div>
 
           {/* ── Transcript Content ── */}
-          <div className="flex-1 overflow-y-auto px-8">
-            <div className="max-w-4xl mx-auto py-6">
-              <TranscriptView
-                lessonId={lesson.id}
-                lessonTitle={lesson.title}
-                lines={lesson.transcript}
-                words={lesson.words}
+          <div className="flex-1 overflow-y-auto px-4">
+            <div className="max-w-7xl mx-auto py-6">
+              <PlaybackDetailTabs
+                lesson={lesson}
                 currentTime={cur}
                 onSeek={seek}
+                onOpenDictation={(sentenceIdx) => setPanelSentence(sentenceIdx)}
+                highlightSentence={panelSentence}
               />
             </div>
           </div>
@@ -102,20 +124,20 @@ export default function PlayerBar() {
           WebkitBackdropFilter: 'blur(40px) saturate(180%)',
           borderTop: '1px solid var(--border-primary)',
         }}>
-        <div className="px-4 pt-0.5">
+        <div className="px-4 pt-1.5 pb-0.5">
           {hasContent && (isL || isC) && (
             <Waveform
               lessonId={isL ? mode.lesson.id : mode.clip.lessonId}
               currentTime={cur}
               duration={dur}
               onSeek={seek}
-              height={20}
+              height={28}
               selectionRange={isC ? { start: mode.clip.startTime, end: mode.clip.endTime } : null}
             />
           )}
         </div>
 
-        <div className="flex items-center gap-3 px-4 py-2.5 max-w-screen-xl mx-auto">
+        <div className="flex items-center gap-3 px-4 pt-0 pb-2.5 max-w-screen-xl mx-auto">
           {/* Artwork + Info */}
           <div className="w-36 md:w-52 min-w-0 flex items-center gap-3"
             onClick={() => {
@@ -146,12 +168,16 @@ export default function PlayerBar() {
           <div className="flex-1 flex items-center justify-center gap-3">
             {(isL || isC) && <button onClick={e=>{e.stopPropagation();prevS();}} className="text-secondary hover:text-primary transition-colors cursor-pointer" title="上一句"><HiBackward size={15}/></button>}
 
-            <button onClick={e=>{e.stopPropagation();toggle();}}
+            <button
+              onPointerDown={e=>{e.stopPropagation();e.preventDefault();if(hasContent&&!loading){setPressing(true);toggle();}}}
+              onPointerUp={()=>setPressing(false)}
+              onPointerLeave={()=>setPressing(false)}
               disabled={!hasContent || loading}
-              className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 cursor-pointer ${
+              className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-150 cursor-pointer select-none ${
                 !hasContent ? 'bg-[var(--bg-tertiary)] text-tertiary cursor-default' :
-                loading ? 'bg-[var(--bg-active)]' :
-                'bg-white hover:scale-105 active:scale-95'
+                loading ? 'bg-[var(--bg-active)] animate-pulse' :
+                pressing ? 'bg-white scale-90' :
+                'bg-white hover:scale-105'
               }`}
               style={hasContent && !loading ? { boxShadow: '0 4px 20px rgba(0,0,0,0.4)' } : {}}>
               {loading
@@ -161,14 +187,6 @@ export default function PlayerBar() {
             </button>
 
             {(isL || isC) && <button onClick={e=>{e.stopPropagation();nextS();}} className="text-secondary hover:text-primary transition-colors cursor-pointer" title="下一句"><HiForward size={15}/></button>}
-            {/* Lyrics expand - visible on mobile */}
-            {(isL || (isC && mode.lesson)) && (
-              <button onClick={e=>{e.stopPropagation();setExpanded(!expanded);}}
-                className="md:hidden w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-all cursor-pointer"
-                title={expanded ? '收起' : '歌词'}>
-                <HiChevronUp size={14} className={expanded ? 'rotate-180 transition-transform' : ''} />
-              </button>
-            )}
           </div>
 
           {/* Right */}
@@ -181,11 +199,10 @@ export default function PlayerBar() {
               </button>
             )}
             {hasContent && favType && favId && (
-              <button onClick={e=>{e.stopPropagation();favToggle({item_id:favId,item_type:favType,title:favTitle,subtitle:favSub,extra_data:favType==='clip'?JSON.stringify({lessonId:mode.clip.lessonId,start:mode.clip.startTime,end:mode.clip.endTime}):'{}'});}}
-                className={`transition-colors cursor-pointer ${isFav(favId,favType) ? 'text-[var(--accent)]' : 'text-tertiary hover:text-secondary'}`}
-                title="收藏">
-                <HiHeart size={14} />
-              </button>
+              <HeartButton
+                active={isFav(favId, favType)}
+                onToggle={() => favToggle({item_id:favId,item_type:favType,title:favTitle,subtitle:favSub,extra_data:favExtraData})}
+              />
             )}
             {hasContent && (
               <>
@@ -197,34 +214,65 @@ export default function PlayerBar() {
                   </button>
                 )}
                 <button onClick={e=>{e.stopPropagation();cycleLoop();}} className="text-tertiary hover:text-secondary transition-colors cursor-pointer" title={`循环模式: ${LOOP[loop].label}`}>{li.icon}</button>
-                <span className="text-tertiary">|</span>
                 <span className="font-mono tabular-nums text-secondary font-medium">{fmt(dTime)}</span>
                 <span className="text-tertiary">/</span>
                 <span className="font-mono tabular-nums text-tertiary">{fmt(dDur)}</span>
-                <div className="flex items-center gap-px ml-1">
-                  {[0.75,1,1.25,1.5].map(r=>(
-                    <button key={r} onClick={e=>{e.stopPropagation();setRate(r);}}
-                      className={`px-1.5 py-0.5 rounded-md cursor-pointer transition-colors font-medium ${rate===r ? 'bg-[var(--bg-active)] text-primary' : 'text-tertiary hover:text-secondary'}`}>{r}x</button>
-                  ))}
+
+                {/* Speed dropdown */}
+                <div className="relative speed-dropdown">
+                  <button
+                    onPointerDown={e=>{e.stopPropagation();setSpeedOpen(!speedOpen);setLoopOpen(false);}}
+                    className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-xs font-mono font-medium cursor-pointer transition-colors hover:bg-[var(--bg-active)] text-tertiary hover:text-secondary"
+                    title="播放速度">
+                    {rate}x <HiChevronRight size={10} className={`transition-transform duration-150 ${speedOpen ? 'rotate-90' : ''}`} />
+                  </button>
+                  {speedOpen && (
+                    <div className="absolute bottom-full left-0 mb-1 rounded-lg shadow-xl border border-[var(--border-primary)] overflow-hidden z-50"
+                      style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+                      {[0.5, 0.75, 1, 1.25, 1.5, 2.0].map(r => (
+                        <button key={r}
+                          onPointerDown={e=>{e.stopPropagation();setRate(r);setSpeedPop(r);setTimeout(()=>setSpeedPop(null),300);setSpeedOpen(false);}}
+                          className={`block w-full text-left px-3 py-1.5 text-xs font-mono cursor-pointer transition-colors ${
+                            rate===r ? 'bg-[var(--bg-active)] text-primary font-semibold' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+                          } ${speedPop===r ? 'animate-speed-pop' : ''}`}>
+                          {r}x {rate===r && '✓'}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                {isC && <>
-                  <span className="text-tertiary">|</span>
-                  {[1,3,5,10].map(n=>(
-                    <button key={n} onClick={e=>{e.stopPropagation();setLoopT(n);}}
-                      className={`px-1.5 py-0.5 rounded-md cursor-pointer transition-colors font-medium ${loopT===n ? 'bg-emerald-500/20 text-emerald-600' : 'text-tertiary hover:text-secondary'}`}>{n}x</button>
-                  ))}
-                </>}
+
+                {/* Loop count dropdown (clip mode only) */}
+                {isC && (
+                  <div className="relative loop-dropdown">
+                    <button
+                      onPointerDown={e=>{e.stopPropagation();setLoopOpen(!loopOpen);setSpeedOpen(false);}}
+                      className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-xs font-mono font-medium cursor-pointer transition-colors hover:bg-[var(--bg-active)] text-emerald-500/70 hover:text-emerald-500"
+                      title="重复次数">
+                      ×{loopT} <HiChevronRight size={10} className={`transition-transform duration-150 ${loopOpen ? 'rotate-90' : ''}`} />
+                    </button>
+                    {loopOpen && (
+                      <div className="absolute bottom-full left-0 mb-1 rounded-lg shadow-xl border border-[var(--border-primary)] overflow-hidden z-50"
+                        style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+                        {[1, 2, 3, 5, 10, 20].map(n => (
+                          <button key={n}
+                            onPointerDown={e=>{e.stopPropagation();setLoopT(n);setLoopOpen(false);}}
+                            className={`block w-full text-left px-3 py-1.5 text-xs font-mono cursor-pointer transition-colors ${
+                              loopT===n ? 'bg-emerald-500/15 text-emerald-500 font-semibold' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+                            }`}>
+                            ×{n} {loopT===n && '✓'}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </>
-            )}
-            {(isL || isC) && (
-              <button onClick={e=>{e.stopPropagation();setExpanded(!expanded);}}
-                className="ml-1 text-tertiary hover:text-secondary transition-colors cursor-pointer">
-                {expanded ? <HiChevronDown size={16}/> : <HiChevronUp size={16}/>}
-              </button>
             )}
           </div>
         </div>
       </div>
+
     </>
   );
 }
