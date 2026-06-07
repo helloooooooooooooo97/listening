@@ -7,6 +7,7 @@ import { useToastStore } from '../stores/toastStore';
 import { useAudioStore, getAudio } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { getKnownWords, getDictationSentences, setWordKnown, type SentenceDictation } from '../lib/api';
+import WordBadges from './dictation/WordBadges';
 
 interface Props {
   lessonId: string; lessonTitle: string;
@@ -258,26 +259,6 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const showDictation = !activeTab || activeTab === 'dictation';
   const showFavs = !activeTab || activeTab === 'favorites';
 
-  // Build dictation word status map: sentenceIndex → (wordIndex → status)
-  const dictWordStatus = useMemo(() => {
-    if (!showDictation || !dictationWordResults) return null;
-    const map = new Map<number, Map<number, string>>();
-    for (let si = 0; si < dictationWordResults.length; si++) {
-      const results = dictationWordResults[si];
-      if (!results) continue;
-      const wordMap = new Map<number, string>();
-      let correctIdx = 0;
-      for (const r of results) {
-        if (r.status === 'correct') { wordMap.set(correctIdx, 'correct'); correctIdx++; }
-        else if (r.status === 'wrong') { wordMap.set(correctIdx, 'wrong'); correctIdx++; }
-        else if (r.status === 'missing') { wordMap.set(correctIdx, 'missing'); correctIdx++; }
-        // extras don't map to expected words
-      }
-      map.set(si, wordMap);
-    }
-    return map;
-  }, [showDictation, dictationWordResults]);
-
   return (
     <div ref={containerRef} className="relative">
       {showToolbar && selection && (() => {
@@ -332,8 +313,10 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
               </div>
               {/* Words */}
               <p className="flex-1 text-base leading-relaxed text-secondary select-none">
-                {lineWords.length>0
-                  ? lineWords.map((word, wordIdx) => {
+                {showDictation && dictationWordResults?.[lineIdx] ? (
+                  <span className="inline-flex flex-wrap gap-1 align-baseline"><WordBadges results={dictationWordResults[lineIdx]!} /></span>
+                ) : lineWords.length>0
+                  ? lineWords.map((word) => {
                       const sel=isWordSelected(word.id);
                       const ci = wordClipInfo(word.start, word.end);
                       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
@@ -353,11 +336,6 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                         return m ? `${parseInt(m[1],16)},${parseInt(m[2],16)},${parseInt(m[3],16)}` : '250,204,21';
                       };
                       const clipRgb = hexToRgb(ci.color);
-                      // Dictation word status
-                      const dwStatus = dictWordStatus?.get(lineIdx)?.get(wordIdx);
-                      const isDictCorrect = dwStatus === 'correct';
-                      const isDictWrong = dwStatus === 'wrong';
-                      const isDictMissing = dwStatus === 'missing';
                       return (
                         <span key={word.id} data-word-id={word.id}
                           onMouseDown={e=>handleWordMouseDown(word,e)}
@@ -369,12 +347,9 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                             word.id===activeWordId&&!selection ? 'active' : sel ? 'selected' : 'hover:bg-[var(--bg-hover)]'
                           }`}
                           style={{
-                            ...(showDictation && isDictCorrect ? { background: 'rgba(52,211,153,0.12)', borderRadius: 2 } : {}),
-                            ...(showDictation && isDictWrong ? { background: 'rgba(239,68,68,0.12)', borderRadius: 2, textDecoration: 'underline wavy rgba(239,68,68,0.5)', textUnderlineOffset: '2px' } : {}),
-                            ...(showDictation && isDictMissing ? { background: 'rgba(239,68,68,0.06)', borderRadius: 2, fontStyle: 'italic', color: 'var(--text-tertiary)' } : {}),
-                            ...(!showDictation && showClips && ci.count > 0 ? { background: `rgba(${clipRgb},${clipAlpha})`, borderRadius: 0 } : {}),
-                            ...(showFavs && isKnown && !showDictation ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
-                            ...(showClips && ci.count > 0 && !showDictation ? { borderBottom: `1px solid rgba(${clipRgb},0.4)` } : {}),
+                            ...(showClips && ci.count > 0 ? { background: `rgba(${clipRgb},${clipAlpha})`, borderRadius: 0 } : {}),
+                            ...(showFavs && isKnown ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
+                            ...(showClips && ci.count > 0 ? { borderBottom: `1px solid rgba(${clipRgb},0.4)` } : {}),
                           }}>
                           {/* Clip play button at the start of each clip */}
                           {showClips && anchoredClip && (
