@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HiClock, HiBookOpen, HiPencil, HiBookmark, HiAcademicCap, HiChevronUp, HiChevronDown, HiSpeakerWave } from 'react-icons/hi2';
+import { HiClock, HiPencil, HiBookmark, HiAcademicCap } from 'react-icons/hi2';
 import { getAudioDetailStats, type AudioDetailStats } from '../lib/api';
 
 interface Props {
@@ -14,7 +14,6 @@ function fmtTime(s: number) {
 
 export default function AudioStatsBar({ audioId }: Props) {
   const [stats, setStats] = useState<AudioDetailStats | null>(null);
-  const [collapsed, setCollapsed] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,71 +28,51 @@ export default function AudioStatsBar({ audioId }: Props) {
   if (!stats) return null;
 
   const pct = stats.duration_seconds > 0
-    ? Math.round((listeningSeconds / stats.duration_seconds) * 100)
+    ? Math.round((stats.listening_seconds / stats.duration_seconds) * 100)
     : 0;
   const progress = Math.min(100, pct);
 
   return (
-    <div className="border-b border-white/[0.04]">
-      {/* Toggle header */}
-      <button
-        onClick={() => setCollapsed(!collapsed)}
-        className="w-full flex items-center justify-between px-6 py-1.5 text-[11px] text-white/25 hover:text-white/50 transition-colors cursor-pointer"
-      >
-        <span className="flex items-center gap-1.5">
-          <HiSpeakerWave size={12} />
-          文章统计
-        </span>
-        {collapsed ? <HiChevronDown size={12} /> : <HiChevronUp size={12} />}
-      </button>
-
-      {!collapsed && (
-        <div className="px-6 pb-3 space-y-2.5 animate-fade-in">
-          {/* Stats row 1 */}
-          <div className="grid grid-cols-5 gap-2">
-            {[
-              { icon: HiClock, label: '进度', value: `${progress}%`, color: '#f59e0b' },
-              { icon: HiClock, label: '已听', value: fmtTime(listeningSeconds), color: '#f59e0b' },
-              { icon: HiPencil, label: '听写均分', value: stats.dictation_count > 0 ? `${stats.dictation_avg_score}%` : '--', color: '#8b5cf6' },
-              { icon: HiAcademicCap, label: '掌握单词', value: `${stats.known_words}/${stats.total_words}`, color: '#10b981' },
-              { icon: HiBookmark, label: '片段', value: `${stats.clips_count}`, color: '#3b82f6' },
-            ].map(s => (
-              <div key={s.label} className="rounded-lg p-2.5 text-center" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                <div className="flex items-center justify-center gap-1 mb-0.5">
-                  <s.icon size={10} style={{ color: s.color }} />
-                  <span className="text-[9px] text-white/20">{s.label}</span>
-                </div>
-                <p className="text-xs font-semibold text-white/70">{s.value}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Progress bar */}
-          <div className="flex items-center gap-2">
-            <div className="flex-1 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-500"
-                style={{
-                  width: `${progress}%`,
-                  background: progress >= 100
-                    ? 'linear-gradient(90deg, #10b981, #34d399)'
-                    : 'linear-gradient(90deg, #fa2d48, #ff6b7f)',
-                }}
-              />
+    <div className="px-6 py-4 space-y-3">
+      {/* Stats grid */}
+      <div className="grid grid-cols-5 gap-3">
+        {[
+          { label: '进度', value: `${progress}%`, icon: HiClock, color: '#f59e0b' },
+          { label: '已听', value: fmtTime(stats.listening_seconds), icon: HiClock, color: '#f59e0b' },
+          { label: '听写', value: stats.dictation_count > 0 ? `${stats.dictation_avg_score}%` : '--', icon: HiPencil, color: '#8b5cf6' },
+          { label: '掌握词', value: `${stats.known_words}/${stats.total_words}`, icon: HiAcademicCap, color: '#10b981' },
+          { label: '片段', value: `${stats.clips_count}`, icon: HiBookmark, color: '#3b82f6' },
+        ].map(s => (
+          <div key={s.label} className="flex items-center gap-2.5 rounded-lg px-3 py-2" style={{ background: 'var(--bg-tertiary)' }}>
+            <div className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0" style={{ background: `${s.color}15` }}>
+              <s.icon size={12} style={{ color: s.color }} />
             </div>
-            <span className="text-[10px] text-white/20 w-8 text-right font-mono">{progress}%</span>
+            <div>
+              <p className="text-xs font-semibold text-primary">{s.value}</p>
+              <p className="text-xs text-tertiary">{s.label}</p>
+            </div>
           </div>
+        ))}
+      </div>
 
-          {/* Secondary info row */}
-          <div className="flex items-center gap-3 text-[10px] text-white/15">
-            {stats.dictation_count > 0 && (
-              <span>📝 听写 {stats.dictation_count} 次 · {stats.last_practiced?.slice(0, 10) || ''}</span>
-            )}
-            <span>🔤 {stats.total_sentences} 句</span>
-            {stats.completed && <span className="text-emerald-400/50">✅ 已完成</span>}
-          </div>
+      {/* Progress bar */}
+      <div className="flex items-center gap-2">
+        <div className="flex-1 h-1 bg-[var(--bg-hover)] rounded-full overflow-hidden">
+          <div className="h-full rounded-full transition-all duration-500" style={{
+            width: `${progress}%`,
+            background: progress >= 100 ? 'linear-gradient(90deg, #10b981, #34d399)' : 'linear-gradient(90deg, #fa2d48, #ff6b7f)',
+          }}/>
         </div>
-      )}
+        <span className="text-xs text-tertiary w-8 text-right font-mono">{progress}%</span>
+      </div>
+
+      {/* Meta row */}
+      <div className="flex items-center gap-4 text-xs text-tertiary">
+        <span>🔤 {stats.total_sentences} 句 · {stats.total_words} 词</span>
+        {stats.dictation_count > 0 && <span>📝 听写 {stats.dictation_count} 次</span>}
+        {stats.completed && <span className="text-emerald-500">✓ 已完成</span>}
+        {stats.last_practiced && <span>最近 {stats.last_practiced.slice(0, 10)}</span>}
+      </div>
     </div>
   );
 }

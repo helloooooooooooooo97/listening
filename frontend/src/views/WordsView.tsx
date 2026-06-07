@@ -97,30 +97,30 @@ export default function WordsView() {
     : {};
 
   return (
-    <div className="h-full flex bg-[#0a0a0b] overflow-hidden">
+    <div className="h-full flex bg-[var(--bg-primary)] overflow-hidden">
       {/* Word list */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-shrink-0 px-6 pt-10 pb-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-extrabold text-white tracking-tight">单词</h1>
-              <p className="text-white/25 text-xs mt-1">
+              <h1 className="text-2xl font-extrabold text-primary tracking-tight">单词</h1>
+              <p className="text-tertiary text-xs mt-1">
                 {total} 个单词 · 已掌握 {knownCount}
               </p>
             </div>
             <div className="flex items-center gap-2">
               {/* Sort toggle */}
               <button onClick={() => setSortMode(s => s === 'freq-desc' ? 'freq-asc' : 'freq-desc')}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-white/40 hover:text-white/70 transition-colors cursor-pointer"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:text-secondary transition-colors cursor-pointer"
                 title="切换排序">
                 <HiBarsArrowDown size={13} style={{ transform: sortMode === 'freq-asc' ? 'rotate(180deg)' : '' }} />
                 {SORT_LABELS[sortMode]}
               </button>
               {/* Search */}
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/15"><HiMagnifyingGlass size={13} /></span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary"><HiMagnifyingGlass size={13} /></span>
                 <input type="text" placeholder="搜索" value={search} onChange={e=>setSearch(e.target.value)}
-                  className="w-40 pl-8 pr-3 py-1.5 text-[12px] bg-white/[0.05] border-0 rounded-md focus:outline-none focus:ring-1 focus:ring-white/10 text-white placeholder:text-white/15"/>
+                  className="w-40 pl-8 pr-3 py-1.5 text-xs bg-[var(--bg-tertiary)] border-0 rounded-md focus:outline-none focus:ring-1 focus:ring-white/10 text-primary placeholder:text-tertiary"/>
               </div>
             </div>
           </div>
@@ -129,7 +129,7 @@ export default function WordsView() {
           {loading ? (
             <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
               {Array.from({length: 40}).map((_,i)=>(
-                <div key={i} className="h-8 rounded-lg bg-white/[0.03] animate-pulse" style={{animationDelay:`${i*20}ms`}}/>
+                <div key={i} className="h-8 rounded-lg bg-[var(--bg-tertiary)] animate-pulse" style={{animationDelay:`${i*20}ms`}}/>
               ))}
             </div>
           ) : (
@@ -137,15 +137,15 @@ export default function WordsView() {
               <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
                 {words.map(w => (
                   <div key={w.word}
-                    className={`rounded-lg px-3 py-1.5 transition-all duration-200 cursor-pointer text-[13px] flex items-center justify-between gap-1 group ${
+                    className={`rounded-lg px-3 py-1.5 transition-all duration-200 cursor-pointer text-[14px] flex items-center justify-between gap-1 group ${
                       selected?.word===w.word
-                        ? 'bg-[#fa2d48]/15 ring-1 ring-[#fa2d48]/30 text-white'
-                        : 'bg-white/[0.02] text-white/60 hover:bg-white/[0.05] hover:text-white/80'
+                        ? 'bg-[var(--accent)]/15 ring-1 ring-[var(--accent)]/30 text-primary'
+                        : 'bg-[var(--bg-tertiary)] text-secondary hover:bg-[var(--bg-tertiary)] hover:text-primary'
                     }`}>
                     <span className="truncate flex-1" onClick={() => setSelected(w)}>{w.word}</span>
-                    <span className="text-[10px] text-white/20 flex-shrink-0 flex items-center gap-0.5">
+                    <span className="text-xs text-tertiary flex-shrink-0 flex items-center gap-0.5">
                       <button onClick={e=>{e.stopPropagation();favToggle({item_id:w.word,item_type:'word',title:w.word,subtitle:`${w.count}次`});}}
-                        className={`transition-colors cursor-pointer ${isFav(w.word,'word') ? 'text-[#fa2d48]' : 'text-white/10 opacity-0 group-hover:opacity-100 hover:text-white/30'}`}>
+                        className={`transition-colors cursor-pointer ${isFav(w.word,'word') ? 'text-[var(--accent)]' : 'text-tertiary opacity-0 group-hover:opacity-100 hover:text-tertiary'}`}>
                         <HiHeart size={10} />
                       </button>
                       {w.count}
@@ -163,27 +163,27 @@ export default function WordsView() {
                   <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
                 </div>
               )}
-              {words.length===0&&!loading&&<p className="text-white/15 text-sm py-8">无匹配单词</p>}
+              {words.length===0&&!loading&&<p className="text-tertiary text-sm py-8">无匹配单词</p>}
             </>
           )}
         </div>
       </div>
 
       {/* Detail panel */}
-      <div className="w-96 flex-shrink-0 border-l border-white/[0.05] flex flex-col overflow-hidden" style={{background:'rgba(255,255,255,0.01)'}}>
+      <div className="w-96 flex-shrink-0 border-l border-[var(--border-primary)] flex flex-col overflow-hidden" style={{background: 'var(--bg-tertiary)'}}>
         {selected ? (
           <div className="flex flex-col h-full">
-            <div className="flex-shrink-0 px-5 pt-10 pb-4 border-b border-white/[0.04]">
+            <div className="flex-shrink-0 px-5 pt-10 pb-4 border-b border-[var(--border-secondary)]">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-3xl font-bold text-white">{selected.word}</h2>
-                  <p className="text-white/25 text-xs mt-1">出现 {selected.count} 次 · {selected.lessons.length} 节课</p>
+                  <h2 className="text-3xl font-bold text-primary">{selected.word}</h2>
+                  <p className="text-tertiary text-xs mt-1">出现 {selected.count} 次 · {selected.lessons.length} 节课</p>
                 </div>
                 <button onClick={() => toggleKnown(selected.word)}
-                  className={`mt-1 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-colors cursor-pointer ${
+                  className={`mt-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
                     knownWords.has(selected.word)
                       ? 'bg-emerald-500/20 text-emerald-400'
-                      : 'bg-white/[0.04] text-white/30 hover:text-white/60'
+                      : 'bg-[var(--bg-tertiary)] text-tertiary hover:text-secondary'
                   }`}>
                   {knownWords.has(selected.word) ? '✓ 已掌握' : '标记掌握'}
                 </button>
@@ -192,14 +192,14 @@ export default function WordsView() {
             <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
               {Object.entries(groupedOccurrences).map(([lid, g]) => (
                 <div key={lid}>
-                  <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.15em] mb-2">{g.title}</p>
+                  <p className="text-xs font-bold text-tertiary uppercase tracking-[0.15em] mb-2">{g.title}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {g.times.map((t, i) => (
                       <button key={i}
                         onClick={() => handlePlayAt(lid, g.title, selected.word, t)}
-                        className="flex items-center gap-1 px-2.5 py-1 rounded-md text-[12px] text-white/50 hover:text-white hover:bg-white/[0.06] transition-colors cursor-pointer font-mono"
+                        className="flex items-center gap-1 px-2.5 py-1 rounded-md text-xs text-secondary hover:text-white hover:bg-[var(--bg-hover)] transition-colors cursor-pointer font-mono"
                         title={`播放 ${fmtTime(t)}`}>
-                        <HiPlay size={10} className="text-white/30"/>
+                        <HiPlay size={10} className="text-tertiary"/>
                         {fmtTime(t)}
                       </button>
                     ))}
@@ -211,8 +211,8 @@ export default function WordsView() {
         ) : (
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
-              <p className="text-white/10 text-xs">← 点击单词查看详情</p>
-              <div className="mt-4 space-y-2 text-[10px] text-white/10">
+              <p className="text-tertiary text-xs">← 点击单词查看详情</p>
+              <div className="mt-4 space-y-2 text-xs text-tertiary">
                 <p>大字 = 高频词</p>
                 <p>✓ = 已掌握</p>
                 <p>滚动加载更多</p>

@@ -15,7 +15,7 @@ export default function FeedbackPhase({ score, results, onPrev, onNext, onReplay
   return (
     <div className="animate-scale-in">
       <div className="text-center mb-4">
-        <span className="text-3xl font-bold text-white">{score}%</span>
+        <span className="text-3xl font-bold text-primary">{score}%</span>
       </div>
       <div className="flex flex-wrap gap-1.5 justify-center mb-6">
         {results.map((r, i) => (
@@ -36,15 +36,15 @@ export default function FeedbackPhase({ score, results, onPrev, onNext, onReplay
       <div className="flex gap-3 justify-center flex-wrap">
         <button onClick={onPrev}
           disabled={!canGoPrev}
-          className="px-4 py-2 bg-white/[0.04] text-white/40 rounded-full text-sm hover:bg-white/[0.08] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer flex items-center gap-1.5">
+          className="px-4 py-2 bg-[var(--bg-tertiary)] text-secondary rounded-full text-sm hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer flex items-center gap-1.5">
           <HiArrowLeft size={14}/> 上一句
         </button>
         <button onClick={onReplay}
-          className="px-4 py-2 bg-white/[0.04] text-white/60 rounded-full text-sm hover:bg-white/[0.08] transition-colors cursor-pointer flex items-center gap-1.5">
+          className="px-4 py-2 bg-[var(--bg-tertiary)] text-secondary rounded-full text-sm hover:bg-[var(--bg-active)] transition-colors cursor-pointer flex items-center gap-1.5">
           <HiPlay size={14}/> 重听
         </button>
         <button onClick={onNext}
-          className="px-4 py-2 bg-[#fa2d48] text-white rounded-full text-sm font-semibold hover:bg-[#fb5b6e] transition-colors cursor-pointer flex items-center gap-1.5">
+          className="px-4 py-2 bg-[var(--accent)] on-accent rounded-full text-sm font-semibold hover:bg-[var(--accent-hover)] transition-colors cursor-pointer flex items-center gap-1.5">
           下一句 <HiArrowRight size={14}/>
         </button>
       </div>

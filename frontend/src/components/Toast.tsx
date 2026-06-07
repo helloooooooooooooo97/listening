@@ -9,7 +9,7 @@ const iconMap = {
 
 const colorMap = {
   success: 'text-[#10b981]',
-  error: 'text-[#fa2d48]',
+  error: 'text-[var(--accent)]',
   info: 'text-[#3b82f6]',
 };
 
@@ -23,10 +23,10 @@ export default function ToastContainer() {
       {toasts.map(t=>{
         const Icon = iconMap[t.type];
         return (
-          <div key={t.id} className="pointer-events-auto glass-light flex items-center gap-3 rounded-2xl px-4 py-3 animate-scale-in border border-white/[0.06]">
+          <div key={t.id} className="pointer-events-auto glass-light flex items-center gap-3 rounded-2xl px-4 py-3 animate-scale-in border border-[var(--border-primary)]">
             <span className={colorMap[t.type]}><Icon size={18}/></span>
-            <span className="text-sm text-white/80">{t.message}</span>
-            <button onClick={()=>remove(t.id)} className="ml-2 text-white/20 hover:text-white/50 cursor-pointer">
+            <span className="text-sm text-primary">{t.message}</span>
+            <button onClick={()=>remove(t.id)} className="ml-2 text-tertiary hover:text-secondary cursor-pointer">
               <HiXMark size={14}/>
             </button>
           </div>

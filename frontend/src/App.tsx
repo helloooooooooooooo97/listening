@@ -50,7 +50,7 @@ function AppContent() {
   };
 
   return (
-    <div className="h-screen flex overflow-hidden bg-black">
+    <div className="h-screen flex overflow-hidden bg-[var(--bg-primary)]">
       <Sidebar
         activeSection={activeSection}
         onSectionChange={(s) => navigate(`/${s === 'home' ? '' : s}`)}

@@ -17,14 +17,14 @@ export default function SentenceSelector({ sentences, sentenceIndex, scores, avg
     <div className="relative mt-1">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 text-white/35 hover:text-white/60 transition-colors cursor-pointer text-xs"
+        className="flex items-center gap-1.5 text-tertiary hover:text-secondary transition-colors cursor-pointer text-xs"
       >
         第 {sentenceIndex + 1}/{sentences.length} 句
         <HiChevronDown size={10} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
-        {avgScore !== null && <span className="text-white/15">· 均分 {avgScore}%</span>}
+        {avgScore !== null && <span className="text-tertiary">· 均分 {avgScore}%</span>}
       </button>
       {open && (
-        <div className="absolute top-full left-0 mt-1 w-72 max-h-64 overflow-y-auto bg-[#1a1a1d] border border-white/[0.08] rounded-xl shadow-2xl z-50 py-1 animate-scale-in">
+        <div className="absolute top-full left-0 mt-1 w-72 max-h-64 overflow-y-auto bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl shadow-2xl z-50 py-1 animate-scale-in">
           {sentences.map((s, i) => {
             const done = scores[i] !== undefined;
             const sScore = scores[i];
@@ -34,19 +34,19 @@ export default function SentenceSelector({ sentences, sentenceIndex, scores, avg
                 onClick={() => { onGoToSentence(i); setOpen(false); }}
                 className={`w-full text-left px-4 py-2 text-xs flex items-center gap-3 transition-colors cursor-pointer ${
                   i === sentenceIndex
-                    ? 'bg-[#fa2d48]/10 text-white'
-                    : 'text-white/40 hover:bg-white/[0.04] hover:text-white/70'
+                    ? 'bg-[var(--accent)]/15 on-accent'
+                    : 'text-secondary hover:bg-[var(--bg-tertiary)] hover:text-secondary'
                 }`}
               >
-                <span className={`w-6 h-5 rounded flex items-center justify-center text-[10px] font-mono flex-shrink-0 ${
+                <span className={`w-6 h-5 rounded flex items-center justify-center text-xs font-mono flex-shrink-0 ${
                   done
                     ? sScore! >= 80 ? 'bg-emerald-500/20 text-emerald-400' : sScore! >= 50 ? 'bg-amber-500/20 text-amber-400' : 'bg-red-500/20 text-red-400'
-                    : 'bg-white/[0.04] text-white/20'
+                    : 'bg-[var(--bg-tertiary)] text-tertiary'
                 }`}>
                   {done ? `${sScore}%` : i + 1}
                 </span>
                 <span className="truncate">{s.text.slice(0, 50)}{s.text.length > 50 ? '...' : ''}</span>
-                {done && sScore! < 50 && <span className="ml-auto text-[10px] text-red-400/50">需复习</span>}
+                {done && sScore! < 50 && <span className="ml-auto text-xs text-red-500/70">需复习</span>}
               </button>
             );
           })}

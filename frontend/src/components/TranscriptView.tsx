@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { HiBookmark } from 'react-icons/hi2';
-import type { TranscriptLine, TranscriptWord } from '../types/lesson';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { HiBookmark, HiPlay } from 'react-icons/hi2';
+import type { TranscriptLine, TranscriptWord, AudioClip } from '../types/lesson';
 import { useClipsStore } from '../stores/clipsStore';
+import { useFavoritesStore } from '../stores/favoritesStore';
 import { useToastStore } from '../stores/toastStore';
+import { useAudioStore } from '../stores/audioStore';
+import { useSettingsStore } from '../stores/settingsStore';
+import { getKnownWords, getDictationSentences, type SentenceDictation } from '../lib/api';
 
 interface Props {
   lessonId: string; lessonTitle: string;
@@ -23,6 +27,20 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const [pendingAnchor, setPendingAnchor] = useState<TranscriptWord | null>(null);
   const [showToolbar, setShowToolbar] = useState(false);
   const [clipNote, setClipNote] = useState('');
+  const [knownWords, setKnownWords] = useState<Set<string>>(new Set());
+  const [sentenceScores, setSentenceScores] = useState<SentenceDictation[]>([]);
+  const isFav = useFavoritesStore(s => s.isFav);
+  const playClip = useAudioStore(s => s.playClip);
+  const setLoopTarget = useAudioStore(s => s.setLoopTarget);
+  const defaultLoopCount = useSettingsStore(s => s.settings.defaultLoopCount);
+
+  useEffect(() => {
+    getKnownWords().then(words => setKnownWords(new Set(words))).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    getDictationSentences(lessonId).then(d => setSentenceScores(d.sentences)).catch(() => {});
+  }, [lessonId]);
 
   let activeLineIndex = -1;
   for (let i=lines.length-1;i>=0;i--) { if(currentTime>=lines[i].start-0.1){activeLineIndex=i;break;} }
@@ -35,7 +53,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
 
   const handleWordMouseDown = useCallback((word: TranscriptWord, e: React.MouseEvent) => {
     e.preventDefault(); setPendingAnchor(word); setIsDragging(true);
-    setSelection({startWord:word,endWord:word}); setShowToolbar(false);
+    setShowToolbar(false);
   }, []);
 
   const handleWordMouseEnter = useCallback((word: TranscriptWord) => {
@@ -47,11 +65,19 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false); setPendingAnchor(null);
-    if(selection && selection.startWord.id!==selection.endWord.id) setShowToolbar(true);
+    if (selection && selection.startWord.id !== selection.endWord.id) {
+      setShowToolbar(true);
+    } else {
+      setSelection(null);
+    }
   }, [selection]);
 
   useEffect(() => {
-    const onClick=(e:MouseEvent)=>{if(containerRef.current&&!containerRef.current.contains(e.target as Node)){setSelection(null);setShowToolbar(false);setClipNote('');}};
+    const onClick=(e:MouseEvent)=>{
+      const target = e.target as HTMLElement;
+      if (target.closest('.clip-toolbar')) return;
+      setSelection(null); setShowToolbar(false); setClipNote('');
+    };
     document.addEventListener('mousedown',onClick); return ()=>document.removeEventListener('mousedown',onClick);
   }, []);
 
@@ -66,60 +92,177 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   };
 
   const handleCancelSelection = () => { setSelection(null); setShowToolbar(false); setClipNote(''); };
+
+  // Build sentence lookup for dictation data
+  const sentenceDictMap = useMemo(() => {
+    const m = new Map<number, SentenceDictation>();
+    for (const s of sentenceScores) m.set(s.index, s);
+    return m;
+  }, [sentenceScores]);
+
+  // Build wrong indices lookup: sentenceIndex → Set<wordIndex>
+  const wrongIdxMap = useMemo(() => {
+    const m = new Map<number, Set<number>>();
+    for (const sd of sentenceScores) {
+      m.set(sd.index, new Set(sd.wrong_indices));
+    }
+    return m;
+  }, [sentenceScores]);
+
+  // Clips data for this lesson
+  const allClips = useClipsStore(s => s.clips);
+  const lessonClips = useMemo(() => allClips.filter(c => c.lessonId === lessonId), [allClips, lessonId]);
+  const wordClipCount = (wordStart: number, wordEnd: number) =>
+    lessonClips.filter(c => wordStart >= c.startTime - 0.1 && wordEnd <= c.endTime + 0.1).length;
+
   const isWordSelected = (id: string) => {
     if(!selection) return false;
     const si=getWordIndex(selection.startWord.id), ei=getWordIndex(selection.endWord.id), wi=getWordIndex(id);
     return wi>=si&&wi<=ei;
   };
 
+  // Get current lesson context from audioStore (keeps expanded overlay alive)
+  const audioMode = useAudioStore(s => s.mode);
+  const contextLesson = audioMode.kind === 'lesson' ? audioMode.lesson :
+    audioMode.kind === 'clip' ? audioMode.lesson : null;
+
+  // Play the clip at this word's position
+  const handlePlayLineClip = (e: React.MouseEvent, word: TranscriptWord) => {
+    e.stopPropagation();
+    // Find the clip that covers this word
+    const clip = lessonClips.find(c => word.start >= c.startTime - 0.1 && word.end <= c.endTime + 0.1);
+    const startTime = clip ? clip.startTime : word.start;
+    const endTime = clip ? clip.endTime : word.start + 1;
+    const lineClip: AudioClip = {
+      id: `clip-${lessonId}-${startTime}`,
+      lessonId,
+      lessonTitle,
+      startTime,
+      endTime,
+      text: clip?.text || word.text,
+      note: '',
+      startWordId: '', endWordId: '',
+      createdAt: '',
+    };
+    setLoopTarget(defaultLoopCount);
+    playClip(lineClip, contextLesson);
+  };
+
+  // Pre-compute which words are the exact start of a clip
+  const clipStartWords = useMemo(() => {
+    const s = new Set<string>();
+    for (const clip of lessonClips) {
+      const match = words.find(w => Math.abs(w.start - clip.startTime) < 0.15);
+      if (match) s.add(match.id);
+    }
+    return s;
+  }, [lessonClips, words]);
+
+  // Stats
+  const knownCount = words.filter(w => knownWords.has(w.text.toLowerCase())).length;
+  const favCount = words.filter(w => isFav(w.text.toLowerCase(), 'word')).length;
+  const totalDictCount = sentenceScores.reduce((a, s) => a + s.count, 0);
+
   return (
     <div ref={containerRef} className="relative">
-      {showToolbar && selection && (
-        <div className="sticky top-0 z-20 rounded-2xl p-5 mb-4 animate-scale-in" style={{ background: 'rgba(250,45,72,0.1)', border: '1px solid rgba(250,45,72,0.2)' }}>
-          <div className="flex items-start gap-4">
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white/90 flex items-center gap-1.5"><HiBookmark size={14}/>保存片段</p>
-              <p className="text-[13px] text-white/50 italic mt-1 truncate">"{selection.startWord.text} ... {selection.endWord.text}"</p>
-              <input type="text" placeholder="添加标签..." value={clipNote}
-                onChange={e=>setClipNote(e.target.value)}
-                onKeyDown={e=>{if(e.key==='Enter')handleSaveClip();if(e.key==='Escape')handleCancelSelection();}}
-                className="mt-3 w-full text-[13px] text-white/70 bg-white/[0.06] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#fa2d48]/30 placeholder:text-white/20"/>
-            </div>
-            <div className="flex flex-col gap-2 flex-shrink-0">
-              <button onClick={handleSaveClip} className="px-4 py-2 text-[13px] font-semibold bg-[#fa2d48] text-white rounded-full hover:bg-[#fb5b6e] transition-colors cursor-pointer">保存</button>
-              <button onClick={handleCancelSelection} className="px-4 py-2 text-[13px] text-white/40 hover:text-white/70 transition-colors cursor-pointer">取消</button>
+      {showToolbar && selection && (() => {
+        const endEl = containerRef.current?.querySelector(`[data-word-id="${selection.endWord.id}"]`);
+        const rect = endEl?.getBoundingClientRect();
+        return (
+          <div className="clip-toolbar fixed z-50 animate-fade-in"
+            style={{
+              left: rect ? Math.max(10, Math.min(rect.left, window.innerWidth - 280)) : 100,
+              top: rect ? rect.bottom + 6 : 100,
+            }}>
+            <div className="rounded-lg px-3 py-2 shadow-2xl flex items-center gap-2" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)' }}>
+              <HiBookmark size={13} className="text-[var(--accent)] flex-shrink-0" />
+              <span className="text-xs text-secondary truncate max-w-[100px]">{selection.startWord.text}...{selection.endWord.text}</span>
+              <span className="text-tertiary">|</span>
+              <input type="text" placeholder="添加备注..." value={clipNote}
+                onChange={e => setClipNote(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') handleSaveClip(); if (e.key === 'Escape') handleCancelSelection(); }}
+                className="w-28 text-xs text-secondary bg-transparent border-0 outline-none placeholder:text-tertiary" />
+              <button onClick={handleSaveClip} className="px-2 py-0.5 text-xs font-medium bg-[var(--accent)] on-accent rounded-md hover:bg-[var(--accent-hover)] transition-colors cursor-pointer whitespace-nowrap">保存</button>
+              <button onClick={handleCancelSelection} className="text-tertiary hover:text-secondary transition-colors cursor-pointer text-xs">✕</button>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       <div className="space-y-1" onMouseUp={handleMouseUp}>
-        <p className="text-[10px] font-semibold text-white/20 uppercase tracking-widest mb-3 px-1">文本 · 拖拽选词保存片段</p>
+        {/* Stats bar */}
+        <div className="flex items-center justify-end gap-3 px-1 pb-2 text-xs text-tertiary">
+          {knownCount > 0 && <span className="text-emerald-500/70">✓ {knownCount} 掌握</span>}
+          {favCount > 0 && <span className="text-[var(--accent)]">♥ {favCount} 收藏</span>}
+          {lessonClips.length > 0 && <span className="text-amber-600">■ {lessonClips.length} 片段</span>}
+          {totalDictCount > 0 && <span className="text-tertiary">📝 {totalDictCount} 听写</span>}
+        </div>
         {lines.map((line, lineIdx) => {
           const isActive = lineIdx===activeLineIndex;
           const lineWords = words.filter(w=>w.start>=line.start-0.05&&w.end<=line.end+0.05);
+          const sentData = sentenceDictMap.get(lineIdx);
           return (
             <div key={line.id} ref={isActive?activeLineRef:null}
-              className={`transcript-line ${isActive?'active':''}`}
+              className={`transcript-line ${isActive?'active':''} flex items-start gap-4 px-4 py-2.5`}
               onClick={()=>onSeek(line.start)}>
-              <p className="text-sm leading-relaxed text-white/60 select-none">
+              {/* Line number + timestamp */}
+              <div className="flex-shrink-0 flex items-center gap-2 pt-0.5 text-sm font-mono text-tertiary select-none">
+                <span className="w-5 text-right text-tertiary">{lineIdx + 1}</span>
+                <span className="w-12 text-left text-tertiary">{Math.floor(line.start/60)}:{Math.floor(line.start%60).toString().padStart(2,'0')}</span>
+              </div>
+              {/* Words */}
+              <p className="flex-1 text-base leading-relaxed text-secondary select-none">
                 {lineWords.length>0
-                  ? lineWords.map(word=>{
+                  ? lineWords.map((word, wordIdx) => {
                       const sel=isWordSelected(word.id);
+                      const cc = wordClipCount(word.start, word.end);
+                      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                      const clipAlpha = Math.min((isLight ? 0.12 : 0.06) * cc, isLight ? 0.3 : 0.2);
+                      const isKnown = knownWords.has(word.text.toLowerCase());
+                      const isFavorited = isFav(word.text.toLowerCase(), 'word');
+                      const isWrong = wrongIdxMap.get(lineIdx)?.has(wordIdx) ?? false;
+                      // Show play button only at the exact start of each clip
+                      const isClipStart = clipStartWords.has(word.id);
                       return (
                         <span key={word.id} data-word-id={word.id}
                           onMouseDown={e=>handleWordMouseDown(word,e)}
                           onMouseEnter={()=>handleWordMouseEnter(word)}
+                          onClick={e => { e.stopPropagation(); if (!selection) onSeek(word.start); }}
                           className={`transcript-word cursor-pointer ${
-                            word.id===activeWordId&&!selection ? 'active' : sel ? 'selected' : 'hover:bg-white/[0.06]'
-                          }`}>
+                            word.id===activeWordId&&!selection ? 'active' : sel ? 'selected' : 'hover:bg-[var(--bg-hover)]'
+                          }`}
+                          style={{
+                            ...(cc > 0 ? { background: `rgba(250,204,21,${clipAlpha})`, borderRadius: 0 } : {}),
+                            ...(isKnown ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
+                            ...(isWrong ? { textDecoration: 'underline wavy rgba(239,68,68,0.6)', textUnderlineOffset: '2px' } : cc > 0 ? { borderBottom: '1px solid rgba(250,204,21,0.4)' } : {}),
+                          }}>
+                          {/* Clip play button at the start of each clip */}
+                          {isClipStart && (
+                            <button onClick={e => handlePlayLineClip(e, word)}
+                              className="inline-flex items-center justify-center w-4 h-4 rounded bg-amber-500/20 text-amber-600 hover:bg-amber-500/30 hover:text-amber-700 transition-colors cursor-pointer align-middle mr-1 -mt-0.5"
+                              title="播放片段">
+                              <HiPlay size={8} />
+                            </button>
+                          )}
+                          {isFavorited && <span className="text-[var(--accent)] text-[9px] mr-px">♥</span>}
                           {word.text}{' '}
                         </span>
                       );
                     })
                   : line.text}
+                {/* Sentence score badge */}
+                {sentData && sentData.count > 0 && (
+                  <span className={`inline-flex items-center ml-2 text-[11px] font-mono px-1.5 py-0.5 rounded ${
+                    sentData.avg_score >= 80 ? 'text-emerald-500/70 bg-emerald-500/15' :
+                    sentData.avg_score >= 50 ? 'text-amber-500/70 bg-amber-500/15' :
+                    'text-red-500/70 bg-red-500/10'
+                  }`}
+                    title={`听写 ${sentData.count} 次 · 均分 ${sentData.avg_score}% · 最近 ${sentData.last_score}%`}>
+                    {sentData.avg_score}%
+                  </span>
+                )}
               </p>
-              {line.note && <p className="text-xs text-white/20 mt-1 italic">{line.note}</p>}
+              {line.note && <p className="text-xs text-tertiary mt-1 italic">{line.note}</p>}
             </div>
           );
         })}

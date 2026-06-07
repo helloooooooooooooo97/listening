@@ -208,6 +208,55 @@ def audio_detail(audio_id: str):
     }
 
 
+@router.get("/dictation-sentences/{audio_id}")
+@locked
+def dictation_sentences(audio_id: str):
+    """Per-sentence dictation stats for the transcript view."""
+    conn = get_conn()
+    from services import get_lesson
+    lesson = get_lesson(audio_id)
+    total_sentences = len(lesson.transcript) if lesson else 0
+
+    # Get all dictation records for this audio
+    rows = conn.execute(
+        "SELECT sentence_index, score, user_input, expected_text FROM dictation_history WHERE audio_id=? ORDER BY created_at",
+        [audio_id]
+    ).fetchall()
+
+    # Aggregate per sentence
+    sentence_map: dict[int, dict] = {}
+    for r in rows:
+        idx = r["sentence_index"]
+        if idx not in sentence_map:
+            sentence_map[idx] = {"index": idx, "scores": [], "wrong_indices": set(), "count": 0}
+        sentence_map[idx]["scores"].append(r["score"])
+        sentence_map[idx]["count"] += 1
+        # Find wrong word indices
+        if r["user_input"] and r["expected_text"]:
+            expected = r["expected_text"].lower().split()
+            actual = r["user_input"].lower().split()
+            for i, _ in enumerate(expected):
+                if i >= len(actual) or actual[i] != expected[i]:
+                    sentence_map[idx]["wrong_indices"].add(i)
+
+    sentences = []
+    for i in range(total_sentences):
+        if i in sentence_map:
+            data = sentence_map[i]
+            scores = data["scores"]
+            sentences.append({
+                "index": i,
+                "avg_score": round(sum(scores) / len(scores), 1),
+                "count": data["count"],
+                "last_score": scores[-1],
+                "wrong_indices": sorted(data["wrong_indices"]),
+            })
+        else:
+            sentences.append({"index": i, "avg_score": 0, "count": 0, "last_score": 0, "wrong_indices": []})
+
+    return {"sentences": sentences}
+
+
 @router.get("/audio-progress")
 @locked
 def audio_progress():

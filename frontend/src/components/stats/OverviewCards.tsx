@@ -20,25 +20,25 @@ export default function OverviewCards({ overview }: { overview: Overview | null 
   return (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
       {cards.map(s => (
-        <div key={s.label} className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.03)' }}>
+        <div key={s.label} className="rounded-xl p-5" style={{ background: 'var(--bg-tertiary)' }}>
           <div className="flex items-center justify-between mb-3">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: `${s.color}20` }}>
               <s.icon size={18} style={{ color: s.color }} />
             </div>
             {s.change && (
-              <span className={`flex items-center gap-0.5 text-[10px] font-semibold ${s.up ? 'text-emerald-400' : 'text-red-400'}`}>
+              <span className={`flex items-center gap-0.5 text-xs font-semibold ${s.up ? 'text-emerald-400' : 'text-red-400'}`}>
                 {s.up ? <HiArrowTrendingUp size={12}/> : <HiArrowTrendingDown size={12}/>}
                 {s.change}
               </span>
             )}
           </div>
           {s.value !== null ? (
-            <p className="text-2xl font-bold text-white tracking-tight">{s.value}</p>
+            <p className="text-2xl font-bold text-primary tracking-tight">{s.value}</p>
           ) : (
             <Skeleton className="h-7 w-16" />
           )}
           {s.sub !== null ? (
-            <p className="text-[11px] text-white/30 mt-1">{s.sub}</p>
+            <p className="text-xs text-tertiary mt-1">{s.sub}</p>
           ) : (
             <Skeleton className="h-3 w-12 mt-2" />
           )}

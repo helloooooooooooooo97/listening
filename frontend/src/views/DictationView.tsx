@@ -80,11 +80,11 @@ export default function DictationView() {
   const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
 
   return (
-    <div className="h-full flex flex-col bg-[#0a0a0b] overflow-hidden">
+    <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
       {/* Header */}
-      <div className="flex-shrink-0 px-6 py-4 flex items-center justify-between border-b border-white/[0.04]">
+      <div className="flex-shrink-0 px-6 py-4 flex items-center justify-between border-b border-[var(--border-secondary)]">
         <div>
-          <h2 className="text-lg font-bold text-white">听写模式</h2>
+          <h2 className="text-lg font-bold text-primary">听写模式</h2>
           <SentenceSelector
             sentences={sentences}
             sentenceIndex={sentenceIndex}
@@ -96,17 +96,17 @@ export default function DictationView() {
         <div className="flex items-center gap-2">
           <button onClick={prevSentence}
             disabled={sentenceIndex <= 0}
-            className="w-7 h-7 rounded-lg flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-white/40 hover:text-white/70"
+            className="w-7 h-7 rounded-lg flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary hover:text-secondary"
             title="上一句">
             <HiArrowLeft size={14} />
           </button>
           <button onClick={nextSentence}
             disabled={sentenceIndex >= sentences.length - 1}
-            className="w-7 h-7 rounded-lg flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.08] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-white/40 hover:text-white/70"
+            className="w-7 h-7 rounded-lg flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary hover:text-secondary"
             title="下一句">
             <HiArrowRight size={14} />
           </button>
-          <button onClick={reset} className="px-3 py-1.5 text-xs text-white/40 hover:text-white/70 transition-colors cursor-pointer rounded-lg hover:bg-white/[0.04]">退出</button>
+          <button onClick={reset} className="px-3 py-1.5 text-xs text-secondary hover:text-secondary transition-colors cursor-pointer rounded-lg hover:bg-[var(--bg-tertiary)]">退出</button>
         </div>
       </div>
 

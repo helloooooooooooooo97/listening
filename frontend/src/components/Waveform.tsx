@@ -1,5 +1,12 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { extractWaveform, cacheWaveform, getCachedWaveform } from '../lib/waveform';
+import { useThemeStore } from '../stores/themeStore';
+
+/** Resolve a CSS variable value for use in Canvas 2D context. */
+function cssVar(name: string, fallback = '#fa2d48'): string {
+  if (typeof document === 'undefined') return fallback;
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+}
 
 interface Props {
   lessonId: string;
@@ -9,7 +16,11 @@ interface Props {
   height?: number;
   playedColor?: string;
   unplayedColor?: string;
+  selectionRange?: { start: number; end: number } | null;
 }
+
+const HIGHLIGHT = 'rgba(250,204,21,0.5)';
+const HIGHLIGHT_BORDER = 'rgba(250,204,21,0.8)';
 
 export default function Waveform({
   lessonId,
@@ -17,15 +28,20 @@ export default function Waveform({
   duration,
   onSeek,
   height = 48,
-  playedColor = '#fa2d48',
-  unplayedColor = 'rgba(255,255,255,0.08)',
+  playedColor,
+  unplayedColor,
+  selectionRange,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const peaksRef = useRef<Float32Array | null>(null);
   const [ready, setReady] = useState(false);
+  const theme = useThemeStore(s => s.mode);
 
-  // Resize canvas to match container
+  const resolvedPlayed = playedColor || cssVar('--accent', '#fa2d48');
+  const resolvedUnplayed = unplayedColor || cssVar('--waveform-unplayed', 'rgba(255,255,255,0.08)');
+
+  // Resize canvas
   const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -38,11 +54,10 @@ export default function Waveform({
     canvas.style.height = `${height}px`;
   }, [height]);
 
-  // Load waveform
+  // Load waveform (already cached in lib/waveform.ts)
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      // Check cache
       const key = `waveform:${lessonId}`;
       const cached = getCachedWaveform(key);
       if (cached) {
@@ -64,7 +79,6 @@ export default function Waveform({
     return () => { cancelled = true; };
   }, [lessonId]);
 
-  // Bind resize
   useEffect(() => {
     resizeCanvas();
     const onResize = () => resizeCanvas();
@@ -72,7 +86,7 @@ export default function Waveform({
     return () => window.removeEventListener('resize', onResize);
   }, [resizeCanvas, ready]);
 
-  // Draw waveform + progress
+  // Draw
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -94,15 +108,39 @@ export default function Waveform({
     const progress = duration > 0 ? Math.min(1, Math.max(0, currentTime / duration)) : 0;
     const playedIdx = Math.floor(progress * len);
 
+    // Selection range
+    let selStart = -1, selEnd = -1;
+    if (selectionRange && duration > 0) {
+      selStart = Math.floor((selectionRange.start / duration) * len);
+      selEnd = Math.ceil((selectionRange.end / duration) * len);
+    }
+
     for (let i = 0; i < len; i++) {
       const x = i * stepX;
       const peak = peaks[i] * mid * 0.85;
       const barW = Math.max(1, stepX - 0.8);
+      const isSel = i >= selStart && i <= selEnd;
+      const isPlayed = i < playedIdx;
 
-      ctx.fillStyle = i < playedIdx ? playedColor : unplayedColor;
+      if (isSel) {
+        ctx.fillStyle = 'rgba(250,204,21,0.08)';
+        ctx.fillRect(x, 0, barW, h);
+      }
+
+      ctx.fillStyle = isPlayed ? resolvedPlayed : (isSel ? HIGHLIGHT : resolvedUnplayed);
       ctx.fillRect(x, mid - peak, barW, Math.max(1, peak * 2));
     }
-  }, [currentTime, duration, ready, playedColor, unplayedColor]);
+
+    // Selection border lines
+    if (selStart >= 0) {
+      ctx.strokeStyle = HIGHLIGHT_BORDER;
+      ctx.lineWidth = 1.5;
+      const sx = selStart * stepX;
+      ctx.beginPath(); ctx.moveTo(sx, 4); ctx.lineTo(sx, h - 4); ctx.stroke();
+      const ex = selEnd * stepX + stepX;
+      ctx.beginPath(); ctx.moveTo(ex, 4); ctx.lineTo(ex, h - 4); ctx.stroke();
+    }
+  }, [currentTime, duration, ready, resolvedPlayed, resolvedUnplayed, selectionRange, theme]);
 
   const handleClick = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -118,10 +156,7 @@ export default function Waveform({
       style={{ height }}
       onClick={handleClick}
     >
-      <canvas
-        ref={canvasRef}
-        className="rounded"
-      />
+      <canvas ref={canvasRef} className="rounded" />
     </div>
   );
 }

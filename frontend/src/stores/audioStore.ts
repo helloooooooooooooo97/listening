@@ -133,7 +133,14 @@ export const useAudioStore = create<AudioState>((set, get) => {
       const switched = switchSource(lesson.id, flushTrack);
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'lesson', lesson }, loopCount: 0, playbackRate: getSettingDefault('defaultSpeed', 1) });
-      waitForReady(getAudio(), () => getAudio().play());
+      waitForReady(getAudio(), () => {
+        // Restore saved position if available
+        const saved = useSettingsStore.getState().getPosition(lesson.id);
+        if (saved && saved.position > 5) {
+          getAudio().currentTime = saved.position;
+        }
+        getAudio().play();
+      });
     },
 
     viewLesson: (lesson) => {
@@ -174,6 +181,19 @@ export const useAudioStore = create<AudioState>((set, get) => {
     },
 
     seek: (time) => {
+      const state = get();
+      // If in clip loop mode and seeking outside clip range, break out of loop
+      if (state.mode.kind === 'clip') {
+        const { clip } = state.mode;
+        if (time < clip.startTime || time > clip.endTime) {
+          // Switch to lesson mode if we have context lesson
+          if (state.mode.lesson) {
+            set({ mode: { kind: 'lesson', lesson: state.mode.lesson }, loopMode: 'all', loopCount: 0 });
+          } else {
+            set({ loopMode: 'all', loopCount: 0 });
+          }
+        }
+      }
       getAudio().currentTime = Math.max(0, Math.min(time, getAudio().duration || 0));
     },
 

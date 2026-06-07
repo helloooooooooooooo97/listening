@@ -130,7 +130,6 @@ export interface AudioDetailStats {
 export function getAudioDetailStats(audioId: string): Promise<AudioDetailStats> {
   return get<AudioDetailStats>(`/api/stats/audio-detail/${encodeURIComponent(audioId)}`);
 }
-}
 
 export interface DailyDay { date: string; seconds: number; }
 
@@ -229,6 +228,20 @@ export function removeFavorite(id: number): Promise<{ ok: boolean }> {
 
 export function removeFavoriteByItem(item_type: string, item_id: string): Promise<{ ok: boolean }> {
   return fetch(`/api/favorites/by-item/${item_type}/${encodeURIComponent(item_id)}`, { method: 'DELETE' }).then(r => r.json());
+}
+
+// ── Dictation Sentences ──
+
+export interface SentenceDictation {
+  index: number;
+  avg_score: number;
+  count: number;
+  last_score: number;
+  wrong_indices: number[];
+}
+
+export function getDictationSentences(audioId: string): Promise<{ sentences: SentenceDictation[] }> {
+  return get(`/api/stats/dictation-sentences/${encodeURIComponent(audioId)}`);
 }
 
 export function getWords(params: {
