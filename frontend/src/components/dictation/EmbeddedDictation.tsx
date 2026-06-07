@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { HiArrowLeft, HiArrowRight } from 'react-icons/hi2';
 import { useAudioStore } from '../../stores/audioStore';
 import { useDictationStore } from '../../stores/dictationStore';
 import { postDictation } from '../../lib/api';
@@ -67,13 +66,11 @@ export default function EmbeddedDictation({ lesson }: Props) {
     }, 100);
   };
 
-  // Auto-play sentence on change
   useEffect(() => {
     seek(currentSentence.start);
     setTimeout(() => useAudioStore.getState().togglePlay(), 150);
   }, [sentenceIndex]);
 
-  // Stop at sentence end
   useEffect(() => {
     if (!isPlaying || !currentSentence) return;
     if (currentTime >= currentSentence.end - 0.1) {
@@ -84,11 +81,10 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden">
-      {/* Header */}
-      <div className="flex-shrink-0 px-4 py-3 flex items-center justify-between border-b border-[var(--border-secondary)]">
-        <div>
-          <h3 className="text-sm font-bold text-primary">听写模式</h3>
+    <div className="h-full flex flex-col items-center justify-center px-8">
+      <div className="w-full max-w-lg flex flex-col items-center gap-4">
+        {/* Sentence indicator — centered */}
+        <div className="text-center">
           <SentenceSelector
             sentences={sentences}
             sentenceIndex={sentenceIndex}
@@ -96,46 +92,31 @@ export default function EmbeddedDictation({ lesson }: Props) {
             avgScore={avgScore}
             onGoToSentence={goToSentence}
           />
+          <p className="text-xs text-tertiary mt-1">句子 {sentenceIndex + 1} / {sentences.length}</p>
         </div>
-        <div className="flex items-center gap-2">
-          <button onClick={prevSentence}
-            disabled={sentenceIndex <= 0}
-            className="w-7 h-7 rounded-lg flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary">
-            <HiArrowLeft size={14} />
-          </button>
-          <button onClick={nextSentence}
-            disabled={sentenceIndex >= sentences.length - 1}
-            className="w-7 h-7 rounded-lg flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary">
-            <HiArrowRight size={14} />
-          </button>
-        </div>
-      </div>
 
-      {/* Phase content */}
-      <div className="flex-1 flex items-center justify-center px-8">
-        <div className="w-full max-w-lg space-y-6">
-          {phase === 'typing' && (
-            <TypingPhase
-              inputRef={inputRef}
-              userInput={userInput}
-              onInputChange={setInput}
-              onSubmit={handleSubmit}
-              onSkip={skip}
-              onPlaySentence={handlePlaySentence}
-            />
-          )}
-          {phase === 'feedback' && (
-            <FeedbackPhase
-              score={scores[scores.length - 1] ?? 0}
-              results={results}
-              onPrev={prevSentence}
-              onNext={nextSentence}
-              onReplay={handlePlaySentence}
-              canGoPrev={sentenceIndex > 0}
-              canGoNext={sentenceIndex < sentences.length - 1}
-            />
-          )}
-        </div>
+        {/* Phase content */}
+        {phase === 'typing' && (
+          <TypingPhase
+            inputRef={inputRef}
+            userInput={userInput}
+            onInputChange={setInput}
+            onSubmit={handleSubmit}
+            onSkip={skip}
+            onPlaySentence={handlePlaySentence}
+          />
+        )}
+        {phase === 'feedback' && (
+          <FeedbackPhase
+            score={scores[scores.length - 1] ?? 0}
+            results={results}
+            onPrev={prevSentence}
+            onNext={nextSentence}
+            onReplay={handlePlaySentence}
+            canGoPrev={sentenceIndex > 0}
+            canGoNext={sentenceIndex < sentences.length - 1}
+          />
+        )}
       </div>
     </div>
   );

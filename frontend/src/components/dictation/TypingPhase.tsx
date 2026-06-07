@@ -16,10 +16,9 @@ export default function TypingPhase({ inputRef, userInput, onInputChange, onSubm
   }, [inputRef]);
 
   return (
-    <div className="animate-fade-in text-center">
-      <p className="text-tertiary text-sm mb-6">点击播放后输入你听到的内容</p>
-      <button onClick={onPlaySentence} className="w-14 h-14 rounded-full flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] transition-colors cursor-pointer mx-auto mb-6">
-        <HiPlay size={22} className="text-secondary" />
+    <div className="animate-fade-in w-full flex flex-col items-center gap-3">
+      <button onClick={onPlaySentence} className="w-12 h-12 rounded-full flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] transition-colors cursor-pointer">
+        <HiPlay size={20} className="text-secondary" />
       </button>
       <input
         ref={inputRef}
@@ -30,10 +29,10 @@ export default function TypingPhase({ inputRef, userInput, onInputChange, onSubm
         placeholder="输入你听到的内容..."
         className="w-full px-4 py-3 text-lg text-center bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded-xl text-primary placeholder:text-tertiary focus:outline-none focus:ring-2 focus:ring-[#fa2d48]/30"
       />
-      <div className="mt-4 flex gap-2 justify-center">
+      <div className="flex gap-2 w-full justify-center">
         <button onClick={onSubmit}
           disabled={!userInput.trim()}
-          className="px-8 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:bg-[var(--bg-tertiary)] disabled:text-tertiary on-accent font-semibold rounded-full text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5">
+          className="px-8 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:bg-[var(--bg-tertiary)] disabled:text-tertiary on-accent font-semibold rounded-full text-sm transition-colors cursor-pointer flex items-center gap-1.5">
           提交 <HiArrowRight size={14} />
         </button>
         <button onClick={onSkip}
