@@ -11,6 +11,8 @@ import SettingsView from '../views/SettingsView';
 import StatsView from '../views/StatsView';
 import DictationHistoryView from '../views/DictationHistoryView';
 import FavoritesView from '../views/FavoritesView';
+import PlaylistView from '../views/PlaylistView';
+import ImportView from '../views/ImportView';
 import type { NavSection } from './Sidebar';
 
 interface Props {
@@ -42,6 +44,10 @@ export default function ContentPanel({ activeSection, lessons, clips, wordCount,
       return <WordsView />;
     case 'stats':
       return <StatsView />;
+    case 'import':
+      return <ImportView />;
+    case 'playlist':
+      return <PlaylistView />;
     case 'favorites':
       return <FavoritesView />;
     case 'dictation':

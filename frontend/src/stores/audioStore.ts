@@ -3,6 +3,7 @@ import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
 import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio } from '../lib/audioEngine';
 import { trackPlay, flushTrack, setLessonInfoProvider } from '../lib/playTracking';
+import { usePlaylistStore } from './playlistStore';
 
 export { getAudio, preloadLessonAudio };
 
@@ -106,7 +107,19 @@ export const useAudioStore = create<AudioState>((set, get) => {
   audio.addEventListener('canplay', () => set({ isLoading: false }));
   audio.addEventListener('play', () => { set({ isPlaying: true }); trackPlay(); });
   audio.addEventListener('pause', () => { set({ isPlaying: false }); flushTrack(); });
-  audio.addEventListener('ended', () => { set({ isPlaying: false }); flushTrack(); });
+  audio.addEventListener('ended', () => {
+    set({ isPlaying: false }); flushTrack();
+    // Auto-play next in queue
+    const next = usePlaylistStore.getState().playNext();
+    if (next) {
+      if (next.kind === 'lesson') {
+        // Use setTimeout to avoid React-stuck-in-ended state
+        setTimeout(() => useAudioStore.getState().playLesson(next.lesson), 100);
+      } else if (next.kind === 'clip') {
+        setTimeout(() => useAudioStore.getState().playClip(next.clip, next.lesson ?? null), 100);
+      }
+    }
+  });
 
   let waitTimer: ReturnType<typeof setTimeout> | null = null;
   audio.addEventListener('waiting', () => {
@@ -133,8 +146,8 @@ export const useAudioStore = create<AudioState>((set, get) => {
       const switched = switchSource(lesson.id, flushTrack);
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'lesson', lesson }, loopCount: 0, playbackRate: getSettingDefault('defaultSpeed', 1) });
+      usePlaylistStore.getState().addToHistory({ kind: 'lesson', lesson });
       waitForReady(getAudio(), () => {
-        // Restore saved position if available
         const saved = useSettingsStore.getState().getPosition(lesson.id);
         if (saved && saved.position > 5) {
           getAudio().currentTime = saved.position;

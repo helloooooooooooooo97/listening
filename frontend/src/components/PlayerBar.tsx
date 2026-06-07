@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiChevronUp, HiPencil, HiTag, HiHeart } from 'react-icons/hi2';
+import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiChevronUp, HiPencil, HiTag, HiHeart, HiPlusCircle } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useDictationStore } from '../stores/dictationStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
+import { usePlaylistStore } from '../stores/playlistStore';
 import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
 import TranscriptView from './TranscriptView';
@@ -164,6 +165,13 @@ export default function PlayerBar() {
 
           {/* Right */}
           <div className="w-52 flex items-center justify-end gap-3 text-xs">
+            {hasContent && (
+              <button onClick={e=>{e.stopPropagation();if (isL) usePlaylistStore.getState().addToQueue({kind:'lesson', lesson: mode.lesson}); else if (isC) usePlaylistStore.getState().addToQueue({kind:'clip', clip: mode.clip, lesson: mode.lesson});}}
+                className="text-tertiary hover:text-secondary transition-colors cursor-pointer"
+                title="添加到队列">
+                <HiPlusCircle size={14} />
+              </button>
+            )}
             {hasContent && favType && favId && (
               <button onClick={e=>{e.stopPropagation();favToggle({item_id:favId,item_type:favType,title:favTitle,subtitle:favSub,extra_data:favType==='clip'?JSON.stringify({lessonId:mode.clip.lessonId,start:mode.clip.startTime,end:mode.clip.endTime}):'{}'});}}
                 className={`transition-colors cursor-pointer ${isFav(favId,favType) ? 'text-[var(--accent)]' : 'text-tertiary hover:text-secondary'}`}

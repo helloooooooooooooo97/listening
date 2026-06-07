@@ -1,6 +1,6 @@
-import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag, HiCog6Tooth, HiChartBar, HiPencilSquare, HiHeart } from 'react-icons/hi2';
+import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag, HiCog6Tooth, HiChartBar, HiPencilSquare, HiHeart, HiQueueList, HiCloudArrowUp } from 'react-icons/hi2';
 
-export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'stats' | 'dictation' | 'favorites' | 'recent' | 'settings';
+export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'stats' | 'dictation' | 'favorites' | 'playlist' | 'recent' | 'import' | 'settings';
 
 interface Props {
   activeSection: NavSection;
@@ -32,10 +32,12 @@ export default function Sidebar({ activeSection, onSectionChange, lessonCount, c
           ['courses', '音频', HiBookOpen, lessonCount],
           ['clips', '片段', HiBookmark, clipsCount],
           ['words', '单词', HiTag, wordCount],
+          ['playlist', '播放队列', HiQueueList, 0],
           ['stats', '统计', HiChartBar, 0],
           ['favorites', '收藏', HiHeart, favCount],
           ['dictation', '听写记录', HiPencilSquare, 0],
           ['recent', '最近播放', HiClock, lessonCount],
+          ['import', '导入', HiCloudArrowUp, 0],
         ] as const).map(([key, label, Icon, count]) => (
           <div key={key} onClick={() => onSectionChange(key as NavSection)}
             className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-sm font-medium cursor-pointer transition-colors ${
