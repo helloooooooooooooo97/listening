@@ -53,15 +53,13 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const handleSubmit = () => {
     if (!userInput.trim()) return;
     submit(expectedWords);
-    const expectedJoined = expectedWords.join(' ');
     setTimeout(() => {
       const state = useDictationStore.getState();
-      const latestScore = state.scores[state.scores.length - 1] || 0;
       postDictation({
         audio_id: lesson.id, audio_title: lesson.title,
-        sentence_index: sentenceIndex, score: latestScore,
+        sentence_index: sentenceIndex, score: state.scores[state.scores.length - 1] || 0,
         user_input: userInput.trim(),
-        expected_text: expectedJoined,
+        expected_text: expectedWords.join(' '),
       }).catch(() => {});
     }, 100);
   };
@@ -81,21 +79,18 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
 
   return (
-    <div className="h-full flex flex-col items-center justify-center px-8">
-      <div className="w-full max-w-lg flex flex-col items-center gap-4">
-        {/* Sentence indicator — centered */}
+    <div className="h-full flex flex-col items-center justify-center px-6">
+      <div className="w-full max-w-md flex flex-col items-center gap-6">
+        {/* Sentence counter — large, clear */}
         <div className="text-center">
-          <SentenceSelector
-            sentences={sentences}
-            sentenceIndex={sentenceIndex}
-            scores={scores}
-            avgScore={avgScore}
-            onGoToSentence={goToSentence}
-          />
-          <p className="text-xs text-tertiary mt-1">句子 {sentenceIndex + 1} / {sentences.length}</p>
+          <span className="text-4xl font-bold text-primary tabular-nums">{sentenceIndex + 1}</span>
+          <span className="text-lg text-tertiary"> / {sentences.length}</span>
+          {avgScore !== null && (
+            <p className="text-xs text-tertiary mt-0.5">均分 {avgScore}%</p>
+          )}
         </div>
 
-        {/* Phase content */}
+        {/* Phase */}
         {phase === 'typing' && (
           <TypingPhase
             inputRef={inputRef}
@@ -117,6 +112,15 @@ export default function EmbeddedDictation({ lesson }: Props) {
             canGoNext={sentenceIndex < sentences.length - 1}
           />
         )}
+
+        {/* Sentence dots at bottom */}
+        <SentenceSelector
+          sentences={sentences}
+          sentenceIndex={sentenceIndex}
+          scores={scores}
+          avgScore={avgScore}
+          onGoToSentence={goToSentence}
+        />
       </div>
     </div>
   );

@@ -17,8 +17,9 @@ export default function TypingPhase({ inputRef, userInput, onInputChange, onSubm
 
   return (
     <div className="animate-fade-in w-full flex flex-col items-center gap-3">
-      <button onClick={onPlaySentence} className="w-12 h-12 rounded-full flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] transition-colors cursor-pointer">
-        <HiPlay size={20} className="text-secondary" />
+      <button onClick={onPlaySentence}
+        className="flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] transition-colors cursor-pointer text-secondary text-sm">
+        <HiPlay size={16} /> 播放
       </button>
       <input
         ref={inputRef}
@@ -26,8 +27,8 @@ export default function TypingPhase({ inputRef, userInput, onInputChange, onSubm
         value={userInput}
         onChange={e => onInputChange(e.target.value)}
         onKeyDown={e => { if (e.key === 'Enter') onSubmit(); }}
-        placeholder="输入你听到的内容..."
-        className="w-full px-4 py-3 text-lg text-center bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded-xl text-primary placeholder:text-tertiary focus:outline-none focus:ring-2 focus:ring-[#fa2d48]/30"
+        placeholder="输入你听到的内容"
+        className="w-full px-4 py-3 text-lg text-center bg-transparent border border-[var(--border-primary)] rounded-xl text-primary placeholder:text-tertiary focus:outline-none focus:ring-2 focus:ring-[#fa2d48]/30"
       />
       <div className="flex gap-2 w-full justify-center">
         <button onClick={onSubmit}
@@ -36,8 +37,8 @@ export default function TypingPhase({ inputRef, userInput, onInputChange, onSubm
           提交 <HiArrowRight size={14} />
         </button>
         <button onClick={onSkip}
-          className="px-5 py-2.5 bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] text-tertiary hover:text-secondary rounded-full text-sm transition-colors cursor-pointer flex items-center gap-1"
-          title="跳过此句（记0分）">
+          className="px-5 py-2.5 text-tertiary hover:text-secondary rounded-full text-sm transition-colors cursor-pointer flex items-center gap-1"
+          title="跳过（记0分）">
           <HiForward size={14} /> 跳过
         </button>
       </div>
