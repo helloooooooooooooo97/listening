@@ -6,6 +6,7 @@ import { useAudioStore, preloadLessonAudio } from './stores/audioStore';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { getLessons, getLessonStats } from './lib/api';
 import Sidebar, { type NavSection } from './components/Sidebar';
+import MobileTabBar from './components/MobileTabBar';
 import ContentPanel from './components/ContentPanel';
 import PlayerBar from './components/PlayerBar';
 import ToastContainer from './components/Toast';
@@ -51,15 +52,21 @@ function AppContent() {
 
   return (
     <div className="h-screen flex overflow-hidden bg-[var(--bg-primary)]">
-      <Sidebar
+      <div className="hidden md:flex">
+        <Sidebar
+          activeSection={activeSection}
+          onSectionChange={(s) => navigate(`/${s === 'home' ? '' : s}`)}
+          lessonCount={lessons.length}
+          clipsCount={clips.length}
+          wordCount={wordCount}
+          favCount={favItems.length}
+        />
+      </div>
+      <MobileTabBar
         activeSection={activeSection}
         onSectionChange={(s) => navigate(`/${s === 'home' ? '' : s}`)}
-        lessonCount={lessons.length}
-        clipsCount={clips.length}
-        wordCount={wordCount}
-        favCount={favItems.length}
       />
-      <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-16">
+      <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-16 md:pb-16" style={{ paddingBottom: 'calc(64px + env(safe-area-inset-bottom, 0px))' }}>
         <ContentPanel
           activeSection={activeSection}
           lessons={lessons}

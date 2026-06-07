@@ -61,7 +61,7 @@ export default function PlayerBar() {
         const lesson = mode.kind==='lesson' ? mode.lesson : mode.kind==='clip' ? mode.lesson! : null;
         if (!lesson) return null;
         return (
-        <div className="fixed inset-0 z-30 flex flex-col bg-[var(--bg-primary)]" style={{ paddingBottom: '72px' }}>
+        <div className="fixed inset-0 z-30 flex flex-col bg-[var(--bg-primary)]" style={{ paddingBottom: 'calc(72px + env(safe-area-inset-bottom, 0px))' }}>
           {/* ── Header ── */}
           <div className="flex-shrink-0 flex items-center justify-between px-6 py-3 border-b border-[var(--border-secondary)]">
             <button onClick={()=>setExpanded(false)}
@@ -95,7 +95,7 @@ export default function PlayerBar() {
       })()}
 
       {/* ── Bottom Player Bar (always visible) ── */}
-      <div className={`fixed bottom-0 right-0 z-40 transition-all duration-300 ${expanded ? 'left-0' : 'left-56'}`}
+      <div className={`fixed bottom-0 right-0 z-40 transition-all duration-300 ${expanded ? 'left-0' : 'left-0 md:left-56'}`}
         style={{
           background: 'var(--glass-bg)',
           backdropFilter: 'blur(40px) saturate(180%)',
@@ -117,7 +117,7 @@ export default function PlayerBar() {
 
         <div className="flex items-center gap-3 px-4 py-2.5 max-w-screen-xl mx-auto">
           {/* Artwork + Info */}
-          <div className="w-52 min-w-0 flex items-center gap-3"
+          <div className="w-36 md:w-52 min-w-0 flex items-center gap-3"
             onClick={() => {
               if (isL) { setExpanded(!expanded); }
               else if (isC) {
@@ -164,7 +164,7 @@ export default function PlayerBar() {
           </div>
 
           {/* Right */}
-          <div className="w-52 flex items-center justify-end gap-3 text-xs">
+          <div className="w-auto md:w-52 flex items-center justify-end gap-2 md:gap-3 text-xs">
             {hasContent && (
               <button onClick={e=>{e.stopPropagation();if (isL) usePlaylistStore.getState().addToQueue({kind:'lesson', lesson: mode.lesson}); else if (isC) usePlaylistStore.getState().addToQueue({kind:'clip', clip: mode.clip, lesson: mode.lesson});}}
                 className="text-tertiary hover:text-secondary transition-colors cursor-pointer"
