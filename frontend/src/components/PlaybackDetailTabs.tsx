@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlusCircle } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
+import { alignDictation } from '../lib/dictationAligner';
 import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
@@ -103,48 +104,7 @@ export default function PlaybackDetailTabs({
 
   // Group dictation by sentence for overview display
   function computeWordResults(expected: string, actual: string): WordResult[] {
-    const expLower = expected.toLowerCase().split(/\s+/);
-    const actLower = actual.toLowerCase().split(/\s+/);
-    const expOrig = expected.split(/\s+/);
-    const actOrig = actual.split(/\s+/);
-    const m = expLower.length, n = actLower.length;
-
-    // LCS DP
-    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
-    for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) {
-      dp[i][j] = expLower[i - 1] === actLower[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
-    }
-
-    // Build aligned results inline (same algorithm as dictationStore.submit)
-    const results: WordResult[] = [];
-    let ei = 0, ai = 0;
-    while (ei < m || ai < n) {
-      if (ei < m && ai < n && expLower[ei] === actLower[ai]) {
-        results.push({ expected: expOrig[ei], actual: actOrig[ai], status: 'correct' });
-        ei++; ai++;
-      } else if (ei < m && ai < n && dp[ei + 1][ai] >= dp[ei][ai + 1]) {
-        // Check if expected word matches something ahead
-        let foundAt = -1;
-        for (let k = ai; k < n && k - ai <= 2; k++) {
-          if (expLower[ei] === actLower[k]) { foundAt = k; break; }
-        }
-        if (foundAt >= 0) {
-          while (ai < foundAt) { results.push({ expected: '', actual: actOrig[ai], status: 'extra' }); ai++; }
-          results.push({ expected: expOrig[ei], actual: actOrig[ai], status: 'correct' });
-          ei++; ai++;
-        } else {
-          results.push({ expected: expOrig[ei], actual: null, status: 'missing' });
-          ei++;
-        }
-      } else if (ai < n && (ei >= m || dp[ei][ai + 1] >= dp[ei + 1][ai])) {
-        results.push({ expected: '', actual: actOrig[ai], status: 'extra' });
-        ai++;
-      } else {
-        if (ei < m) { results.push({ expected: expOrig[ei], actual: null, status: 'missing' }); ei++; }
-        if (ai < n) { results.push({ expected: '', actual: actOrig[ai], status: 'extra' }); ai++; }
-      }
-    }
-    return results;
+    return alignDictation(expected.split(/\s+/), actual.split(/\s+/));
   }
 
   const dictationBySentence = useMemo(() => {
