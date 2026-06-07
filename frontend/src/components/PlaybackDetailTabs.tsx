@@ -23,14 +23,6 @@ function fmt(t: number) {
   return `${m}:${Math.floor(t % 60).toString().padStart(2, '0')}`;
 }
 
-function fmtDate(iso: string) {
-  try {
-    return new Date(iso).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
-  } catch {
-    return iso?.slice(0, 10) || '';
-  }
-}
-
 export default function PlaybackDetailTabs({
   lesson,
   currentTime,
@@ -106,6 +98,24 @@ export default function PlaybackDetailTabs({
     [dictGroups]
   );
 
+  // Group dictation by sentence for overview display
+  const dictationBySentence = useMemo(() => {
+    const bySentence = new Map<number, { best: DictRecord; records: DictRecord[] }>();
+    for (const r of dictationRecords) {
+      const existing = bySentence.get(r.sentence_index);
+      if (!existing) {
+        bySentence.set(r.sentence_index, { best: r, records: [r] });
+      } else {
+        if (r.score > existing.best.score) existing.best = r;
+        existing.records.push(r);
+      }
+    }
+    return lesson.transcript.map((sent, idx) => {
+      const data = bySentence.get(idx);
+      return { idx, text: sent.text, bestScore: data?.best.score, recordCount: data?.records.length ?? 0 };
+    });
+  }, [dictationRecords, lesson.transcript]);
+
   return (
     <div className={`grid gap-6 ${collapsed ? 'lg:grid-cols-[minmax(0,1fr)_48px]' : 'lg:grid-cols-[minmax(0,1fr)_360px]'} transition-all duration-300`}>
       <section className="min-w-0">
@@ -155,45 +165,41 @@ export default function PlaybackDetailTabs({
               ) : dictationRecords.length === 0 ? (
                 <p className="text-center text-tertiary text-sm py-16">暂无听写记录</p>
               ) : (
-                dictationRecords.map((r: DictRecord) => (
-                  <button
-                    key={r.id}
-                    onClick={() => {
-                      const sent = lesson.transcript[r.sentence_index];
-                      if (sent) onSeek(sent.start);
-                    }}
-                    className={`w-full text-left px-5 py-3 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium text-secondary">句子 {r.sentence_index + 1}</span>
-                      <div className="flex items-center gap-1.5">
-                        <span className={`text-xs font-mono font-semibold px-1.5 py-0.5 rounded ${
-                          r.score >= 80 ? 'text-emerald-500 bg-emerald-500/10' :
-                          r.score >= 50 ? 'text-amber-500 bg-amber-500/10' :
-                          'text-red-500 bg-red-500/10'
-                        }`}>{r.score}%</span>
+                dictationBySentence.map(({ idx, text, bestScore, recordCount }) => {
+                  if (recordCount === 0) {
+                    return (
+                      <div key={idx} className="px-5 py-2.5 flex items-start gap-3 opacity-30">
+                        <span className="text-xs text-tertiary w-5 text-right flex-shrink-0 pt-0.5">{idx + 1}</span>
+                        <p className="text-sm text-secondary leading-relaxed line-clamp-2 flex-1">{text}</p>
+                        <span className="text-[10px] text-tertiary flex-shrink-0">未练</span>
+                      </div>
+                    );
+                  }
+                  const s = bestScore ?? 0;
+                  const scoreCls = s >= 80 ? 'text-emerald-500 bg-emerald-500/10' : s >= 50 ? 'text-amber-500 bg-amber-500/10' : 'text-red-500 bg-red-500/10';
+                  return (
+                    <div key={idx}
+                      onClick={() => { const sent = lesson.transcript[idx]; if (sent) onSeek(sent.start); }}
+                      className="px-5 py-2.5 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-start gap-3 group"
+                    >
+                      <span className="text-xs text-tertiary w-5 text-right flex-shrink-0 pt-0.5">{idx + 1}</span>
+                      <p className="text-sm text-secondary leading-relaxed line-clamp-2 flex-1">{text}</p>
+                      <div className="flex items-center gap-1 flex-shrink-0">
+                        <span className={`text-xs font-mono font-semibold px-1.5 py-0.5 rounded ${scoreCls}`}>{s}%</span>
                         <span onClick={e => { e.stopPropagation();
-                          const sent = lesson.transcript[r.sentence_index];
-                          if (sent) addToQueue({ kind: 'sentence', lessonId: lesson.id, lessonTitle: lesson.title, sentenceIndex: r.sentence_index, start: sent.start, end: sent.end, text: sent.text });
+                          const sent = lesson.transcript[idx];
+                          if (sent) addToQueue({ kind: 'sentence', lessonId: lesson.id, lessonTitle: lesson.title, sentenceIndex: idx, start: sent.start, end: sent.end, text: sent.text });
                           addToast('句子已加入队列', 'success');
-                        }}
-                          className="text-[10px] text-blue-400 hover:underline cursor-pointer" title="加入队列">➕</span>
-                        {r.score < 80 && (
-                          <span onClick={e => { e.stopPropagation(); onOpenDictation(r.sentence_index); }}
-                            className="text-[10px] text-[var(--accent)] hover:underline cursor-pointer">复练</span>
+                        }} className="text-[10px] text-blue-400 hover:underline cursor-pointer opacity-0 group-hover:opacity-100">➕</span>
+                        {s < 80 && (
+                          <span onClick={e => { e.stopPropagation(); onOpenDictation(idx); }}
+                            className="text-[10px] text-[var(--accent)] hover:underline cursor-pointer opacity-0 group-hover:opacity-100">复练</span>
                         )}
                       </div>
                     </div>
-                    {r.user_input && <p className="text-sm text-secondary mb-1">{r.user_input}</p>}
-                    {r.expected_text && r.user_input && r.score < 100 && (
-                      <p className="text-xs text-tertiary line-through">{r.expected_text}</p>
-                    )}
-                    <p className="text-[10px] text-tertiary mt-1">{fmtDate(r.created_at)}</p>
-                  </button>
-                ))
-              )
-            )}
-
+                  );
+                })
+              ))}
             {sideTab === 'clips' && (
               lessonClips.length === 0 ? (
                 <p className="text-center text-tertiary text-sm py-16">暂无片段</p>
