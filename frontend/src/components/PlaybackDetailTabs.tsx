@@ -7,6 +7,7 @@ import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
+import type { WordResult } from '../stores/dictationStore';
 import TranscriptView from './TranscriptView';
 
 type SideTab = 'clips' | 'dictation' | 'favorites';
@@ -37,6 +38,7 @@ export default function PlaybackDetailTabs({
   const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
   const [editNote, setEditNote] = useState('');
+  const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
   const clips = useClipsStore(s => s.clips);
   const removeClip = useClipsStore(s => s.removeClip);
   const updateClip = useClipsStore(s => s.updateClip);
@@ -99,6 +101,32 @@ export default function PlaybackDetailTabs({
   );
 
   // Group dictation by sentence for overview display
+  function computeWordResults(expected: string, actual: string): WordResult[] {
+    const expLower = expected.toLowerCase().split(/\s+/);
+    const actLower = actual.toLowerCase().split(/\s+/);
+    const m = expLower.length, n = actLower.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) {
+      dp[i][j] = expLower[i - 1] === actLower[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
+    }
+    const results: WordResult[] = [];
+    let ei = m, aj = n;
+    const matchedE = new Set<number>(), matchedA = new Set<number>();
+    while (ei > 0 && aj > 0) {
+      if (expLower[ei - 1] === actLower[aj - 1]) { matchedE.add(ei - 1); matchedA.add(aj - 1); ei--; aj--; }
+      else if (dp[ei - 1][aj] >= dp[ei][aj - 1]) ei--;
+      else aj--;
+    }
+    for (let i = 0; i < m; i++) {
+      if (matchedE.has(i)) results.push({ expected: expected.split(/\s+/)[i], actual: expected.split(/\s+/)[i], status: 'correct' });
+      else results.push({ expected: expected.split(/\s+/)[i], actual: null, status: 'missing' });
+    }
+    for (let j = 0; j < n; j++) {
+      if (!matchedA.has(j)) results.push({ expected: '', actual: actual.split(/\s+/)[j], status: 'extra' });
+    }
+    return results;
+  }
+
   const dictationBySentence = useMemo(() => {
     const bySentence = new Map<number, { best: DictRecord; records: DictRecord[] }>();
     for (const r of dictationRecords) {
@@ -112,7 +140,11 @@ export default function PlaybackDetailTabs({
     }
     return lesson.transcript.map((sent, idx) => {
       const data = bySentence.get(idx);
-      return { idx, text: sent.text, bestScore: data?.best.score, recordCount: data?.records.length ?? 0 };
+      const best = data?.best;
+      const wordResults = best?.user_input && best?.expected_text
+        ? computeWordResults(best.expected_text, best.user_input)
+        : null;
+      return { idx, text: sent.text, bestScore: best?.score, recordCount: data?.records.length ?? 0, wordResults };
     });
   }, [dictationRecords, lesson.transcript]);
 
@@ -165,7 +197,7 @@ export default function PlaybackDetailTabs({
               ) : dictationRecords.length === 0 ? (
                 <p className="text-center text-tertiary text-sm py-16">暂无听写记录</p>
               ) : (
-                dictationBySentence.map(({ idx, text, bestScore, recordCount }) => {
+                dictationBySentence.map(({ idx, text, bestScore, recordCount, wordResults }) => {
                   if (recordCount === 0) {
                     return (
                       <div key={idx} className="px-5 py-2.5 flex items-start gap-3 opacity-30">
@@ -177,25 +209,44 @@ export default function PlaybackDetailTabs({
                   }
                   const s = bestScore ?? 0;
                   const scoreCls = s >= 80 ? 'text-emerald-500 bg-emerald-500/10' : s >= 50 ? 'text-amber-500 bg-amber-500/10' : 'text-red-500 bg-red-500/10';
+                  const isExpanded = expandedSentences.has(idx);
                   return (
-                    <div key={idx}
-                      onClick={() => { const sent = lesson.transcript[idx]; if (sent) onSeek(sent.start); }}
-                      className="px-5 py-2.5 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-start gap-3 group"
-                    >
-                      <span className="text-xs text-tertiary w-5 text-right flex-shrink-0 pt-0.5">{idx + 1}</span>
-                      <p className="text-sm text-secondary leading-relaxed line-clamp-2 flex-1">{text}</p>
-                      <div className="flex items-center gap-1 flex-shrink-0">
-                        <span className={`text-xs font-mono font-semibold px-1.5 py-0.5 rounded ${scoreCls}`}>{s}%</span>
-                        <span onClick={e => { e.stopPropagation();
-                          const sent = lesson.transcript[idx];
-                          if (sent) addToQueue({ kind: 'sentence', lessonId: lesson.id, lessonTitle: lesson.title, sentenceIndex: idx, start: sent.start, end: sent.end, text: sent.text });
-                          addToast('句子已加入队列', 'success');
-                        }} className="text-[10px] text-blue-400 hover:underline cursor-pointer opacity-0 group-hover:opacity-100">➕</span>
-                        {s < 80 && (
-                          <span onClick={e => { e.stopPropagation(); onOpenDictation(idx); }}
-                            className="text-[10px] text-[var(--accent)] hover:underline cursor-pointer opacity-0 group-hover:opacity-100">复练</span>
-                        )}
+                    <div key={idx}>
+                      <div
+                        onClick={() => {
+                          const sent = lesson.transcript[idx]; if (sent) onSeek(sent.start);
+                          setExpandedSentences(prev => { const next = new Set(prev); if (next.has(idx)) next.delete(idx); else next.add(idx); return next; });
+                        }}
+                        className="px-5 py-2.5 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-start gap-3 group"
+                      >
+                        <span className="text-xs text-tertiary w-5 text-right flex-shrink-0 pt-0.5">{idx + 1}</span>
+                        <p className="text-sm text-secondary leading-relaxed line-clamp-2 flex-1">{text}</p>
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          <span className={`text-xs font-mono font-semibold px-1.5 py-0.5 rounded ${scoreCls}`}>{s}%</span>
+                          <span onClick={e => { e.stopPropagation();
+                            const sent = lesson.transcript[idx];
+                            if (sent) addToQueue({ kind: 'sentence', lessonId: lesson.id, lessonTitle: lesson.title, sentenceIndex: idx, start: sent.start, end: sent.end, text: sent.text });
+                            addToast('句子已加入队列', 'success');
+                          }} className="text-[10px] text-blue-400 hover:underline cursor-pointer opacity-0 group-hover:opacity-100">➕</span>
+                          {s < 80 && (
+                            <span onClick={e => { e.stopPropagation(); onOpenDictation(idx); }}
+                              className="text-[10px] text-[var(--accent)] hover:underline cursor-pointer opacity-0 group-hover:opacity-100">复练</span>
+                          )}
+                        </div>
                       </div>
+                      {isExpanded && wordResults && (
+                        <div className="ml-9 mb-2 px-3 py-2 rounded-lg bg-[var(--bg-tertiary)]">
+                          <div className="flex flex-wrap gap-1.5">
+                            {wordResults.map((r: WordResult, i: number) => {
+                              if (r.status === 'correct') return <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-500/20 text-emerald-400">{r.expected}</span>;
+                              if (r.status === 'wrong') return <span key={i} className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-red-500/20 text-red-400"><span className="line-through">{r.actual}</span><span>→</span><span className="text-emerald-400">{r.expected}</span></span>;
+                              if (r.status === 'missing') return <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-500/10 text-red-300/50 italic">{r.expected}</span>;
+                              if (r.status === 'extra') return <span key={i} className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-amber-500/20 text-amber-400 line-through">{r.actual}</span>;
+                              return null;
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })
