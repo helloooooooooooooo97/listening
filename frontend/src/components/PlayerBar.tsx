@@ -10,6 +10,7 @@ import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
 import Waveform from './Waveform';
 import HeartButton from './HeartButton';
+import EmbeddedDictation from './dictation/EmbeddedDictation';
 import PlaybackDetailTabs from './PlaybackDetailTabs';
 
 function fmt(t: number) { const m=Math.floor(t/60); return `${m}:${Math.floor(t%60).toString().padStart(2,'0')}`; }
@@ -138,16 +139,22 @@ export default function PlayerBar() {
             </div>
           </div>
 
-          {/* ── Transcript Content ── */}
+          {/* ── Content ── */}
           <div className="flex-1 overflow-y-auto px-4">
-            <div className="max-w-7xl mx-auto py-6">
-              <PlaybackDetailTabs
-                lesson={lesson}
-                currentTime={cur}
-                onSeek={seek}
-                onOpenDictation={() => {}}
-              />
-            </div>
+            {isDictating ? (
+              <div className="max-w-7xl mx-auto py-4">
+                <EmbeddedDictation lesson={lesson} />
+              </div>
+            ) : (
+              <div className="max-w-7xl mx-auto py-6">
+                <PlaybackDetailTabs
+                  lesson={lesson}
+                  currentTime={cur}
+                  onSeek={seek}
+                  onOpenDictation={() => {}}
+                />
+              </div>
+            )}
           </div>
 
           {/* ── Spacer for bottom bar ── */}

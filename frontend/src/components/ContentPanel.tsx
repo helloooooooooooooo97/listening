@@ -1,8 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import type { AudioClip, LessonSummary } from '../types/lesson';
-import { useDictationStore } from '../stores/dictationStore';
 import HomeView from '../views/HomeView';
-import DictationView from '../views/DictationView';
 import type { NavSection } from './Sidebar';
 
 // Lazy-loaded views — loaded on first visit only
@@ -46,9 +44,6 @@ export default function ContentPanel({ activeSection, lessons, clips, wordCount,
   const [search, setSearch] = useState('');
 
   useEffect(() => { setSearch(''); }, [activeSection]);
-
-  const dictationActive = useDictationStore(s => s.active);
-  if (dictationActive) return <DictationView />;
 
   const section = activeSection;
   return (
