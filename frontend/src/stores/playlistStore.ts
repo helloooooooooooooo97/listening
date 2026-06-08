@@ -34,6 +34,8 @@ interface PlaylistState {
   repeatMode: RepeatMode;
   addToQueue: (item: QueueItem) => void;
   addAllToQueue: (items: QueueItem[]) => void;
+  /** Replace queue with all clips from this lesson, start at given clip index */
+  playClipsFrom: (clips: AudioClip[], lesson: ListeningLesson | null, startIndex: number) => void;
   /** Play this item now: clear everything after current, append item, jump to it */
   playNow: (item: QueueItem) => void;
   removeFromQueue: (index: number) => void;
@@ -59,7 +61,6 @@ export const usePlaylistStore = create<PlaylistState>((set, get) => ({
 
   addAllToQueue: (items) => {
     set(s => {
-      // Deduplicate by kind+id
       const existing = new Set(s.queue.map(i => {
         if (i.kind === 'lesson') return `lesson:${i.lesson.id}`;
         if (i.kind === 'clip') return `clip:${i.clip.id}`;
@@ -75,6 +76,13 @@ export const usePlaylistStore = create<PlaylistState>((set, get) => ({
       });
       return { queue: [...s.queue, ...fresh] };
     });
+  },
+
+  /** Replace queue with all clips from this lesson, start at given clip index */
+  playClipsFrom: (clips: AudioClip[], lesson: ListeningLesson | null, startIndex: number) => {
+    if (clips.length === 0) return;
+    const items: QueueItem[] = clips.map(c => ({ kind: 'clip' as const, clip: c, lesson }));
+    set({ queue: items, currentIndex: startIndex });
   },
 
   playNow: (item) => {

@@ -8,6 +8,7 @@ import { useAudioStore, getAudio } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { getKnownWords, getDictationSentences, setWordKnown, type SentenceDictation } from '../lib/api';
 import { useAiStore } from '../stores/aiStore';
+import { usePlaylistStore } from '../stores/playlistStore';
 import WordBadges from './dictation/WordBadges';
 
 interface Props {
@@ -226,24 +227,16 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const contextLesson = audioMode.kind === 'lesson' ? audioMode.lesson :
     audioMode.kind === 'clip' ? audioMode.lesson : null;
 
-  // Play a saved clip from its single anchor button.
+  // Play a saved clip: loads all lesson clips into queue, starts at this clip.
   const handlePlayLineClip = (e: React.MouseEvent, clip: AudioClip) => {
     e.stopPropagation();
-    const lineClip: AudioClip = {
-      id: clip.id,
-      lessonId,
-      lessonTitle,
-      startTime: clip.startTime,
-      endTime: clip.endTime,
-      text: clip.text,
-      note: clip.note,
-      startWordId: clip.startWordId,
-      endWordId: clip.endWordId,
-      createdAt: clip.createdAt,
-      color: clip.color || '#facc15',
-    };
+    const allLessonClips = allClips.filter(c => c.lessonId === lessonId);
+    const idx = allLessonClips.findIndex(c => c.id === clip.id);
+    if (idx >= 0) {
+      usePlaylistStore.getState().playClipsFrom(allLessonClips, contextLesson, idx);
+    }
     setLoopTarget(defaultLoopCount);
-    playClip(lineClip, contextLesson);
+    playClip(clip, contextLesson);
   };
 
   const handleTranslate = async (lineIdx: number, text: string) => {

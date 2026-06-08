@@ -63,6 +63,7 @@ export default function PlaybackDetailTabs({
   const addToQueue = usePlaylistStore(s => s.addToQueue);
   const addAllToQueue = usePlaylistStore(s => s.addAllToQueue);
   const playNow = usePlaylistStore(s => s.playNow);
+  const playClipsFrom = usePlaylistStore(s => s.playClipsFrom);
   const activeClipId = audioMode.kind === 'clip' ? audioMode.clip.id : null;
 
   const lessonClips = useMemo(() => {
@@ -304,13 +305,8 @@ export default function PlaybackDetailTabs({
                     <div className="flex-1" />
                     <button onClick={() => {
                       if (lessonClips.length === 0) return;
-                      const first = lessonClips[0];
-                      playNow({ kind: 'clip', clip: first, lesson });
-                      if (lessonClips.length > 1) {
-                        const rest = lessonClips.slice(1).map(c => ({ kind: 'clip' as const, clip: c, lesson }));
-                        addAllToQueue(rest);
-                      }
-                      setTimeout(() => playClip(first.clip, lesson), 50);
+                      playClipsFrom(lessonClips, lesson, 0);
+                      setTimeout(() => playClip(lessonClips[0].clip, lesson), 50);
                       addToast(`即将播放 ${lessonClips.length} 个片段`, 'success');
                     }}
                       className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1 flex items-center gap-1">
@@ -333,7 +329,12 @@ export default function PlaybackDetailTabs({
                       {/* Row 1: icon + text + actions */}
                       <div className="flex items-start gap-3">
                         <button
-                          onClick={() => { onSeek(clip.startTime); playNow({ kind: 'clip', clip, lesson }); setTimeout(() => playClip(clip, lesson), 0); }}
+                          onClick={() => {
+                            const idx = lessonClips.findIndex(c => c.id === clip.id);
+                            if (idx >= 0) { playClipsFrom(lessonClips, lesson, idx); }
+                            onSeek(clip.startTime);
+                            setTimeout(() => playClip(clip, lesson), 0);
+                          }}
                           onMouseEnter={() => setHoveredClipId(clip.id)}
                           onMouseLeave={() => setHoveredClipId(null)}
                           className="flex-1 text-left min-w-0 flex items-start gap-3 cursor-pointer"
