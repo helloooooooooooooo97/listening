@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
-import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio } from '../lib/audioEngine';
+import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio, setSavedRate } from '../lib/audioEngine';
 import { trackPlay, flushTrack, setLessonInfoProvider } from '../lib/playTracking';
 import { usePlaylistStore } from './playlistStore';
 
@@ -69,6 +69,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
   const audio = getAudio();
   const initialRate = useSettingsStore.getState().settings.defaultSpeed || 1;
   audio.playbackRate = initialRate;
+  setSavedRate(initialRate);
 
   audio.addEventListener('timeupdate', () => {
     const state = get();
@@ -337,8 +338,8 @@ export const useAudioStore = create<AudioState>((set, get) => {
     setRate: (rate) => {
       const a = getAudio();
       a.playbackRate = rate;
+      setSavedRate(rate);
       set({ playbackRate: rate });
-      // Persist via settingsStore (auto-synced by zustand persist)
       useSettingsStore.getState().setDefaultSpeed(rate);
     },
 

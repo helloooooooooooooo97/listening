@@ -11,13 +11,20 @@ export function getAudio(): HTMLAudioElement {
 
 let _currentSrc = '';
 
+let _savedRate = 1;
+export function getSavedRate() { return _savedRate; }
+export function setSavedRate(r: number) { _savedRate = r; }
+
 export function switchSource(lessonId: string, onSwitch?: () => void): boolean {
   const url = `/api/lessons/${lessonId}/audio`;
   if (_currentSrc === url) return false;
   onSwitch?.();
   _currentSrc = url;
-  getAudio().src = url;
-  getAudio().load();
+  const a = getAudio();
+  a.src = url;
+  a.load();
+  // Chromium resets playbackRate to 1 on load(); restore it
+  a.playbackRate = _savedRate;
   return true;
 }
 
