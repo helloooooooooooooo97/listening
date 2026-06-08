@@ -122,3 +122,13 @@ export interface WordAnalysis {
   synonyms?: string[];
   usage?: string;
 }
+
+// ── AI Clip Analysis ──
+
+export interface ClipAnalysis {
+  summary: string;
+  keywords: { word: string; definition: string }[];
+  grammar: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  practiceTip: string;
+}

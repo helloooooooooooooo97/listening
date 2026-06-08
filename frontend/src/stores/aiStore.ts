@@ -4,9 +4,6 @@ import type { AiProvider, AiProviderId } from '../types/lesson';
 /* ── Storage ── */
 
 const STORAGE_KEY = 'ai-providers';
-const CACHE_KEY = 'app-translation-cache';
-const WORD_CACHE_KEY = 'app-word-cache';
-const CACHE_MAX = 10000;
 
 /* ── Provider presets ── */
 
@@ -56,94 +53,30 @@ function persist(providers: AiProvider[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
 }
 
-/* ── Translation cache (memory + localStorage) ── */
+/* ── Translation cache (memory + backend) ── */
 
-interface CacheEntry {
-  result: string;
-  timestamp: number;
-}
-const translationCache = new Map<string, CacheEntry>();
+const translationCache = new Map<string, string>();
 
-function loadCacheFromStorage() {
+async function cacheGetBackend(sourceType: string, text: string): Promise<string | null> {
+  const memKey = `${sourceType}:${text}`;
+  if (translationCache.has(memKey)) return translationCache.get(memKey)!;
   try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return;
-    const data = JSON.parse(raw) as Record<string, CacheEntry>;
-    const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
-    for (const [text, entry] of Object.entries(data)) {
-      if (entry.timestamp > cutoff) {
-        translationCache.set(text, entry);
-      }
+    const { getCachedTranslation } = await import('../lib/api');
+    const entry = await getCachedTranslation(sourceType, text);
+    if (entry) {
+      translationCache.set(memKey, entry.translated_text);
+      return entry.translated_text;
     }
   } catch {}
+  return null;
 }
 
-function saveCacheToStorage() {
+async function cacheSetBackend(sourceType: string, text: string, result: string, extraData?: string) {
+  const memKey = `${sourceType}:${text}`;
+  translationCache.set(memKey, result);
   try {
-    const obj: Record<string, CacheEntry> = {};
-    for (const [text, entry] of translationCache) {
-      obj[text] = entry;
-    }
-    localStorage.setItem(CACHE_KEY, JSON.stringify(obj));
-  } catch {
-    try {
-      localStorage.removeItem(CACHE_KEY);
-      const recent = [...translationCache.entries()]
-        .sort((a, b) => b[1].timestamp - a[1].timestamp)
-        .slice(0, 50);
-      const obj: Record<string, CacheEntry> = {};
-      for (const [text, entry] of recent) { obj[text] = entry; }
-      localStorage.setItem(CACHE_KEY, JSON.stringify(obj));
-    } catch {}
-  }
-}
-
-loadCacheFromStorage();
-
-function cacheGet(text: string): string | null {
-  const entry = translationCache.get(text);
-  if (!entry) return null;
-  return entry.result;
-}
-
-function cacheSet(text: string, result: string) {
-  if (translationCache.size >= CACHE_MAX) {
-    let oldestKey = '';
-    let oldestTime = Infinity;
-    for (const [k, v] of translationCache) {
-      if (v.timestamp < oldestTime) { oldestTime = v.timestamp; oldestKey = k; }
-    }
-    if (oldestKey) translationCache.delete(oldestKey);
-  }
-  translationCache.set(text, { result, timestamp: Date.now() });
-  saveCacheToStorage();
-}
-
-/* ── Word analysis cache (localStorage only) ── */
-
-function wordCacheGet(word: string): import('../types/lesson').WordAnalysis | null {
-  try {
-    const raw = localStorage.getItem(WORD_CACHE_KEY);
-    if (!raw) return null;
-    const cache = JSON.parse(raw) as Record<string, { data: import('../types/lesson').WordAnalysis; timestamp: number }>;
-    const entry = cache[word.toLowerCase()];
-    if (!entry) return null;
-    if (Date.now() - entry.timestamp > 30 * 24 * 60 * 60 * 1000) return null;
-    return entry.data;
-  } catch { return null; }
-}
-
-function wordCacheSet(word: string, analysis: import('../types/lesson').WordAnalysis) {
-  try {
-    const raw = localStorage.getItem(WORD_CACHE_KEY);
-    const cache = raw ? JSON.parse(raw) : {};
-    cache[word.toLowerCase()] = { data: analysis, timestamp: Date.now() };
-    const keys = Object.keys(cache);
-    if (keys.length > 10000) {
-      const sorted = keys.sort((a, b) => cache[b].timestamp - cache[a].timestamp);
-      for (let i = 200; i < sorted.length; i++) delete cache[sorted[i]];
-    }
-    localStorage.setItem(WORD_CACHE_KEY, JSON.stringify(cache));
+    const { saveTranslation } = await import('../lib/api');
+    await saveTranslation({ source_text: text, translated_text: result, source_type: sourceType, extra_data: extraData });
   } catch {}
 }
 
@@ -210,6 +143,7 @@ interface AiState {
 
   translate: (text: string) => Promise<string>;
   lookupWord: (word: string) => Promise<import('../types/lesson').WordAnalysis>;
+  analyzeClip: (text: string) => Promise<import('../types/lesson').ClipAnalysis>;
   testConnection: (provider: AiProvider) => Promise<boolean>;
 }
 
@@ -262,8 +196,8 @@ export const useAiStore = create<AiState>((set, get) => ({
   },
 
   translate: async (text: string): Promise<string> => {
-    // Check cache
-    const cached = cacheGet(text);
+    // Check backend cache
+    const cached = await cacheGetBackend('sentence', text);
     if (cached) return cached;
 
     const provider = get().getDefaultProvider();
@@ -277,14 +211,16 @@ export const useAiStore = create<AiState>((set, get) => ({
       result = await callOpenAICompat(text, provider.apiKey, provider.apiBase, provider.model);
     }
 
-    cacheSet(text, result);
+    cacheSetBackend('sentence', text, result);
     return result;
   },
 
   lookupWord: async (word: string) => {
-    // Check cache
-    const cached = wordCacheGet(word);
-    if (cached) return cached;
+    // Check backend cache
+    const cached = await cacheGetBackend('word', word.toLowerCase());
+    if (cached) {
+      try { return JSON.parse(cached) as import('../types/lesson').WordAnalysis; } catch {}
+    }
 
     const provider = get().getDefaultProvider();
     if (!provider) throw new Error('未配置 AI Token');
@@ -321,7 +257,38 @@ export const useAiStore = create<AiState>((set, get) => ({
     const data = await response.json();
     const text = data.choices?.[0]?.message?.content?.trim() || '';
     const analysis = JSON.parse(text) as import('../types/lesson').WordAnalysis;
-    wordCacheSet(word, analysis);
+    cacheSetBackend('word', word.toLowerCase(), text);
+    return analysis;
+  },
+
+  analyzeClip: async (text: string) => {
+    const cached = await cacheGetBackend('clip', text);
+    if (cached) {
+      try { return JSON.parse(cached) as import('../types/lesson').ClipAnalysis; } catch {}
+    }
+
+    const provider = get().getDefaultProvider();
+    if (!provider) throw new Error('未配置 AI Token');
+    if (!provider.apiKey) throw new Error('API Key 未配置');
+
+    const response = await fetch(`${provider.apiBase.replace(/\/+$/, '')}/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${provider.apiKey}` },
+      body: JSON.stringify({
+        model: provider.model,
+        messages: [
+          { role: 'system', content: '你是一个英语学习助手。分析以下英文片段，返回严格的 JSON 格式，不要包含 markdown 代码块标记：\n\n{\n  "summary": "片段内容总结（中文）",\n  "keywords": [\n    { "word": "关键词", "definition": "中文释义" }\n  ],\n  "grammar": "语法要点（中文）",\n  "difficulty": "easy/medium/hard",\n  "practiceTip": "练习建议（中文）"\n}' },
+          { role: 'user', content: text },
+        ],
+        temperature: 0.3,
+        max_tokens: 512,
+      }),
+    });
+    if (!response.ok) throw new Error(`API error: ${response.status}`);
+    const data = await response.json();
+    const resultText = data.choices?.[0]?.message?.content?.trim() || '';
+    const analysis = JSON.parse(resultText) as import('../types/lesson').ClipAnalysis;
+    cacheSetBackend('clip', text, resultText);
     return analysis;
   },
 

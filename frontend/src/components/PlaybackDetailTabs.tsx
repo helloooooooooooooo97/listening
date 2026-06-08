@@ -9,7 +9,9 @@ import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
 import { useSettingsStore } from '../stores/settingsStore';
+import { useAiStore } from '../stores/aiStore';
 import type { WordResult } from '../stores/dictationStore';
+import type { ClipAnalysis } from '../types/lesson';
 import WordBadges from './dictation/WordBadges';
 import TranscriptView from './TranscriptView';
 
@@ -42,9 +44,14 @@ export default function PlaybackDetailTabs({
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
   const [editNote, setEditNote] = useState('');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
+  const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
+  const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
+  const [analyzingClips, setAnalyzingClips] = useState<Set<string>>(new Set());
+  const analyzeClipFn = useAiStore(s => s.analyzeClip);
   const lyricDisplayMode = useSettingsStore(s => s.settings.lyricDisplayMode);
   const translationEnabled = useSettingsStore(s => s.settings.translationEnabled);
   const setTranslationEnabled = useSettingsStore(s => s.setTranslationEnabled);
+
   const clips = useClipsStore(s => s.clips);
   const removeClip = useClipsStore(s => s.removeClip);
   const updateClip = useClipsStore(s => s.updateClip);
@@ -62,6 +69,23 @@ export default function PlaybackDetailTabs({
     if (clipSort === 'date') return [...filtered].sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
     return [...filtered].sort((a, b) => a.startTime - b.startTime);
   }, [clips, lesson.id, clipSort]);
+
+  // Auto-analyze clips when they load
+  useEffect(() => {
+    for (const clip of lessonClips) {
+      if (!clipAnalyses.has(clip.text) && !analyzingClips.has(clip.text)) {
+        setAnalyzingClips(prev => new Set(prev).add(clip.text));
+        analyzeClipFn(clip.text)
+          .then(analysis => {
+            setClipAnalyses(prev => new Map(prev).set(clip.text, analysis));
+            setAnalyzingClips(prev => { const n = new Set(prev); n.delete(clip.text); return n; });
+          })
+          .catch(() => {
+            setAnalyzingClips(prev => { const n = new Set(prev); n.delete(clip.text); return n; });
+          });
+      }
+    }
+  }, [lessonClips.length]);
 
   const handleExportClips = () => {
     const text = lessonClips.map(c =>
@@ -133,7 +157,7 @@ export default function PlaybackDetailTabs({
   }, [dictationRecords, lesson.transcript]);
 
   return (
-    <div className={`grid gap-6 ${collapsed ? 'lg:grid-cols-[minmax(0,1fr)_48px]' : 'lg:grid-cols-[minmax(0,1fr)_360px]'} transition-all duration-300`}>
+    <><div className={`grid gap-6 ${collapsed ? 'lg:grid-cols-[minmax(0,1fr)_48px]' : 'lg:grid-cols-[minmax(0,1fr)_360px]'} transition-all duration-300`}>
       <section className="min-w-0">
         {/* Lyric display mode toggle */}
         <div className="flex items-center gap-0.5 px-1 py-1.5 mb-1 border-b border-[var(--border-secondary)]">
@@ -341,6 +365,17 @@ export default function PlaybackDetailTabs({
                         </button>
                         {/* More actions */}
                         <div className="relative flex-shrink-0 flex items-center gap-1">
+                          {clipAnalyses.has(clip.text) ? (
+                            <button onClick={e => { e.stopPropagation(); setViewingAnalysis(clipAnalyses.get(clip.text)!); }}
+                              className="text-amber-400/70 hover:text-amber-400 transition-colors cursor-pointer p-1"
+                              title="查看解析">
+                              <HiSparkles size={11} />
+                            </button>
+                          ) : analyzingClips.has(clip.text) ? (
+                            <span className="p-1 text-tertiary/50" title="解析中...">
+                              <HiSparkles size={11} className="animate-pulse" />
+                            </span>
+                          ) : null}
 <button onClick={e => { e.stopPropagation(); setEditingClipId(clip.id); setEditNote(clip.note || ''); }}
                             className="text-tertiary hover:text-secondary transition-colors cursor-pointer p-1">
                             <HiPencil size={11} />
@@ -401,6 +436,61 @@ export default function PlaybackDetailTabs({
         )}
       </aside>
     </div>
+
+    {/* ── Clip Analysis Popup ── */}
+    {viewingAnalysis && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={() => setViewingAnalysis(null)}>
+    <div className="absolute inset-0 bg-black/30" />
+    <div className="relative max-w-md w-[90vw] rounded-xl shadow-2xl border border-[var(--border-primary)] overflow-hidden animate-scale-in"
+      style={{ background: 'var(--bg-secondary)', backdropFilter: 'blur(20px)' }}
+      onClick={e => e.stopPropagation()}>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-secondary)]">
+        <h3 className="text-sm font-bold text-primary flex items-center gap-2">
+          <HiSparkles size={14} className="text-amber-400" /> 片段解析
+        </h3>
+        <button onClick={() => setViewingAnalysis(null)}
+          className="text-tertiary hover:text-secondary transition-colors cursor-pointer text-lg leading-none">&times;</button>
+      </div>
+      <div className="px-4 py-3 max-h-[60vh] overflow-y-auto space-y-3">
+        <div>
+          <p className="text-[11px] text-tertiary font-medium mb-1">内容总结</p>
+          <p className="text-sm text-primary leading-relaxed">{viewingAnalysis.summary}</p>
+        </div>
+        {viewingAnalysis.keywords.length > 0 && (
+          <div>
+            <p className="text-[11px] text-tertiary font-medium mb-1">关键词汇</p>
+            <div className="flex flex-wrap gap-2">
+              {viewingAnalysis.keywords.map((kw, i) => (
+                <span key={i} className="text-xs px-2 py-1 rounded-lg bg-[var(--accent)]/10 text-[var(--accent)]">
+                  {kw.word} — {kw.definition}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        <div>
+          <p className="text-[11px] text-tertiary font-medium mb-1">语法要点</p>
+          <p className="text-xs text-secondary leading-relaxed">{viewingAnalysis.grammar}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] text-tertiary font-medium">难度</span>
+          <span className={`text-[11px] px-2 py-0.5 rounded font-medium ${
+            viewingAnalysis.difficulty === 'easy' ? 'bg-emerald-500/15 text-emerald-400' :
+            viewingAnalysis.difficulty === 'medium' ? 'bg-amber-500/15 text-amber-400' :
+            'bg-red-500/15 text-red-400'
+          }`}>
+            {viewingAnalysis.difficulty === 'easy' ? '简单' : viewingAnalysis.difficulty === 'medium' ? '中等' : '困难'}
+          </span>
+        </div>
+        <div>
+          <p className="text-[11px] text-tertiary font-medium mb-1">练习建议</p>
+          <p className="text-xs text-tertiary italic leading-relaxed">{viewingAnalysis.practiceTip}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+</>
   );
 }
 

@@ -182,4 +182,19 @@ def init_db():
                 [name, icon, color, is_dynamic, dynamic_type, i],
             )
 
+    # ── 翻译缓存 ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS translations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source_hash TEXT NOT NULL UNIQUE,
+            source_text TEXT NOT NULL,
+            translated_text TEXT NOT NULL,
+            source_type TEXT NOT NULL DEFAULT 'sentence',
+            extra_data TEXT DEFAULT NULL,
+            created_at TEXT DEFAULT (datetime('now')),
+            updated_at TEXT DEFAULT (datetime('now'))
+        );
+        CREATE INDEX IF NOT EXISTS idx_translations_hash ON translations(source_hash);
+    """)
+
     conn.commit()

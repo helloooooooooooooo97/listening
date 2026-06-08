@@ -321,3 +321,26 @@ export function reorderCollectionItems(collectionId: number, itemIds: number[]):
 export function clearCollectionItems(collectionId: number): Promise<{ ok: boolean }> {
   return del(`/api/collections/${collectionId}/items`).then(() => ({ ok: true }));
 }
+
+// ── Translation Cache ──
+
+export interface TranslationCacheEntry {
+  id: number;
+  source_text: string;
+  translated_text: string;
+  source_type: string;
+  extra_data: string | null;
+}
+
+export function getCachedTranslation(sourceType: string, text: string): Promise<TranslationCacheEntry | null> {
+  return get<TranslationCacheEntry | null>(`/api/translations/${sourceType}/${encodeURIComponent(text)}`);
+}
+
+export function saveTranslation(data: {
+  source_text: string;
+  translated_text: string;
+  source_type: string;
+  extra_data?: string;
+}): Promise<TranslationCacheEntry> {
+  return post<TranslationCacheEntry>('/api/translations', data);
+}

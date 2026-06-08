@@ -44,6 +44,57 @@ app.include_router(import_router)
 app.include_router(collections_router)
 
 
+# ── 翻译/单词解析 缓存 API ──
+
+def _hash_text(text: str) -> str:
+    h = 0
+    for ch in text:
+        h = ((h << 5) - h) + ord(ch)
+        h &= 0xFFFFFFFF
+    return f"{h}"
+
+@app.get("/api/translations/{source_type}/{source_text}")
+def get_translation(source_type: str, source_text: str):
+    h = _hash_text(source_text)
+    row = get_db().execute(
+        "SELECT id, source_text, translated_text, source_type, extra_data FROM translations WHERE source_hash=? AND source_type=?",
+        [h, source_type]
+    ).fetchone()
+    if not row:
+        return None
+    return {
+        "id": row[0], "source_text": row[1], "translated_text": row[2],
+        "source_type": row[3], "extra_data": row[4],
+    }
+
+@app.post("/api/translations")
+def save_translation(data: dict):
+    h = _hash_text(data["source_text"])
+    db = get_db()
+    existing = db.execute(
+        "SELECT id FROM translations WHERE source_hash=? AND source_type=?",
+        [h, data["source_type"]]
+    ).fetchone()
+    if existing:
+        db.execute(
+            "UPDATE translations SET translated_text=?, extra_data=?, updated_at=datetime('now') WHERE id=?",
+            [data["translated_text"], data.get("extra_data"), existing[0]]
+        )
+        row_id = existing[0]
+    else:
+        cur = db.execute(
+            "INSERT INTO translations (source_hash, source_text, translated_text, source_type, extra_data) VALUES (?,?,?,?,?)",
+            [h, data["source_text"], data["translated_text"], data["source_type"], data.get("extra_data")]
+        )
+        row_id = cur.lastrowid
+    db.commit()
+    row = db.execute("SELECT id, source_text, translated_text, source_type, extra_data FROM translations WHERE id=?", [row_id]).fetchone()
+    return {
+        "id": row[0], "source_text": row[1], "translated_text": row[2],
+        "source_type": row[3], "extra_data": row[4],
+    }
+
+
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
