@@ -313,10 +313,11 @@ export default function PlayerBar({ onQueueToggle }: Props) {
                     style={{ background: "var(--glass-bg)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
                     <input type="range" min="0" max="1" step="0.05" defaultValue="1"
                       onChange={e => { const a = document.querySelector("audio"); if (a) { a.volume = parseFloat(e.target.value); localStorage.setItem("app-volume", e.target.value); }}}
-                      className="h-20 w-1 accent-[var(--accent)] cursor-pointer" 
+                      className="h-20 w-1 accent-[var(--accent)] cursor-pointer"
                       style={{ writingMode: "vertical-lr" }} />
                   </div>
                 )}
+              </div>
               <div className="relative speed-dropdown">
                 <button
                   onPointerDown={e=>{e.stopPropagation();setSpeedOpen(!speedOpen);setLoopOpen(false);}}
@@ -363,62 +364,11 @@ export default function PlayerBar({ onQueueToggle }: Props) {
                   )}
                 </div>
               )}
-              </div>
             </>}
           </div>
 
           {/* Right */}
           <div className="w-auto md:w-52 flex items-center justify-end gap-2 md:gap-3 text-xs">
-
-            {hasContent && (
-              <>
-                                  <button
-                    onPointerDown={e=>{e.stopPropagation();setSpeedOpen(!speedOpen);setLoopOpen(false);}}
-                    className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-xs font-mono font-medium cursor-pointer transition-colors hover:bg-[var(--bg-active)] text-tertiary hover:text-secondary"
-                    title="播放速度">
-                    {rate}x <HiChevronRight size={10} className={`transition-transform duration-150 ${speedOpen ? 'rotate-90' : ''}`} />
-                  </button>
-                  {speedOpen && (
-                    <div className="absolute bottom-full left-0 mb-1 rounded-lg shadow-xl border border-[var(--border-primary)] overflow-hidden z-50"
-                      style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
-                      {[0.5, 0.75, 1, 1.25, 1.5, 2.0].map(r => (
-                        <button key={r}
-                          onPointerDown={e=>{e.stopPropagation();setRate(r);setSpeedPop(r);setTimeout(()=>setSpeedPop(null),300);setSpeedOpen(false);}}
-                          className={`block w-full text-left px-3 py-1.5 text-xs font-mono cursor-pointer transition-colors ${
-                            rate===r ? 'bg-[var(--bg-active)] text-primary font-semibold' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
-                          } ${speedPop===r ? 'animate-speed-pop' : ''}`}>
-                          {r}x {rate===r && '✓'}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                {isC && (
-                  <div className="relative loop-dropdown">
-                    <button
-                      onPointerDown={e=>{e.stopPropagation();setLoopOpen(!loopOpen);setSpeedOpen(false);}}
-                      className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-xs font-mono font-medium cursor-pointer transition-colors hover:bg-[var(--bg-active)] text-emerald-500/70 hover:text-emerald-500"
-                      title="重复次数">
-                      ×{loopT} <HiChevronRight size={10} className={`transition-transform duration-150 ${loopOpen ? 'rotate-90' : ''}`} />
-                    </button>
-                    {loopOpen && (
-                      <div className="absolute bottom-full left-0 mb-1 rounded-lg shadow-xl border border-[var(--border-primary)] overflow-hidden z-50"
-                        style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
-                        {[1, 2, 3, 5, 10, 20].map(n => (
-                          <button key={n}
-                            onPointerDown={e=>{e.stopPropagation();setLoopT(n);setLoopOpen(false);}}
-                            className={`block w-full text-left px-3 py-1.5 text-xs font-mono cursor-pointer transition-colors ${
-                              loopT===n ? 'bg-emerald-500/15 text-emerald-500 font-semibold' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
-                            }`}>
-                            ×{n} {loopT===n && '✓'}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </>
-            )}
 
             {/* ── Queue toggle button (far right) ── */}
             <button onClick={e => { e.stopPropagation(); onQueueToggle?.(); }}
