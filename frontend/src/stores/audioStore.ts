@@ -226,6 +226,11 @@ export const useAudioStore = create<AudioState>((set, get) => {
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'lesson', lesson }, loopCount: 0, playbackRate: rate });
       usePlaylistStore.getState().addToHistory({ kind: 'lesson', lesson });
+      // Clear queue context when switching to a different lesson
+      const q = usePlaylistStore.getState();
+      if (q.queueContext && q.queueContext.lessonTitle !== lesson.title) {
+        q.clearQueue();
+      }
       waitForReady(getAudio(), () => {
         const a = getAudio();
         a.playbackRate = rate;

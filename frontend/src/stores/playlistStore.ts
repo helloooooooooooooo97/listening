@@ -42,6 +42,8 @@ interface PlaylistState {
   playNext: () => QueueItem | null;
   playPrev: () => QueueItem | null;
   clearQueue: () => void;
+  /** Queue source context (e.g. "来自 xx 音频的 N 个片段") */
+  queueContext: { lessonTitle: string; count: number } | null;
   setCurrentIndex: (index: number) => void;
   reorder: (fromIndex: number, toIndex: number) => void;
   addToHistory: (item: QueueItem) => void;
@@ -54,6 +56,7 @@ export const usePlaylistStore = create<PlaylistState>((set, get) => ({
   currentIndex: -1,
   history: [],
   repeatMode: 'sequential',
+  queueContext: null,
 
   addToQueue: (item) => {
     set(s => ({ queue: [...s.queue, item] }));
@@ -82,7 +85,8 @@ export const usePlaylistStore = create<PlaylistState>((set, get) => ({
   playClipsFrom: (clips: AudioClip[], lesson: ListeningLesson | null, startIndex: number) => {
     if (clips.length === 0) return;
     const items: QueueItem[] = clips.map(c => ({ kind: 'clip' as const, clip: c, lesson }));
-    set({ queue: items, currentIndex: startIndex });
+    const lessonTitle = lesson?.title || (clips[0]?.lessonTitle || '');
+    set({ queue: items, currentIndex: startIndex, queueContext: { lessonTitle, count: clips.length } });
   },
 
   playNow: (item) => {
@@ -139,11 +143,17 @@ export const usePlaylistStore = create<PlaylistState>((set, get) => ({
   },
 
   playPrev: () => {
-    const { queue, currentIndex } = get();
+    const { queue, currentIndex, repeatMode } = get();
     const prevIdx = currentIndex - 1;
-    if (prevIdx < 0) return null;
-    set({ currentIndex: prevIdx });
-    return queue[prevIdx];
+    if (prevIdx >= 0) {
+      set({ currentIndex: prevIdx });
+      return queue[prevIdx];
+    }
+    if (repeatMode === 'repeat-all' && queue.length > 0) {
+      set({ currentIndex: queue.length - 1 });
+      return queue[queue.length - 1];
+    }
+    return null;
   },
 
   setCurrentIndex: (index: number) => set({ currentIndex: index }),

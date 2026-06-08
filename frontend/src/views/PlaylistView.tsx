@@ -26,6 +26,7 @@ export default function PlaylistView() {
   const repeatMode = usePlaylistStore(s => s.repeatMode);
   const cycleRepeatMode = usePlaylistStore(s => s.cycleRepeatMode);
   const setCurrentIndex = usePlaylistStore(s => s.setCurrentIndex);
+  const queueContext = usePlaylistStore(s => s.queueContext);
   const playLesson = useAudioStore(s => s.playLesson);
   const playClip = useAudioStore(s => s.playClip);
 
@@ -80,7 +81,12 @@ export default function PlaylistView() {
         ) : (
           <div className="space-y-4 max-w-3xl mx-auto">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm text-secondary">即将播放 · {queue.length} 项</p>
+              <div>
+                <p className="text-sm text-secondary">即将播放 · {queue.length} 项</p>
+                {queueContext && (
+                  <p className="text-[11px] text-tertiary mt-0.5">来自 <span className="text-secondary font-medium">{queueContext.lessonTitle}</span> 的 {queueContext.count} 个片段</p>
+                )}
+              </div>
               <button onClick={clearQueue}
                 className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">清空队列</button>
             </div>
