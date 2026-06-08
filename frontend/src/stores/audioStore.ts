@@ -348,7 +348,10 @@ export const useAudioStore = create<AudioState>((set, get) => {
       set({ loopMode: LOOP_ORDER[nextIdx], loopCount: 0 });
     },
 
-    setLoopTarget: (n) => set({ loopTarget: n, loopCount: 0 }),
+    setLoopTarget: (n) => {
+      set({ loopTarget: n, loopCount: 0 });
+      useSettingsStore.getState().setDefaultLoopCount(n);
+    },
 
     setContextLesson: (lesson) => {
       const { mode } = get();
