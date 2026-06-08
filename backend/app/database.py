@@ -125,4 +125,61 @@ def init_db():
         conn.execute("ALTER TABLE clips ADD COLUMN color TEXT DEFAULT '#facc15'")
     except sqlite3.OperationalError:
         pass  # column already exists
+
+    # ── 合集 (Collections) ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS collections (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            icon TEXT DEFAULT 'HiQueueList',
+            color TEXT DEFAULT '#3b82f6',
+            is_dynamic INTEGER DEFAULT 0,
+            dynamic_type TEXT DEFAULT NULL,
+            item_count INTEGER DEFAULT 0,
+            sort_order INTEGER DEFAULT 0,
+            created_at TEXT DEFAULT (datetime('now')),
+            updated_at TEXT DEFAULT (datetime('now'))
+        );
+
+        CREATE TABLE IF NOT EXISTS collection_items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            collection_id INTEGER NOT NULL REFERENCES collections(id) ON DELETE CASCADE,
+            item_type TEXT NOT NULL CHECK(item_type IN ('audio','clip','sentence','word')),
+            item_ref TEXT NOT NULL,
+            lesson_id TEXT NOT NULL DEFAULT '',
+            lesson_title TEXT DEFAULT '',
+            title TEXT DEFAULT '',
+            subtitle TEXT DEFAULT '',
+            start_time REAL DEFAULT 0,
+            end_time REAL DEFAULT 0,
+            extra_data TEXT DEFAULT '{}',
+            sort_order INTEGER DEFAULT 0,
+            added_at TEXT DEFAULT (datetime('now'))
+        );
+        CREATE INDEX IF NOT EXISTS idx_ci_collection ON collection_items(collection_id);
+        CREATE INDEX IF NOT EXISTS idx_ci_ref ON collection_items(collection_id, item_ref);
+    """)
+
+    # Seed default dynamic collections (insert or ignore by dynamic_type)
+    DEFAULTS = [
+        ('我的收藏',      'HiHeart',       '#fa2d48', 1, 'favorites'),
+        ('今日练习',      'HiClock',       '#f59e0b', 1, 'today_practice'),
+        ('最近听写错句',   'HiPencil',     '#8b5cf6', 1, 'recent_dictation_errors'),
+        ('最近播放',      'HiClock',       '#3b82f6', 1, 'recent_plays'),
+        ('高频错词',      'HiTag',         '#10b981', 1, 'frequent_wrong_words'),
+        ('全部音频',      'HiMusicalNote', '#fa2d48', 1, 'all_audio'),
+        ('全部片段',      'HiBookmark',    '#f97316', 1, 'all_clips'),
+        ('全部单词',      'HiBookOpen',    '#a855f7', 1, 'all_words'),
+        ('全部听写记录',  'HiPencilSquare','#06b6d4', 1, 'all_dictation'),
+    ]
+    for i, (name, icon, color, is_dynamic, dynamic_type) in enumerate(DEFAULTS):
+        existing = conn.execute(
+            "SELECT id FROM collections WHERE dynamic_type=?", [dynamic_type]
+        ).fetchone()
+        if not existing:
+            conn.execute(
+                "INSERT INTO collections (name, icon, color, is_dynamic, dynamic_type, sort_order) VALUES (?,?,?,?,?,?)",
+                [name, icon, color, is_dynamic, dynamic_type, i],
+            )
+
     conn.commit()

@@ -32,6 +32,7 @@ from routers.progress_api import router as progress_router
 from routers.stats_api import router as stats_router
 from routers.favorites_api import router as favorites_router
 from routers.import_api import router as import_router
+from routers.collections_api import router as collections_router
 
 app.include_router(lessons_router)
 app.include_router(words_router)
@@ -40,6 +41,7 @@ app.include_router(progress_router)
 app.include_router(stats_router)
 app.include_router(favorites_router)
 app.include_router(import_router)
+app.include_router(collections_router)
 
 
 @app.get("/api/health")

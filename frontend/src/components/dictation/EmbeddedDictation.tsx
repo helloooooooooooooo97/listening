@@ -4,7 +4,6 @@ import { useAudioStore } from '../../stores/audioStore';
 import { useDictationStore } from '../../stores/dictationStore';
 import { postDictation } from '../../lib/api';
 import type { ListeningLesson } from '../../types/lesson';
-import SentenceSelector from './SentenceSelector';
 import TypingPhase from './TypingPhase';
 import FeedbackPhase from './FeedbackPhase';
 
@@ -28,8 +27,6 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const submit = useDictationStore(s => s.submit);
   const nextSentence = useDictationStore(s => s.nextSentence);
   const prevSentence = useDictationStore(s => s.prevSentence);
-  const goToSentence = useDictationStore(s => s.goToSentence);
-  const skip = useDictationStore(s => s.skip);
   const reset = useDictationStore(s => s.reset);
 
   const sentences = lesson.transcript;
@@ -48,95 +45,74 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const handleSubmit = () => {
     if (!userInput.trim()) return;
     submit(expectedWords);
-    setTimeout(() => {
-      const state = useDictationStore.getState();
-      postDictation({
-        audio_id: lesson.id, audio_title: lesson.title,
-        sentence_index: sentenceIndex, score: state.scores[state.scores.length - 1] || 0,
-        user_input: userInput.trim(),
-        expected_text: expectedWords.join(' '),
-      }).catch(() => {});
-    }, 100);
   };
 
-  // ALL hooks must be called unconditionally, before any return
+  // Save dictation result when feedback is shown
+  const lastScoreRef = useRef(scores.length);
   useEffect(() => {
-    if (!currentSentence) return;
-    seek(currentSentence.start);
-    setTimeout(() => useAudioStore.getState().togglePlay(), 150);
-  }, [sentenceIndex]);
-
-  useEffect(() => {
-    if (!isPlaying || !currentSentence) return;
-    if (currentTime >= currentSentence.end - 0.1) {
-      useAudioStore.getState().togglePlay();
+    if (scores.length > lastScoreRef.current && currentSentence) {
+      lastScoreRef.current = scores.length;
+      const lastScore = scores[scores.length - 1];
+      if (lastScore != null) {
+        postDictation({
+          audio_id: lesson.id,
+          audio_title: lesson.title,
+          sentence_index: sentenceIndex,
+          score: lastScore,
+          user_input: userInput,
+          expected_text: currentSentence.text,
+        }).catch(() => {});
+      }
     }
-  }, [currentTime, isPlaying, currentSentence]);
+  }, [scores.length, scores, sentenceIndex, userInput, currentSentence, lesson]);
 
-  const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
-
-  // ── Now conditional rendering ──
-  if (!active) return null;
-
-  if (!currentSentence) { reset(); return null; }
+  if (!currentSentence) {
+    return <div className="text-tertiary text-sm text-center py-16">没有可用的句子</div>;
+  }
 
   return (
-    <div className="h-full flex flex-col items-center justify-center px-6">
-      <div className="w-full max-w-md flex flex-col items-center gap-6">
-        {/* Sentence counter with prev/next */}
-        <div className="flex items-center gap-3">
-          <button onClick={prevSentence}
-            disabled={sentenceIndex <= 0}
-            className="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary">
-            <HiChevronLeft size={16} />
-          </button>
-          <div className="text-center min-w-[80px]">
-            <span className="text-3xl font-bold text-primary tabular-nums">{sentenceIndex + 1}</span>
-            <span className="text-sm text-tertiary"> / {sentences.length}</span>
-            {avgScore !== null && (
-              <p className="text-[10px] text-tertiary mt-0.5">均分 {avgScore}%</p>
-            )}
+    <div className="h-full flex flex-col items-center justify-center gap-6 px-4">
+      {/* Phase */}
+      {phase === 'typing' && (
+        <div className="w-full max-w-lg flex flex-col items-center gap-6">
+          {/* Play row: prev | current/total | play | current/total | next */}
+          <div className="w-full flex items-center justify-center gap-4">
+            <button onClick={prevSentence} disabled={sentenceIndex <= 0}
+              className="w-10 h-10 rounded-full flex items-center justify-center text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer disabled:opacity-30">
+              <HiChevronLeft size={20} />
+            </button>
+            <span className="text-lg font-bold text-secondary font-mono min-w-[2ch] text-right tabular-nums">{sentenceIndex + 1}</span>
+            <button onClick={handlePlaySentence}
+              className="flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] transition-colors cursor-pointer text-secondary text-base font-semibold">
+              <HiChevronRight size={18} className="text-[var(--accent)]" /> 播放
+            </button>
+            <span className="text-lg font-bold text-secondary font-mono min-w-[2ch] tabular-nums">{sentences.length}</span>
+            <button onClick={nextSentence} disabled={sentenceIndex >= sentences.length - 1}
+              className="w-10 h-10 rounded-full flex items-center justify-center text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer disabled:opacity-30">
+              <HiChevronRight size={20} />
+            </button>
           </div>
-          <button onClick={nextSentence}
-            disabled={sentenceIndex >= sentences.length - 1}
-            className="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] disabled:opacity-20 disabled:cursor-default transition-colors cursor-pointer text-secondary">
-            <HiChevronRight size={16} />
-          </button>
-        </div>
 
-        {/* Phase */}
-        {phase === 'typing' && (
           <TypingPhase
             inputRef={inputRef}
             userInput={userInput}
             onInputChange={setInput}
             onSubmit={handleSubmit}
-            onSkip={skip}
             onPlaySentence={handlePlaySentence}
           />
-        )}
-        {phase === 'feedback' && (
-          <FeedbackPhase
-            score={scores[scores.length - 1] ?? 0}
-            results={results}
-            onPrev={prevSentence}
-            onNext={nextSentence}
-            onReplay={handlePlaySentence}
-            canGoPrev={sentenceIndex > 0}
-            canGoNext={sentenceIndex < sentences.length - 1}
-          />
-        )}
-
-        {/* Sentence dots at bottom */}
-        <SentenceSelector
-          sentences={sentences}
-          sentenceIndex={sentenceIndex}
-          scores={scores}
-          avgScore={avgScore}
-          onGoToSentence={goToSentence}
+        </div>
+      )}
+      {phase === 'feedback' && (
+        <FeedbackPhase
+          score={scores[scores.length - 1] ?? 0}
+          results={results}
+          onPrev={prevSentence}
+          onNext={nextSentence}
+          onReplay={handlePlaySentence}
+          canGoPrev={sentenceIndex > 0}
+          canGoNext={sentenceIndex < sentences.length - 1}
         />
-
-      </div>
+      )}
     </div>
   );
 }

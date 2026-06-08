@@ -7,6 +7,9 @@ import { usePlaylistStore } from './playlistStore';
 
 export { getAudio, preloadLessonAudio };
 
+/* ── Guard: prevent double playNext() when clip-end fires multiple timeupdate events ── */
+let _clipEndHandled = false;
+
 /* ── Settings defaults ── */
 function getSettingDefault(key: string, fallback: number): number {
   try {
@@ -72,14 +75,15 @@ export const useAudioStore = create<AudioState>((set, get) => {
     const { mode, loopMode, loopTarget, loopCount } = state;
     const t = audio.currentTime;
 
-    // Loop enforcement
-    if (mode.kind === 'clip') {
+    // Loop enforcement — skip if _clipEndHandled to prevent double-trigger
+    if (mode.kind === 'clip' && !_clipEndHandled) {
       const clip = mode.clip;
       if (t >= clip.endTime) {
         if (loopCount + 1 < loopTarget) {
           audio.currentTime = clip.startTime;
           set({ loopCount: loopCount + 1 });
         } else {
+          _clipEndHandled = true;
           audio.pause();
           audio.currentTime = clip.endTime;
           set({ isPlaying: false });
@@ -140,6 +144,13 @@ export const useAudioStore = create<AudioState>((set, get) => {
   audio.addEventListener('pause', () => { set({ isPlaying: false }); flushTrack(); });
   audio.addEventListener('ended', () => {
     set({ isPlaying: false }); flushTrack();
+    if (get().mode.kind === 'empty') return;
+
+    if (_clipEndHandled) {
+      _clipEndHandled = false;
+      return;
+    }
+
     const mode = usePlaylistStore.getState().repeatMode;
     // Repeat-one: replay current item
     if (mode === 'repeat-one') {
@@ -241,6 +252,8 @@ export const useAudioStore = create<AudioState>((set, get) => {
       const rate = get().playbackRate;
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'clip', clip, lesson: contextLesson ?? null }, loopCount: 0, loopMode: 'clip', playbackRate: rate });
+      // Reset guard flag: new clip starts fresh
+      _clipEndHandled = false;
       waitForReady(getAudio(), () => {
         const a = getAudio();
         a.playbackRate = rate;

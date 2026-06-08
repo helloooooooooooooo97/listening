@@ -1,4 +1,4 @@
-import { HiHome, HiBookOpen, HiBookmark, HiHeart, HiQueueList, HiCog6Tooth, HiChartBar } from 'react-icons/hi2';
+import { HiHome, HiBookOpen, HiBookmark, HiHeart, HiQueueList, HiCog6Tooth, HiChartBar, HiFolderOpen } from 'react-icons/hi2';
 import type { NavSection } from './Sidebar';
 
 interface Props {
@@ -11,7 +11,7 @@ const TABS: { key: NavSection; label: string; icon: React.ComponentType<{ size?:
   { key: 'courses', label: '音频', icon: HiBookOpen },
   { key: 'clips', label: '片段', icon: HiBookmark },
   { key: 'favorites', label: '收藏', icon: HiHeart },
-  { key: 'playlist', label: '队列', icon: HiQueueList },
+  { key: 'collections', label: '合集', icon: HiFolderOpen },
   { key: 'stats', label: '统计', icon: HiChartBar },
   { key: 'settings', label: '设置', icon: HiCog6Tooth },
 ];

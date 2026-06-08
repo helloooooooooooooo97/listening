@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock } from 'react-icons/hi2';
+import { useNavigate } from 'react-router-dom';
+import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiFolderOpen, HiHeart, HiTag } from 'react-icons/hi2';
 import HeartButton from '../components/HeartButton';
 import type { AudioClip, LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useSettingsStore } from '../stores/settingsStore';
+import { useCollectionsStore } from '../stores/collectionsStore';
 import { getLessonById, getOverview } from '../lib/api';
 
 interface Props {
@@ -17,12 +19,30 @@ interface Props {
 
 function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',{month:'short',day:'numeric'}); }
 
+const COLLECTION_COLORS: Record<string, string> = {
+  favorites: '#fa2d48',
+  today_practice: '#f59e0b',
+  recent_dictation_errors: '#8b5cf6',
+  recent_plays: '#3b82f6',
+  frequent_wrong_words: '#10b981',
+};
+
+const COLLECTION_ICONS: Record<string, React.ComponentType<{size?: number}>> = {
+  favorites: HiHeart,
+  today_practice: HiClock,
+  recent_dictation_errors: HiClock,
+  recent_plays: HiClock,
+  frequent_wrong_words: HiTag,
+};
+
 export default function HomeView({ search, onSearchChange, lessons, clips, uniqueWords }: Props) {
+  const navigate = useNavigate();
   const playLesson = useAudioStore(s => s.playLesson);
   const playClip = useAudioStore(s => s.playClip);
   const favToggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
   const dailyGoal = useSettingsStore(s => s.settings.dailyGoalMinutes);
+  const collections = useCollectionsStore(s => s.collections);
   const [todaySeconds, setTodaySeconds] = useState(0);
 
   useEffect(() => {
@@ -34,6 +54,7 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
   const fL = lessons.filter(l => l.title.toLowerCase().includes(q) || l.subtitle.toLowerCase().includes(q));
   const fC = clips.filter(c => c.text.toLowerCase().includes(q) || c.note.toLowerCase().includes(q) || c.lessonTitle.toLowerCase().includes(q));
   const totalDuration = lessons.reduce((a,l)=>a+l.duration,0);
+  const dynamicCols = collections.filter(c => c.is_dynamic && c.item_count > 0).slice(0, 4);
 
   return (
     <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
@@ -86,6 +107,44 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
             ))}
           </div>
         )}
+
+        {/* Collections quick entry */}
+        {!q && dynamicCols.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-bold text-primary tracking-tight flex items-center gap-2">
+                <HiFolderOpen size={16} /> 学习合集
+              </h2>
+              <button onClick={() => navigate('/collections')}
+                className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">
+                查看全部 →
+              </button>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {dynamicCols.map(col => {
+                const Icon = COLLECTION_ICONS[col.dynamic_type || ''] || HiFolderOpen;
+                const color = COLLECTION_COLORS[col.dynamic_type || ''] || col.color;
+                return (
+                  <div key={col.id} onClick={() => navigate(`/collections/${col.id}`)}
+                    className="group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)]"
+                    style={{ background: 'var(--bg-tertiary)' }}>
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ background: `${color}20` }}>
+                        <Icon size={18} style={{ color }} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-primary">{col.name}</p>
+                        <p className="text-xs text-tertiary mt-0.5">{col.item_count} 项</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         <div>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-bold text-primary tracking-tight">音频</h2>

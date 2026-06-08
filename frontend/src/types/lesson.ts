@@ -55,3 +55,38 @@ export interface LessonSummary {
   sentenceCount: number;
   wordCount: number;
 }
+
+// ── Collections ──
+
+export interface CollectionSummary {
+  id: number;
+  name: string;
+  icon: string;
+  color: string;
+  is_dynamic: boolean;
+  dynamic_type: string | null;
+  item_count: number;
+  sort_order: number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface CollectionItem {
+  id: number;
+  collection_id: number;
+  item_type: 'audio' | 'clip' | 'sentence' | 'word';
+  item_ref: string;
+  lesson_id: string;
+  lesson_title: string;
+  title: string;
+  subtitle: string;
+  start_time: number;
+  end_time: number;
+  extra_data: string;
+  sort_order: number;
+  added_at: string;
+}
+
+export interface CollectionDetail extends CollectionSummary {
+  items: CollectionItem[];
+}

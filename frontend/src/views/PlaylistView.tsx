@@ -72,13 +72,13 @@ export default function PlaylistView() {
       </div>
       <div className="flex-1 overflow-y-auto px-6 py-4">
         {queue.length === 0 ? (
-          <div className="text-center py-16">
+          <div className="text-center py-16 max-w-3xl mx-auto">
             <HiQueueList size={40} className="text-tertiary mx-auto mb-4" />
             <p className="text-tertiary text-sm">播放队列为空</p>
             <p className="text-tertiary text-xs mt-1">点击片段/句子旁的 ➕ 加入队列</p>
           </div>
         ) : (
-          <div className="space-y-4 max-w-3xl">
+          <div className="space-y-4 max-w-3xl mx-auto">
             <div className="flex items-center justify-between mb-2">
               <p className="text-sm text-secondary">即将播放 · {queue.length} 项</p>
               <button onClick={clearQueue}

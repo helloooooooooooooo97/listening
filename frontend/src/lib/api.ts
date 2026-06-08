@@ -1,6 +1,6 @@
 /** Centralized API client — all fetch calls in one place with typed responses. */
 
-import type { AudioClip, LessonSummary, ListeningLesson } from '../types/lesson';
+import type { AudioClip, LessonSummary, ListeningLesson, CollectionSummary, CollectionItem, CollectionDetail } from '../types/lesson';
 
 // ── Helpers ──
 
@@ -260,4 +260,64 @@ export function getWords(params: {
   if (params.offset) sp.set('offset', String(params.offset));
   const qs = sp.toString();
   return get(`/api/words${qs ? `?${qs}` : ''}`);
+}
+
+// ── Collections ──
+
+export function getCollections(): Promise<CollectionSummary[]> {
+  return get<CollectionSummary[]>('/api/collections/');
+}
+
+export function getCollection(id: number): Promise<CollectionDetail> {
+  return get<CollectionDetail>(`/api/collections/${id}`);
+}
+
+export function createCollection(data: { name: string; icon?: string; color?: string }): Promise<CollectionSummary> {
+  return post<CollectionSummary>('/api/collections/', data);
+}
+
+export function updateCollection(id: number, data: { name?: string; icon?: string; color?: string }): Promise<CollectionSummary> {
+  return fetch(`/api/collections/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  }).then(r => r.json());
+}
+
+export function deleteCollection(id: number): Promise<{ ok: boolean }> {
+  return del(`/api/collections/${id}`).then(() => ({ ok: true }));
+}
+
+export function refreshCollection(id: number): Promise<{ items: CollectionItem[]; item_count: number }> {
+  return post(`/api/collections/${id}/refresh`, {});
+}
+
+export function addCollectionItem(collectionId: number, data: {
+  item_type: string;
+  item_ref: string;
+  lesson_id?: string;
+  lesson_title?: string;
+  title?: string;
+  subtitle?: string;
+  start_time?: number;
+  end_time?: number;
+  extra_data?: string;
+}): Promise<CollectionItem> {
+  return post<CollectionItem>(`/api/collections/${collectionId}/items`, data);
+}
+
+export function removeCollectionItem(collectionId: number, itemId: number): Promise<{ ok: boolean }> {
+  return del(`/api/collections/${collectionId}/items/${itemId}`).then(() => ({ ok: true }));
+}
+
+export function reorderCollectionItems(collectionId: number, itemIds: number[]): Promise<{ ok: boolean }> {
+  return fetch(`/api/collections/${collectionId}/items/reorder`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ item_ids: itemIds }),
+  }).then(r => r.json());
+}
+
+export function clearCollectionItems(collectionId: number): Promise<{ ok: boolean }> {
+  return del(`/api/collections/${collectionId}/items`).then(() => ({ ok: true }));
 }

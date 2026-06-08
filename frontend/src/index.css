@@ -49,9 +49,9 @@
   --bg-tertiary: rgba(255,255,255,0.028);
   --bg-hover: rgba(255,255,255,0.045);
   --bg-active: rgba(255,255,255,0.06);
-  --text-primary: rgba(255,255,255,0.87);
-  --text-secondary: rgba(255,255,255,0.55);
-  --text-tertiary: rgba(255,255,255,0.25);
+  --text-primary: rgba(255,255,255,0.90);
+  --text-secondary: rgba(255,255,255,0.70);
+  --text-tertiary: rgba(255,255,255,0.45);
   --border-primary: rgba(255,255,255,0.06);
   --border-secondary: rgba(255,255,255,0.03);
   --accent: #fa2d48;

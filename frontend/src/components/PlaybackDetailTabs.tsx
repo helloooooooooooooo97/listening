@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlusCircle } from 'react-icons/hi2';
+import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlusCircle, HiPlay } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
 import { alignDictation } from '../lib/dictationAligner';
@@ -240,14 +240,19 @@ export default function PlaybackDetailTabs({
                     <button onClick={() => {
                       const items = lessonClips.map(c => ({ kind: 'clip' as const, clip: c, lesson }));
                       addAllToQueue(items);
-                      addToast(`已添加 ${items.length} 个片段到队列`, 'success');
+                      if (items.length > 0) {
+                        const first = items[0];
+                        playNow(first);
+                        setTimeout(() => playClip(first.clip, lesson), 50);
+                      }
+                      addToast(`即将播放 ${items.length} 个片段`, 'success');
                     }}
                       className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1 flex items-center gap-1">
-                      <HiPlusCircle size={11} /> 全部入队
+                      <HiPlay size={11} />
                     </button>
                     <button onClick={handleExportClips}
                       className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1 flex items-center gap-1">
-                      <HiArrowDownTray size={11} /> 导出
+                      <HiArrowDownTray size={11} />
                     </button>
                   </div>
 
@@ -259,64 +264,64 @@ export default function PlaybackDetailTabs({
                     return (
                   <div key={clip.id}
                     className={`transition-colors ${isActive ? 'bg-[var(--accent-soft)]' : isHovered ? 'bg-[var(--bg-hover)]' : ''}`}>
-                    <div className="flex items-start gap-3 px-5 py-3">
-                      <button
-                        onClick={() => { onSeek(clip.startTime); playNow({ kind: 'clip', clip, lesson }); setTimeout(() => playClip(clip, lesson), 0); }}
-                        onMouseEnter={() => setHoveredClipId(clip.id)}
-                        onMouseLeave={() => setHoveredClipId(null)}
-                        className="flex-1 text-left min-w-0 flex items-start gap-3 cursor-pointer"
-                      >
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: clip.color + '20', border: `1px solid ${clip.color}40` }}>
-                          <HiBookmark size={13} style={{ color: clip.color }} />
+                    <div className="px-5 py-3">
+                      {/* Row 1: icon + text + actions */}
+                      <div className="flex items-start gap-3">
+                        <button
+                          onClick={() => { onSeek(clip.startTime); playNow({ kind: 'clip', clip, lesson }); setTimeout(() => playClip(clip, lesson), 0); }}
+                          onMouseEnter={() => setHoveredClipId(clip.id)}
+                          onMouseLeave={() => setHoveredClipId(null)}
+                          className="flex-1 text-left min-w-0 flex items-start gap-3 cursor-pointer"
+                        >
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: clip.color + '20', border: `1px solid ${clip.color}40` }}>
+                            <HiBookmark size={13} style={{ color: clip.color }} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            {isEditing ? (
+                              <input type="text" value={editNote}
+                                onChange={e => setEditNote(e.target.value)}
+                                onKeyDown={e => {
+                                  if (e.key === 'Enter') { updateClip(clip.id, { note: editNote }); setEditingClipId(null); }
+                                  if (e.key === 'Escape') setEditingClipId(null);
+                                }}
+                                onBlur={() => { if (editNote !== clip.note) updateClip(clip.id, { note: editNote }); setEditingClipId(null); }}
+                                className="w-full text-xs bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded px-2 py-1 text-secondary outline-none"
+                                autoFocus
+                                onClick={e => e.stopPropagation()}
+                              />
+                            ) : (
+                              <>
+                                <p className="text-sm text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  {clip.note && <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-secondary">{clip.note}</span>}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        </button>
+                        {/* More actions */}
+                        <div className="relative flex-shrink-0 flex items-center gap-1">
+<button onClick={e => { e.stopPropagation(); setEditingClipId(clip.id); setEditNote(clip.note || ''); }}
+                            className="text-tertiary hover:text-secondary transition-colors cursor-pointer p-1">
+                            <HiPencil size={11} />
+                          </button>
+                          <button onClick={e => { e.stopPropagation(); removeClip(clip.id); addToast('片段已删除', 'info'); }}
+                            className="text-tertiary hover:text-[var(--accent)] transition-colors cursor-pointer p-1">
+                            <HiTrash size={11} />
+                          </button>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          {isEditing ? (
-                            <input type="text" value={editNote}
-                              onChange={e => setEditNote(e.target.value)}
-                              onKeyDown={e => {
-                                if (e.key === 'Enter') { updateClip(clip.id, { note: editNote }); setEditingClipId(null); }
-                                if (e.key === 'Escape') setEditingClipId(null);
-                              }}
-                              onBlur={() => { if (editNote !== clip.note) updateClip(clip.id, { note: editNote }); setEditingClipId(null); }}
-                              className="w-full text-xs bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded px-2 py-1 text-secondary outline-none"
-                              autoFocus
-                              onClick={e => e.stopPropagation()}
-                            />
-                          ) : (
-                            <>
-                              <p className="text-sm text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
-                              <div className="flex items-center gap-2 mt-1">
-                                <span className="text-xs text-tertiary">{d.toFixed(1)}s</span>
-                                <span className="text-xs text-tertiary">{fmt(clip.startTime)} - {fmt(clip.endTime)}</span>
-                                {clip.note && <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-secondary">{clip.note}</span>}
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      </button>
-                      {/* More actions */}
-                      <div className="relative flex-shrink-0 flex items-center gap-1">
-                        <button onClick={e => { e.stopPropagation(); addToQueue({ kind: 'clip', clip, lesson }); addToast('已加入队列', 'success'); }}
-                          className="text-tertiary hover:text-blue-400 transition-colors cursor-pointer p-1" title="加入队列">
-                          <HiPlusCircle size={11} />
-                        </button>
-                        <button onClick={e => { e.stopPropagation(); setEditingClipId(clip.id); setEditNote(clip.note || ''); }}
-                          className="text-tertiary hover:text-secondary transition-colors cursor-pointer p-1">
-                          <HiPencil size={11} />
-                        </button>
-                        <button onClick={e => { e.stopPropagation(); removeClip(clip.id); addToast('片段已删除', 'info'); }}
-                          className="text-tertiary hover:text-[var(--accent)] transition-colors cursor-pointer p-1">
-                          <HiTrash size={11} />
-                        </button>
                       </div>
-                    </div>
-                    {/* Color picker row */}
-                    <div className="flex items-center gap-1 px-5 pb-2 pl-16">
-                      {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
-                        <button key={c} onClick={e => { e.stopPropagation(); updateClip(clip.id, { color: c }); }}
-                          className={`w-3.5 h-3.5 rounded-full border transition-transform cursor-pointer hover:scale-125 ${clip.color === c ? 'ring-1 ring-offset-1 ring-[var(--text-primary)]' : ''}`}
-                          style={{ backgroundColor: c }} />
-                      ))}
+                      {/* Row 2: colors + time */}
+                      <div className="flex items-center justify-between mt-2 ml-11">
+                        <div className="flex items-center gap-1">
+                          {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
+                            <button key={c} onClick={e => { e.stopPropagation(); updateClip(clip.id, { color: c }); }}
+                              className={`rounded-full transition-all cursor-pointer hover:scale-125 ${clip.color === c ? 'w-4 h-4 shadow-sm ring-1 ring-white/20' : 'w-3 h-3 opacity-60 hover:opacity-100'}`}
+                              style={{ backgroundColor: c }} />
+                          ))}
+                        </div>
+                        <span className="text-xs text-tertiary">{fmt(clip.startTime)} - {fmt(clip.endTime)} · {d.toFixed(1)}s</span>
+                      </div>
                     </div>
                   </div>
                   );})}
