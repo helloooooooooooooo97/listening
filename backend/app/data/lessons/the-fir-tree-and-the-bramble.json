@@ -1,0 +1,773 @@
+{
+  "id": "the-fir-tree-and-the-bramble",
+  "title": "The Fir-Tree and The Bramble",
+  "subtitle": "Aesop's Fables, Volume 02",
+  "level": "A2-B1",
+  "duration": 71.1,
+  "audioFileName": "the-fir-tree-and-the-bramble.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-2-fables-26-50/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 18.9,
+      "end": 26.26,
+      "text": "A fir tree was boasting to a bramble and said, somewhat contemptuously, you poor creature,",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 26.26,
+      "end": 32.5,
+      "text": "you have no use whatsoever. Now look at me, I am useful for all sorts of things,",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 32.98,
+      "end": 36.82,
+      "text": "particularly when men build houses. They can't do without me then.\"",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 38.62,
+      "end": 39.8,
+      "text": "But the bramble replied,",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 40.76,
+      "end": 45.48,
+      "text": "ah, that's all very well, but you wait till they come with axes and saws to cut you down,",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 45.98,
+      "end": 48.66,
+      "text": "and then you'll wish you were a bramble, and not a fir.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 50.36,
+      "end": 57.46,
+      "text": "The moral? Better poverty without a care than wealth with its many obligations.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 62.16,
+      "end": 66.44,
+      "text": "This has been an audio recording of the fir and the bramble from ASOP's Fables,",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 66.94,
+      "end": 71.06,
+      "text": "read by Andy Fluke of 13pennies.net for LibriVox.org.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "A",
+      "start": 18.9,
+      "end": 19.76
+    },
+    {
+      "id": "w-0001",
+      "text": "fir",
+      "start": 19.76,
+      "end": 20.62
+    },
+    {
+      "id": "w-0002",
+      "text": "tree",
+      "start": 20.62,
+      "end": 20.88
+    },
+    {
+      "id": "w-0003",
+      "text": "was",
+      "start": 20.88,
+      "end": 21.42
+    },
+    {
+      "id": "w-0004",
+      "text": "boasting",
+      "start": 21.42,
+      "end": 21.7
+    },
+    {
+      "id": "w-0005",
+      "text": "to",
+      "start": 21.7,
+      "end": 22.0
+    },
+    {
+      "id": "w-0006",
+      "text": "a",
+      "start": 22.0,
+      "end": 22.12
+    },
+    {
+      "id": "w-0007",
+      "text": "bramble",
+      "start": 22.12,
+      "end": 22.52
+    },
+    {
+      "id": "w-0008",
+      "text": "and",
+      "start": 22.52,
+      "end": 23.0
+    },
+    {
+      "id": "w-0009",
+      "text": "said,",
+      "start": 23.0,
+      "end": 23.22
+    },
+    {
+      "id": "w-0010",
+      "text": "somewhat",
+      "start": 24.0,
+      "end": 24.02
+    },
+    {
+      "id": "w-0011",
+      "text": "contemptuously,",
+      "start": 24.02,
+      "end": 24.6
+    },
+    {
+      "id": "w-0012",
+      "text": "you",
+      "start": 25.24,
+      "end": 25.7
+    },
+    {
+      "id": "w-0013",
+      "text": "poor",
+      "start": 25.7,
+      "end": 25.92
+    },
+    {
+      "id": "w-0014",
+      "text": "creature,",
+      "start": 25.92,
+      "end": 26.26
+    },
+    {
+      "id": "w-0015",
+      "text": "you",
+      "start": 26.26,
+      "end": 26.46
+    },
+    {
+      "id": "w-0016",
+      "text": "have",
+      "start": 26.46,
+      "end": 27.42
+    },
+    {
+      "id": "w-0017",
+      "text": "no",
+      "start": 27.42,
+      "end": 27.64
+    },
+    {
+      "id": "w-0018",
+      "text": "use",
+      "start": 27.64,
+      "end": 27.94
+    },
+    {
+      "id": "w-0019",
+      "text": "whatsoever.",
+      "start": 27.94,
+      "end": 28.14
+    },
+    {
+      "id": "w-0020",
+      "text": "Now",
+      "start": 29.3,
+      "end": 29.6
+    },
+    {
+      "id": "w-0021",
+      "text": "look",
+      "start": 29.6,
+      "end": 29.76
+    },
+    {
+      "id": "w-0022",
+      "text": "at",
+      "start": 29.76,
+      "end": 29.88
+    },
+    {
+      "id": "w-0023",
+      "text": "me,",
+      "start": 29.88,
+      "end": 30.06
+    },
+    {
+      "id": "w-0024",
+      "text": "I",
+      "start": 30.4,
+      "end": 30.68
+    },
+    {
+      "id": "w-0025",
+      "text": "am",
+      "start": 30.68,
+      "end": 30.78
+    },
+    {
+      "id": "w-0026",
+      "text": "useful",
+      "start": 30.78,
+      "end": 31.02
+    },
+    {
+      "id": "w-0027",
+      "text": "for",
+      "start": 31.02,
+      "end": 31.32
+    },
+    {
+      "id": "w-0028",
+      "text": "all",
+      "start": 31.32,
+      "end": 31.66
+    },
+    {
+      "id": "w-0029",
+      "text": "sorts",
+      "start": 31.66,
+      "end": 31.98
+    },
+    {
+      "id": "w-0030",
+      "text": "of",
+      "start": 31.98,
+      "end": 32.24
+    },
+    {
+      "id": "w-0031",
+      "text": "things,",
+      "start": 32.24,
+      "end": 32.5
+    },
+    {
+      "id": "w-0032",
+      "text": "particularly",
+      "start": 32.98,
+      "end": 33.36
+    },
+    {
+      "id": "w-0033",
+      "text": "when",
+      "start": 33.36,
+      "end": 33.94
+    },
+    {
+      "id": "w-0034",
+      "text": "men",
+      "start": 33.94,
+      "end": 34.1
+    },
+    {
+      "id": "w-0035",
+      "text": "build",
+      "start": 34.1,
+      "end": 34.4
+    },
+    {
+      "id": "w-0036",
+      "text": "houses.",
+      "start": 34.4,
+      "end": 34.62
+    },
+    {
+      "id": "w-0037",
+      "text": "They",
+      "start": 35.3,
+      "end": 35.62
+    },
+    {
+      "id": "w-0038",
+      "text": "can't",
+      "start": 35.62,
+      "end": 35.94
+    },
+    {
+      "id": "w-0039",
+      "text": "do",
+      "start": 35.94,
+      "end": 36.06
+    },
+    {
+      "id": "w-0040",
+      "text": "without",
+      "start": 36.06,
+      "end": 36.26
+    },
+    {
+      "id": "w-0041",
+      "text": "me",
+      "start": 36.26,
+      "end": 36.56
+    },
+    {
+      "id": "w-0042",
+      "text": "then.\"",
+      "start": 36.56,
+      "end": 36.82
+    },
+    {
+      "id": "w-0043",
+      "text": "But",
+      "start": 38.62,
+      "end": 39.06
+    },
+    {
+      "id": "w-0044",
+      "text": "the",
+      "start": 39.06,
+      "end": 39.18
+    },
+    {
+      "id": "w-0045",
+      "text": "bramble",
+      "start": 39.18,
+      "end": 39.6
+    },
+    {
+      "id": "w-0046",
+      "text": "replied,",
+      "start": 39.6,
+      "end": 39.8
+    },
+    {
+      "id": "w-0047",
+      "text": "ah,",
+      "start": 40.76,
+      "end": 41.16
+    },
+    {
+      "id": "w-0048",
+      "text": "that's",
+      "start": 41.36,
+      "end": 41.54
+    },
+    {
+      "id": "w-0049",
+      "text": "all",
+      "start": 41.54,
+      "end": 41.64
+    },
+    {
+      "id": "w-0050",
+      "text": "very",
+      "start": 41.64,
+      "end": 41.82
+    },
+    {
+      "id": "w-0051",
+      "text": "well,",
+      "start": 41.82,
+      "end": 42.12
+    },
+    {
+      "id": "w-0052",
+      "text": "but",
+      "start": 42.84,
+      "end": 42.92
+    },
+    {
+      "id": "w-0053",
+      "text": "you",
+      "start": 42.92,
+      "end": 43.08
+    },
+    {
+      "id": "w-0054",
+      "text": "wait",
+      "start": 43.08,
+      "end": 43.24
+    },
+    {
+      "id": "w-0055",
+      "text": "till",
+      "start": 43.24,
+      "end": 43.46
+    },
+    {
+      "id": "w-0056",
+      "text": "they",
+      "start": 43.46,
+      "end": 43.56
+    },
+    {
+      "id": "w-0057",
+      "text": "come",
+      "start": 43.56,
+      "end": 43.74
+    },
+    {
+      "id": "w-0058",
+      "text": "with",
+      "start": 43.74,
+      "end": 43.92
+    },
+    {
+      "id": "w-0059",
+      "text": "axes",
+      "start": 43.92,
+      "end": 44.18
+    },
+    {
+      "id": "w-0060",
+      "text": "and",
+      "start": 44.18,
+      "end": 44.44
+    },
+    {
+      "id": "w-0061",
+      "text": "saws",
+      "start": 44.44,
+      "end": 44.84
+    },
+    {
+      "id": "w-0062",
+      "text": "to",
+      "start": 44.84,
+      "end": 44.94
+    },
+    {
+      "id": "w-0063",
+      "text": "cut",
+      "start": 44.94,
+      "end": 45.06
+    },
+    {
+      "id": "w-0064",
+      "text": "you",
+      "start": 45.06,
+      "end": 45.22
+    },
+    {
+      "id": "w-0065",
+      "text": "down,",
+      "start": 45.22,
+      "end": 45.48
+    },
+    {
+      "id": "w-0066",
+      "text": "and",
+      "start": 45.98,
+      "end": 46.22
+    },
+    {
+      "id": "w-0067",
+      "text": "then",
+      "start": 46.22,
+      "end": 46.4
+    },
+    {
+      "id": "w-0068",
+      "text": "you'll",
+      "start": 46.4,
+      "end": 46.62
+    },
+    {
+      "id": "w-0069",
+      "text": "wish",
+      "start": 46.62,
+      "end": 46.78
+    },
+    {
+      "id": "w-0070",
+      "text": "you",
+      "start": 46.78,
+      "end": 46.98
+    },
+    {
+      "id": "w-0071",
+      "text": "were",
+      "start": 46.98,
+      "end": 47.12
+    },
+    {
+      "id": "w-0072",
+      "text": "a",
+      "start": 47.12,
+      "end": 47.24
+    },
+    {
+      "id": "w-0073",
+      "text": "bramble,",
+      "start": 47.24,
+      "end": 47.58
+    },
+    {
+      "id": "w-0074",
+      "text": "and",
+      "start": 47.9,
+      "end": 48.1
+    },
+    {
+      "id": "w-0075",
+      "text": "not",
+      "start": 48.1,
+      "end": 48.32
+    },
+    {
+      "id": "w-0076",
+      "text": "a",
+      "start": 48.32,
+      "end": 48.44
+    },
+    {
+      "id": "w-0077",
+      "text": "fir.",
+      "start": 48.44,
+      "end": 48.66
+    },
+    {
+      "id": "w-0078",
+      "text": "The",
+      "start": 50.36,
+      "end": 51.02
+    },
+    {
+      "id": "w-0079",
+      "text": "moral?",
+      "start": 51.02,
+      "end": 51.24
+    },
+    {
+      "id": "w-0080",
+      "text": "Better",
+      "start": 52.76,
+      "end": 53.42
+    },
+    {
+      "id": "w-0081",
+      "text": "poverty",
+      "start": 53.42,
+      "end": 53.7
+    },
+    {
+      "id": "w-0082",
+      "text": "without",
+      "start": 53.7,
+      "end": 54.44
+    },
+    {
+      "id": "w-0083",
+      "text": "a",
+      "start": 54.44,
+      "end": 54.7
+    },
+    {
+      "id": "w-0084",
+      "text": "care",
+      "start": 54.7,
+      "end": 54.92
+    },
+    {
+      "id": "w-0085",
+      "text": "than",
+      "start": 54.92,
+      "end": 55.74
+    },
+    {
+      "id": "w-0086",
+      "text": "wealth",
+      "start": 55.74,
+      "end": 56.0
+    },
+    {
+      "id": "w-0087",
+      "text": "with",
+      "start": 56.0,
+      "end": 56.28
+    },
+    {
+      "id": "w-0088",
+      "text": "its",
+      "start": 56.28,
+      "end": 56.44
+    },
+    {
+      "id": "w-0089",
+      "text": "many",
+      "start": 56.44,
+      "end": 56.8
+    },
+    {
+      "id": "w-0090",
+      "text": "obligations.",
+      "start": 56.8,
+      "end": 57.46
+    },
+    {
+      "id": "w-0091",
+      "text": "This",
+      "start": 62.16,
+      "end": 62.82
+    },
+    {
+      "id": "w-0092",
+      "text": "has",
+      "start": 62.82,
+      "end": 62.96
+    },
+    {
+      "id": "w-0093",
+      "text": "been",
+      "start": 62.96,
+      "end": 63.12
+    },
+    {
+      "id": "w-0094",
+      "text": "an",
+      "start": 63.12,
+      "end": 63.22
+    },
+    {
+      "id": "w-0095",
+      "text": "audio",
+      "start": 63.22,
+      "end": 63.48
+    },
+    {
+      "id": "w-0096",
+      "text": "recording",
+      "start": 63.48,
+      "end": 63.86
+    },
+    {
+      "id": "w-0097",
+      "text": "of",
+      "start": 63.86,
+      "end": 64.22
+    },
+    {
+      "id": "w-0098",
+      "text": "the",
+      "start": 64.22,
+      "end": 64.34
+    },
+    {
+      "id": "w-0099",
+      "text": "fir",
+      "start": 64.34,
+      "end": 64.56
+    },
+    {
+      "id": "w-0100",
+      "text": "and",
+      "start": 64.56,
+      "end": 64.86
+    },
+    {
+      "id": "w-0101",
+      "text": "the",
+      "start": 64.86,
+      "end": 65.0
+    },
+    {
+      "id": "w-0102",
+      "text": "bramble",
+      "start": 65.0,
+      "end": 65.38
+    },
+    {
+      "id": "w-0103",
+      "text": "from",
+      "start": 65.38,
+      "end": 65.64
+    },
+    {
+      "id": "w-0104",
+      "text": "ASOP's",
+      "start": 65.64,
+      "end": 66.12
+    },
+    {
+      "id": "w-0105",
+      "text": "Fables,",
+      "start": 66.12,
+      "end": 66.44
+    },
+    {
+      "id": "w-0106",
+      "text": "read",
+      "start": 66.94,
+      "end": 67.04
+    },
+    {
+      "id": "w-0107",
+      "text": "by",
+      "start": 67.04,
+      "end": 67.26
+    },
+    {
+      "id": "w-0108",
+      "text": "Andy",
+      "start": 67.26,
+      "end": 67.46
+    },
+    {
+      "id": "w-0109",
+      "text": "Fluke",
+      "start": 67.46,
+      "end": 67.88
+    },
+    {
+      "id": "w-0110",
+      "text": "of",
+      "start": 67.88,
+      "end": 68.14
+    },
+    {
+      "id": "w-0111",
+      "text": "13pennies",
+      "start": 68.14,
+      "end": 68.78
+    },
+    {
+      "id": "w-0112",
+      "text": ".net",
+      "start": 68.78,
+      "end": 69.12
+    },
+    {
+      "id": "w-0113",
+      "text": "for",
+      "start": 69.12,
+      "end": 69.66
+    },
+    {
+      "id": "w-0114",
+      "text": "LibriVox",
+      "start": 69.66,
+      "end": 70.22
+    },
+    {
+      "id": "w-0115",
+      "text": ".org.",
+      "start": 70.22,
+      "end": 71.06
+    }
+  ]
+}

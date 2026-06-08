@@ -1,0 +1,930 @@
+{
+  "id": "the-farmer-and-the-fox",
+  "title": "The Farmer and The Fox",
+  "subtitle": "Aesop's Fables, Volume 06",
+  "level": "A2-B1",
+  "duration": 55.1,
+  "audioFileName": "the-farmer-and-the-fox.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-6-fables-126-150/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.68,
+      "end": 5.56,
+      "text": "This is a Levi-Vox recording. All Levi-Vox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.76,
+      "end": 11.42,
+      "text": "For more information or to volunteer, please visit LeviVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 13.22,
+      "end": 16.12,
+      "text": "Asop's fables. The farmer and the fox.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 17.86,
+      "end": 23.74,
+      "text": "A farmer was greatly annoyed by a fox, which came prowling about his yard at night and carried off his pals.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 23.74,
+      "end": 26.78,
+      "text": "So he set the trap for him and caught him.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 27.52,
+      "end": 33.46,
+      "text": "And in order to be revengeed upon him, he tied a bunch of toe to his tail and set fire to it and let him go.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 34.76,
+      "end": 41.08,
+      "text": "As elok would have it however, the fox made straight for the fields where the corn was standing ripe and ready for cutting.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 41.7,
+      "end": 46.74,
+      "text": "He quickly caught fire and was all burnt up and the farmer lost all his harvest.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 49.28,
+      "end": 51.08,
+      "text": "Revenge is a two-edged sword.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 53.54,
+      "end": 55.12,
+      "text": "End of the farmer and the fox.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.68,
+      "end": 1.18
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.18,
+      "end": 1.42
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.42,
+      "end": 1.58
+    },
+    {
+      "id": "w-0003",
+      "text": "Levi",
+      "start": 1.58,
+      "end": 1.7
+    },
+    {
+      "id": "w-0004",
+      "text": "-Vox",
+      "start": 1.7,
+      "end": 2.04
+    },
+    {
+      "id": "w-0005",
+      "text": "recording.",
+      "start": 2.04,
+      "end": 2.2
+    },
+    {
+      "id": "w-0006",
+      "text": "All",
+      "start": 3.32,
+      "end": 3.5
+    },
+    {
+      "id": "w-0007",
+      "text": "Levi",
+      "start": 3.5,
+      "end": 3.7
+    },
+    {
+      "id": "w-0008",
+      "text": "-Vox",
+      "start": 3.7,
+      "end": 4.08
+    },
+    {
+      "id": "w-0009",
+      "text": "recordings",
+      "start": 4.08,
+      "end": 4.3
+    },
+    {
+      "id": "w-0010",
+      "text": "are",
+      "start": 4.3,
+      "end": 4.82
+    },
+    {
+      "id": "w-0011",
+      "text": "in",
+      "start": 4.82,
+      "end": 4.94
+    },
+    {
+      "id": "w-0012",
+      "text": "the",
+      "start": 4.94,
+      "end": 5.02
+    },
+    {
+      "id": "w-0013",
+      "text": "public",
+      "start": 5.02,
+      "end": 5.28
+    },
+    {
+      "id": "w-0014",
+      "text": "domain.",
+      "start": 5.28,
+      "end": 5.56
+    },
+    {
+      "id": "w-0015",
+      "text": "For",
+      "start": 6.76,
+      "end": 6.82
+    },
+    {
+      "id": "w-0016",
+      "text": "more",
+      "start": 6.82,
+      "end": 7.02
+    },
+    {
+      "id": "w-0017",
+      "text": "information",
+      "start": 7.02,
+      "end": 7.42
+    },
+    {
+      "id": "w-0018",
+      "text": "or",
+      "start": 7.42,
+      "end": 7.9
+    },
+    {
+      "id": "w-0019",
+      "text": "to",
+      "start": 7.9,
+      "end": 8.06
+    },
+    {
+      "id": "w-0020",
+      "text": "volunteer,",
+      "start": 8.06,
+      "end": 8.34
+    },
+    {
+      "id": "w-0021",
+      "text": "please",
+      "start": 9.26,
+      "end": 9.48
+    },
+    {
+      "id": "w-0022",
+      "text": "visit",
+      "start": 9.48,
+      "end": 9.86
+    },
+    {
+      "id": "w-0023",
+      "text": "LeviVox",
+      "start": 9.86,
+      "end": 10.94
+    },
+    {
+      "id": "w-0024",
+      "text": ".org.",
+      "start": 10.94,
+      "end": 11.42
+    },
+    {
+      "id": "w-0025",
+      "text": "Asop's",
+      "start": 13.22,
+      "end": 13.72
+    },
+    {
+      "id": "w-0026",
+      "text": "fables.",
+      "start": 13.72,
+      "end": 14.12
+    },
+    {
+      "id": "w-0027",
+      "text": "The",
+      "start": 15.32,
+      "end": 15.32
+    },
+    {
+      "id": "w-0028",
+      "text": "farmer",
+      "start": 15.32,
+      "end": 15.5
+    },
+    {
+      "id": "w-0029",
+      "text": "and",
+      "start": 15.5,
+      "end": 15.8
+    },
+    {
+      "id": "w-0030",
+      "text": "the",
+      "start": 15.8,
+      "end": 15.94
+    },
+    {
+      "id": "w-0031",
+      "text": "fox.",
+      "start": 15.94,
+      "end": 16.12
+    },
+    {
+      "id": "w-0032",
+      "text": "A",
+      "start": 17.86,
+      "end": 18.36
+    },
+    {
+      "id": "w-0033",
+      "text": "farmer",
+      "start": 18.36,
+      "end": 18.56
+    },
+    {
+      "id": "w-0034",
+      "text": "was",
+      "start": 18.56,
+      "end": 18.86
+    },
+    {
+      "id": "w-0035",
+      "text": "greatly",
+      "start": 18.86,
+      "end": 19.1
+    },
+    {
+      "id": "w-0036",
+      "text": "annoyed",
+      "start": 19.1,
+      "end": 19.38
+    },
+    {
+      "id": "w-0037",
+      "text": "by",
+      "start": 19.38,
+      "end": 19.7
+    },
+    {
+      "id": "w-0038",
+      "text": "a",
+      "start": 19.7,
+      "end": 19.78
+    },
+    {
+      "id": "w-0039",
+      "text": "fox,",
+      "start": 19.78,
+      "end": 20.0
+    },
+    {
+      "id": "w-0040",
+      "text": "which",
+      "start": 20.8,
+      "end": 20.92
+    },
+    {
+      "id": "w-0041",
+      "text": "came",
+      "start": 20.92,
+      "end": 21.12
+    },
+    {
+      "id": "w-0042",
+      "text": "prowling",
+      "start": 21.12,
+      "end": 21.56
+    },
+    {
+      "id": "w-0043",
+      "text": "about",
+      "start": 21.56,
+      "end": 21.82
+    },
+    {
+      "id": "w-0044",
+      "text": "his",
+      "start": 21.82,
+      "end": 22.0
+    },
+    {
+      "id": "w-0045",
+      "text": "yard",
+      "start": 22.0,
+      "end": 22.22
+    },
+    {
+      "id": "w-0046",
+      "text": "at",
+      "start": 22.22,
+      "end": 22.4
+    },
+    {
+      "id": "w-0047",
+      "text": "night",
+      "start": 22.4,
+      "end": 22.6
+    },
+    {
+      "id": "w-0048",
+      "text": "and",
+      "start": 22.6,
+      "end": 22.8
+    },
+    {
+      "id": "w-0049",
+      "text": "carried",
+      "start": 22.8,
+      "end": 23.02
+    },
+    {
+      "id": "w-0050",
+      "text": "off",
+      "start": 23.02,
+      "end": 23.34
+    },
+    {
+      "id": "w-0051",
+      "text": "his",
+      "start": 23.34,
+      "end": 23.5
+    },
+    {
+      "id": "w-0052",
+      "text": "pals.",
+      "start": 23.5,
+      "end": 23.74
+    },
+    {
+      "id": "w-0053",
+      "text": "So",
+      "start": 23.74,
+      "end": 24.3
+    },
+    {
+      "id": "w-0054",
+      "text": "he",
+      "start": 24.3,
+      "end": 25.18
+    },
+    {
+      "id": "w-0055",
+      "text": "set",
+      "start": 25.18,
+      "end": 25.42
+    },
+    {
+      "id": "w-0056",
+      "text": "the",
+      "start": 25.42,
+      "end": 25.6
+    },
+    {
+      "id": "w-0057",
+      "text": "trap",
+      "start": 25.6,
+      "end": 25.76
+    },
+    {
+      "id": "w-0058",
+      "text": "for",
+      "start": 25.76,
+      "end": 26.06
+    },
+    {
+      "id": "w-0059",
+      "text": "him",
+      "start": 26.06,
+      "end": 26.26
+    },
+    {
+      "id": "w-0060",
+      "text": "and",
+      "start": 26.26,
+      "end": 26.36
+    },
+    {
+      "id": "w-0061",
+      "text": "caught",
+      "start": 26.36,
+      "end": 26.54
+    },
+    {
+      "id": "w-0062",
+      "text": "him.",
+      "start": 26.54,
+      "end": 26.78
+    },
+    {
+      "id": "w-0063",
+      "text": "And",
+      "start": 27.52,
+      "end": 27.7
+    },
+    {
+      "id": "w-0064",
+      "text": "in",
+      "start": 27.7,
+      "end": 27.8
+    },
+    {
+      "id": "w-0065",
+      "text": "order",
+      "start": 27.8,
+      "end": 28.0
+    },
+    {
+      "id": "w-0066",
+      "text": "to",
+      "start": 28.0,
+      "end": 28.24
+    },
+    {
+      "id": "w-0067",
+      "text": "be",
+      "start": 28.24,
+      "end": 28.38
+    },
+    {
+      "id": "w-0068",
+      "text": "revengeed",
+      "start": 28.38,
+      "end": 28.96
+    },
+    {
+      "id": "w-0069",
+      "text": "upon",
+      "start": 28.96,
+      "end": 29.16
+    },
+    {
+      "id": "w-0070",
+      "text": "him,",
+      "start": 29.16,
+      "end": 29.38
+    },
+    {
+      "id": "w-0071",
+      "text": "he",
+      "start": 29.92,
+      "end": 30.14
+    },
+    {
+      "id": "w-0072",
+      "text": "tied",
+      "start": 30.14,
+      "end": 30.38
+    },
+    {
+      "id": "w-0073",
+      "text": "a",
+      "start": 30.38,
+      "end": 30.6
+    },
+    {
+      "id": "w-0074",
+      "text": "bunch",
+      "start": 30.6,
+      "end": 30.86
+    },
+    {
+      "id": "w-0075",
+      "text": "of",
+      "start": 30.86,
+      "end": 30.96
+    },
+    {
+      "id": "w-0076",
+      "text": "toe",
+      "start": 30.96,
+      "end": 31.16
+    },
+    {
+      "id": "w-0077",
+      "text": "to",
+      "start": 31.16,
+      "end": 31.42
+    },
+    {
+      "id": "w-0078",
+      "text": "his",
+      "start": 31.42,
+      "end": 31.5
+    },
+    {
+      "id": "w-0079",
+      "text": "tail",
+      "start": 31.5,
+      "end": 31.72
+    },
+    {
+      "id": "w-0080",
+      "text": "and",
+      "start": 31.72,
+      "end": 31.92
+    },
+    {
+      "id": "w-0081",
+      "text": "set",
+      "start": 31.92,
+      "end": 32.14
+    },
+    {
+      "id": "w-0082",
+      "text": "fire",
+      "start": 32.14,
+      "end": 32.38
+    },
+    {
+      "id": "w-0083",
+      "text": "to",
+      "start": 32.38,
+      "end": 32.64
+    },
+    {
+      "id": "w-0084",
+      "text": "it",
+      "start": 32.64,
+      "end": 32.8
+    },
+    {
+      "id": "w-0085",
+      "text": "and",
+      "start": 32.8,
+      "end": 32.94
+    },
+    {
+      "id": "w-0086",
+      "text": "let",
+      "start": 32.94,
+      "end": 33.1
+    },
+    {
+      "id": "w-0087",
+      "text": "him",
+      "start": 33.1,
+      "end": 33.24
+    },
+    {
+      "id": "w-0088",
+      "text": "go.",
+      "start": 33.24,
+      "end": 33.46
+    },
+    {
+      "id": "w-0089",
+      "text": "As",
+      "start": 34.76,
+      "end": 35.24
+    },
+    {
+      "id": "w-0090",
+      "text": "elok",
+      "start": 35.24,
+      "end": 35.68
+    },
+    {
+      "id": "w-0091",
+      "text": "would",
+      "start": 35.68,
+      "end": 35.84
+    },
+    {
+      "id": "w-0092",
+      "text": "have",
+      "start": 35.84,
+      "end": 36.02
+    },
+    {
+      "id": "w-0093",
+      "text": "it",
+      "start": 36.02,
+      "end": 36.16
+    },
+    {
+      "id": "w-0094",
+      "text": "however,",
+      "start": 36.16,
+      "end": 36.36
+    },
+    {
+      "id": "w-0095",
+      "text": "the",
+      "start": 37.2,
+      "end": 37.4
+    },
+    {
+      "id": "w-0096",
+      "text": "fox",
+      "start": 37.4,
+      "end": 37.58
+    },
+    {
+      "id": "w-0097",
+      "text": "made",
+      "start": 37.58,
+      "end": 37.84
+    },
+    {
+      "id": "w-0098",
+      "text": "straight",
+      "start": 37.84,
+      "end": 38.16
+    },
+    {
+      "id": "w-0099",
+      "text": "for",
+      "start": 38.16,
+      "end": 38.4
+    },
+    {
+      "id": "w-0100",
+      "text": "the",
+      "start": 38.4,
+      "end": 38.54
+    },
+    {
+      "id": "w-0101",
+      "text": "fields",
+      "start": 38.54,
+      "end": 38.82
+    },
+    {
+      "id": "w-0102",
+      "text": "where",
+      "start": 38.82,
+      "end": 39.06
+    },
+    {
+      "id": "w-0103",
+      "text": "the",
+      "start": 39.06,
+      "end": 39.18
+    },
+    {
+      "id": "w-0104",
+      "text": "corn",
+      "start": 39.18,
+      "end": 39.42
+    },
+    {
+      "id": "w-0105",
+      "text": "was",
+      "start": 39.42,
+      "end": 39.58
+    },
+    {
+      "id": "w-0106",
+      "text": "standing",
+      "start": 39.58,
+      "end": 39.84
+    },
+    {
+      "id": "w-0107",
+      "text": "ripe",
+      "start": 39.84,
+      "end": 40.16
+    },
+    {
+      "id": "w-0108",
+      "text": "and",
+      "start": 40.16,
+      "end": 40.36
+    },
+    {
+      "id": "w-0109",
+      "text": "ready",
+      "start": 40.36,
+      "end": 40.52
+    },
+    {
+      "id": "w-0110",
+      "text": "for",
+      "start": 40.52,
+      "end": 40.76
+    },
+    {
+      "id": "w-0111",
+      "text": "cutting.",
+      "start": 40.76,
+      "end": 41.08
+    },
+    {
+      "id": "w-0112",
+      "text": "He",
+      "start": 41.7,
+      "end": 41.7
+    },
+    {
+      "id": "w-0113",
+      "text": "quickly",
+      "start": 41.7,
+      "end": 42.48
+    },
+    {
+      "id": "w-0114",
+      "text": "caught",
+      "start": 42.48,
+      "end": 42.82
+    },
+    {
+      "id": "w-0115",
+      "text": "fire",
+      "start": 42.82,
+      "end": 43.1
+    },
+    {
+      "id": "w-0116",
+      "text": "and",
+      "start": 43.1,
+      "end": 43.64
+    },
+    {
+      "id": "w-0117",
+      "text": "was",
+      "start": 43.64,
+      "end": 43.76
+    },
+    {
+      "id": "w-0118",
+      "text": "all",
+      "start": 43.76,
+      "end": 44.04
+    },
+    {
+      "id": "w-0119",
+      "text": "burnt",
+      "start": 44.04,
+      "end": 44.2
+    },
+    {
+      "id": "w-0120",
+      "text": "up",
+      "start": 44.2,
+      "end": 44.52
+    },
+    {
+      "id": "w-0121",
+      "text": "and",
+      "start": 44.52,
+      "end": 45.36
+    },
+    {
+      "id": "w-0122",
+      "text": "the",
+      "start": 45.36,
+      "end": 45.46
+    },
+    {
+      "id": "w-0123",
+      "text": "farmer",
+      "start": 45.46,
+      "end": 45.68
+    },
+    {
+      "id": "w-0124",
+      "text": "lost",
+      "start": 45.68,
+      "end": 46.04
+    },
+    {
+      "id": "w-0125",
+      "text": "all",
+      "start": 46.04,
+      "end": 46.3
+    },
+    {
+      "id": "w-0126",
+      "text": "his",
+      "start": 46.3,
+      "end": 46.52
+    },
+    {
+      "id": "w-0127",
+      "text": "harvest.",
+      "start": 46.52,
+      "end": 46.74
+    },
+    {
+      "id": "w-0128",
+      "text": "Revenge",
+      "start": 49.28,
+      "end": 49.76
+    },
+    {
+      "id": "w-0129",
+      "text": "is",
+      "start": 49.76,
+      "end": 50.1
+    },
+    {
+      "id": "w-0130",
+      "text": "a",
+      "start": 50.1,
+      "end": 50.26
+    },
+    {
+      "id": "w-0131",
+      "text": "two",
+      "start": 50.26,
+      "end": 50.44
+    },
+    {
+      "id": "w-0132",
+      "text": "-edged",
+      "start": 50.44,
+      "end": 50.7
+    },
+    {
+      "id": "w-0133",
+      "text": "sword.",
+      "start": 50.7,
+      "end": 51.08
+    },
+    {
+      "id": "w-0134",
+      "text": "End",
+      "start": 53.54,
+      "end": 53.96
+    },
+    {
+      "id": "w-0135",
+      "text": "of",
+      "start": 53.96,
+      "end": 54.16
+    },
+    {
+      "id": "w-0136",
+      "text": "the",
+      "start": 54.16,
+      "end": 54.28
+    },
+    {
+      "id": "w-0137",
+      "text": "farmer",
+      "start": 54.28,
+      "end": 54.5
+    },
+    {
+      "id": "w-0138",
+      "text": "and",
+      "start": 54.5,
+      "end": 54.8
+    },
+    {
+      "id": "w-0139",
+      "text": "the",
+      "start": 54.8,
+      "end": 54.92
+    },
+    {
+      "id": "w-0140",
+      "text": "fox.",
+      "start": 54.92,
+      "end": 55.12
+    }
+  ]
+}

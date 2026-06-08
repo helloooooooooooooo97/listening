@@ -1,0 +1,850 @@
+{
+  "id": "the-three-tradesmen",
+  "title": "The Three Tradesmen",
+  "subtitle": "Aesop's Fables, Volume 06",
+  "level": "A2-B1",
+  "duration": 62.4,
+  "audioFileName": "the-three-tradesmen.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-6-fables-126-150/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 6.5,
+      "text": "This is a labor box recording. All labor box recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 7.38,
+      "end": 11.96,
+      "text": "For more information or to volunteer, please visit laborbox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 12.74,
+      "end": 16.34,
+      "text": "Recorded by Patty McCoy in Hudson, Colorado.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 17.8,
+      "end": 28.04,
+      "text": "ASOP's Fables, the three tradesmen. The citizens of a certain city were debating about the best material to use in the fortifications,",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 29.12,
+      "end": 33.74,
+      "text": "which were about to be erected for the greater security of the town.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 34.02,
+      "end": 42.4,
+      "text": "A carpenter got up and advised the use of wood, which he said was regularly procurable and easily worked.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 42.68,
+      "end": 50.64,
+      "text": "A stone mason objected to the wood on the grounds that it was so implammable and recommended stones instead.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 51.34,
+      "end": 62.42,
+      "text": "Then the tander got on his legs and said, in my opinion, there's nothing like leather every man for himself, end of the three tradesmen.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 1.6
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.6,
+      "end": 2.0
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 2.0,
+      "end": 2.16
+    },
+    {
+      "id": "w-0003",
+      "text": "labor",
+      "start": 2.16,
+      "end": 2.3
+    },
+    {
+      "id": "w-0004",
+      "text": "box",
+      "start": 2.3,
+      "end": 2.66
+    },
+    {
+      "id": "w-0005",
+      "text": "recording.",
+      "start": 2.66,
+      "end": 2.96
+    },
+    {
+      "id": "w-0006",
+      "text": "All",
+      "start": 3.68,
+      "end": 3.86
+    },
+    {
+      "id": "w-0007",
+      "text": "labor",
+      "start": 3.86,
+      "end": 4.22
+    },
+    {
+      "id": "w-0008",
+      "text": "box",
+      "start": 4.22,
+      "end": 4.64
+    },
+    {
+      "id": "w-0009",
+      "text": "recordings",
+      "start": 4.64,
+      "end": 5.22
+    },
+    {
+      "id": "w-0010",
+      "text": "are",
+      "start": 5.22,
+      "end": 5.62
+    },
+    {
+      "id": "w-0011",
+      "text": "in",
+      "start": 5.62,
+      "end": 5.76
+    },
+    {
+      "id": "w-0012",
+      "text": "the",
+      "start": 5.76,
+      "end": 5.88
+    },
+    {
+      "id": "w-0013",
+      "text": "public",
+      "start": 5.88,
+      "end": 6.14
+    },
+    {
+      "id": "w-0014",
+      "text": "domain.",
+      "start": 6.14,
+      "end": 6.5
+    },
+    {
+      "id": "w-0015",
+      "text": "For",
+      "start": 7.38,
+      "end": 7.4
+    },
+    {
+      "id": "w-0016",
+      "text": "more",
+      "start": 7.4,
+      "end": 7.68
+    },
+    {
+      "id": "w-0017",
+      "text": "information",
+      "start": 7.68,
+      "end": 8.22
+    },
+    {
+      "id": "w-0018",
+      "text": "or",
+      "start": 8.22,
+      "end": 8.78
+    },
+    {
+      "id": "w-0019",
+      "text": "to",
+      "start": 8.78,
+      "end": 8.94
+    },
+    {
+      "id": "w-0020",
+      "text": "volunteer,",
+      "start": 8.94,
+      "end": 9.38
+    },
+    {
+      "id": "w-0021",
+      "text": "please",
+      "start": 9.84,
+      "end": 10.02
+    },
+    {
+      "id": "w-0022",
+      "text": "visit",
+      "start": 10.02,
+      "end": 10.36
+    },
+    {
+      "id": "w-0023",
+      "text": "laborbox",
+      "start": 10.36,
+      "end": 11.14
+    },
+    {
+      "id": "w-0024",
+      "text": ".org.",
+      "start": 11.14,
+      "end": 11.96
+    },
+    {
+      "id": "w-0025",
+      "text": "Recorded",
+      "start": 12.74,
+      "end": 13.58
+    },
+    {
+      "id": "w-0026",
+      "text": "by",
+      "start": 13.58,
+      "end": 14.02
+    },
+    {
+      "id": "w-0027",
+      "text": "Patty",
+      "start": 14.02,
+      "end": 14.46
+    },
+    {
+      "id": "w-0028",
+      "text": "McCoy",
+      "start": 14.46,
+      "end": 14.8
+    },
+    {
+      "id": "w-0029",
+      "text": "in",
+      "start": 14.8,
+      "end": 15.4
+    },
+    {
+      "id": "w-0030",
+      "text": "Hudson,",
+      "start": 15.4,
+      "end": 15.6
+    },
+    {
+      "id": "w-0031",
+      "text": "Colorado.",
+      "start": 16.26,
+      "end": 16.34
+    },
+    {
+      "id": "w-0032",
+      "text": "ASOP's",
+      "start": 17.8,
+      "end": 18.48
+    },
+    {
+      "id": "w-0033",
+      "text": "Fables,",
+      "start": 18.48,
+      "end": 18.9
+    },
+    {
+      "id": "w-0034",
+      "text": "the",
+      "start": 19.36,
+      "end": 19.38
+    },
+    {
+      "id": "w-0035",
+      "text": "three",
+      "start": 19.38,
+      "end": 19.64
+    },
+    {
+      "id": "w-0036",
+      "text": "tradesmen.",
+      "start": 19.64,
+      "end": 20.28
+    },
+    {
+      "id": "w-0037",
+      "text": "The",
+      "start": 20.86,
+      "end": 21.22
+    },
+    {
+      "id": "w-0038",
+      "text": "citizens",
+      "start": 21.22,
+      "end": 21.66
+    },
+    {
+      "id": "w-0039",
+      "text": "of",
+      "start": 21.66,
+      "end": 22.2
+    },
+    {
+      "id": "w-0040",
+      "text": "a",
+      "start": 22.2,
+      "end": 22.32
+    },
+    {
+      "id": "w-0041",
+      "text": "certain",
+      "start": 22.32,
+      "end": 22.58
+    },
+    {
+      "id": "w-0042",
+      "text": "city",
+      "start": 22.58,
+      "end": 23.1
+    },
+    {
+      "id": "w-0043",
+      "text": "were",
+      "start": 23.1,
+      "end": 23.76
+    },
+    {
+      "id": "w-0044",
+      "text": "debating",
+      "start": 23.76,
+      "end": 24.1
+    },
+    {
+      "id": "w-0045",
+      "text": "about",
+      "start": 24.1,
+      "end": 24.72
+    },
+    {
+      "id": "w-0046",
+      "text": "the",
+      "start": 24.72,
+      "end": 25.34
+    },
+    {
+      "id": "w-0047",
+      "text": "best",
+      "start": 25.34,
+      "end": 25.62
+    },
+    {
+      "id": "w-0048",
+      "text": "material",
+      "start": 25.62,
+      "end": 26.08
+    },
+    {
+      "id": "w-0049",
+      "text": "to",
+      "start": 26.08,
+      "end": 26.5
+    },
+    {
+      "id": "w-0050",
+      "text": "use",
+      "start": 26.5,
+      "end": 26.88
+    },
+    {
+      "id": "w-0051",
+      "text": "in",
+      "start": 26.88,
+      "end": 27.14
+    },
+    {
+      "id": "w-0052",
+      "text": "the",
+      "start": 27.14,
+      "end": 27.26
+    },
+    {
+      "id": "w-0053",
+      "text": "fortifications,",
+      "start": 27.26,
+      "end": 28.04
+    },
+    {
+      "id": "w-0054",
+      "text": "which",
+      "start": 29.12,
+      "end": 29.8
+    },
+    {
+      "id": "w-0055",
+      "text": "were",
+      "start": 29.8,
+      "end": 30.08
+    },
+    {
+      "id": "w-0056",
+      "text": "about",
+      "start": 30.08,
+      "end": 30.36
+    },
+    {
+      "id": "w-0057",
+      "text": "to",
+      "start": 30.36,
+      "end": 30.6
+    },
+    {
+      "id": "w-0058",
+      "text": "be",
+      "start": 30.6,
+      "end": 30.74
+    },
+    {
+      "id": "w-0059",
+      "text": "erected",
+      "start": 30.74,
+      "end": 31.12
+    },
+    {
+      "id": "w-0060",
+      "text": "for",
+      "start": 31.12,
+      "end": 31.5
+    },
+    {
+      "id": "w-0061",
+      "text": "the",
+      "start": 31.5,
+      "end": 31.6
+    },
+    {
+      "id": "w-0062",
+      "text": "greater",
+      "start": 31.6,
+      "end": 31.84
+    },
+    {
+      "id": "w-0063",
+      "text": "security",
+      "start": 31.84,
+      "end": 32.68
+    },
+    {
+      "id": "w-0064",
+      "text": "of",
+      "start": 32.68,
+      "end": 32.84
+    },
+    {
+      "id": "w-0065",
+      "text": "the",
+      "start": 32.84,
+      "end": 33.02
+    },
+    {
+      "id": "w-0066",
+      "text": "town.",
+      "start": 33.02,
+      "end": 33.74
+    },
+    {
+      "id": "w-0067",
+      "text": "A",
+      "start": 34.02,
+      "end": 34.1
+    },
+    {
+      "id": "w-0068",
+      "text": "carpenter",
+      "start": 34.1,
+      "end": 34.56
+    },
+    {
+      "id": "w-0069",
+      "text": "got",
+      "start": 34.56,
+      "end": 34.96
+    },
+    {
+      "id": "w-0070",
+      "text": "up",
+      "start": 34.96,
+      "end": 35.24
+    },
+    {
+      "id": "w-0071",
+      "text": "and",
+      "start": 35.24,
+      "end": 35.46
+    },
+    {
+      "id": "w-0072",
+      "text": "advised",
+      "start": 35.46,
+      "end": 35.8
+    },
+    {
+      "id": "w-0073",
+      "text": "the",
+      "start": 35.8,
+      "end": 36.3
+    },
+    {
+      "id": "w-0074",
+      "text": "use",
+      "start": 36.3,
+      "end": 36.5
+    },
+    {
+      "id": "w-0075",
+      "text": "of",
+      "start": 36.5,
+      "end": 36.74
+    },
+    {
+      "id": "w-0076",
+      "text": "wood,",
+      "start": 36.74,
+      "end": 37.0
+    },
+    {
+      "id": "w-0077",
+      "text": "which",
+      "start": 37.52,
+      "end": 37.68
+    },
+    {
+      "id": "w-0078",
+      "text": "he",
+      "start": 37.68,
+      "end": 37.92
+    },
+    {
+      "id": "w-0079",
+      "text": "said",
+      "start": 37.92,
+      "end": 38.28
+    },
+    {
+      "id": "w-0080",
+      "text": "was",
+      "start": 38.28,
+      "end": 38.52
+    },
+    {
+      "id": "w-0081",
+      "text": "regularly",
+      "start": 38.52,
+      "end": 39.12
+    },
+    {
+      "id": "w-0082",
+      "text": "procurable",
+      "start": 39.12,
+      "end": 40.08
+    },
+    {
+      "id": "w-0083",
+      "text": "and",
+      "start": 40.08,
+      "end": 41.6
+    },
+    {
+      "id": "w-0084",
+      "text": "easily",
+      "start": 41.6,
+      "end": 41.98
+    },
+    {
+      "id": "w-0085",
+      "text": "worked.",
+      "start": 41.98,
+      "end": 42.4
+    },
+    {
+      "id": "w-0086",
+      "text": "A",
+      "start": 42.68,
+      "end": 42.74
+    },
+    {
+      "id": "w-0087",
+      "text": "stone",
+      "start": 42.74,
+      "end": 42.98
+    },
+    {
+      "id": "w-0088",
+      "text": "mason",
+      "start": 42.98,
+      "end": 43.48
+    },
+    {
+      "id": "w-0089",
+      "text": "objected",
+      "start": 43.48,
+      "end": 43.9
+    },
+    {
+      "id": "w-0090",
+      "text": "to",
+      "start": 43.9,
+      "end": 44.4
+    },
+    {
+      "id": "w-0091",
+      "text": "the",
+      "start": 44.4,
+      "end": 44.56
+    },
+    {
+      "id": "w-0092",
+      "text": "wood",
+      "start": 44.56,
+      "end": 44.88
+    },
+    {
+      "id": "w-0093",
+      "text": "on",
+      "start": 44.88,
+      "end": 45.48
+    },
+    {
+      "id": "w-0094",
+      "text": "the",
+      "start": 45.48,
+      "end": 45.64
+    },
+    {
+      "id": "w-0095",
+      "text": "grounds",
+      "start": 45.64,
+      "end": 46.0
+    },
+    {
+      "id": "w-0096",
+      "text": "that",
+      "start": 46.0,
+      "end": 46.48
+    },
+    {
+      "id": "w-0097",
+      "text": "it",
+      "start": 46.48,
+      "end": 46.7
+    },
+    {
+      "id": "w-0098",
+      "text": "was",
+      "start": 46.7,
+      "end": 46.92
+    },
+    {
+      "id": "w-0099",
+      "text": "so",
+      "start": 46.92,
+      "end": 47.18
+    },
+    {
+      "id": "w-0100",
+      "text": "implammable",
+      "start": 47.18,
+      "end": 48.04
+    },
+    {
+      "id": "w-0101",
+      "text": "and",
+      "start": 48.04,
+      "end": 48.82
+    },
+    {
+      "id": "w-0102",
+      "text": "recommended",
+      "start": 48.82,
+      "end": 49.34
+    },
+    {
+      "id": "w-0103",
+      "text": "stones",
+      "start": 49.34,
+      "end": 50.0
+    },
+    {
+      "id": "w-0104",
+      "text": "instead.",
+      "start": 50.0,
+      "end": 50.64
+    },
+    {
+      "id": "w-0105",
+      "text": "Then",
+      "start": 51.34,
+      "end": 51.98
+    },
+    {
+      "id": "w-0106",
+      "text": "the",
+      "start": 51.98,
+      "end": 52.12
+    },
+    {
+      "id": "w-0107",
+      "text": "tander",
+      "start": 52.12,
+      "end": 52.52
+    },
+    {
+      "id": "w-0108",
+      "text": "got",
+      "start": 52.52,
+      "end": 52.84
+    },
+    {
+      "id": "w-0109",
+      "text": "on",
+      "start": 52.84,
+      "end": 53.12
+    },
+    {
+      "id": "w-0110",
+      "text": "his",
+      "start": 53.12,
+      "end": 53.36
+    },
+    {
+      "id": "w-0111",
+      "text": "legs",
+      "start": 53.36,
+      "end": 53.66
+    },
+    {
+      "id": "w-0112",
+      "text": "and",
+      "start": 53.66,
+      "end": 53.94
+    },
+    {
+      "id": "w-0113",
+      "text": "said,",
+      "start": 53.94,
+      "end": 54.18
+    },
+    {
+      "id": "w-0114",
+      "text": "in",
+      "start": 54.46,
+      "end": 54.48
+    },
+    {
+      "id": "w-0115",
+      "text": "my",
+      "start": 54.48,
+      "end": 54.68
+    },
+    {
+      "id": "w-0116",
+      "text": "opinion,",
+      "start": 54.68,
+      "end": 55.14
+    },
+    {
+      "id": "w-0117",
+      "text": "there's",
+      "start": 55.74,
+      "end": 56.0
+    },
+    {
+      "id": "w-0118",
+      "text": "nothing",
+      "start": 56.0,
+      "end": 56.36
+    },
+    {
+      "id": "w-0119",
+      "text": "like",
+      "start": 56.36,
+      "end": 56.66
+    },
+    {
+      "id": "w-0120",
+      "text": "leather",
+      "start": 56.66,
+      "end": 57.3
+    },
+    {
+      "id": "w-0121",
+      "text": "every",
+      "start": 57.3,
+      "end": 58.34
+    },
+    {
+      "id": "w-0122",
+      "text": "man",
+      "start": 58.34,
+      "end": 58.66
+    },
+    {
+      "id": "w-0123",
+      "text": "for",
+      "start": 58.66,
+      "end": 58.94
+    },
+    {
+      "id": "w-0124",
+      "text": "himself,",
+      "start": 58.94,
+      "end": 59.62
+    },
+    {
+      "id": "w-0125",
+      "text": "end",
+      "start": 60.06,
+      "end": 60.32
+    },
+    {
+      "id": "w-0126",
+      "text": "of",
+      "start": 60.32,
+      "end": 60.66
+    },
+    {
+      "id": "w-0127",
+      "text": "the",
+      "start": 60.66,
+      "end": 61.52
+    },
+    {
+      "id": "w-0128",
+      "text": "three",
+      "start": 61.52,
+      "end": 61.76
+    },
+    {
+      "id": "w-0129",
+      "text": "tradesmen.",
+      "start": 61.76,
+      "end": 62.42
+    }
+  ]
+}

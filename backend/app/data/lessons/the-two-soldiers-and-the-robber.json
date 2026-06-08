@@ -1,0 +1,1502 @@
+{
+  "id": "the-two-soldiers-and-the-robber",
+  "title": "The Two Soldiers and The Robber",
+  "subtitle": "Aesop's Fables, Volume 05",
+  "level": "A2-B1",
+  "duration": 105.5,
+  "audioFileName": "the-two-soldiers-and-the-robber.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-5-fables-101-125/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 5.88,
+      "text": "This is a LibraVox recording. All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.88,
+      "end": 15.5,
+      "text": "For more information or to volunteer, please visit LibraVoxLIBRIVOX.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 16.02,
+      "end": 24.4,
+      "text": "Recorded by Lee Dunkleberg for it with Texas. Dunkleberg. D-U-N-K-E-L-B-E-R-G.com.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 26.46,
+      "end": 29.46,
+      "text": "Asom's fables, the two soldiers and the robber.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 32.5,
+      "end": 38.66,
+      "text": "Two soldiers traveling together were set upon by a robber. One of them ran away,",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 39.54,
+      "end": 44.56,
+      "text": "but the other stood his ground and laid about him so lustily with his sword",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 44.56,
+      "end": 48.36,
+      "text": "that the robber was fain to fly and leave him in peace.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 48.36,
+      "end": 56.26,
+      "text": "When the coast was clear, the timid one ran back, and flourishing his weapon",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 56.26,
+      "end": 58.3,
+      "text": "cried in a threatening voice.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 58.92,
+      "end": 65.06,
+      "text": "Where is he? Let me get at him, and I'll soon let him know whom he's got to deal with.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 66.06,
+      "end": 67.18,
+      "text": "But the other replied,",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 69.0,
+      "end": 74.2,
+      "text": "You are a little late, my friend. I only wish you had backed me up just now,",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 74.2,
+      "end": 78.84,
+      "text": "even if you had done no more than speak, for I should have been encouraged,",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 78.84,
+      "end": 80.82,
+      "text": "believing your words to be true.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 82.14,
+      "end": 87.08,
+      "text": "As it is, calm yourself and put up your sword. There is no further use for it.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 88.24,
+      "end": 91.62,
+      "text": "You may delude others into thinking you're as brave as a lion,",
+      "note": ""
+    },
+    {
+      "id": "line-016",
+      "start": 92.34,
+      "end": 100.96,
+      "text": "but I know that at the first sign of danger, you run away like a hare.",
+      "note": ""
+    },
+    {
+      "id": "line-017",
+      "start": 102.8,
+      "end": 105.5,
+      "text": "End of the Two Soldiers and the Robber.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 0.94
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.94,
+      "end": 1.32
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.32,
+      "end": 1.5
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.5,
+      "end": 2.14
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.14,
+      "end": 2.46
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.4,
+      "end": 3.68
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.68,
+      "end": 4.44
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 4.44,
+      "end": 4.84
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.84,
+      "end": 5.14
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 5.14,
+      "end": 5.22
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.22,
+      "end": 5.32
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.32,
+      "end": 5.58
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.58,
+      "end": 5.88
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.88,
+      "end": 6.98
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.98,
+      "end": 7.18
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 7.18,
+      "end": 7.54
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.54,
+      "end": 8.12
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.12,
+      "end": 8.3
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.3,
+      "end": 8.74
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.34,
+      "end": 9.78
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.78,
+      "end": 10.48
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVoxLIBRIVOX",
+      "start": 10.48,
+      "end": 13.76
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 13.76,
+      "end": 15.5
+    },
+    {
+      "id": "w-0023",
+      "text": "Recorded",
+      "start": 16.02,
+      "end": 16.76
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 16.76,
+      "end": 17.26
+    },
+    {
+      "id": "w-0025",
+      "text": "Lee",
+      "start": 17.26,
+      "end": 17.42
+    },
+    {
+      "id": "w-0026",
+      "text": "Dunkleberg",
+      "start": 17.42,
+      "end": 17.94
+    },
+    {
+      "id": "w-0027",
+      "text": "for",
+      "start": 17.94,
+      "end": 18.4
+    },
+    {
+      "id": "w-0028",
+      "text": "it",
+      "start": 18.4,
+      "end": 18.54
+    },
+    {
+      "id": "w-0029",
+      "text": "with",
+      "start": 18.54,
+      "end": 18.68
+    },
+    {
+      "id": "w-0030",
+      "text": "Texas.",
+      "start": 18.68,
+      "end": 18.98
+    },
+    {
+      "id": "w-0031",
+      "text": "Dunkleberg.",
+      "start": 19.66,
+      "end": 20.12
+    },
+    {
+      "id": "w-0032",
+      "text": "D",
+      "start": 20.52,
+      "end": 20.76
+    },
+    {
+      "id": "w-0033",
+      "text": "-U",
+      "start": 20.76,
+      "end": 20.98
+    },
+    {
+      "id": "w-0034",
+      "text": "-N",
+      "start": 20.98,
+      "end": 21.2
+    },
+    {
+      "id": "w-0035",
+      "text": "-K",
+      "start": 21.2,
+      "end": 21.48
+    },
+    {
+      "id": "w-0036",
+      "text": "-E",
+      "start": 21.48,
+      "end": 21.68
+    },
+    {
+      "id": "w-0037",
+      "text": "-L",
+      "start": 21.68,
+      "end": 22.12
+    },
+    {
+      "id": "w-0038",
+      "text": "-B",
+      "start": 22.12,
+      "end": 22.42
+    },
+    {
+      "id": "w-0039",
+      "text": "-E",
+      "start": 22.42,
+      "end": 22.64
+    },
+    {
+      "id": "w-0040",
+      "text": "-R",
+      "start": 22.64,
+      "end": 22.9
+    },
+    {
+      "id": "w-0041",
+      "text": "-G",
+      "start": 22.9,
+      "end": 23.14
+    },
+    {
+      "id": "w-0042",
+      "text": ".com.",
+      "start": 23.14,
+      "end": 24.4
+    },
+    {
+      "id": "w-0043",
+      "text": "Asom's",
+      "start": 26.46,
+      "end": 27.06
+    },
+    {
+      "id": "w-0044",
+      "text": "fables,",
+      "start": 27.06,
+      "end": 27.5
+    },
+    {
+      "id": "w-0045",
+      "text": "the",
+      "start": 27.9,
+      "end": 28.02
+    },
+    {
+      "id": "w-0046",
+      "text": "two",
+      "start": 28.02,
+      "end": 28.18
+    },
+    {
+      "id": "w-0047",
+      "text": "soldiers",
+      "start": 28.18,
+      "end": 28.62
+    },
+    {
+      "id": "w-0048",
+      "text": "and",
+      "start": 28.62,
+      "end": 29.14
+    },
+    {
+      "id": "w-0049",
+      "text": "the",
+      "start": 29.14,
+      "end": 29.26
+    },
+    {
+      "id": "w-0050",
+      "text": "robber.",
+      "start": 29.26,
+      "end": 29.46
+    },
+    {
+      "id": "w-0051",
+      "text": "Two",
+      "start": 32.5,
+      "end": 33.1
+    },
+    {
+      "id": "w-0052",
+      "text": "soldiers",
+      "start": 33.1,
+      "end": 33.64
+    },
+    {
+      "id": "w-0053",
+      "text": "traveling",
+      "start": 33.64,
+      "end": 34.16
+    },
+    {
+      "id": "w-0054",
+      "text": "together",
+      "start": 34.16,
+      "end": 34.84
+    },
+    {
+      "id": "w-0055",
+      "text": "were",
+      "start": 34.84,
+      "end": 35.82
+    },
+    {
+      "id": "w-0056",
+      "text": "set",
+      "start": 35.82,
+      "end": 36.04
+    },
+    {
+      "id": "w-0057",
+      "text": "upon",
+      "start": 36.04,
+      "end": 36.3
+    },
+    {
+      "id": "w-0058",
+      "text": "by",
+      "start": 36.3,
+      "end": 36.6
+    },
+    {
+      "id": "w-0059",
+      "text": "a",
+      "start": 36.6,
+      "end": 36.72
+    },
+    {
+      "id": "w-0060",
+      "text": "robber.",
+      "start": 36.72,
+      "end": 36.86
+    },
+    {
+      "id": "w-0061",
+      "text": "One",
+      "start": 37.6,
+      "end": 37.8
+    },
+    {
+      "id": "w-0062",
+      "text": "of",
+      "start": 37.8,
+      "end": 37.94
+    },
+    {
+      "id": "w-0063",
+      "text": "them",
+      "start": 37.94,
+      "end": 38.12
+    },
+    {
+      "id": "w-0064",
+      "text": "ran",
+      "start": 38.12,
+      "end": 38.34
+    },
+    {
+      "id": "w-0065",
+      "text": "away,",
+      "start": 38.34,
+      "end": 38.66
+    },
+    {
+      "id": "w-0066",
+      "text": "but",
+      "start": 39.54,
+      "end": 39.72
+    },
+    {
+      "id": "w-0067",
+      "text": "the",
+      "start": 39.72,
+      "end": 39.86
+    },
+    {
+      "id": "w-0068",
+      "text": "other",
+      "start": 39.86,
+      "end": 40.22
+    },
+    {
+      "id": "w-0069",
+      "text": "stood",
+      "start": 40.22,
+      "end": 40.68
+    },
+    {
+      "id": "w-0070",
+      "text": "his",
+      "start": 40.68,
+      "end": 40.98
+    },
+    {
+      "id": "w-0071",
+      "text": "ground",
+      "start": 40.98,
+      "end": 41.4
+    },
+    {
+      "id": "w-0072",
+      "text": "and",
+      "start": 41.4,
+      "end": 41.8
+    },
+    {
+      "id": "w-0073",
+      "text": "laid",
+      "start": 41.8,
+      "end": 42.08
+    },
+    {
+      "id": "w-0074",
+      "text": "about",
+      "start": 42.08,
+      "end": 42.56
+    },
+    {
+      "id": "w-0075",
+      "text": "him",
+      "start": 42.56,
+      "end": 42.82
+    },
+    {
+      "id": "w-0076",
+      "text": "so",
+      "start": 42.82,
+      "end": 43.02
+    },
+    {
+      "id": "w-0077",
+      "text": "lustily",
+      "start": 43.02,
+      "end": 43.8
+    },
+    {
+      "id": "w-0078",
+      "text": "with",
+      "start": 43.8,
+      "end": 44.02
+    },
+    {
+      "id": "w-0079",
+      "text": "his",
+      "start": 44.02,
+      "end": 44.2
+    },
+    {
+      "id": "w-0080",
+      "text": "sword",
+      "start": 44.2,
+      "end": 44.56
+    },
+    {
+      "id": "w-0081",
+      "text": "that",
+      "start": 44.56,
+      "end": 45.48
+    },
+    {
+      "id": "w-0082",
+      "text": "the",
+      "start": 45.48,
+      "end": 45.58
+    },
+    {
+      "id": "w-0083",
+      "text": "robber",
+      "start": 45.58,
+      "end": 45.8
+    },
+    {
+      "id": "w-0084",
+      "text": "was",
+      "start": 45.8,
+      "end": 46.08
+    },
+    {
+      "id": "w-0085",
+      "text": "fain",
+      "start": 46.08,
+      "end": 46.48
+    },
+    {
+      "id": "w-0086",
+      "text": "to",
+      "start": 46.48,
+      "end": 46.74
+    },
+    {
+      "id": "w-0087",
+      "text": "fly",
+      "start": 46.74,
+      "end": 47.06
+    },
+    {
+      "id": "w-0088",
+      "text": "and",
+      "start": 47.06,
+      "end": 47.5
+    },
+    {
+      "id": "w-0089",
+      "text": "leave",
+      "start": 47.5,
+      "end": 47.74
+    },
+    {
+      "id": "w-0090",
+      "text": "him",
+      "start": 47.74,
+      "end": 47.98
+    },
+    {
+      "id": "w-0091",
+      "text": "in",
+      "start": 47.98,
+      "end": 48.06
+    },
+    {
+      "id": "w-0092",
+      "text": "peace.",
+      "start": 48.06,
+      "end": 48.36
+    },
+    {
+      "id": "w-0093",
+      "text": "When",
+      "start": 48.36,
+      "end": 49.36
+    },
+    {
+      "id": "w-0094",
+      "text": "the",
+      "start": 49.36,
+      "end": 50.56
+    },
+    {
+      "id": "w-0095",
+      "text": "coast",
+      "start": 50.56,
+      "end": 50.76
+    },
+    {
+      "id": "w-0096",
+      "text": "was",
+      "start": 50.76,
+      "end": 51.0
+    },
+    {
+      "id": "w-0097",
+      "text": "clear,",
+      "start": 51.0,
+      "end": 51.42
+    },
+    {
+      "id": "w-0098",
+      "text": "the",
+      "start": 52.12,
+      "end": 52.22
+    },
+    {
+      "id": "w-0099",
+      "text": "timid",
+      "start": 52.22,
+      "end": 52.52
+    },
+    {
+      "id": "w-0100",
+      "text": "one",
+      "start": 52.52,
+      "end": 53.0
+    },
+    {
+      "id": "w-0101",
+      "text": "ran",
+      "start": 53.0,
+      "end": 53.64
+    },
+    {
+      "id": "w-0102",
+      "text": "back,",
+      "start": 53.64,
+      "end": 54.12
+    },
+    {
+      "id": "w-0103",
+      "text": "and",
+      "start": 54.58,
+      "end": 54.88
+    },
+    {
+      "id": "w-0104",
+      "text": "flourishing",
+      "start": 54.88,
+      "end": 55.46
+    },
+    {
+      "id": "w-0105",
+      "text": "his",
+      "start": 55.46,
+      "end": 55.88
+    },
+    {
+      "id": "w-0106",
+      "text": "weapon",
+      "start": 55.88,
+      "end": 56.26
+    },
+    {
+      "id": "w-0107",
+      "text": "cried",
+      "start": 56.26,
+      "end": 56.7
+    },
+    {
+      "id": "w-0108",
+      "text": "in",
+      "start": 56.7,
+      "end": 57.08
+    },
+    {
+      "id": "w-0109",
+      "text": "a",
+      "start": 57.08,
+      "end": 57.18
+    },
+    {
+      "id": "w-0110",
+      "text": "threatening",
+      "start": 57.18,
+      "end": 57.56
+    },
+    {
+      "id": "w-0111",
+      "text": "voice.",
+      "start": 57.56,
+      "end": 58.3
+    },
+    {
+      "id": "w-0112",
+      "text": "Where",
+      "start": 58.92,
+      "end": 59.48
+    },
+    {
+      "id": "w-0113",
+      "text": "is",
+      "start": 59.48,
+      "end": 59.72
+    },
+    {
+      "id": "w-0114",
+      "text": "he?",
+      "start": 59.72,
+      "end": 59.92
+    },
+    {
+      "id": "w-0115",
+      "text": "Let",
+      "start": 60.42,
+      "end": 60.58
+    },
+    {
+      "id": "w-0116",
+      "text": "me",
+      "start": 60.58,
+      "end": 60.82
+    },
+    {
+      "id": "w-0117",
+      "text": "get",
+      "start": 60.82,
+      "end": 61.06
+    },
+    {
+      "id": "w-0118",
+      "text": "at",
+      "start": 61.06,
+      "end": 61.28
+    },
+    {
+      "id": "w-0119",
+      "text": "him,",
+      "start": 61.28,
+      "end": 61.52
+    },
+    {
+      "id": "w-0120",
+      "text": "and",
+      "start": 61.78,
+      "end": 61.94
+    },
+    {
+      "id": "w-0121",
+      "text": "I'll",
+      "start": 61.94,
+      "end": 62.14
+    },
+    {
+      "id": "w-0122",
+      "text": "soon",
+      "start": 62.14,
+      "end": 62.34
+    },
+    {
+      "id": "w-0123",
+      "text": "let",
+      "start": 62.34,
+      "end": 62.62
+    },
+    {
+      "id": "w-0124",
+      "text": "him",
+      "start": 62.62,
+      "end": 62.76
+    },
+    {
+      "id": "w-0125",
+      "text": "know",
+      "start": 62.76,
+      "end": 63.0
+    },
+    {
+      "id": "w-0126",
+      "text": "whom",
+      "start": 63.0,
+      "end": 63.34
+    },
+    {
+      "id": "w-0127",
+      "text": "he's",
+      "start": 63.34,
+      "end": 63.86
+    },
+    {
+      "id": "w-0128",
+      "text": "got",
+      "start": 63.86,
+      "end": 64.04
+    },
+    {
+      "id": "w-0129",
+      "text": "to",
+      "start": 64.04,
+      "end": 64.3
+    },
+    {
+      "id": "w-0130",
+      "text": "deal",
+      "start": 64.3,
+      "end": 64.7
+    },
+    {
+      "id": "w-0131",
+      "text": "with.",
+      "start": 64.7,
+      "end": 65.06
+    },
+    {
+      "id": "w-0132",
+      "text": "But",
+      "start": 66.06,
+      "end": 66.64
+    },
+    {
+      "id": "w-0133",
+      "text": "the",
+      "start": 66.64,
+      "end": 66.76
+    },
+    {
+      "id": "w-0134",
+      "text": "other",
+      "start": 66.76,
+      "end": 66.88
+    },
+    {
+      "id": "w-0135",
+      "text": "replied,",
+      "start": 66.88,
+      "end": 67.18
+    },
+    {
+      "id": "w-0136",
+      "text": "You",
+      "start": 69.0,
+      "end": 69.58
+    },
+    {
+      "id": "w-0137",
+      "text": "are",
+      "start": 69.58,
+      "end": 69.72
+    },
+    {
+      "id": "w-0138",
+      "text": "a",
+      "start": 69.72,
+      "end": 69.86
+    },
+    {
+      "id": "w-0139",
+      "text": "little",
+      "start": 69.86,
+      "end": 70.02
+    },
+    {
+      "id": "w-0140",
+      "text": "late,",
+      "start": 70.02,
+      "end": 70.28
+    },
+    {
+      "id": "w-0141",
+      "text": "my",
+      "start": 70.38,
+      "end": 70.58
+    },
+    {
+      "id": "w-0142",
+      "text": "friend.",
+      "start": 70.58,
+      "end": 70.94
+    },
+    {
+      "id": "w-0143",
+      "text": "I",
+      "start": 71.8,
+      "end": 72.22
+    },
+    {
+      "id": "w-0144",
+      "text": "only",
+      "start": 72.22,
+      "end": 72.5
+    },
+    {
+      "id": "w-0145",
+      "text": "wish",
+      "start": 72.5,
+      "end": 72.82
+    },
+    {
+      "id": "w-0146",
+      "text": "you",
+      "start": 72.82,
+      "end": 72.96
+    },
+    {
+      "id": "w-0147",
+      "text": "had",
+      "start": 72.96,
+      "end": 73.04
+    },
+    {
+      "id": "w-0148",
+      "text": "backed",
+      "start": 73.04,
+      "end": 73.24
+    },
+    {
+      "id": "w-0149",
+      "text": "me",
+      "start": 73.24,
+      "end": 73.46
+    },
+    {
+      "id": "w-0150",
+      "text": "up",
+      "start": 73.46,
+      "end": 73.62
+    },
+    {
+      "id": "w-0151",
+      "text": "just",
+      "start": 73.62,
+      "end": 73.84
+    },
+    {
+      "id": "w-0152",
+      "text": "now,",
+      "start": 73.84,
+      "end": 74.2
+    },
+    {
+      "id": "w-0153",
+      "text": "even",
+      "start": 74.2,
+      "end": 74.92
+    },
+    {
+      "id": "w-0154",
+      "text": "if",
+      "start": 74.92,
+      "end": 75.14
+    },
+    {
+      "id": "w-0155",
+      "text": "you",
+      "start": 75.14,
+      "end": 75.34
+    },
+    {
+      "id": "w-0156",
+      "text": "had",
+      "start": 75.34,
+      "end": 75.64
+    },
+    {
+      "id": "w-0157",
+      "text": "done",
+      "start": 75.64,
+      "end": 75.92
+    },
+    {
+      "id": "w-0158",
+      "text": "no",
+      "start": 75.92,
+      "end": 76.2
+    },
+    {
+      "id": "w-0159",
+      "text": "more",
+      "start": 76.2,
+      "end": 76.48
+    },
+    {
+      "id": "w-0160",
+      "text": "than",
+      "start": 76.48,
+      "end": 76.66
+    },
+    {
+      "id": "w-0161",
+      "text": "speak,",
+      "start": 76.66,
+      "end": 77.1
+    },
+    {
+      "id": "w-0162",
+      "text": "for",
+      "start": 77.44,
+      "end": 77.5
+    },
+    {
+      "id": "w-0163",
+      "text": "I",
+      "start": 77.5,
+      "end": 77.84
+    },
+    {
+      "id": "w-0164",
+      "text": "should",
+      "start": 77.84,
+      "end": 78.04
+    },
+    {
+      "id": "w-0165",
+      "text": "have",
+      "start": 78.04,
+      "end": 78.16
+    },
+    {
+      "id": "w-0166",
+      "text": "been",
+      "start": 78.16,
+      "end": 78.3
+    },
+    {
+      "id": "w-0167",
+      "text": "encouraged,",
+      "start": 78.3,
+      "end": 78.84
+    },
+    {
+      "id": "w-0168",
+      "text": "believing",
+      "start": 78.84,
+      "end": 79.78
+    },
+    {
+      "id": "w-0169",
+      "text": "your",
+      "start": 79.78,
+      "end": 80.06
+    },
+    {
+      "id": "w-0170",
+      "text": "words",
+      "start": 80.06,
+      "end": 80.26
+    },
+    {
+      "id": "w-0171",
+      "text": "to",
+      "start": 80.26,
+      "end": 80.48
+    },
+    {
+      "id": "w-0172",
+      "text": "be",
+      "start": 80.48,
+      "end": 80.6
+    },
+    {
+      "id": "w-0173",
+      "text": "true.",
+      "start": 80.6,
+      "end": 80.82
+    },
+    {
+      "id": "w-0174",
+      "text": "As",
+      "start": 82.14,
+      "end": 82.58
+    },
+    {
+      "id": "w-0175",
+      "text": "it",
+      "start": 82.58,
+      "end": 82.74
+    },
+    {
+      "id": "w-0176",
+      "text": "is,",
+      "start": 82.74,
+      "end": 82.94
+    },
+    {
+      "id": "w-0177",
+      "text": "calm",
+      "start": 83.4,
+      "end": 83.7
+    },
+    {
+      "id": "w-0178",
+      "text": "yourself",
+      "start": 83.7,
+      "end": 84.16
+    },
+    {
+      "id": "w-0179",
+      "text": "and",
+      "start": 84.16,
+      "end": 84.54
+    },
+    {
+      "id": "w-0180",
+      "text": "put",
+      "start": 84.54,
+      "end": 84.7
+    },
+    {
+      "id": "w-0181",
+      "text": "up",
+      "start": 84.7,
+      "end": 84.84
+    },
+    {
+      "id": "w-0182",
+      "text": "your",
+      "start": 84.84,
+      "end": 84.98
+    },
+    {
+      "id": "w-0183",
+      "text": "sword.",
+      "start": 84.98,
+      "end": 85.3
+    },
+    {
+      "id": "w-0184",
+      "text": "There",
+      "start": 85.82,
+      "end": 85.94
+    },
+    {
+      "id": "w-0185",
+      "text": "is",
+      "start": 85.94,
+      "end": 86.02
+    },
+    {
+      "id": "w-0186",
+      "text": "no",
+      "start": 86.02,
+      "end": 86.18
+    },
+    {
+      "id": "w-0187",
+      "text": "further",
+      "start": 86.18,
+      "end": 86.34
+    },
+    {
+      "id": "w-0188",
+      "text": "use",
+      "start": 86.34,
+      "end": 86.62
+    },
+    {
+      "id": "w-0189",
+      "text": "for",
+      "start": 86.62,
+      "end": 86.9
+    },
+    {
+      "id": "w-0190",
+      "text": "it.",
+      "start": 86.9,
+      "end": 87.08
+    },
+    {
+      "id": "w-0191",
+      "text": "You",
+      "start": 88.24,
+      "end": 88.38
+    },
+    {
+      "id": "w-0192",
+      "text": "may",
+      "start": 88.38,
+      "end": 88.56
+    },
+    {
+      "id": "w-0193",
+      "text": "delude",
+      "start": 88.56,
+      "end": 88.9
+    },
+    {
+      "id": "w-0194",
+      "text": "others",
+      "start": 88.9,
+      "end": 89.26
+    },
+    {
+      "id": "w-0195",
+      "text": "into",
+      "start": 89.26,
+      "end": 89.58
+    },
+    {
+      "id": "w-0196",
+      "text": "thinking",
+      "start": 89.58,
+      "end": 89.96
+    },
+    {
+      "id": "w-0197",
+      "text": "you're",
+      "start": 89.96,
+      "end": 90.42
+    },
+    {
+      "id": "w-0198",
+      "text": "as",
+      "start": 90.42,
+      "end": 90.6
+    },
+    {
+      "id": "w-0199",
+      "text": "brave",
+      "start": 90.6,
+      "end": 90.92
+    },
+    {
+      "id": "w-0200",
+      "text": "as",
+      "start": 90.92,
+      "end": 91.18
+    },
+    {
+      "id": "w-0201",
+      "text": "a",
+      "start": 91.18,
+      "end": 91.28
+    },
+    {
+      "id": "w-0202",
+      "text": "lion,",
+      "start": 91.28,
+      "end": 91.62
+    },
+    {
+      "id": "w-0203",
+      "text": "but",
+      "start": 92.34,
+      "end": 92.6
+    },
+    {
+      "id": "w-0204",
+      "text": "I",
+      "start": 92.6,
+      "end": 92.76
+    },
+    {
+      "id": "w-0205",
+      "text": "know",
+      "start": 92.76,
+      "end": 93.04
+    },
+    {
+      "id": "w-0206",
+      "text": "that",
+      "start": 93.04,
+      "end": 94.38
+    },
+    {
+      "id": "w-0207",
+      "text": "at",
+      "start": 94.38,
+      "end": 94.52
+    },
+    {
+      "id": "w-0208",
+      "text": "the",
+      "start": 94.52,
+      "end": 94.68
+    },
+    {
+      "id": "w-0209",
+      "text": "first",
+      "start": 94.68,
+      "end": 95.02
+    },
+    {
+      "id": "w-0210",
+      "text": "sign",
+      "start": 95.02,
+      "end": 95.52
+    },
+    {
+      "id": "w-0211",
+      "text": "of",
+      "start": 95.52,
+      "end": 95.76
+    },
+    {
+      "id": "w-0212",
+      "text": "danger,",
+      "start": 95.76,
+      "end": 96.16
+    },
+    {
+      "id": "w-0213",
+      "text": "you",
+      "start": 97.46,
+      "end": 97.7
+    },
+    {
+      "id": "w-0214",
+      "text": "run",
+      "start": 97.7,
+      "end": 98.68
+    },
+    {
+      "id": "w-0215",
+      "text": "away",
+      "start": 98.68,
+      "end": 99.12
+    },
+    {
+      "id": "w-0216",
+      "text": "like",
+      "start": 99.12,
+      "end": 100.18
+    },
+    {
+      "id": "w-0217",
+      "text": "a",
+      "start": 100.18,
+      "end": 100.38
+    },
+    {
+      "id": "w-0218",
+      "text": "hare.",
+      "start": 100.38,
+      "end": 100.96
+    },
+    {
+      "id": "w-0219",
+      "text": "End",
+      "start": 102.8,
+      "end": 103.56
+    },
+    {
+      "id": "w-0220",
+      "text": "of",
+      "start": 103.56,
+      "end": 103.84
+    },
+    {
+      "id": "w-0221",
+      "text": "the",
+      "start": 103.84,
+      "end": 103.96
+    },
+    {
+      "id": "w-0222",
+      "text": "Two",
+      "start": 103.96,
+      "end": 104.12
+    },
+    {
+      "id": "w-0223",
+      "text": "Soldiers",
+      "start": 104.12,
+      "end": 104.52
+    },
+    {
+      "id": "w-0224",
+      "text": "and",
+      "start": 104.52,
+      "end": 105.04
+    },
+    {
+      "id": "w-0225",
+      "text": "the",
+      "start": 105.04,
+      "end": 105.12
+    },
+    {
+      "id": "w-0226",
+      "text": "Robber.",
+      "start": 105.12,
+      "end": 105.5
+    }
+  ]
+}

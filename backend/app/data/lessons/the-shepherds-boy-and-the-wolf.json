@@ -1,0 +1,1190 @@
+{
+  "id": "the-shepherds-boy-and-the-wolf",
+  "title": "The Sheperd's Boy and The Wolf",
+  "subtitle": "Aesop's Fables, Volume 02",
+  "level": "A2-B1",
+  "duration": 60.4,
+  "audioFileName": "the-shepherds-boy-and-the-wolf.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-2-fables-26-50/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 6.4,
+      "text": "This is a livervox recording. All livervox recordings are in the public domain. For more information,",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.86,
+      "end": 9.8,
+      "text": "or to volunteer, say visit the pervox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 11.18,
+      "end": 13.9,
+      "text": "ASOC's fables. The Shepherd's Boy and the Wolf.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 15.0,
+      "end": 18.8,
+      "text": "A Shepherd's Boy was tending his flock near a village and thought it would be great fun",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 18.8,
+      "end": 23.64,
+      "text": "to focus the villagers by pretending that a wolf was attacking the sheep. So he shouted",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 23.64,
+      "end": 28.86,
+      "text": "out, Wolf! Wolf! And when the people came running up, he'd have laughed at them for their pains.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 29.48,
+      "end": 34.38,
+      "text": "He did this more than once, and every time the villagers found they had been host, for",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 34.38,
+      "end": 39.9,
+      "text": "there was no wolf at all. At last, a wolf really did come and the boy cried, Wolf! Wolf!",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 40.78,
+      "end": 45.42,
+      "text": "As loud as he could, but the people were so used to hearing him call that they took no",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 45.42,
+      "end": 50.68,
+      "text": "notice of his cries for help. And so the wolf had it all his own way and killed off sheep",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 50.68,
+      "end": 55.92,
+      "text": "after sheep at his leisure. You cannot believe a liar even when he tells the truth.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 57.62,
+      "end": 60.44,
+      "text": "And of the Shepherd's Boy and the Wolf.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 0.64
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.64,
+      "end": 0.8
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 0.8,
+      "end": 0.96
+    },
+    {
+      "id": "w-0003",
+      "text": "livervox",
+      "start": 0.96,
+      "end": 1.52
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 1.52,
+      "end": 1.76
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 2.7,
+      "end": 2.82
+    },
+    {
+      "id": "w-0006",
+      "text": "livervox",
+      "start": 2.82,
+      "end": 3.36
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 3.36,
+      "end": 3.82
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 3.82,
+      "end": 4.1
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.1,
+      "end": 4.2
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 4.2,
+      "end": 4.28
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 4.28,
+      "end": 4.5
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 4.5,
+      "end": 4.86
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 5.66,
+      "end": 5.82
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 5.82,
+      "end": 5.98
+    },
+    {
+      "id": "w-0015",
+      "text": "information,",
+      "start": 5.98,
+      "end": 6.4
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 6.86,
+      "end": 6.88
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 6.88,
+      "end": 7.08
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 7.08,
+      "end": 7.62
+    },
+    {
+      "id": "w-0019",
+      "text": "say",
+      "start": 7.98,
+      "end": 8.22
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 8.22,
+      "end": 8.52
+    },
+    {
+      "id": "w-0021",
+      "text": "the",
+      "start": 8.52,
+      "end": 8.9
+    },
+    {
+      "id": "w-0022",
+      "text": "pervox",
+      "start": 8.9,
+      "end": 9.24
+    },
+    {
+      "id": "w-0023",
+      "text": ".org.",
+      "start": 9.24,
+      "end": 9.8
+    },
+    {
+      "id": "w-0024",
+      "text": "ASOC's",
+      "start": 11.18,
+      "end": 11.66
+    },
+    {
+      "id": "w-0025",
+      "text": "fables.",
+      "start": 11.66,
+      "end": 11.96
+    },
+    {
+      "id": "w-0026",
+      "text": "The",
+      "start": 12.56,
+      "end": 12.64
+    },
+    {
+      "id": "w-0027",
+      "text": "Shepherd's",
+      "start": 12.64,
+      "end": 13.12
+    },
+    {
+      "id": "w-0028",
+      "text": "Boy",
+      "start": 13.12,
+      "end": 13.24
+    },
+    {
+      "id": "w-0029",
+      "text": "and",
+      "start": 13.24,
+      "end": 13.62
+    },
+    {
+      "id": "w-0030",
+      "text": "the",
+      "start": 13.62,
+      "end": 13.78
+    },
+    {
+      "id": "w-0031",
+      "text": "Wolf.",
+      "start": 13.78,
+      "end": 13.9
+    },
+    {
+      "id": "w-0032",
+      "text": "A",
+      "start": 15.0,
+      "end": 15.14
+    },
+    {
+      "id": "w-0033",
+      "text": "Shepherd's",
+      "start": 15.14,
+      "end": 15.58
+    },
+    {
+      "id": "w-0034",
+      "text": "Boy",
+      "start": 15.58,
+      "end": 15.78
+    },
+    {
+      "id": "w-0035",
+      "text": "was",
+      "start": 15.78,
+      "end": 15.98
+    },
+    {
+      "id": "w-0036",
+      "text": "tending",
+      "start": 15.98,
+      "end": 16.24
+    },
+    {
+      "id": "w-0037",
+      "text": "his",
+      "start": 16.24,
+      "end": 16.58
+    },
+    {
+      "id": "w-0038",
+      "text": "flock",
+      "start": 16.58,
+      "end": 16.82
+    },
+    {
+      "id": "w-0039",
+      "text": "near",
+      "start": 16.82,
+      "end": 17.08
+    },
+    {
+      "id": "w-0040",
+      "text": "a",
+      "start": 17.08,
+      "end": 17.24
+    },
+    {
+      "id": "w-0041",
+      "text": "village",
+      "start": 17.24,
+      "end": 17.42
+    },
+    {
+      "id": "w-0042",
+      "text": "and",
+      "start": 17.42,
+      "end": 17.74
+    },
+    {
+      "id": "w-0043",
+      "text": "thought",
+      "start": 17.74,
+      "end": 17.92
+    },
+    {
+      "id": "w-0044",
+      "text": "it",
+      "start": 17.92,
+      "end": 18.04
+    },
+    {
+      "id": "w-0045",
+      "text": "would",
+      "start": 18.04,
+      "end": 18.16
+    },
+    {
+      "id": "w-0046",
+      "text": "be",
+      "start": 18.16,
+      "end": 18.32
+    },
+    {
+      "id": "w-0047",
+      "text": "great",
+      "start": 18.32,
+      "end": 18.56
+    },
+    {
+      "id": "w-0048",
+      "text": "fun",
+      "start": 18.56,
+      "end": 18.8
+    },
+    {
+      "id": "w-0049",
+      "text": "to",
+      "start": 18.8,
+      "end": 19.0
+    },
+    {
+      "id": "w-0050",
+      "text": "focus",
+      "start": 19.0,
+      "end": 19.32
+    },
+    {
+      "id": "w-0051",
+      "text": "the",
+      "start": 19.32,
+      "end": 19.48
+    },
+    {
+      "id": "w-0052",
+      "text": "villagers",
+      "start": 19.48,
+      "end": 19.74
+    },
+    {
+      "id": "w-0053",
+      "text": "by",
+      "start": 19.74,
+      "end": 20.14
+    },
+    {
+      "id": "w-0054",
+      "text": "pretending",
+      "start": 20.14,
+      "end": 20.44
+    },
+    {
+      "id": "w-0055",
+      "text": "that",
+      "start": 20.44,
+      "end": 20.96
+    },
+    {
+      "id": "w-0056",
+      "text": "a",
+      "start": 20.96,
+      "end": 21.14
+    },
+    {
+      "id": "w-0057",
+      "text": "wolf",
+      "start": 21.14,
+      "end": 21.36
+    },
+    {
+      "id": "w-0058",
+      "text": "was",
+      "start": 21.36,
+      "end": 21.66
+    },
+    {
+      "id": "w-0059",
+      "text": "attacking",
+      "start": 21.66,
+      "end": 22.06
+    },
+    {
+      "id": "w-0060",
+      "text": "the",
+      "start": 22.06,
+      "end": 22.38
+    },
+    {
+      "id": "w-0061",
+      "text": "sheep.",
+      "start": 22.38,
+      "end": 22.58
+    },
+    {
+      "id": "w-0062",
+      "text": "So",
+      "start": 23.22,
+      "end": 23.32
+    },
+    {
+      "id": "w-0063",
+      "text": "he",
+      "start": 23.32,
+      "end": 23.46
+    },
+    {
+      "id": "w-0064",
+      "text": "shouted",
+      "start": 23.46,
+      "end": 23.64
+    },
+    {
+      "id": "w-0065",
+      "text": "out,",
+      "start": 23.64,
+      "end": 23.96
+    },
+    {
+      "id": "w-0066",
+      "text": "Wolf!",
+      "start": 24.24,
+      "end": 24.28
+    },
+    {
+      "id": "w-0067",
+      "text": "Wolf!",
+      "start": 25.02,
+      "end": 25.02
+    },
+    {
+      "id": "w-0068",
+      "text": "And",
+      "start": 25.72,
+      "end": 26.06
+    },
+    {
+      "id": "w-0069",
+      "text": "when",
+      "start": 26.06,
+      "end": 26.18
+    },
+    {
+      "id": "w-0070",
+      "text": "the",
+      "start": 26.18,
+      "end": 26.32
+    },
+    {
+      "id": "w-0071",
+      "text": "people",
+      "start": 26.32,
+      "end": 26.56
+    },
+    {
+      "id": "w-0072",
+      "text": "came",
+      "start": 26.56,
+      "end": 26.8
+    },
+    {
+      "id": "w-0073",
+      "text": "running",
+      "start": 26.8,
+      "end": 27.02
+    },
+    {
+      "id": "w-0074",
+      "text": "up,",
+      "start": 27.02,
+      "end": 27.28
+    },
+    {
+      "id": "w-0075",
+      "text": "he'd",
+      "start": 27.46,
+      "end": 27.62
+    },
+    {
+      "id": "w-0076",
+      "text": "have",
+      "start": 27.62,
+      "end": 27.68
+    },
+    {
+      "id": "w-0077",
+      "text": "laughed",
+      "start": 27.68,
+      "end": 27.9
+    },
+    {
+      "id": "w-0078",
+      "text": "at",
+      "start": 27.9,
+      "end": 28.16
+    },
+    {
+      "id": "w-0079",
+      "text": "them",
+      "start": 28.16,
+      "end": 28.3
+    },
+    {
+      "id": "w-0080",
+      "text": "for",
+      "start": 28.3,
+      "end": 28.5
+    },
+    {
+      "id": "w-0081",
+      "text": "their",
+      "start": 28.5,
+      "end": 28.64
+    },
+    {
+      "id": "w-0082",
+      "text": "pains.",
+      "start": 28.64,
+      "end": 28.86
+    },
+    {
+      "id": "w-0083",
+      "text": "He",
+      "start": 29.48,
+      "end": 29.94
+    },
+    {
+      "id": "w-0084",
+      "text": "did",
+      "start": 29.94,
+      "end": 30.14
+    },
+    {
+      "id": "w-0085",
+      "text": "this",
+      "start": 30.14,
+      "end": 30.34
+    },
+    {
+      "id": "w-0086",
+      "text": "more",
+      "start": 30.34,
+      "end": 30.54
+    },
+    {
+      "id": "w-0087",
+      "text": "than",
+      "start": 30.54,
+      "end": 30.72
+    },
+    {
+      "id": "w-0088",
+      "text": "once,",
+      "start": 30.72,
+      "end": 30.98
+    },
+    {
+      "id": "w-0089",
+      "text": "and",
+      "start": 31.24,
+      "end": 31.38
+    },
+    {
+      "id": "w-0090",
+      "text": "every",
+      "start": 31.38,
+      "end": 31.6
+    },
+    {
+      "id": "w-0091",
+      "text": "time",
+      "start": 31.6,
+      "end": 31.92
+    },
+    {
+      "id": "w-0092",
+      "text": "the",
+      "start": 31.92,
+      "end": 32.1
+    },
+    {
+      "id": "w-0093",
+      "text": "villagers",
+      "start": 32.1,
+      "end": 32.38
+    },
+    {
+      "id": "w-0094",
+      "text": "found",
+      "start": 32.38,
+      "end": 32.74
+    },
+    {
+      "id": "w-0095",
+      "text": "they",
+      "start": 32.74,
+      "end": 32.98
+    },
+    {
+      "id": "w-0096",
+      "text": "had",
+      "start": 32.98,
+      "end": 33.14
+    },
+    {
+      "id": "w-0097",
+      "text": "been",
+      "start": 33.14,
+      "end": 33.3
+    },
+    {
+      "id": "w-0098",
+      "text": "host,",
+      "start": 33.3,
+      "end": 33.5
+    },
+    {
+      "id": "w-0099",
+      "text": "for",
+      "start": 34.22,
+      "end": 34.38
+    },
+    {
+      "id": "w-0100",
+      "text": "there",
+      "start": 34.38,
+      "end": 34.52
+    },
+    {
+      "id": "w-0101",
+      "text": "was",
+      "start": 34.52,
+      "end": 34.64
+    },
+    {
+      "id": "w-0102",
+      "text": "no",
+      "start": 34.64,
+      "end": 34.9
+    },
+    {
+      "id": "w-0103",
+      "text": "wolf",
+      "start": 34.9,
+      "end": 35.12
+    },
+    {
+      "id": "w-0104",
+      "text": "at",
+      "start": 35.12,
+      "end": 35.36
+    },
+    {
+      "id": "w-0105",
+      "text": "all.",
+      "start": 35.36,
+      "end": 35.56
+    },
+    {
+      "id": "w-0106",
+      "text": "At",
+      "start": 36.2,
+      "end": 36.46
+    },
+    {
+      "id": "w-0107",
+      "text": "last,",
+      "start": 36.46,
+      "end": 36.66
+    },
+    {
+      "id": "w-0108",
+      "text": "a",
+      "start": 36.9,
+      "end": 36.94
+    },
+    {
+      "id": "w-0109",
+      "text": "wolf",
+      "start": 36.94,
+      "end": 37.14
+    },
+    {
+      "id": "w-0110",
+      "text": "really",
+      "start": 37.14,
+      "end": 37.5
+    },
+    {
+      "id": "w-0111",
+      "text": "did",
+      "start": 37.5,
+      "end": 37.76
+    },
+    {
+      "id": "w-0112",
+      "text": "come",
+      "start": 37.76,
+      "end": 38.04
+    },
+    {
+      "id": "w-0113",
+      "text": "and",
+      "start": 38.04,
+      "end": 38.24
+    },
+    {
+      "id": "w-0114",
+      "text": "the",
+      "start": 38.24,
+      "end": 38.34
+    },
+    {
+      "id": "w-0115",
+      "text": "boy",
+      "start": 38.34,
+      "end": 38.52
+    },
+    {
+      "id": "w-0116",
+      "text": "cried,",
+      "start": 38.52,
+      "end": 38.84
+    },
+    {
+      "id": "w-0117",
+      "text": "Wolf!",
+      "start": 39.1,
+      "end": 39.34
+    },
+    {
+      "id": "w-0118",
+      "text": "Wolf!",
+      "start": 39.86,
+      "end": 39.9
+    },
+    {
+      "id": "w-0119",
+      "text": "As",
+      "start": 40.78,
+      "end": 40.88
+    },
+    {
+      "id": "w-0120",
+      "text": "loud",
+      "start": 40.88,
+      "end": 41.18
+    },
+    {
+      "id": "w-0121",
+      "text": "as",
+      "start": 41.18,
+      "end": 41.48
+    },
+    {
+      "id": "w-0122",
+      "text": "he",
+      "start": 41.48,
+      "end": 41.6
+    },
+    {
+      "id": "w-0123",
+      "text": "could,",
+      "start": 41.6,
+      "end": 41.86
+    },
+    {
+      "id": "w-0124",
+      "text": "but",
+      "start": 42.24,
+      "end": 42.5
+    },
+    {
+      "id": "w-0125",
+      "text": "the",
+      "start": 42.5,
+      "end": 42.64
+    },
+    {
+      "id": "w-0126",
+      "text": "people",
+      "start": 42.64,
+      "end": 42.92
+    },
+    {
+      "id": "w-0127",
+      "text": "were",
+      "start": 42.92,
+      "end": 43.14
+    },
+    {
+      "id": "w-0128",
+      "text": "so",
+      "start": 43.14,
+      "end": 43.42
+    },
+    {
+      "id": "w-0129",
+      "text": "used",
+      "start": 43.42,
+      "end": 43.66
+    },
+    {
+      "id": "w-0130",
+      "text": "to",
+      "start": 43.66,
+      "end": 43.84
+    },
+    {
+      "id": "w-0131",
+      "text": "hearing",
+      "start": 43.84,
+      "end": 43.98
+    },
+    {
+      "id": "w-0132",
+      "text": "him",
+      "start": 43.98,
+      "end": 44.24
+    },
+    {
+      "id": "w-0133",
+      "text": "call",
+      "start": 44.24,
+      "end": 44.5
+    },
+    {
+      "id": "w-0134",
+      "text": "that",
+      "start": 44.5,
+      "end": 44.86
+    },
+    {
+      "id": "w-0135",
+      "text": "they",
+      "start": 44.86,
+      "end": 45.0
+    },
+    {
+      "id": "w-0136",
+      "text": "took",
+      "start": 45.0,
+      "end": 45.2
+    },
+    {
+      "id": "w-0137",
+      "text": "no",
+      "start": 45.2,
+      "end": 45.42
+    },
+    {
+      "id": "w-0138",
+      "text": "notice",
+      "start": 45.42,
+      "end": 45.72
+    },
+    {
+      "id": "w-0139",
+      "text": "of",
+      "start": 45.72,
+      "end": 45.94
+    },
+    {
+      "id": "w-0140",
+      "text": "his",
+      "start": 45.94,
+      "end": 46.08
+    },
+    {
+      "id": "w-0141",
+      "text": "cries",
+      "start": 46.08,
+      "end": 46.28
+    },
+    {
+      "id": "w-0142",
+      "text": "for",
+      "start": 46.28,
+      "end": 46.62
+    },
+    {
+      "id": "w-0143",
+      "text": "help.",
+      "start": 46.62,
+      "end": 46.84
+    },
+    {
+      "id": "w-0144",
+      "text": "And",
+      "start": 47.82,
+      "end": 47.98
+    },
+    {
+      "id": "w-0145",
+      "text": "so",
+      "start": 47.98,
+      "end": 48.16
+    },
+    {
+      "id": "w-0146",
+      "text": "the",
+      "start": 48.16,
+      "end": 48.34
+    },
+    {
+      "id": "w-0147",
+      "text": "wolf",
+      "start": 48.34,
+      "end": 48.52
+    },
+    {
+      "id": "w-0148",
+      "text": "had",
+      "start": 48.52,
+      "end": 48.78
+    },
+    {
+      "id": "w-0149",
+      "text": "it",
+      "start": 48.78,
+      "end": 48.9
+    },
+    {
+      "id": "w-0150",
+      "text": "all",
+      "start": 48.9,
+      "end": 49.1
+    },
+    {
+      "id": "w-0151",
+      "text": "his",
+      "start": 49.1,
+      "end": 49.3
+    },
+    {
+      "id": "w-0152",
+      "text": "own",
+      "start": 49.3,
+      "end": 49.46
+    },
+    {
+      "id": "w-0153",
+      "text": "way",
+      "start": 49.46,
+      "end": 49.72
+    },
+    {
+      "id": "w-0154",
+      "text": "and",
+      "start": 49.72,
+      "end": 50.02
+    },
+    {
+      "id": "w-0155",
+      "text": "killed",
+      "start": 50.02,
+      "end": 50.22
+    },
+    {
+      "id": "w-0156",
+      "text": "off",
+      "start": 50.22,
+      "end": 50.42
+    },
+    {
+      "id": "w-0157",
+      "text": "sheep",
+      "start": 50.42,
+      "end": 50.68
+    },
+    {
+      "id": "w-0158",
+      "text": "after",
+      "start": 50.68,
+      "end": 51.2
+    },
+    {
+      "id": "w-0159",
+      "text": "sheep",
+      "start": 51.2,
+      "end": 51.48
+    },
+    {
+      "id": "w-0160",
+      "text": "at",
+      "start": 51.48,
+      "end": 51.74
+    },
+    {
+      "id": "w-0161",
+      "text": "his",
+      "start": 51.74,
+      "end": 51.94
+    },
+    {
+      "id": "w-0162",
+      "text": "leisure.",
+      "start": 51.94,
+      "end": 52.22
+    },
+    {
+      "id": "w-0163",
+      "text": "You",
+      "start": 53.0,
+      "end": 53.46
+    },
+    {
+      "id": "w-0164",
+      "text": "cannot",
+      "start": 53.46,
+      "end": 53.66
+    },
+    {
+      "id": "w-0165",
+      "text": "believe",
+      "start": 53.66,
+      "end": 54.08
+    },
+    {
+      "id": "w-0166",
+      "text": "a",
+      "start": 54.08,
+      "end": 54.26
+    },
+    {
+      "id": "w-0167",
+      "text": "liar",
+      "start": 54.26,
+      "end": 54.5
+    },
+    {
+      "id": "w-0168",
+      "text": "even",
+      "start": 54.5,
+      "end": 54.82
+    },
+    {
+      "id": "w-0169",
+      "text": "when",
+      "start": 54.82,
+      "end": 55.12
+    },
+    {
+      "id": "w-0170",
+      "text": "he",
+      "start": 55.12,
+      "end": 55.28
+    },
+    {
+      "id": "w-0171",
+      "text": "tells",
+      "start": 55.28,
+      "end": 55.48
+    },
+    {
+      "id": "w-0172",
+      "text": "the",
+      "start": 55.48,
+      "end": 55.72
+    },
+    {
+      "id": "w-0173",
+      "text": "truth.",
+      "start": 55.72,
+      "end": 55.92
+    },
+    {
+      "id": "w-0174",
+      "text": "And",
+      "start": 57.62,
+      "end": 58.26
+    },
+    {
+      "id": "w-0175",
+      "text": "of",
+      "start": 58.26,
+      "end": 58.58
+    },
+    {
+      "id": "w-0176",
+      "text": "the",
+      "start": 58.58,
+      "end": 58.96
+    },
+    {
+      "id": "w-0177",
+      "text": "Shepherd's",
+      "start": 58.96,
+      "end": 59.46
+    },
+    {
+      "id": "w-0178",
+      "text": "Boy",
+      "start": 59.46,
+      "end": 59.62
+    },
+    {
+      "id": "w-0179",
+      "text": "and",
+      "start": 59.62,
+      "end": 60.04
+    },
+    {
+      "id": "w-0180",
+      "text": "the",
+      "start": 60.04,
+      "end": 60.2
+    },
+    {
+      "id": "w-0181",
+      "text": "Wolf.",
+      "start": 60.2,
+      "end": 60.44
+    }
+  ]
+}

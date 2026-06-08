@@ -1,0 +1,1092 @@
+{
+  "id": "venus-and-the-cat",
+  "title": "Venus and The Cat",
+  "subtitle": "Aesop's Fables, Volume 06",
+  "level": "A2-B1",
+  "duration": 63.7,
+  "audioFileName": "venus-and-the-cat.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-6-fables-126-150/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 6.72,
+      "text": "This is a LibraVox recording. All LibraVox recordings are in the public domain. For more",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.72,
+      "end": 14.24,
+      "text": "information and to find out how to volunteer, please visit LibraVox.org. Recording by Marion",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 14.24,
+      "end": 23.96,
+      "text": "Brown, Toronto, Canada. ASOP's Fables. Venus and the Cat. A cat fell in love with a handsome",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 23.96,
+      "end": 29.82,
+      "text": "young man and begged the goddess Venus to change her into a woman. Venus was very gracious",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 29.82,
+      "end": 35.28,
+      "text": "about it and changed her at once into a beautiful maiden, whom the young man fell in love with",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 35.28,
+      "end": 41.04,
+      "text": "at first sight and shortly afterwards married. One day Venus thought she would like to see",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 41.04,
+      "end": 46.5,
+      "text": "whether the cat had changed her habits as well as her form, so she let a mouse run loose",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 46.5,
+      "end": 51.72,
+      "text": "in the room where they were. Forgetting everything, the young woman had no sooner seen the mouse",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 51.72,
+      "end": 57.96,
+      "text": "than up she jumped and was after it like a shot at which the goddess was so disgusted that she",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 57.96,
+      "end": 63.72,
+      "text": "changed her back again into a cat. End of Venus and the Cat.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 1.06
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.06,
+      "end": 1.28
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.28,
+      "end": 1.42
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.42,
+      "end": 1.96
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 1.96,
+      "end": 2.2
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.12,
+      "end": 3.18
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.18,
+      "end": 3.86
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 3.86,
+      "end": 4.18
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.18,
+      "end": 4.74
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.74,
+      "end": 4.88
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 4.88,
+      "end": 4.98
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 4.98,
+      "end": 5.24
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.24,
+      "end": 5.58
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.46,
+      "end": 6.5
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.5,
+      "end": 6.72
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 6.72,
+      "end": 7.08
+    },
+    {
+      "id": "w-0016",
+      "text": "and",
+      "start": 7.08,
+      "end": 7.76
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 7.76,
+      "end": 7.92
+    },
+    {
+      "id": "w-0018",
+      "text": "find",
+      "start": 7.92,
+      "end": 8.16
+    },
+    {
+      "id": "w-0019",
+      "text": "out",
+      "start": 8.16,
+      "end": 8.42
+    },
+    {
+      "id": "w-0020",
+      "text": "how",
+      "start": 8.42,
+      "end": 8.7
+    },
+    {
+      "id": "w-0021",
+      "text": "to",
+      "start": 8.7,
+      "end": 8.84
+    },
+    {
+      "id": "w-0022",
+      "text": "volunteer,",
+      "start": 8.84,
+      "end": 9.32
+    },
+    {
+      "id": "w-0023",
+      "text": "please",
+      "start": 9.78,
+      "end": 9.96
+    },
+    {
+      "id": "w-0024",
+      "text": "visit",
+      "start": 9.96,
+      "end": 10.38
+    },
+    {
+      "id": "w-0025",
+      "text": "LibraVox",
+      "start": 10.38,
+      "end": 11.24
+    },
+    {
+      "id": "w-0026",
+      "text": ".org.",
+      "start": 11.24,
+      "end": 12.0
+    },
+    {
+      "id": "w-0027",
+      "text": "Recording",
+      "start": 12.52,
+      "end": 13.02
+    },
+    {
+      "id": "w-0028",
+      "text": "by",
+      "start": 13.02,
+      "end": 13.52
+    },
+    {
+      "id": "w-0029",
+      "text": "Marion",
+      "start": 13.52,
+      "end": 14.24
+    },
+    {
+      "id": "w-0030",
+      "text": "Brown,",
+      "start": 14.24,
+      "end": 14.68
+    },
+    {
+      "id": "w-0031",
+      "text": "Toronto,",
+      "start": 15.12,
+      "end": 15.28
+    },
+    {
+      "id": "w-0032",
+      "text": "Canada.",
+      "start": 15.98,
+      "end": 16.24
+    },
+    {
+      "id": "w-0033",
+      "text": "ASOP's",
+      "start": 17.5,
+      "end": 18.1
+    },
+    {
+      "id": "w-0034",
+      "text": "Fables.",
+      "start": 18.1,
+      "end": 18.56
+    },
+    {
+      "id": "w-0035",
+      "text": "Venus",
+      "start": 19.72,
+      "end": 19.8
+    },
+    {
+      "id": "w-0036",
+      "text": "and",
+      "start": 19.8,
+      "end": 20.5
+    },
+    {
+      "id": "w-0037",
+      "text": "the",
+      "start": 20.5,
+      "end": 20.68
+    },
+    {
+      "id": "w-0038",
+      "text": "Cat.",
+      "start": 20.68,
+      "end": 20.86
+    },
+    {
+      "id": "w-0039",
+      "text": "A",
+      "start": 22.1,
+      "end": 22.32
+    },
+    {
+      "id": "w-0040",
+      "text": "cat",
+      "start": 22.32,
+      "end": 22.6
+    },
+    {
+      "id": "w-0041",
+      "text": "fell",
+      "start": 22.6,
+      "end": 22.96
+    },
+    {
+      "id": "w-0042",
+      "text": "in",
+      "start": 22.96,
+      "end": 23.12
+    },
+    {
+      "id": "w-0043",
+      "text": "love",
+      "start": 23.12,
+      "end": 23.32
+    },
+    {
+      "id": "w-0044",
+      "text": "with",
+      "start": 23.32,
+      "end": 23.54
+    },
+    {
+      "id": "w-0045",
+      "text": "a",
+      "start": 23.54,
+      "end": 23.64
+    },
+    {
+      "id": "w-0046",
+      "text": "handsome",
+      "start": 23.64,
+      "end": 23.96
+    },
+    {
+      "id": "w-0047",
+      "text": "young",
+      "start": 23.96,
+      "end": 24.36
+    },
+    {
+      "id": "w-0048",
+      "text": "man",
+      "start": 24.36,
+      "end": 24.64
+    },
+    {
+      "id": "w-0049",
+      "text": "and",
+      "start": 24.64,
+      "end": 25.08
+    },
+    {
+      "id": "w-0050",
+      "text": "begged",
+      "start": 25.08,
+      "end": 25.32
+    },
+    {
+      "id": "w-0051",
+      "text": "the",
+      "start": 25.32,
+      "end": 25.56
+    },
+    {
+      "id": "w-0052",
+      "text": "goddess",
+      "start": 25.56,
+      "end": 25.86
+    },
+    {
+      "id": "w-0053",
+      "text": "Venus",
+      "start": 25.86,
+      "end": 26.1
+    },
+    {
+      "id": "w-0054",
+      "text": "to",
+      "start": 26.1,
+      "end": 26.56
+    },
+    {
+      "id": "w-0055",
+      "text": "change",
+      "start": 26.56,
+      "end": 26.86
+    },
+    {
+      "id": "w-0056",
+      "text": "her",
+      "start": 26.86,
+      "end": 27.08
+    },
+    {
+      "id": "w-0057",
+      "text": "into",
+      "start": 27.08,
+      "end": 27.34
+    },
+    {
+      "id": "w-0058",
+      "text": "a",
+      "start": 27.34,
+      "end": 27.52
+    },
+    {
+      "id": "w-0059",
+      "text": "woman.",
+      "start": 27.52,
+      "end": 27.72
+    },
+    {
+      "id": "w-0060",
+      "text": "Venus",
+      "start": 28.4,
+      "end": 28.8
+    },
+    {
+      "id": "w-0061",
+      "text": "was",
+      "start": 28.8,
+      "end": 29.14
+    },
+    {
+      "id": "w-0062",
+      "text": "very",
+      "start": 29.14,
+      "end": 29.4
+    },
+    {
+      "id": "w-0063",
+      "text": "gracious",
+      "start": 29.4,
+      "end": 29.82
+    },
+    {
+      "id": "w-0064",
+      "text": "about",
+      "start": 29.82,
+      "end": 30.22
+    },
+    {
+      "id": "w-0065",
+      "text": "it",
+      "start": 30.22,
+      "end": 30.44
+    },
+    {
+      "id": "w-0066",
+      "text": "and",
+      "start": 30.44,
+      "end": 30.7
+    },
+    {
+      "id": "w-0067",
+      "text": "changed",
+      "start": 30.7,
+      "end": 30.92
+    },
+    {
+      "id": "w-0068",
+      "text": "her",
+      "start": 30.92,
+      "end": 31.28
+    },
+    {
+      "id": "w-0069",
+      "text": "at",
+      "start": 31.28,
+      "end": 31.4
+    },
+    {
+      "id": "w-0070",
+      "text": "once",
+      "start": 31.4,
+      "end": 31.58
+    },
+    {
+      "id": "w-0071",
+      "text": "into",
+      "start": 31.58,
+      "end": 31.98
+    },
+    {
+      "id": "w-0072",
+      "text": "a",
+      "start": 31.98,
+      "end": 32.14
+    },
+    {
+      "id": "w-0073",
+      "text": "beautiful",
+      "start": 32.14,
+      "end": 32.48
+    },
+    {
+      "id": "w-0074",
+      "text": "maiden,",
+      "start": 32.48,
+      "end": 32.88
+    },
+    {
+      "id": "w-0075",
+      "text": "whom",
+      "start": 33.38,
+      "end": 33.74
+    },
+    {
+      "id": "w-0076",
+      "text": "the",
+      "start": 33.74,
+      "end": 33.92
+    },
+    {
+      "id": "w-0077",
+      "text": "young",
+      "start": 33.92,
+      "end": 34.12
+    },
+    {
+      "id": "w-0078",
+      "text": "man",
+      "start": 34.12,
+      "end": 34.38
+    },
+    {
+      "id": "w-0079",
+      "text": "fell",
+      "start": 34.38,
+      "end": 34.64
+    },
+    {
+      "id": "w-0080",
+      "text": "in",
+      "start": 34.64,
+      "end": 34.84
+    },
+    {
+      "id": "w-0081",
+      "text": "love",
+      "start": 34.84,
+      "end": 35.04
+    },
+    {
+      "id": "w-0082",
+      "text": "with",
+      "start": 35.04,
+      "end": 35.28
+    },
+    {
+      "id": "w-0083",
+      "text": "at",
+      "start": 35.28,
+      "end": 35.52
+    },
+    {
+      "id": "w-0084",
+      "text": "first",
+      "start": 35.52,
+      "end": 35.78
+    },
+    {
+      "id": "w-0085",
+      "text": "sight",
+      "start": 35.78,
+      "end": 36.14
+    },
+    {
+      "id": "w-0086",
+      "text": "and",
+      "start": 36.14,
+      "end": 36.46
+    },
+    {
+      "id": "w-0087",
+      "text": "shortly",
+      "start": 36.46,
+      "end": 36.76
+    },
+    {
+      "id": "w-0088",
+      "text": "afterwards",
+      "start": 36.76,
+      "end": 37.28
+    },
+    {
+      "id": "w-0089",
+      "text": "married.",
+      "start": 37.28,
+      "end": 37.8
+    },
+    {
+      "id": "w-0090",
+      "text": "One",
+      "start": 38.62,
+      "end": 39.06
+    },
+    {
+      "id": "w-0091",
+      "text": "day",
+      "start": 39.06,
+      "end": 39.36
+    },
+    {
+      "id": "w-0092",
+      "text": "Venus",
+      "start": 39.36,
+      "end": 39.76
+    },
+    {
+      "id": "w-0093",
+      "text": "thought",
+      "start": 39.76,
+      "end": 40.14
+    },
+    {
+      "id": "w-0094",
+      "text": "she",
+      "start": 40.14,
+      "end": 40.36
+    },
+    {
+      "id": "w-0095",
+      "text": "would",
+      "start": 40.36,
+      "end": 40.46
+    },
+    {
+      "id": "w-0096",
+      "text": "like",
+      "start": 40.46,
+      "end": 40.62
+    },
+    {
+      "id": "w-0097",
+      "text": "to",
+      "start": 40.62,
+      "end": 40.8
+    },
+    {
+      "id": "w-0098",
+      "text": "see",
+      "start": 40.8,
+      "end": 41.04
+    },
+    {
+      "id": "w-0099",
+      "text": "whether",
+      "start": 41.04,
+      "end": 41.46
+    },
+    {
+      "id": "w-0100",
+      "text": "the",
+      "start": 41.46,
+      "end": 41.66
+    },
+    {
+      "id": "w-0101",
+      "text": "cat",
+      "start": 41.66,
+      "end": 41.84
+    },
+    {
+      "id": "w-0102",
+      "text": "had",
+      "start": 41.84,
+      "end": 42.08
+    },
+    {
+      "id": "w-0103",
+      "text": "changed",
+      "start": 42.08,
+      "end": 42.4
+    },
+    {
+      "id": "w-0104",
+      "text": "her",
+      "start": 42.4,
+      "end": 42.58
+    },
+    {
+      "id": "w-0105",
+      "text": "habits",
+      "start": 42.58,
+      "end": 42.96
+    },
+    {
+      "id": "w-0106",
+      "text": "as",
+      "start": 42.96,
+      "end": 43.32
+    },
+    {
+      "id": "w-0107",
+      "text": "well",
+      "start": 43.32,
+      "end": 43.52
+    },
+    {
+      "id": "w-0108",
+      "text": "as",
+      "start": 43.52,
+      "end": 43.74
+    },
+    {
+      "id": "w-0109",
+      "text": "her",
+      "start": 43.74,
+      "end": 43.86
+    },
+    {
+      "id": "w-0110",
+      "text": "form,",
+      "start": 43.86,
+      "end": 44.18
+    },
+    {
+      "id": "w-0111",
+      "text": "so",
+      "start": 44.68,
+      "end": 45.1
+    },
+    {
+      "id": "w-0112",
+      "text": "she",
+      "start": 45.1,
+      "end": 45.28
+    },
+    {
+      "id": "w-0113",
+      "text": "let",
+      "start": 45.28,
+      "end": 45.48
+    },
+    {
+      "id": "w-0114",
+      "text": "a",
+      "start": 45.48,
+      "end": 45.56
+    },
+    {
+      "id": "w-0115",
+      "text": "mouse",
+      "start": 45.56,
+      "end": 45.86
+    },
+    {
+      "id": "w-0116",
+      "text": "run",
+      "start": 45.86,
+      "end": 46.2
+    },
+    {
+      "id": "w-0117",
+      "text": "loose",
+      "start": 46.2,
+      "end": 46.5
+    },
+    {
+      "id": "w-0118",
+      "text": "in",
+      "start": 46.5,
+      "end": 46.72
+    },
+    {
+      "id": "w-0119",
+      "text": "the",
+      "start": 46.72,
+      "end": 46.84
+    },
+    {
+      "id": "w-0120",
+      "text": "room",
+      "start": 46.84,
+      "end": 47.08
+    },
+    {
+      "id": "w-0121",
+      "text": "where",
+      "start": 47.08,
+      "end": 47.34
+    },
+    {
+      "id": "w-0122",
+      "text": "they",
+      "start": 47.34,
+      "end": 47.52
+    },
+    {
+      "id": "w-0123",
+      "text": "were.",
+      "start": 47.52,
+      "end": 47.76
+    },
+    {
+      "id": "w-0124",
+      "text": "Forgetting",
+      "start": 48.48,
+      "end": 49.0
+    },
+    {
+      "id": "w-0125",
+      "text": "everything,",
+      "start": 49.0,
+      "end": 49.32
+    },
+    {
+      "id": "w-0126",
+      "text": "the",
+      "start": 49.32,
+      "end": 49.78
+    },
+    {
+      "id": "w-0127",
+      "text": "young",
+      "start": 49.78,
+      "end": 49.94
+    },
+    {
+      "id": "w-0128",
+      "text": "woman",
+      "start": 49.94,
+      "end": 50.22
+    },
+    {
+      "id": "w-0129",
+      "text": "had",
+      "start": 50.22,
+      "end": 50.44
+    },
+    {
+      "id": "w-0130",
+      "text": "no",
+      "start": 50.44,
+      "end": 50.7
+    },
+    {
+      "id": "w-0131",
+      "text": "sooner",
+      "start": 50.7,
+      "end": 50.94
+    },
+    {
+      "id": "w-0132",
+      "text": "seen",
+      "start": 50.94,
+      "end": 51.3
+    },
+    {
+      "id": "w-0133",
+      "text": "the",
+      "start": 51.3,
+      "end": 51.52
+    },
+    {
+      "id": "w-0134",
+      "text": "mouse",
+      "start": 51.52,
+      "end": 51.72
+    },
+    {
+      "id": "w-0135",
+      "text": "than",
+      "start": 51.72,
+      "end": 52.32
+    },
+    {
+      "id": "w-0136",
+      "text": "up",
+      "start": 52.32,
+      "end": 52.56
+    },
+    {
+      "id": "w-0137",
+      "text": "she",
+      "start": 52.56,
+      "end": 52.82
+    },
+    {
+      "id": "w-0138",
+      "text": "jumped",
+      "start": 52.82,
+      "end": 53.12
+    },
+    {
+      "id": "w-0139",
+      "text": "and",
+      "start": 53.12,
+      "end": 53.38
+    },
+    {
+      "id": "w-0140",
+      "text": "was",
+      "start": 53.38,
+      "end": 53.5
+    },
+    {
+      "id": "w-0141",
+      "text": "after",
+      "start": 53.5,
+      "end": 53.88
+    },
+    {
+      "id": "w-0142",
+      "text": "it",
+      "start": 53.88,
+      "end": 54.04
+    },
+    {
+      "id": "w-0143",
+      "text": "like",
+      "start": 54.04,
+      "end": 54.18
+    },
+    {
+      "id": "w-0144",
+      "text": "a",
+      "start": 54.18,
+      "end": 54.32
+    },
+    {
+      "id": "w-0145",
+      "text": "shot",
+      "start": 54.32,
+      "end": 54.66
+    },
+    {
+      "id": "w-0146",
+      "text": "at",
+      "start": 54.66,
+      "end": 55.54
+    },
+    {
+      "id": "w-0147",
+      "text": "which",
+      "start": 55.54,
+      "end": 55.76
+    },
+    {
+      "id": "w-0148",
+      "text": "the",
+      "start": 55.76,
+      "end": 55.94
+    },
+    {
+      "id": "w-0149",
+      "text": "goddess",
+      "start": 55.94,
+      "end": 56.18
+    },
+    {
+      "id": "w-0150",
+      "text": "was",
+      "start": 56.18,
+      "end": 56.46
+    },
+    {
+      "id": "w-0151",
+      "text": "so",
+      "start": 56.46,
+      "end": 56.78
+    },
+    {
+      "id": "w-0152",
+      "text": "disgusted",
+      "start": 56.78,
+      "end": 57.24
+    },
+    {
+      "id": "w-0153",
+      "text": "that",
+      "start": 57.24,
+      "end": 57.78
+    },
+    {
+      "id": "w-0154",
+      "text": "she",
+      "start": 57.78,
+      "end": 57.96
+    },
+    {
+      "id": "w-0155",
+      "text": "changed",
+      "start": 57.96,
+      "end": 58.28
+    },
+    {
+      "id": "w-0156",
+      "text": "her",
+      "start": 58.28,
+      "end": 58.54
+    },
+    {
+      "id": "w-0157",
+      "text": "back",
+      "start": 58.54,
+      "end": 58.78
+    },
+    {
+      "id": "w-0158",
+      "text": "again",
+      "start": 58.78,
+      "end": 59.14
+    },
+    {
+      "id": "w-0159",
+      "text": "into",
+      "start": 59.14,
+      "end": 59.58
+    },
+    {
+      "id": "w-0160",
+      "text": "a",
+      "start": 59.58,
+      "end": 59.76
+    },
+    {
+      "id": "w-0161",
+      "text": "cat.",
+      "start": 59.76,
+      "end": 60.1
+    },
+    {
+      "id": "w-0162",
+      "text": "End",
+      "start": 61.06,
+      "end": 61.52
+    },
+    {
+      "id": "w-0163",
+      "text": "of",
+      "start": 61.52,
+      "end": 61.88
+    },
+    {
+      "id": "w-0164",
+      "text": "Venus",
+      "start": 61.88,
+      "end": 62.76
+    },
+    {
+      "id": "w-0165",
+      "text": "and",
+      "start": 62.76,
+      "end": 63.32
+    },
+    {
+      "id": "w-0166",
+      "text": "the",
+      "start": 63.32,
+      "end": 63.5
+    },
+    {
+      "id": "w-0167",
+      "text": "Cat.",
+      "start": 63.5,
+      "end": 63.72
+    }
+  ]
+}

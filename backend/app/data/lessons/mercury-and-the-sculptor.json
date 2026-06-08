@@ -1,0 +1,1125 @@
+{
+  "id": "mercury-and-the-sculptor",
+  "title": "Mercury and The Sculptor",
+  "subtitle": "Aesop's Fables, Volume 04",
+  "level": "A2-B1",
+  "duration": 78.4,
+  "audioFileName": "mercury-and-the-sculptor.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-4-fables-76-100/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 2.14,
+      "end": 4.56,
+      "text": "This is a labor box recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 5.42,
+      "end": 8.24,
+      "text": "All labor box recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 9.2,
+      "end": 13.8,
+      "text": "For more information or to volunteer, please visit laborbox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 14.54,
+      "end": 18.32,
+      "text": "Recorded by Patty McCoy in Hudson, Colorado.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 19.28,
+      "end": 20.54,
+      "text": "ASOPS Fables.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 21.78,
+      "end": 23.5,
+      "text": "Mercury and Sculpture.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 24.68,
+      "end": 29.86,
+      "text": "Mercury was very anxious to know in what estimation he was held by mankind.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 30.88,
+      "end": 35.88,
+      "text": "So he disguised himself as a man and walked into a sculptor's studio.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 37.02,
+      "end": 41.28,
+      "text": "Where there were a number of statues finished and ready for sale.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 42.66,
+      "end": 47.68,
+      "text": "Seeing a statue of Jupiter among the rest, he inquired the price of it.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 47.68,
+      "end": 50.12,
+      "text": "A crown said the sculpture.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 51.04,
+      "end": 51.92,
+      "text": "Is that all?",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 52.42,
+      "end": 55.62,
+      "text": "Said he laughing and pointing to one of Juno.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 56.28,
+      "end": 57.24,
+      "text": "How much is that one?",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 57.78,
+      "end": 60.14,
+      "text": "That was reply is half a crown.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 60.84,
+      "end": 64.0,
+      "text": "And how much right you be wanting for that one over there now?",
+      "note": ""
+    },
+    {
+      "id": "line-016",
+      "start": 64.7,
+      "end": 67.86,
+      "text": "He continued pointing to a statue of himself.",
+      "note": ""
+    },
+    {
+      "id": "line-017",
+      "start": 68.44,
+      "end": 73.88,
+      "text": "That one said the sculpture, oh I'll throw him in for nothing, if you'll buy the other two.",
+      "note": ""
+    },
+    {
+      "id": "line-018",
+      "start": 73.88,
+      "end": 78.38,
+      "text": "And of Mercury and Sculpture.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 2.14,
+      "end": 3.02
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 3.02,
+      "end": 3.5
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 3.5,
+      "end": 3.7
+    },
+    {
+      "id": "w-0003",
+      "text": "labor",
+      "start": 3.7,
+      "end": 3.84
+    },
+    {
+      "id": "w-0004",
+      "text": "box",
+      "start": 3.84,
+      "end": 4.26
+    },
+    {
+      "id": "w-0005",
+      "text": "recording.",
+      "start": 4.26,
+      "end": 4.56
+    },
+    {
+      "id": "w-0006",
+      "text": "All",
+      "start": 5.42,
+      "end": 5.52
+    },
+    {
+      "id": "w-0007",
+      "text": "labor",
+      "start": 5.52,
+      "end": 5.98
+    },
+    {
+      "id": "w-0008",
+      "text": "box",
+      "start": 5.98,
+      "end": 6.4
+    },
+    {
+      "id": "w-0009",
+      "text": "recordings",
+      "start": 6.4,
+      "end": 6.98
+    },
+    {
+      "id": "w-0010",
+      "text": "are",
+      "start": 6.98,
+      "end": 7.36
+    },
+    {
+      "id": "w-0011",
+      "text": "in",
+      "start": 7.36,
+      "end": 7.48
+    },
+    {
+      "id": "w-0012",
+      "text": "the",
+      "start": 7.48,
+      "end": 7.58
+    },
+    {
+      "id": "w-0013",
+      "text": "public",
+      "start": 7.58,
+      "end": 7.82
+    },
+    {
+      "id": "w-0014",
+      "text": "domain.",
+      "start": 7.82,
+      "end": 8.24
+    },
+    {
+      "id": "w-0015",
+      "text": "For",
+      "start": 9.2,
+      "end": 9.22
+    },
+    {
+      "id": "w-0016",
+      "text": "more",
+      "start": 9.22,
+      "end": 9.48
+    },
+    {
+      "id": "w-0017",
+      "text": "information",
+      "start": 9.48,
+      "end": 10.04
+    },
+    {
+      "id": "w-0018",
+      "text": "or",
+      "start": 10.04,
+      "end": 10.62
+    },
+    {
+      "id": "w-0019",
+      "text": "to",
+      "start": 10.62,
+      "end": 10.8
+    },
+    {
+      "id": "w-0020",
+      "text": "volunteer,",
+      "start": 10.8,
+      "end": 11.28
+    },
+    {
+      "id": "w-0021",
+      "text": "please",
+      "start": 11.7,
+      "end": 11.9
+    },
+    {
+      "id": "w-0022",
+      "text": "visit",
+      "start": 11.9,
+      "end": 12.22
+    },
+    {
+      "id": "w-0023",
+      "text": "laborbox",
+      "start": 12.22,
+      "end": 13.02
+    },
+    {
+      "id": "w-0024",
+      "text": ".org.",
+      "start": 13.02,
+      "end": 13.8
+    },
+    {
+      "id": "w-0025",
+      "text": "Recorded",
+      "start": 14.54,
+      "end": 15.42
+    },
+    {
+      "id": "w-0026",
+      "text": "by",
+      "start": 15.42,
+      "end": 15.9
+    },
+    {
+      "id": "w-0027",
+      "text": "Patty",
+      "start": 15.9,
+      "end": 16.34
+    },
+    {
+      "id": "w-0028",
+      "text": "McCoy",
+      "start": 16.34,
+      "end": 16.68
+    },
+    {
+      "id": "w-0029",
+      "text": "in",
+      "start": 16.68,
+      "end": 17.3
+    },
+    {
+      "id": "w-0030",
+      "text": "Hudson,",
+      "start": 17.3,
+      "end": 17.54
+    },
+    {
+      "id": "w-0031",
+      "text": "Colorado.",
+      "start": 17.9,
+      "end": 18.32
+    },
+    {
+      "id": "w-0032",
+      "text": "ASOPS",
+      "start": 19.28,
+      "end": 19.8
+    },
+    {
+      "id": "w-0033",
+      "text": "Fables.",
+      "start": 19.8,
+      "end": 20.54
+    },
+    {
+      "id": "w-0034",
+      "text": "Mercury",
+      "start": 21.78,
+      "end": 22.12
+    },
+    {
+      "id": "w-0035",
+      "text": "and",
+      "start": 22.12,
+      "end": 22.72
+    },
+    {
+      "id": "w-0036",
+      "text": "Sculpture.",
+      "start": 22.72,
+      "end": 23.5
+    },
+    {
+      "id": "w-0037",
+      "text": "Mercury",
+      "start": 24.68,
+      "end": 25.32
+    },
+    {
+      "id": "w-0038",
+      "text": "was",
+      "start": 25.32,
+      "end": 25.8
+    },
+    {
+      "id": "w-0039",
+      "text": "very",
+      "start": 25.8,
+      "end": 25.98
+    },
+    {
+      "id": "w-0040",
+      "text": "anxious",
+      "start": 25.98,
+      "end": 26.54
+    },
+    {
+      "id": "w-0041",
+      "text": "to",
+      "start": 26.54,
+      "end": 26.82
+    },
+    {
+      "id": "w-0042",
+      "text": "know",
+      "start": 26.82,
+      "end": 27.06
+    },
+    {
+      "id": "w-0043",
+      "text": "in",
+      "start": 27.06,
+      "end": 27.44
+    },
+    {
+      "id": "w-0044",
+      "text": "what",
+      "start": 27.44,
+      "end": 27.64
+    },
+    {
+      "id": "w-0045",
+      "text": "estimation",
+      "start": 27.64,
+      "end": 28.16
+    },
+    {
+      "id": "w-0046",
+      "text": "he",
+      "start": 28.16,
+      "end": 28.74
+    },
+    {
+      "id": "w-0047",
+      "text": "was",
+      "start": 28.74,
+      "end": 28.9
+    },
+    {
+      "id": "w-0048",
+      "text": "held",
+      "start": 28.9,
+      "end": 29.18
+    },
+    {
+      "id": "w-0049",
+      "text": "by",
+      "start": 29.18,
+      "end": 29.54
+    },
+    {
+      "id": "w-0050",
+      "text": "mankind.",
+      "start": 29.54,
+      "end": 29.86
+    },
+    {
+      "id": "w-0051",
+      "text": "So",
+      "start": 30.88,
+      "end": 30.96
+    },
+    {
+      "id": "w-0052",
+      "text": "he",
+      "start": 30.96,
+      "end": 31.18
+    },
+    {
+      "id": "w-0053",
+      "text": "disguised",
+      "start": 31.18,
+      "end": 31.44
+    },
+    {
+      "id": "w-0054",
+      "text": "himself",
+      "start": 31.44,
+      "end": 32.32
+    },
+    {
+      "id": "w-0055",
+      "text": "as",
+      "start": 32.32,
+      "end": 32.82
+    },
+    {
+      "id": "w-0056",
+      "text": "a",
+      "start": 32.82,
+      "end": 33.04
+    },
+    {
+      "id": "w-0057",
+      "text": "man",
+      "start": 33.04,
+      "end": 33.34
+    },
+    {
+      "id": "w-0058",
+      "text": "and",
+      "start": 33.34,
+      "end": 33.66
+    },
+    {
+      "id": "w-0059",
+      "text": "walked",
+      "start": 33.66,
+      "end": 33.92
+    },
+    {
+      "id": "w-0060",
+      "text": "into",
+      "start": 33.92,
+      "end": 34.4
+    },
+    {
+      "id": "w-0061",
+      "text": "a",
+      "start": 34.4,
+      "end": 34.52
+    },
+    {
+      "id": "w-0062",
+      "text": "sculptor's",
+      "start": 34.52,
+      "end": 35.18
+    },
+    {
+      "id": "w-0063",
+      "text": "studio.",
+      "start": 35.18,
+      "end": 35.88
+    },
+    {
+      "id": "w-0064",
+      "text": "Where",
+      "start": 37.02,
+      "end": 37.18
+    },
+    {
+      "id": "w-0065",
+      "text": "there",
+      "start": 37.18,
+      "end": 37.38
+    },
+    {
+      "id": "w-0066",
+      "text": "were",
+      "start": 37.38,
+      "end": 37.6
+    },
+    {
+      "id": "w-0067",
+      "text": "a",
+      "start": 37.6,
+      "end": 37.72
+    },
+    {
+      "id": "w-0068",
+      "text": "number",
+      "start": 37.72,
+      "end": 38.04
+    },
+    {
+      "id": "w-0069",
+      "text": "of",
+      "start": 38.04,
+      "end": 38.22
+    },
+    {
+      "id": "w-0070",
+      "text": "statues",
+      "start": 38.22,
+      "end": 38.7
+    },
+    {
+      "id": "w-0071",
+      "text": "finished",
+      "start": 38.7,
+      "end": 40.0
+    },
+    {
+      "id": "w-0072",
+      "text": "and",
+      "start": 40.0,
+      "end": 40.5
+    },
+    {
+      "id": "w-0073",
+      "text": "ready",
+      "start": 40.5,
+      "end": 40.7
+    },
+    {
+      "id": "w-0074",
+      "text": "for",
+      "start": 40.7,
+      "end": 40.98
+    },
+    {
+      "id": "w-0075",
+      "text": "sale.",
+      "start": 40.98,
+      "end": 41.28
+    },
+    {
+      "id": "w-0076",
+      "text": "Seeing",
+      "start": 42.66,
+      "end": 43.0
+    },
+    {
+      "id": "w-0077",
+      "text": "a",
+      "start": 43.0,
+      "end": 43.22
+    },
+    {
+      "id": "w-0078",
+      "text": "statue",
+      "start": 43.22,
+      "end": 43.74
+    },
+    {
+      "id": "w-0079",
+      "text": "of",
+      "start": 43.74,
+      "end": 44.18
+    },
+    {
+      "id": "w-0080",
+      "text": "Jupiter",
+      "start": 44.18,
+      "end": 44.66
+    },
+    {
+      "id": "w-0081",
+      "text": "among",
+      "start": 44.66,
+      "end": 45.32
+    },
+    {
+      "id": "w-0082",
+      "text": "the",
+      "start": 45.32,
+      "end": 45.6
+    },
+    {
+      "id": "w-0083",
+      "text": "rest,",
+      "start": 45.6,
+      "end": 45.86
+    },
+    {
+      "id": "w-0084",
+      "text": "he",
+      "start": 45.86,
+      "end": 46.2
+    },
+    {
+      "id": "w-0085",
+      "text": "inquired",
+      "start": 46.2,
+      "end": 46.62
+    },
+    {
+      "id": "w-0086",
+      "text": "the",
+      "start": 46.62,
+      "end": 46.98
+    },
+    {
+      "id": "w-0087",
+      "text": "price",
+      "start": 46.98,
+      "end": 47.22
+    },
+    {
+      "id": "w-0088",
+      "text": "of",
+      "start": 47.22,
+      "end": 47.54
+    },
+    {
+      "id": "w-0089",
+      "text": "it.",
+      "start": 47.54,
+      "end": 47.68
+    },
+    {
+      "id": "w-0090",
+      "text": "A",
+      "start": 47.68,
+      "end": 48.32
+    },
+    {
+      "id": "w-0091",
+      "text": "crown",
+      "start": 48.32,
+      "end": 48.6
+    },
+    {
+      "id": "w-0092",
+      "text": "said",
+      "start": 48.6,
+      "end": 49.26
+    },
+    {
+      "id": "w-0093",
+      "text": "the",
+      "start": 49.26,
+      "end": 49.62
+    },
+    {
+      "id": "w-0094",
+      "text": "sculpture.",
+      "start": 49.62,
+      "end": 50.12
+    },
+    {
+      "id": "w-0095",
+      "text": "Is",
+      "start": 51.04,
+      "end": 51.38
+    },
+    {
+      "id": "w-0096",
+      "text": "that",
+      "start": 51.38,
+      "end": 51.6
+    },
+    {
+      "id": "w-0097",
+      "text": "all?",
+      "start": 51.6,
+      "end": 51.92
+    },
+    {
+      "id": "w-0098",
+      "text": "Said",
+      "start": 52.42,
+      "end": 52.62
+    },
+    {
+      "id": "w-0099",
+      "text": "he",
+      "start": 52.62,
+      "end": 52.8
+    },
+    {
+      "id": "w-0100",
+      "text": "laughing",
+      "start": 52.8,
+      "end": 53.12
+    },
+    {
+      "id": "w-0101",
+      "text": "and",
+      "start": 53.12,
+      "end": 53.78
+    },
+    {
+      "id": "w-0102",
+      "text": "pointing",
+      "start": 53.78,
+      "end": 54.58
+    },
+    {
+      "id": "w-0103",
+      "text": "to",
+      "start": 54.58,
+      "end": 55.0
+    },
+    {
+      "id": "w-0104",
+      "text": "one",
+      "start": 55.0,
+      "end": 55.22
+    },
+    {
+      "id": "w-0105",
+      "text": "of",
+      "start": 55.22,
+      "end": 55.38
+    },
+    {
+      "id": "w-0106",
+      "text": "Juno.",
+      "start": 55.38,
+      "end": 55.62
+    },
+    {
+      "id": "w-0107",
+      "text": "How",
+      "start": 56.28,
+      "end": 56.34
+    },
+    {
+      "id": "w-0108",
+      "text": "much",
+      "start": 56.34,
+      "end": 56.54
+    },
+    {
+      "id": "w-0109",
+      "text": "is",
+      "start": 56.54,
+      "end": 56.82
+    },
+    {
+      "id": "w-0110",
+      "text": "that",
+      "start": 56.82,
+      "end": 56.98
+    },
+    {
+      "id": "w-0111",
+      "text": "one?",
+      "start": 56.98,
+      "end": 57.24
+    },
+    {
+      "id": "w-0112",
+      "text": "That",
+      "start": 57.78,
+      "end": 58.0
+    },
+    {
+      "id": "w-0113",
+      "text": "was",
+      "start": 58.0,
+      "end": 58.42
+    },
+    {
+      "id": "w-0114",
+      "text": "reply",
+      "start": 58.42,
+      "end": 58.8
+    },
+    {
+      "id": "w-0115",
+      "text": "is",
+      "start": 58.8,
+      "end": 59.4
+    },
+    {
+      "id": "w-0116",
+      "text": "half",
+      "start": 59.4,
+      "end": 59.64
+    },
+    {
+      "id": "w-0117",
+      "text": "a",
+      "start": 59.64,
+      "end": 59.86
+    },
+    {
+      "id": "w-0118",
+      "text": "crown.",
+      "start": 59.86,
+      "end": 60.14
+    },
+    {
+      "id": "w-0119",
+      "text": "And",
+      "start": 60.84,
+      "end": 61.3
+    },
+    {
+      "id": "w-0120",
+      "text": "how",
+      "start": 61.3,
+      "end": 61.52
+    },
+    {
+      "id": "w-0121",
+      "text": "much",
+      "start": 61.52,
+      "end": 61.76
+    },
+    {
+      "id": "w-0122",
+      "text": "right",
+      "start": 61.76,
+      "end": 61.96
+    },
+    {
+      "id": "w-0123",
+      "text": "you",
+      "start": 61.96,
+      "end": 62.2
+    },
+    {
+      "id": "w-0124",
+      "text": "be",
+      "start": 62.2,
+      "end": 62.34
+    },
+    {
+      "id": "w-0125",
+      "text": "wanting",
+      "start": 62.34,
+      "end": 62.62
+    },
+    {
+      "id": "w-0126",
+      "text": "for",
+      "start": 62.62,
+      "end": 62.86
+    },
+    {
+      "id": "w-0127",
+      "text": "that",
+      "start": 62.86,
+      "end": 63.06
+    },
+    {
+      "id": "w-0128",
+      "text": "one",
+      "start": 63.06,
+      "end": 63.26
+    },
+    {
+      "id": "w-0129",
+      "text": "over",
+      "start": 63.26,
+      "end": 63.46
+    },
+    {
+      "id": "w-0130",
+      "text": "there",
+      "start": 63.46,
+      "end": 63.7
+    },
+    {
+      "id": "w-0131",
+      "text": "now?",
+      "start": 63.7,
+      "end": 64.0
+    },
+    {
+      "id": "w-0132",
+      "text": "He",
+      "start": 64.7,
+      "end": 65.24
+    },
+    {
+      "id": "w-0133",
+      "text": "continued",
+      "start": 65.24,
+      "end": 65.58
+    },
+    {
+      "id": "w-0134",
+      "text": "pointing",
+      "start": 65.58,
+      "end": 66.38
+    },
+    {
+      "id": "w-0135",
+      "text": "to",
+      "start": 66.38,
+      "end": 66.8
+    },
+    {
+      "id": "w-0136",
+      "text": "a",
+      "start": 66.8,
+      "end": 66.92
+    },
+    {
+      "id": "w-0137",
+      "text": "statue",
+      "start": 66.92,
+      "end": 67.18
+    },
+    {
+      "id": "w-0138",
+      "text": "of",
+      "start": 67.18,
+      "end": 67.56
+    },
+    {
+      "id": "w-0139",
+      "text": "himself.",
+      "start": 67.56,
+      "end": 67.86
+    },
+    {
+      "id": "w-0140",
+      "text": "That",
+      "start": 68.44,
+      "end": 68.66
+    },
+    {
+      "id": "w-0141",
+      "text": "one",
+      "start": 68.66,
+      "end": 68.92
+    },
+    {
+      "id": "w-0142",
+      "text": "said",
+      "start": 68.92,
+      "end": 69.44
+    },
+    {
+      "id": "w-0143",
+      "text": "the",
+      "start": 69.44,
+      "end": 69.62
+    },
+    {
+      "id": "w-0144",
+      "text": "sculpture,",
+      "start": 69.62,
+      "end": 69.96
+    },
+    {
+      "id": "w-0145",
+      "text": "oh",
+      "start": 70.58,
+      "end": 70.66
+    },
+    {
+      "id": "w-0146",
+      "text": "I'll",
+      "start": 70.66,
+      "end": 70.9
+    },
+    {
+      "id": "w-0147",
+      "text": "throw",
+      "start": 70.9,
+      "end": 71.06
+    },
+    {
+      "id": "w-0148",
+      "text": "him",
+      "start": 71.06,
+      "end": 71.32
+    },
+    {
+      "id": "w-0149",
+      "text": "in",
+      "start": 71.32,
+      "end": 71.46
+    },
+    {
+      "id": "w-0150",
+      "text": "for",
+      "start": 71.46,
+      "end": 71.62
+    },
+    {
+      "id": "w-0151",
+      "text": "nothing,",
+      "start": 71.62,
+      "end": 71.96
+    },
+    {
+      "id": "w-0152",
+      "text": "if",
+      "start": 72.52,
+      "end": 72.72
+    },
+    {
+      "id": "w-0153",
+      "text": "you'll",
+      "start": 72.72,
+      "end": 72.94
+    },
+    {
+      "id": "w-0154",
+      "text": "buy",
+      "start": 72.94,
+      "end": 73.14
+    },
+    {
+      "id": "w-0155",
+      "text": "the",
+      "start": 73.14,
+      "end": 73.36
+    },
+    {
+      "id": "w-0156",
+      "text": "other",
+      "start": 73.36,
+      "end": 73.6
+    },
+    {
+      "id": "w-0157",
+      "text": "two.",
+      "start": 73.6,
+      "end": 73.88
+    },
+    {
+      "id": "w-0158",
+      "text": "And",
+      "start": 73.88,
+      "end": 75.86
+    },
+    {
+      "id": "w-0159",
+      "text": "of",
+      "start": 75.86,
+      "end": 76.22
+    },
+    {
+      "id": "w-0160",
+      "text": "Mercury",
+      "start": 76.22,
+      "end": 77.18
+    },
+    {
+      "id": "w-0161",
+      "text": "and",
+      "start": 77.18,
+      "end": 77.66
+    },
+    {
+      "id": "w-0162",
+      "text": "Sculpture.",
+      "start": 77.66,
+      "end": 78.38
+    }
+  ]
+}

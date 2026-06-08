@@ -1,0 +1,1205 @@
+{
+  "id": "the-monkey-as-king",
+  "title": "The Monkey As King",
+  "subtitle": "Aesop's Fables, Volume 03",
+  "level": "A2-B1",
+  "duration": 82.1,
+  "audioFileName": "the-monkey-as-king.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-3-fables-51-75/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 2.62,
+      "end": 4.38,
+      "text": "This is the LibriVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 5.9,
+      "end": 8.56,
+      "text": "All LibriVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 9.92,
+      "end": 14.82,
+      "text": "For more information or to volunteer, please visit LibriVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 16.12,
+      "end": 17.72,
+      "text": "Recorded by Gizena.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 19.8,
+      "end": 20.94,
+      "text": "Isab's fables.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 23.68,
+      "end": 24.88,
+      "text": "The monkey as king.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 26.78,
+      "end": 33.7,
+      "text": "At a gathering of all the animals, the monkey danced and delighted them so much that they made him their king.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 34.8,
+      "end": 39.46,
+      "text": "The fox, however, was very much disgusted at the promotion of the monkey.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 40.38,
+      "end": 46.92,
+      "text": "So, having one day found a trap with a piece of meat in it, he took the monkey there and said to him,",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 47.46,
+      "end": 55.46,
+      "text": "here is a dainty morsel I have found, Sire, I did not take it myself because I thought it ought to be reserved for you, our king.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 56.56,
+      "end": 58.36,
+      "text": "Will you be pleased to accept it?",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 59.7,
+      "end": 63.46,
+      "text": "The monkey made it once for the meat and got caught in the trap.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 64.74,
+      "end": 71.14,
+      "text": "Then he bitterly reproached the fox for leading him into danger, but the fox only laughed and said,",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 71.14,
+      "end": 77.9,
+      "text": "Oh, monkey, you call yourself king of the beasts and haven't more sense than to be taken in like that.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 80.08,
+      "end": 82.06,
+      "text": "End of The Monkey as King.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 2.62,
+      "end": 3.38
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 3.38,
+      "end": 3.58
+    },
+    {
+      "id": "w-0002",
+      "text": "the",
+      "start": 3.58,
+      "end": 3.7
+    },
+    {
+      "id": "w-0003",
+      "text": "LibriVox",
+      "start": 3.7,
+      "end": 4.16
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 4.16,
+      "end": 4.38
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 5.9,
+      "end": 6.08
+    },
+    {
+      "id": "w-0006",
+      "text": "LibriVox",
+      "start": 6.08,
+      "end": 6.86
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 6.86,
+      "end": 7.08
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 7.08,
+      "end": 7.76
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 7.76,
+      "end": 7.88
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 7.88,
+      "end": 7.96
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 7.96,
+      "end": 8.2
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 8.2,
+      "end": 8.56
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 9.92,
+      "end": 9.96
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 9.96,
+      "end": 10.12
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 10.12,
+      "end": 10.46
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 10.46,
+      "end": 11.08
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 11.08,
+      "end": 11.22
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 11.22,
+      "end": 11.72
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 12.44,
+      "end": 12.6
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 12.6,
+      "end": 12.96
+    },
+    {
+      "id": "w-0021",
+      "text": "LibriVox",
+      "start": 12.96,
+      "end": 14.1
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 14.1,
+      "end": 14.82
+    },
+    {
+      "id": "w-0023",
+      "text": "Recorded",
+      "start": 16.12,
+      "end": 16.88
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 16.88,
+      "end": 17.22
+    },
+    {
+      "id": "w-0025",
+      "text": "Gizena.",
+      "start": 17.22,
+      "end": 17.72
+    },
+    {
+      "id": "w-0026",
+      "text": "Isab's",
+      "start": 19.8,
+      "end": 20.56
+    },
+    {
+      "id": "w-0027",
+      "text": "fables.",
+      "start": 20.56,
+      "end": 20.94
+    },
+    {
+      "id": "w-0028",
+      "text": "The",
+      "start": 23.68,
+      "end": 23.72
+    },
+    {
+      "id": "w-0029",
+      "text": "monkey",
+      "start": 23.72,
+      "end": 23.9
+    },
+    {
+      "id": "w-0030",
+      "text": "as",
+      "start": 23.9,
+      "end": 24.6
+    },
+    {
+      "id": "w-0031",
+      "text": "king.",
+      "start": 24.6,
+      "end": 24.88
+    },
+    {
+      "id": "w-0032",
+      "text": "At",
+      "start": 26.78,
+      "end": 27.3
+    },
+    {
+      "id": "w-0033",
+      "text": "a",
+      "start": 27.3,
+      "end": 27.68
+    },
+    {
+      "id": "w-0034",
+      "text": "gathering",
+      "start": 27.68,
+      "end": 27.96
+    },
+    {
+      "id": "w-0035",
+      "text": "of",
+      "start": 27.96,
+      "end": 28.38
+    },
+    {
+      "id": "w-0036",
+      "text": "all",
+      "start": 28.38,
+      "end": 28.56
+    },
+    {
+      "id": "w-0037",
+      "text": "the",
+      "start": 28.56,
+      "end": 28.72
+    },
+    {
+      "id": "w-0038",
+      "text": "animals,",
+      "start": 28.72,
+      "end": 29.06
+    },
+    {
+      "id": "w-0039",
+      "text": "the",
+      "start": 29.76,
+      "end": 29.82
+    },
+    {
+      "id": "w-0040",
+      "text": "monkey",
+      "start": 29.82,
+      "end": 30.1
+    },
+    {
+      "id": "w-0041",
+      "text": "danced",
+      "start": 30.1,
+      "end": 30.4
+    },
+    {
+      "id": "w-0042",
+      "text": "and",
+      "start": 30.4,
+      "end": 30.84
+    },
+    {
+      "id": "w-0043",
+      "text": "delighted",
+      "start": 30.84,
+      "end": 31.12
+    },
+    {
+      "id": "w-0044",
+      "text": "them",
+      "start": 31.12,
+      "end": 31.44
+    },
+    {
+      "id": "w-0045",
+      "text": "so",
+      "start": 31.44,
+      "end": 31.68
+    },
+    {
+      "id": "w-0046",
+      "text": "much",
+      "start": 31.68,
+      "end": 32.02
+    },
+    {
+      "id": "w-0047",
+      "text": "that",
+      "start": 32.02,
+      "end": 32.66
+    },
+    {
+      "id": "w-0048",
+      "text": "they",
+      "start": 32.66,
+      "end": 32.78
+    },
+    {
+      "id": "w-0049",
+      "text": "made",
+      "start": 32.78,
+      "end": 33.02
+    },
+    {
+      "id": "w-0050",
+      "text": "him",
+      "start": 33.02,
+      "end": 33.26
+    },
+    {
+      "id": "w-0051",
+      "text": "their",
+      "start": 33.26,
+      "end": 33.44
+    },
+    {
+      "id": "w-0052",
+      "text": "king.",
+      "start": 33.44,
+      "end": 33.7
+    },
+    {
+      "id": "w-0053",
+      "text": "The",
+      "start": 34.8,
+      "end": 35.32
+    },
+    {
+      "id": "w-0054",
+      "text": "fox,",
+      "start": 35.32,
+      "end": 35.48
+    },
+    {
+      "id": "w-0055",
+      "text": "however,",
+      "start": 35.8,
+      "end": 36.06
+    },
+    {
+      "id": "w-0056",
+      "text": "was",
+      "start": 36.56,
+      "end": 36.76
+    },
+    {
+      "id": "w-0057",
+      "text": "very",
+      "start": 36.76,
+      "end": 37.06
+    },
+    {
+      "id": "w-0058",
+      "text": "much",
+      "start": 37.06,
+      "end": 37.28
+    },
+    {
+      "id": "w-0059",
+      "text": "disgusted",
+      "start": 37.28,
+      "end": 37.76
+    },
+    {
+      "id": "w-0060",
+      "text": "at",
+      "start": 37.76,
+      "end": 38.24
+    },
+    {
+      "id": "w-0061",
+      "text": "the",
+      "start": 38.24,
+      "end": 38.36
+    },
+    {
+      "id": "w-0062",
+      "text": "promotion",
+      "start": 38.36,
+      "end": 38.66
+    },
+    {
+      "id": "w-0063",
+      "text": "of",
+      "start": 38.66,
+      "end": 39.1
+    },
+    {
+      "id": "w-0064",
+      "text": "the",
+      "start": 39.1,
+      "end": 39.22
+    },
+    {
+      "id": "w-0065",
+      "text": "monkey.",
+      "start": 39.22,
+      "end": 39.46
+    },
+    {
+      "id": "w-0066",
+      "text": "So,",
+      "start": 40.38,
+      "end": 40.72
+    },
+    {
+      "id": "w-0067",
+      "text": "having",
+      "start": 40.98,
+      "end": 41.14
+    },
+    {
+      "id": "w-0068",
+      "text": "one",
+      "start": 41.14,
+      "end": 41.4
+    },
+    {
+      "id": "w-0069",
+      "text": "day",
+      "start": 41.4,
+      "end": 41.64
+    },
+    {
+      "id": "w-0070",
+      "text": "found",
+      "start": 41.64,
+      "end": 41.96
+    },
+    {
+      "id": "w-0071",
+      "text": "a",
+      "start": 41.96,
+      "end": 42.18
+    },
+    {
+      "id": "w-0072",
+      "text": "trap",
+      "start": 42.18,
+      "end": 42.46
+    },
+    {
+      "id": "w-0073",
+      "text": "with",
+      "start": 42.46,
+      "end": 42.94
+    },
+    {
+      "id": "w-0074",
+      "text": "a",
+      "start": 42.94,
+      "end": 43.06
+    },
+    {
+      "id": "w-0075",
+      "text": "piece",
+      "start": 43.06,
+      "end": 43.22
+    },
+    {
+      "id": "w-0076",
+      "text": "of",
+      "start": 43.22,
+      "end": 43.4
+    },
+    {
+      "id": "w-0077",
+      "text": "meat",
+      "start": 43.4,
+      "end": 43.58
+    },
+    {
+      "id": "w-0078",
+      "text": "in",
+      "start": 43.58,
+      "end": 43.8
+    },
+    {
+      "id": "w-0079",
+      "text": "it,",
+      "start": 43.8,
+      "end": 43.98
+    },
+    {
+      "id": "w-0080",
+      "text": "he",
+      "start": 44.6,
+      "end": 44.76
+    },
+    {
+      "id": "w-0081",
+      "text": "took",
+      "start": 44.76,
+      "end": 44.92
+    },
+    {
+      "id": "w-0082",
+      "text": "the",
+      "start": 44.92,
+      "end": 45.1
+    },
+    {
+      "id": "w-0083",
+      "text": "monkey",
+      "start": 45.1,
+      "end": 45.4
+    },
+    {
+      "id": "w-0084",
+      "text": "there",
+      "start": 45.4,
+      "end": 45.74
+    },
+    {
+      "id": "w-0085",
+      "text": "and",
+      "start": 45.74,
+      "end": 46.32
+    },
+    {
+      "id": "w-0086",
+      "text": "said",
+      "start": 46.32,
+      "end": 46.52
+    },
+    {
+      "id": "w-0087",
+      "text": "to",
+      "start": 46.52,
+      "end": 46.74
+    },
+    {
+      "id": "w-0088",
+      "text": "him,",
+      "start": 46.74,
+      "end": 46.92
+    },
+    {
+      "id": "w-0089",
+      "text": "here",
+      "start": 47.46,
+      "end": 47.98
+    },
+    {
+      "id": "w-0090",
+      "text": "is",
+      "start": 47.98,
+      "end": 48.16
+    },
+    {
+      "id": "w-0091",
+      "text": "a",
+      "start": 48.16,
+      "end": 48.24
+    },
+    {
+      "id": "w-0092",
+      "text": "dainty",
+      "start": 48.24,
+      "end": 48.62
+    },
+    {
+      "id": "w-0093",
+      "text": "morsel",
+      "start": 48.62,
+      "end": 49.04
+    },
+    {
+      "id": "w-0094",
+      "text": "I",
+      "start": 49.04,
+      "end": 49.22
+    },
+    {
+      "id": "w-0095",
+      "text": "have",
+      "start": 49.22,
+      "end": 49.34
+    },
+    {
+      "id": "w-0096",
+      "text": "found,",
+      "start": 49.34,
+      "end": 49.68
+    },
+    {
+      "id": "w-0097",
+      "text": "Sire,",
+      "start": 50.08,
+      "end": 50.3
+    },
+    {
+      "id": "w-0098",
+      "text": "I",
+      "start": 50.98,
+      "end": 51.06
+    },
+    {
+      "id": "w-0099",
+      "text": "did",
+      "start": 51.06,
+      "end": 51.18
+    },
+    {
+      "id": "w-0100",
+      "text": "not",
+      "start": 51.18,
+      "end": 51.32
+    },
+    {
+      "id": "w-0101",
+      "text": "take",
+      "start": 51.32,
+      "end": 51.6
+    },
+    {
+      "id": "w-0102",
+      "text": "it",
+      "start": 51.6,
+      "end": 51.72
+    },
+    {
+      "id": "w-0103",
+      "text": "myself",
+      "start": 51.72,
+      "end": 51.92
+    },
+    {
+      "id": "w-0104",
+      "text": "because",
+      "start": 51.92,
+      "end": 52.68
+    },
+    {
+      "id": "w-0105",
+      "text": "I",
+      "start": 52.68,
+      "end": 52.94
+    },
+    {
+      "id": "w-0106",
+      "text": "thought",
+      "start": 52.94,
+      "end": 53.18
+    },
+    {
+      "id": "w-0107",
+      "text": "it",
+      "start": 53.18,
+      "end": 53.36
+    },
+    {
+      "id": "w-0108",
+      "text": "ought",
+      "start": 53.36,
+      "end": 53.52
+    },
+    {
+      "id": "w-0109",
+      "text": "to",
+      "start": 53.52,
+      "end": 53.68
+    },
+    {
+      "id": "w-0110",
+      "text": "be",
+      "start": 53.68,
+      "end": 53.82
+    },
+    {
+      "id": "w-0111",
+      "text": "reserved",
+      "start": 53.82,
+      "end": 54.1
+    },
+    {
+      "id": "w-0112",
+      "text": "for",
+      "start": 54.1,
+      "end": 54.48
+    },
+    {
+      "id": "w-0113",
+      "text": "you,",
+      "start": 54.48,
+      "end": 54.7
+    },
+    {
+      "id": "w-0114",
+      "text": "our",
+      "start": 55.06,
+      "end": 55.18
+    },
+    {
+      "id": "w-0115",
+      "text": "king.",
+      "start": 55.18,
+      "end": 55.46
+    },
+    {
+      "id": "w-0116",
+      "text": "Will",
+      "start": 56.56,
+      "end": 57.02
+    },
+    {
+      "id": "w-0117",
+      "text": "you",
+      "start": 57.02,
+      "end": 57.12
+    },
+    {
+      "id": "w-0118",
+      "text": "be",
+      "start": 57.12,
+      "end": 57.26
+    },
+    {
+      "id": "w-0119",
+      "text": "pleased",
+      "start": 57.26,
+      "end": 57.5
+    },
+    {
+      "id": "w-0120",
+      "text": "to",
+      "start": 57.5,
+      "end": 57.82
+    },
+    {
+      "id": "w-0121",
+      "text": "accept",
+      "start": 57.82,
+      "end": 58.04
+    },
+    {
+      "id": "w-0122",
+      "text": "it?",
+      "start": 58.04,
+      "end": 58.36
+    },
+    {
+      "id": "w-0123",
+      "text": "The",
+      "start": 59.7,
+      "end": 60.08
+    },
+    {
+      "id": "w-0124",
+      "text": "monkey",
+      "start": 60.08,
+      "end": 60.3
+    },
+    {
+      "id": "w-0125",
+      "text": "made",
+      "start": 60.3,
+      "end": 60.72
+    },
+    {
+      "id": "w-0126",
+      "text": "it",
+      "start": 60.72,
+      "end": 60.88
+    },
+    {
+      "id": "w-0127",
+      "text": "once",
+      "start": 60.88,
+      "end": 61.08
+    },
+    {
+      "id": "w-0128",
+      "text": "for",
+      "start": 61.08,
+      "end": 61.44
+    },
+    {
+      "id": "w-0129",
+      "text": "the",
+      "start": 61.44,
+      "end": 61.56
+    },
+    {
+      "id": "w-0130",
+      "text": "meat",
+      "start": 61.56,
+      "end": 61.72
+    },
+    {
+      "id": "w-0131",
+      "text": "and",
+      "start": 61.72,
+      "end": 62.34
+    },
+    {
+      "id": "w-0132",
+      "text": "got",
+      "start": 62.34,
+      "end": 62.5
+    },
+    {
+      "id": "w-0133",
+      "text": "caught",
+      "start": 62.5,
+      "end": 62.76
+    },
+    {
+      "id": "w-0134",
+      "text": "in",
+      "start": 62.76,
+      "end": 63.08
+    },
+    {
+      "id": "w-0135",
+      "text": "the",
+      "start": 63.08,
+      "end": 63.2
+    },
+    {
+      "id": "w-0136",
+      "text": "trap.",
+      "start": 63.2,
+      "end": 63.46
+    },
+    {
+      "id": "w-0137",
+      "text": "Then",
+      "start": 64.74,
+      "end": 65.26
+    },
+    {
+      "id": "w-0138",
+      "text": "he",
+      "start": 65.26,
+      "end": 65.46
+    },
+    {
+      "id": "w-0139",
+      "text": "bitterly",
+      "start": 65.46,
+      "end": 65.72
+    },
+    {
+      "id": "w-0140",
+      "text": "reproached",
+      "start": 65.72,
+      "end": 66.64
+    },
+    {
+      "id": "w-0141",
+      "text": "the",
+      "start": 66.64,
+      "end": 66.82
+    },
+    {
+      "id": "w-0142",
+      "text": "fox",
+      "start": 66.82,
+      "end": 67.0
+    },
+    {
+      "id": "w-0143",
+      "text": "for",
+      "start": 67.0,
+      "end": 67.42
+    },
+    {
+      "id": "w-0144",
+      "text": "leading",
+      "start": 67.42,
+      "end": 67.6
+    },
+    {
+      "id": "w-0145",
+      "text": "him",
+      "start": 67.6,
+      "end": 67.94
+    },
+    {
+      "id": "w-0146",
+      "text": "into",
+      "start": 67.94,
+      "end": 68.16
+    },
+    {
+      "id": "w-0147",
+      "text": "danger,",
+      "start": 68.16,
+      "end": 68.44
+    },
+    {
+      "id": "w-0148",
+      "text": "but",
+      "start": 69.4,
+      "end": 69.48
+    },
+    {
+      "id": "w-0149",
+      "text": "the",
+      "start": 69.48,
+      "end": 69.6
+    },
+    {
+      "id": "w-0150",
+      "text": "fox",
+      "start": 69.6,
+      "end": 69.8
+    },
+    {
+      "id": "w-0151",
+      "text": "only",
+      "start": 69.8,
+      "end": 70.26
+    },
+    {
+      "id": "w-0152",
+      "text": "laughed",
+      "start": 70.26,
+      "end": 70.56
+    },
+    {
+      "id": "w-0153",
+      "text": "and",
+      "start": 70.56,
+      "end": 70.86
+    },
+    {
+      "id": "w-0154",
+      "text": "said,",
+      "start": 70.86,
+      "end": 71.14
+    },
+    {
+      "id": "w-0155",
+      "text": "Oh,",
+      "start": 71.14,
+      "end": 72.1
+    },
+    {
+      "id": "w-0156",
+      "text": "monkey,",
+      "start": 72.2,
+      "end": 72.34
+    },
+    {
+      "id": "w-0157",
+      "text": "you",
+      "start": 72.96,
+      "end": 73.08
+    },
+    {
+      "id": "w-0158",
+      "text": "call",
+      "start": 73.08,
+      "end": 73.32
+    },
+    {
+      "id": "w-0159",
+      "text": "yourself",
+      "start": 73.32,
+      "end": 73.6
+    },
+    {
+      "id": "w-0160",
+      "text": "king",
+      "start": 73.6,
+      "end": 73.96
+    },
+    {
+      "id": "w-0161",
+      "text": "of",
+      "start": 73.96,
+      "end": 74.26
+    },
+    {
+      "id": "w-0162",
+      "text": "the",
+      "start": 74.26,
+      "end": 74.4
+    },
+    {
+      "id": "w-0163",
+      "text": "beasts",
+      "start": 74.4,
+      "end": 74.64
+    },
+    {
+      "id": "w-0164",
+      "text": "and",
+      "start": 74.64,
+      "end": 75.42
+    },
+    {
+      "id": "w-0165",
+      "text": "haven't",
+      "start": 75.42,
+      "end": 75.78
+    },
+    {
+      "id": "w-0166",
+      "text": "more",
+      "start": 75.78,
+      "end": 75.96
+    },
+    {
+      "id": "w-0167",
+      "text": "sense",
+      "start": 75.96,
+      "end": 76.2
+    },
+    {
+      "id": "w-0168",
+      "text": "than",
+      "start": 76.2,
+      "end": 76.58
+    },
+    {
+      "id": "w-0169",
+      "text": "to",
+      "start": 76.58,
+      "end": 76.72
+    },
+    {
+      "id": "w-0170",
+      "text": "be",
+      "start": 76.72,
+      "end": 76.82
+    },
+    {
+      "id": "w-0171",
+      "text": "taken",
+      "start": 76.82,
+      "end": 77.12
+    },
+    {
+      "id": "w-0172",
+      "text": "in",
+      "start": 77.12,
+      "end": 77.3
+    },
+    {
+      "id": "w-0173",
+      "text": "like",
+      "start": 77.3,
+      "end": 77.56
+    },
+    {
+      "id": "w-0174",
+      "text": "that.",
+      "start": 77.56,
+      "end": 77.9
+    },
+    {
+      "id": "w-0175",
+      "text": "End",
+      "start": 80.08,
+      "end": 80.64
+    },
+    {
+      "id": "w-0176",
+      "text": "of",
+      "start": 80.64,
+      "end": 80.86
+    },
+    {
+      "id": "w-0177",
+      "text": "The",
+      "start": 80.86,
+      "end": 81.22
+    },
+    {
+      "id": "w-0178",
+      "text": "Monkey",
+      "start": 81.22,
+      "end": 81.54
+    },
+    {
+      "id": "w-0179",
+      "text": "as",
+      "start": 81.54,
+      "end": 81.78
+    },
+    {
+      "id": "w-0180",
+      "text": "King.",
+      "start": 81.78,
+      "end": 82.06
+    }
+  ]
+}

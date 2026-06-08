@@ -1,0 +1,592 @@
+{
+  "id": "the-dog-and-the-sow",
+  "title": "The Dog and The Sow",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 44.0,
+  "audioFileName": "the-dog-and-the-sow.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 2.96,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 4.0,
+      "end": 6.6,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 7.62,
+      "end": 12.94,
+      "text": "For more information or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 14.12,
+      "end": 16.76,
+      "text": "Recorded by Beth Dudek.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 18.24,
+      "end": 21.2,
+      "text": "ESOP's Fables, the Dog and the Sow.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 23.48,
+      "end": 31.06,
+      "text": "A dog and a Sow were arguing, and each claimed that its own young ones were finer than those of any other animal.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 32.02,
+      "end": 40.44,
+      "text": "Well, said the Sow at last, mine can see at any rate when they come into the world, but yours are born blind.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 42.06,
+      "end": 43.98,
+      "text": "End of the Dog and the Sow.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 1.6
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.6,
+      "end": 1.94
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.94,
+      "end": 2.1
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 2.1,
+      "end": 2.66
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.66,
+      "end": 2.96
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 4.0,
+      "end": 4.24
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 4.24,
+      "end": 4.94
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 4.94,
+      "end": 5.3
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 5.3,
+      "end": 5.76
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 5.76,
+      "end": 5.9
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.9,
+      "end": 5.98
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.98,
+      "end": 6.24
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 6.24,
+      "end": 6.6
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 7.62,
+      "end": 7.84
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 7.84,
+      "end": 8.1
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 8.1,
+      "end": 8.6
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 8.6,
+      "end": 9.28
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 9.28,
+      "end": 9.46
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 9.46,
+      "end": 9.78
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 10.72,
+      "end": 10.92
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 10.92,
+      "end": 11.38
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox",
+      "start": 11.38,
+      "end": 12.36
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 12.36,
+      "end": 12.94
+    },
+    {
+      "id": "w-0023",
+      "text": "Recorded",
+      "start": 14.12,
+      "end": 14.86
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 14.86,
+      "end": 15.3
+    },
+    {
+      "id": "w-0025",
+      "text": "Beth",
+      "start": 15.3,
+      "end": 16.02
+    },
+    {
+      "id": "w-0026",
+      "text": "Dudek.",
+      "start": 16.02,
+      "end": 16.76
+    },
+    {
+      "id": "w-0027",
+      "text": "ESOP's",
+      "start": 18.24,
+      "end": 18.92
+    },
+    {
+      "id": "w-0028",
+      "text": "Fables,",
+      "start": 18.92,
+      "end": 19.34
+    },
+    {
+      "id": "w-0029",
+      "text": "the",
+      "start": 20.12,
+      "end": 20.14
+    },
+    {
+      "id": "w-0030",
+      "text": "Dog",
+      "start": 20.14,
+      "end": 20.38
+    },
+    {
+      "id": "w-0031",
+      "text": "and",
+      "start": 20.38,
+      "end": 20.72
+    },
+    {
+      "id": "w-0032",
+      "text": "the",
+      "start": 20.72,
+      "end": 20.86
+    },
+    {
+      "id": "w-0033",
+      "text": "Sow.",
+      "start": 20.86,
+      "end": 21.2
+    },
+    {
+      "id": "w-0034",
+      "text": "A",
+      "start": 23.48,
+      "end": 24.08
+    },
+    {
+      "id": "w-0035",
+      "text": "dog",
+      "start": 24.08,
+      "end": 24.4
+    },
+    {
+      "id": "w-0036",
+      "text": "and",
+      "start": 24.4,
+      "end": 24.66
+    },
+    {
+      "id": "w-0037",
+      "text": "a",
+      "start": 24.66,
+      "end": 24.76
+    },
+    {
+      "id": "w-0038",
+      "text": "Sow",
+      "start": 24.76,
+      "end": 25.08
+    },
+    {
+      "id": "w-0039",
+      "text": "were",
+      "start": 25.08,
+      "end": 25.26
+    },
+    {
+      "id": "w-0040",
+      "text": "arguing,",
+      "start": 25.26,
+      "end": 25.64
+    },
+    {
+      "id": "w-0041",
+      "text": "and",
+      "start": 26.48,
+      "end": 26.54
+    },
+    {
+      "id": "w-0042",
+      "text": "each",
+      "start": 26.54,
+      "end": 26.84
+    },
+    {
+      "id": "w-0043",
+      "text": "claimed",
+      "start": 26.84,
+      "end": 27.24
+    },
+    {
+      "id": "w-0044",
+      "text": "that",
+      "start": 27.24,
+      "end": 27.58
+    },
+    {
+      "id": "w-0045",
+      "text": "its",
+      "start": 27.58,
+      "end": 27.74
+    },
+    {
+      "id": "w-0046",
+      "text": "own",
+      "start": 27.74,
+      "end": 28.06
+    },
+    {
+      "id": "w-0047",
+      "text": "young",
+      "start": 28.06,
+      "end": 28.26
+    },
+    {
+      "id": "w-0048",
+      "text": "ones",
+      "start": 28.26,
+      "end": 28.6
+    },
+    {
+      "id": "w-0049",
+      "text": "were",
+      "start": 28.6,
+      "end": 28.94
+    },
+    {
+      "id": "w-0050",
+      "text": "finer",
+      "start": 28.94,
+      "end": 29.24
+    },
+    {
+      "id": "w-0051",
+      "text": "than",
+      "start": 29.24,
+      "end": 29.7
+    },
+    {
+      "id": "w-0052",
+      "text": "those",
+      "start": 29.7,
+      "end": 29.92
+    },
+    {
+      "id": "w-0053",
+      "text": "of",
+      "start": 29.92,
+      "end": 30.16
+    },
+    {
+      "id": "w-0054",
+      "text": "any",
+      "start": 30.16,
+      "end": 30.44
+    },
+    {
+      "id": "w-0055",
+      "text": "other",
+      "start": 30.44,
+      "end": 30.78
+    },
+    {
+      "id": "w-0056",
+      "text": "animal.",
+      "start": 30.78,
+      "end": 31.06
+    },
+    {
+      "id": "w-0057",
+      "text": "Well,",
+      "start": 32.02,
+      "end": 32.62
+    },
+    {
+      "id": "w-0058",
+      "text": "said",
+      "start": 33.14,
+      "end": 33.24
+    },
+    {
+      "id": "w-0059",
+      "text": "the",
+      "start": 33.24,
+      "end": 33.4
+    },
+    {
+      "id": "w-0060",
+      "text": "Sow",
+      "start": 33.4,
+      "end": 33.74
+    },
+    {
+      "id": "w-0061",
+      "text": "at",
+      "start": 33.74,
+      "end": 33.92
+    },
+    {
+      "id": "w-0062",
+      "text": "last,",
+      "start": 33.92,
+      "end": 34.12
+    },
+    {
+      "id": "w-0063",
+      "text": "mine",
+      "start": 34.98,
+      "end": 35.22
+    },
+    {
+      "id": "w-0064",
+      "text": "can",
+      "start": 35.22,
+      "end": 35.54
+    },
+    {
+      "id": "w-0065",
+      "text": "see",
+      "start": 35.54,
+      "end": 35.86
+    },
+    {
+      "id": "w-0066",
+      "text": "at",
+      "start": 35.86,
+      "end": 36.24
+    },
+    {
+      "id": "w-0067",
+      "text": "any",
+      "start": 36.24,
+      "end": 36.48
+    },
+    {
+      "id": "w-0068",
+      "text": "rate",
+      "start": 36.48,
+      "end": 36.84
+    },
+    {
+      "id": "w-0069",
+      "text": "when",
+      "start": 36.84,
+      "end": 37.14
+    },
+    {
+      "id": "w-0070",
+      "text": "they",
+      "start": 37.14,
+      "end": 37.34
+    },
+    {
+      "id": "w-0071",
+      "text": "come",
+      "start": 37.34,
+      "end": 37.58
+    },
+    {
+      "id": "w-0072",
+      "text": "into",
+      "start": 37.58,
+      "end": 37.78
+    },
+    {
+      "id": "w-0073",
+      "text": "the",
+      "start": 37.78,
+      "end": 37.96
+    },
+    {
+      "id": "w-0074",
+      "text": "world,",
+      "start": 37.96,
+      "end": 38.26
+    },
+    {
+      "id": "w-0075",
+      "text": "but",
+      "start": 38.9,
+      "end": 38.98
+    },
+    {
+      "id": "w-0076",
+      "text": "yours",
+      "start": 38.98,
+      "end": 39.22
+    },
+    {
+      "id": "w-0077",
+      "text": "are",
+      "start": 39.22,
+      "end": 39.7
+    },
+    {
+      "id": "w-0078",
+      "text": "born",
+      "start": 39.7,
+      "end": 39.94
+    },
+    {
+      "id": "w-0079",
+      "text": "blind.",
+      "start": 39.94,
+      "end": 40.44
+    },
+    {
+      "id": "w-0080",
+      "text": "End",
+      "start": 42.06,
+      "end": 42.66
+    },
+    {
+      "id": "w-0081",
+      "text": "of",
+      "start": 42.66,
+      "end": 42.86
+    },
+    {
+      "id": "w-0082",
+      "text": "the",
+      "start": 42.86,
+      "end": 43.04
+    },
+    {
+      "id": "w-0083",
+      "text": "Dog",
+      "start": 43.04,
+      "end": 43.24
+    },
+    {
+      "id": "w-0084",
+      "text": "and",
+      "start": 43.24,
+      "end": 43.5
+    },
+    {
+      "id": "w-0085",
+      "text": "the",
+      "start": 43.5,
+      "end": 43.64
+    },
+    {
+      "id": "w-0086",
+      "text": "Sow.",
+      "start": 43.64,
+      "end": 43.98
+    }
+  ]
+}

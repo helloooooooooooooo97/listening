@@ -1,0 +1,1035 @@
+{
+  "id": "the-blacksmith-and-his-dog",
+  "title": "The Blacksmith and His Dog",
+  "subtitle": "Aesop's Fables, Volume 04",
+  "level": "A2-B1",
+  "duration": 53.9,
+  "audioFileName": "the-blacksmith-and-his-dog.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-4-fables-76-100/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.76,
+      "end": 5.9,
+      "text": "This is a LibraVox recording. All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.92,
+      "end": 11.72,
+      "text": "For more information or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 13.02,
+      "end": 16.32,
+      "text": "ASOP's Fables, the blacksmith and his dog.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 17.58,
+      "end": 21.94,
+      "text": "A blacksmith had a little dog which used to sleep when his master was at work,",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 22.44,
+      "end": 25.02,
+      "text": "but was very wide awake indeed when it was time for meals.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 25.78,
+      "end": 28.9,
+      "text": "One day his master pretended to be disgruntled at this,",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 29.38,
+      "end": 32.34,
+      "text": "and when he had thrown him a bone as usual, he said,",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 32.86,
+      "end": 35.3,
+      "text": "What on earth is the good of a lazy curl like you?",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 35.88,
+      "end": 39.64,
+      "text": "When I am hammering away at my anvil, you just curl up and go to sleep.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 40.34,
+      "end": 45.46,
+      "text": "But no sooner do I stop for a mouthful of food than you wake up and wag your tail to be fed.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 46.32,
+      "end": 49.26,
+      "text": "Those who will not work deserve to starve.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 50.38,
+      "end": 53.72,
+      "text": "End of the blacksmith and his dog.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 53.72,
+      "end": 53.9,
+      "text": "End of the blacksmith's Fables, the blacksmith and his dog.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.76,
+      "end": 1.32
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.32,
+      "end": 1.7
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.7,
+      "end": 1.84
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.84,
+      "end": 2.32
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.32,
+      "end": 2.58
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.5,
+      "end": 3.6
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.6,
+      "end": 4.2
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 4.2,
+      "end": 4.64
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.64,
+      "end": 5.08
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 5.08,
+      "end": 5.24
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.24,
+      "end": 5.34
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.34,
+      "end": 5.58
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.58,
+      "end": 5.9
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.92,
+      "end": 6.94
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.94,
+      "end": 7.16
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 7.16,
+      "end": 7.58
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.58,
+      "end": 8.28
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.28,
+      "end": 8.46
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.46,
+      "end": 8.88
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.64,
+      "end": 9.9
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.9,
+      "end": 10.18
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox",
+      "start": 10.18,
+      "end": 11.04
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 11.04,
+      "end": 11.72
+    },
+    {
+      "id": "w-0023",
+      "text": "ASOP's",
+      "start": 13.02,
+      "end": 13.58
+    },
+    {
+      "id": "w-0024",
+      "text": "Fables,",
+      "start": 13.58,
+      "end": 14.0
+    },
+    {
+      "id": "w-0025",
+      "text": "the",
+      "start": 14.7,
+      "end": 14.74
+    },
+    {
+      "id": "w-0026",
+      "text": "blacksmith",
+      "start": 14.74,
+      "end": 15.24
+    },
+    {
+      "id": "w-0027",
+      "text": "and",
+      "start": 15.24,
+      "end": 15.76
+    },
+    {
+      "id": "w-0028",
+      "text": "his",
+      "start": 15.76,
+      "end": 16.06
+    },
+    {
+      "id": "w-0029",
+      "text": "dog.",
+      "start": 16.06,
+      "end": 16.32
+    },
+    {
+      "id": "w-0030",
+      "text": "A",
+      "start": 17.58,
+      "end": 17.8
+    },
+    {
+      "id": "w-0031",
+      "text": "blacksmith",
+      "start": 17.8,
+      "end": 18.24
+    },
+    {
+      "id": "w-0032",
+      "text": "had",
+      "start": 18.24,
+      "end": 18.52
+    },
+    {
+      "id": "w-0033",
+      "text": "a",
+      "start": 18.52,
+      "end": 18.74
+    },
+    {
+      "id": "w-0034",
+      "text": "little",
+      "start": 18.74,
+      "end": 18.88
+    },
+    {
+      "id": "w-0035",
+      "text": "dog",
+      "start": 18.88,
+      "end": 19.26
+    },
+    {
+      "id": "w-0036",
+      "text": "which",
+      "start": 19.26,
+      "end": 19.88
+    },
+    {
+      "id": "w-0037",
+      "text": "used",
+      "start": 19.88,
+      "end": 20.14
+    },
+    {
+      "id": "w-0038",
+      "text": "to",
+      "start": 20.14,
+      "end": 20.42
+    },
+    {
+      "id": "w-0039",
+      "text": "sleep",
+      "start": 20.42,
+      "end": 20.64
+    },
+    {
+      "id": "w-0040",
+      "text": "when",
+      "start": 20.64,
+      "end": 20.88
+    },
+    {
+      "id": "w-0041",
+      "text": "his",
+      "start": 20.88,
+      "end": 21.06
+    },
+    {
+      "id": "w-0042",
+      "text": "master",
+      "start": 21.06,
+      "end": 21.3
+    },
+    {
+      "id": "w-0043",
+      "text": "was",
+      "start": 21.3,
+      "end": 21.64
+    },
+    {
+      "id": "w-0044",
+      "text": "at",
+      "start": 21.64,
+      "end": 21.76
+    },
+    {
+      "id": "w-0045",
+      "text": "work,",
+      "start": 21.76,
+      "end": 21.94
+    },
+    {
+      "id": "w-0046",
+      "text": "but",
+      "start": 22.44,
+      "end": 22.56
+    },
+    {
+      "id": "w-0047",
+      "text": "was",
+      "start": 22.56,
+      "end": 22.7
+    },
+    {
+      "id": "w-0048",
+      "text": "very",
+      "start": 22.7,
+      "end": 22.94
+    },
+    {
+      "id": "w-0049",
+      "text": "wide",
+      "start": 22.94,
+      "end": 23.2
+    },
+    {
+      "id": "w-0050",
+      "text": "awake",
+      "start": 23.2,
+      "end": 23.5
+    },
+    {
+      "id": "w-0051",
+      "text": "indeed",
+      "start": 23.5,
+      "end": 23.78
+    },
+    {
+      "id": "w-0052",
+      "text": "when",
+      "start": 23.78,
+      "end": 24.18
+    },
+    {
+      "id": "w-0053",
+      "text": "it",
+      "start": 24.18,
+      "end": 24.28
+    },
+    {
+      "id": "w-0054",
+      "text": "was",
+      "start": 24.28,
+      "end": 24.4
+    },
+    {
+      "id": "w-0055",
+      "text": "time",
+      "start": 24.4,
+      "end": 24.6
+    },
+    {
+      "id": "w-0056",
+      "text": "for",
+      "start": 24.6,
+      "end": 24.86
+    },
+    {
+      "id": "w-0057",
+      "text": "meals.",
+      "start": 24.86,
+      "end": 25.02
+    },
+    {
+      "id": "w-0058",
+      "text": "One",
+      "start": 25.78,
+      "end": 26.28
+    },
+    {
+      "id": "w-0059",
+      "text": "day",
+      "start": 26.28,
+      "end": 26.58
+    },
+    {
+      "id": "w-0060",
+      "text": "his",
+      "start": 26.58,
+      "end": 26.86
+    },
+    {
+      "id": "w-0061",
+      "text": "master",
+      "start": 26.86,
+      "end": 27.3
+    },
+    {
+      "id": "w-0062",
+      "text": "pretended",
+      "start": 27.3,
+      "end": 27.52
+    },
+    {
+      "id": "w-0063",
+      "text": "to",
+      "start": 27.52,
+      "end": 27.9
+    },
+    {
+      "id": "w-0064",
+      "text": "be",
+      "start": 27.9,
+      "end": 28.02
+    },
+    {
+      "id": "w-0065",
+      "text": "disgruntled",
+      "start": 28.02,
+      "end": 28.36
+    },
+    {
+      "id": "w-0066",
+      "text": "at",
+      "start": 28.36,
+      "end": 28.72
+    },
+    {
+      "id": "w-0067",
+      "text": "this,",
+      "start": 28.72,
+      "end": 28.9
+    },
+    {
+      "id": "w-0068",
+      "text": "and",
+      "start": 29.38,
+      "end": 29.64
+    },
+    {
+      "id": "w-0069",
+      "text": "when",
+      "start": 29.64,
+      "end": 29.78
+    },
+    {
+      "id": "w-0070",
+      "text": "he",
+      "start": 29.78,
+      "end": 29.96
+    },
+    {
+      "id": "w-0071",
+      "text": "had",
+      "start": 29.96,
+      "end": 30.06
+    },
+    {
+      "id": "w-0072",
+      "text": "thrown",
+      "start": 30.06,
+      "end": 30.32
+    },
+    {
+      "id": "w-0073",
+      "text": "him",
+      "start": 30.32,
+      "end": 30.58
+    },
+    {
+      "id": "w-0074",
+      "text": "a",
+      "start": 30.58,
+      "end": 30.68
+    },
+    {
+      "id": "w-0075",
+      "text": "bone",
+      "start": 30.68,
+      "end": 30.92
+    },
+    {
+      "id": "w-0076",
+      "text": "as",
+      "start": 30.92,
+      "end": 31.16
+    },
+    {
+      "id": "w-0077",
+      "text": "usual,",
+      "start": 31.16,
+      "end": 31.48
+    },
+    {
+      "id": "w-0078",
+      "text": "he",
+      "start": 31.96,
+      "end": 32.06
+    },
+    {
+      "id": "w-0079",
+      "text": "said,",
+      "start": 32.06,
+      "end": 32.34
+    },
+    {
+      "id": "w-0080",
+      "text": "What",
+      "start": 32.86,
+      "end": 33.04
+    },
+    {
+      "id": "w-0081",
+      "text": "on",
+      "start": 33.04,
+      "end": 33.2
+    },
+    {
+      "id": "w-0082",
+      "text": "earth",
+      "start": 33.2,
+      "end": 33.42
+    },
+    {
+      "id": "w-0083",
+      "text": "is",
+      "start": 33.42,
+      "end": 33.66
+    },
+    {
+      "id": "w-0084",
+      "text": "the",
+      "start": 33.66,
+      "end": 33.78
+    },
+    {
+      "id": "w-0085",
+      "text": "good",
+      "start": 33.78,
+      "end": 33.98
+    },
+    {
+      "id": "w-0086",
+      "text": "of",
+      "start": 33.98,
+      "end": 34.12
+    },
+    {
+      "id": "w-0087",
+      "text": "a",
+      "start": 34.12,
+      "end": 34.2
+    },
+    {
+      "id": "w-0088",
+      "text": "lazy",
+      "start": 34.2,
+      "end": 34.46
+    },
+    {
+      "id": "w-0089",
+      "text": "curl",
+      "start": 34.46,
+      "end": 34.94
+    },
+    {
+      "id": "w-0090",
+      "text": "like",
+      "start": 34.94,
+      "end": 35.04
+    },
+    {
+      "id": "w-0091",
+      "text": "you?",
+      "start": 35.04,
+      "end": 35.3
+    },
+    {
+      "id": "w-0092",
+      "text": "When",
+      "start": 35.88,
+      "end": 36.12
+    },
+    {
+      "id": "w-0093",
+      "text": "I",
+      "start": 36.12,
+      "end": 36.3
+    },
+    {
+      "id": "w-0094",
+      "text": "am",
+      "start": 36.3,
+      "end": 36.44
+    },
+    {
+      "id": "w-0095",
+      "text": "hammering",
+      "start": 36.44,
+      "end": 36.88
+    },
+    {
+      "id": "w-0096",
+      "text": "away",
+      "start": 36.88,
+      "end": 37.08
+    },
+    {
+      "id": "w-0097",
+      "text": "at",
+      "start": 37.08,
+      "end": 37.24
+    },
+    {
+      "id": "w-0098",
+      "text": "my",
+      "start": 37.24,
+      "end": 37.36
+    },
+    {
+      "id": "w-0099",
+      "text": "anvil,",
+      "start": 37.36,
+      "end": 37.8
+    },
+    {
+      "id": "w-0100",
+      "text": "you",
+      "start": 38.3,
+      "end": 38.32
+    },
+    {
+      "id": "w-0101",
+      "text": "just",
+      "start": 38.32,
+      "end": 38.5
+    },
+    {
+      "id": "w-0102",
+      "text": "curl",
+      "start": 38.5,
+      "end": 38.74
+    },
+    {
+      "id": "w-0103",
+      "text": "up",
+      "start": 38.74,
+      "end": 38.98
+    },
+    {
+      "id": "w-0104",
+      "text": "and",
+      "start": 38.98,
+      "end": 39.14
+    },
+    {
+      "id": "w-0105",
+      "text": "go",
+      "start": 39.14,
+      "end": 39.28
+    },
+    {
+      "id": "w-0106",
+      "text": "to",
+      "start": 39.28,
+      "end": 39.42
+    },
+    {
+      "id": "w-0107",
+      "text": "sleep.",
+      "start": 39.42,
+      "end": 39.64
+    },
+    {
+      "id": "w-0108",
+      "text": "But",
+      "start": 40.34,
+      "end": 40.46
+    },
+    {
+      "id": "w-0109",
+      "text": "no",
+      "start": 40.46,
+      "end": 40.6
+    },
+    {
+      "id": "w-0110",
+      "text": "sooner",
+      "start": 40.6,
+      "end": 40.9
+    },
+    {
+      "id": "w-0111",
+      "text": "do",
+      "start": 40.9,
+      "end": 41.1
+    },
+    {
+      "id": "w-0112",
+      "text": "I",
+      "start": 41.1,
+      "end": 41.24
+    },
+    {
+      "id": "w-0113",
+      "text": "stop",
+      "start": 41.24,
+      "end": 41.48
+    },
+    {
+      "id": "w-0114",
+      "text": "for",
+      "start": 41.48,
+      "end": 41.78
+    },
+    {
+      "id": "w-0115",
+      "text": "a",
+      "start": 41.78,
+      "end": 41.88
+    },
+    {
+      "id": "w-0116",
+      "text": "mouthful",
+      "start": 41.88,
+      "end": 42.28
+    },
+    {
+      "id": "w-0117",
+      "text": "of",
+      "start": 42.28,
+      "end": 42.4
+    },
+    {
+      "id": "w-0118",
+      "text": "food",
+      "start": 42.4,
+      "end": 42.72
+    },
+    {
+      "id": "w-0119",
+      "text": "than",
+      "start": 42.72,
+      "end": 43.32
+    },
+    {
+      "id": "w-0120",
+      "text": "you",
+      "start": 43.32,
+      "end": 43.46
+    },
+    {
+      "id": "w-0121",
+      "text": "wake",
+      "start": 43.46,
+      "end": 43.6
+    },
+    {
+      "id": "w-0122",
+      "text": "up",
+      "start": 43.6,
+      "end": 43.84
+    },
+    {
+      "id": "w-0123",
+      "text": "and",
+      "start": 43.84,
+      "end": 44.06
+    },
+    {
+      "id": "w-0124",
+      "text": "wag",
+      "start": 44.06,
+      "end": 44.36
+    },
+    {
+      "id": "w-0125",
+      "text": "your",
+      "start": 44.36,
+      "end": 44.5
+    },
+    {
+      "id": "w-0126",
+      "text": "tail",
+      "start": 44.5,
+      "end": 44.78
+    },
+    {
+      "id": "w-0127",
+      "text": "to",
+      "start": 44.78,
+      "end": 45.08
+    },
+    {
+      "id": "w-0128",
+      "text": "be",
+      "start": 45.08,
+      "end": 45.2
+    },
+    {
+      "id": "w-0129",
+      "text": "fed.",
+      "start": 45.2,
+      "end": 45.46
+    },
+    {
+      "id": "w-0130",
+      "text": "Those",
+      "start": 46.32,
+      "end": 46.82
+    },
+    {
+      "id": "w-0131",
+      "text": "who",
+      "start": 46.82,
+      "end": 47.1
+    },
+    {
+      "id": "w-0132",
+      "text": "will",
+      "start": 47.1,
+      "end": 47.26
+    },
+    {
+      "id": "w-0133",
+      "text": "not",
+      "start": 47.26,
+      "end": 47.48
+    },
+    {
+      "id": "w-0134",
+      "text": "work",
+      "start": 47.48,
+      "end": 47.9
+    },
+    {
+      "id": "w-0135",
+      "text": "deserve",
+      "start": 47.9,
+      "end": 48.48
+    },
+    {
+      "id": "w-0136",
+      "text": "to",
+      "start": 48.48,
+      "end": 48.9
+    },
+    {
+      "id": "w-0137",
+      "text": "starve.",
+      "start": 48.9,
+      "end": 49.26
+    },
+    {
+      "id": "w-0138",
+      "text": "End",
+      "start": 50.38,
+      "end": 50.88
+    },
+    {
+      "id": "w-0139",
+      "text": "of",
+      "start": 50.88,
+      "end": 51.2
+    },
+    {
+      "id": "w-0140",
+      "text": "the",
+      "start": 51.2,
+      "end": 51.8
+    },
+    {
+      "id": "w-0141",
+      "text": "blacksmith",
+      "start": 51.8,
+      "end": 52.36
+    },
+    {
+      "id": "w-0142",
+      "text": "and",
+      "start": 52.36,
+      "end": 52.96
+    },
+    {
+      "id": "w-0143",
+      "text": "his",
+      "start": 52.96,
+      "end": 53.4
+    },
+    {
+      "id": "w-0144",
+      "text": "dog.",
+      "start": 53.4,
+      "end": 53.72
+    },
+    {
+      "id": "w-0145",
+      "text": "End",
+      "start": 53.72,
+      "end": 53.72
+    },
+    {
+      "id": "w-0146",
+      "text": "of",
+      "start": 53.72,
+      "end": 53.72
+    },
+    {
+      "id": "w-0147",
+      "text": "the",
+      "start": 53.72,
+      "end": 53.72
+    },
+    {
+      "id": "w-0148",
+      "text": "blacksmith's",
+      "start": 53.72,
+      "end": 53.72
+    },
+    {
+      "id": "w-0149",
+      "text": "Fables,",
+      "start": 53.72,
+      "end": 53.8
+    },
+    {
+      "id": "w-0150",
+      "text": "the",
+      "start": 53.9,
+      "end": 53.9
+    },
+    {
+      "id": "w-0151",
+      "text": "blacksmith",
+      "start": 53.9,
+      "end": 53.9
+    },
+    {
+      "id": "w-0152",
+      "text": "and",
+      "start": 53.9,
+      "end": 53.9
+    },
+    {
+      "id": "w-0153",
+      "text": "his",
+      "start": 53.9,
+      "end": 53.9
+    },
+    {
+      "id": "w-0154",
+      "text": "dog.",
+      "start": 53.9,
+      "end": 53.9
+    }
+  ]
+}

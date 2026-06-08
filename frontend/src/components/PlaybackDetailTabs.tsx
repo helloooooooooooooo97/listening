@@ -43,6 +43,7 @@ export default function PlaybackDetailTabs({
   const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
   const [editNote, setEditNote] = useState('');
+  const [editingColor, setEditingColor] = useState('#facc15');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
   const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
   const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
@@ -302,14 +303,15 @@ export default function PlaybackDetailTabs({
                     </button>
                     <div className="flex-1" />
                     <button onClick={() => {
-                      const items = lessonClips.map(c => ({ kind: 'clip' as const, clip: c, lesson }));
-                      addAllToQueue(items);
-                      if (items.length > 0) {
-                        const first = items[0];
-                        playNow(first);
-                        setTimeout(() => playClip(first.clip, lesson), 50);
+                      if (lessonClips.length === 0) return;
+                      const first = lessonClips[0];
+                      playNow({ kind: 'clip', clip: first, lesson });
+                      if (lessonClips.length > 1) {
+                        const rest = lessonClips.slice(1).map(c => ({ kind: 'clip' as const, clip: c, lesson }));
+                        addAllToQueue(rest);
                       }
-                      addToast(`即将播放 ${items.length} 个片段`, 'success');
+                      setTimeout(() => playClip(first.clip, lesson), 50);
+                      addToast(`即将播放 ${lessonClips.length} 个片段`, 'success');
                     }}
                       className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1 flex items-center gap-1">
                       <HiPlay size={11} />
@@ -324,7 +326,6 @@ export default function PlaybackDetailTabs({
                     const d = clip.endTime - clip.startTime;
                     const isActive = activeClipId === clip.id;
                     const isHovered = hoveredClipId === clip.id;
-                    const isEditing = editingClipId === clip.id;
                     return (
                   <div key={clip.id}
                     className={`transition-colors ${isActive ? 'bg-[var(--accent-soft)]' : isHovered ? 'bg-[var(--bg-hover)]' : ''}`}>
@@ -341,26 +342,11 @@ export default function PlaybackDetailTabs({
                             <HiBookmark size={13} style={{ color: clip.color }} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            {isEditing ? (
-                              <input type="text" value={editNote}
-                                onChange={e => setEditNote(e.target.value)}
-                                onKeyDown={e => {
-                                  if (e.key === 'Enter') { updateClip(clip.id, { note: editNote }); setEditingClipId(null); }
-                                  if (e.key === 'Escape') setEditingClipId(null);
-                                }}
-                                onBlur={() => { if (editNote !== clip.note) updateClip(clip.id, { note: editNote }); setEditingClipId(null); }}
-                                className="w-full text-xs bg-[var(--bg-tertiary)] border border-[var(--border-primary)] rounded px-2 py-1 text-secondary outline-none"
-                                autoFocus
-                                onClick={e => e.stopPropagation()}
-                              />
-                            ) : (
-                              <>
-                                <p className="text-sm text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  {clip.note && <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-secondary">{clip.note}</span>}
-                                </div>
-                              </>
-                            )}
+                            <p className="text-sm text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
+                            <div className="flex items-center gap-2 mt-1">
+                              {clip.note && <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-secondary">{clip.note}</span>}
+                              <span className="text-xs text-tertiary">{fmt(clip.startTime)} - {fmt(clip.endTime)} · {d.toFixed(1)}s</span>
+                            </div>
                           </div>
                         </button>
                         {/* More actions */}
@@ -376,7 +362,7 @@ export default function PlaybackDetailTabs({
                               <HiSparkles size={11} className="animate-pulse" />
                             </span>
                           ) : null}
-<button onClick={e => { e.stopPropagation(); setEditingClipId(clip.id); setEditNote(clip.note || ''); }}
+<button onClick={e => { e.stopPropagation(); setEditingClipId(clip.id); setEditNote(clip.note || ''); setEditingColor(clip.color); }}
                             className="text-tertiary hover:text-secondary transition-colors cursor-pointer p-1">
                             <HiPencil size={11} />
                           </button>
@@ -386,21 +372,61 @@ export default function PlaybackDetailTabs({
                           </button>
                         </div>
                       </div>
-                      {/* Row 2: colors + time */}
-                      <div className="flex items-center justify-between mt-2 ml-11">
-                        <div className="flex items-center gap-1">
-                          {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
-                            <button key={c} onClick={e => { e.stopPropagation(); updateClip(clip.id, { color: c }); }}
-                              className={`rounded-full transition-all cursor-pointer hover:scale-125 ${clip.color === c ? 'w-4 h-4 shadow-sm ring-1 ring-white/20' : 'w-3 h-3 opacity-60 hover:opacity-100'}`}
-                              style={{ backgroundColor: c }} />
-                          ))}
-                        </div>
-                        <span className="text-xs text-tertiary">{fmt(clip.startTime)} - {fmt(clip.endTime)} · {d.toFixed(1)}s</span>
-                      </div>
                     </div>
                   </div>
                   );})}
-                </>
+                
+{/* ── Edit Clip Modal ── */}
+{editingClipId && (() => {
+  const clip = lessonClips.find(c => c.id === editingClipId);
+  if (!clip) return null;
+  return (
+  <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setEditingClipId(null)}>
+    <div className="absolute inset-0 bg-black/40" />
+    <div className="relative w-full max-w-sm rounded-2xl shadow-2xl border border-[var(--border-primary)] overflow-hidden animate-scale-in"
+      style={{ background: 'var(--bg-secondary)' }}
+      onClick={e => e.stopPropagation()}>
+      <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-secondary)]">
+        <h3 className="text-sm font-bold text-primary">编辑片段</h3>
+        <button onClick={() => setEditingClipId(null)}
+          className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer text-sm">&times;</button>
+      </div>
+      <div className="px-5 py-4 space-y-4">
+        <p className="text-xs text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
+        <div>
+          <label className="text-[11px] text-tertiary font-medium block mb-1.5">备注</label>
+          <input type="text" value={editNote}
+            onChange={e => setEditNote(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') { updateClip(clip.id, { note: editNote, color: editingColor }); setEditingClipId(null); } }}
+            placeholder="添加备注..."
+            className="w-full text-sm bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3.5 py-2.5 text-primary outline-none focus:ring-1 focus:ring-[var(--accent)]/30 placeholder:text-tertiary" />
+        </div>
+        <div>
+          <label className="text-[11px] text-tertiary font-medium block mb-1.5">颜色</label>
+          <div className="flex items-center gap-2">
+            {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
+              <button key={c} onClick={() => setEditingColor(c)}
+                className={`rounded-full transition-all cursor-pointer hover:scale-125 ${editingColor === c ? 'w-7 h-7 shadow-sm ring-2 ring-white/30' : 'w-6 h-6 opacity-60 hover:opacity-100'}`}
+                style={{ backgroundColor: c }} />
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center gap-2 pt-1">
+          <button onClick={() => { updateClip(clip.id, { note: editNote, color: editingColor }); setEditingClipId(null); }}
+            className="flex-1 text-sm py-2.5 rounded-xl bg-[var(--accent)] on-accent font-medium hover:bg-[var(--accent-hover)] transition-colors cursor-pointer">
+            保存
+          </button>
+          <button onClick={() => setEditingClipId(null)}
+            className="flex-1 text-sm py-2.5 rounded-xl bg-[var(--bg-tertiary)] text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
+            取消
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  );
+})()}
+</>
               )
             )}
 
@@ -514,6 +540,57 @@ export default function PlaybackDetailTabs({
     </div>
   </div>
 )}
+
+{/* ── Edit Clip Modal ── */}
+{editingClipId && (() => {
+  const clip = lessonClips.find(c => c.id === editingClipId);
+  if (!clip) return null;
+  return (
+  <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setEditingClipId(null)}>
+    <div className="absolute inset-0 bg-black/40" />
+    <div className="relative w-full max-w-sm rounded-2xl shadow-2xl border border-[var(--border-primary)] overflow-hidden animate-scale-in"
+      style={{ background: 'var(--bg-secondary)' }}
+      onClick={e => e.stopPropagation()}>
+      <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-secondary)]">
+        <h3 className="text-sm font-bold text-primary">编辑片段</h3>
+        <button onClick={() => setEditingClipId(null)}
+          className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer text-sm">&times;</button>
+      </div>
+      <div className="px-5 py-4 space-y-4">
+        <p className="text-xs text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
+        <div>
+          <label className="text-[11px] text-tertiary font-medium block mb-1.5">备注</label>
+          <input type="text" value={editNote}
+            onChange={e => setEditNote(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') { updateClip(clip.id, { note: editNote, color: editingColor }); setEditingClipId(null); } }}
+            placeholder="添加备注..."
+            className="w-full text-sm bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3.5 py-2.5 text-primary outline-none focus:ring-1 focus:ring-[var(--accent)]/30 placeholder:text-tertiary" />
+        </div>
+        <div>
+          <label className="text-[11px] text-tertiary font-medium block mb-1.5">颜色</label>
+          <div className="flex items-center gap-2">
+            {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
+              <button key={c} onClick={() => setEditingColor(c)}
+                className={`rounded-full transition-all cursor-pointer hover:scale-125 ${editingColor === c ? 'w-7 h-7 shadow-sm ring-2 ring-white/30' : 'w-6 h-6 opacity-60 hover:opacity-100'}`}
+                style={{ backgroundColor: c }} />
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center gap-2 pt-1">
+          <button onClick={() => { updateClip(clip.id, { note: editNote, color: editingColor }); setEditingClipId(null); }}
+            className="flex-1 text-sm py-2.5 rounded-xl bg-[var(--accent)] on-accent font-medium hover:bg-[var(--accent-hover)] transition-colors cursor-pointer">
+            保存
+          </button>
+          <button onClick={() => setEditingClipId(null)}
+            className="flex-1 text-sm py-2.5 rounded-xl bg-[var(--bg-tertiary)] text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
+            取消
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  );
+})()}
 </>
   );
 }

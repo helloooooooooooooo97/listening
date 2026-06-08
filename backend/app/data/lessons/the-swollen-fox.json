@@ -1,0 +1,1076 @@
+{
+  "id": "the-swollen-fox",
+  "title": "The Swollen Fox",
+  "subtitle": "Aesop's Fables, Volume 03",
+  "level": "A2-B1",
+  "duration": 57.6,
+  "audioFileName": "the-swollen-fox.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-3-fables-51-75/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 3.84,
+      "text": "This is the LibriVox recording. All LibriVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 4.78,
+      "end": 8.66,
+      "text": "For more information or to volunteer, please visit LibriVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 10.16,
+      "end": 15.98,
+      "text": "Esab's Fable, the Swollen Fox. Read by Patrick McNeil, Bakersfield, California.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 17.86,
+      "end": 21.74,
+      "text": "A hungry fox found in a hollow tree, a quantity of bread and meat,",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 22.22,
+      "end": 24.2,
+      "text": "which some shepherds had placed there against their return.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 25.22,
+      "end": 29.88,
+      "text": "Delighted with his find, he slipped in through the narrow aperture and greedily devoured it all.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 30.52,
+      "end": 35.24,
+      "text": "But when he tried to get out again, he found himself so swollen after his big meal that he",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 35.24,
+      "end": 39.5,
+      "text": "could not squeeze through the hole and fell to whining and groaning over his misfortune.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 40.56,
+      "end": 44.92,
+      "text": "Another fox, happening to pass that way, came and asked him what the matter was.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 45.34,
+      "end": 50.12,
+      "text": "And on learning the state of the case said, well, my friend, I see nothing for it,",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 50.28,
+      "end": 53.2,
+      "text": "but for you to stay where you are till you shrink to your former size.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 53.2,
+      "end": 57.64,
+      "text": "You'll get out then easily enough. End of Fable.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 0.26
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.26,
+      "end": 0.4
+    },
+    {
+      "id": "w-0002",
+      "text": "the",
+      "start": 0.4,
+      "end": 0.54
+    },
+    {
+      "id": "w-0003",
+      "text": "LibriVox",
+      "start": 0.54,
+      "end": 0.96
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 0.96,
+      "end": 1.16
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 2.04,
+      "end": 2.1
+    },
+    {
+      "id": "w-0006",
+      "text": "LibriVox",
+      "start": 2.1,
+      "end": 2.6
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 2.6,
+      "end": 2.8
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 2.8,
+      "end": 3.2
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 3.2,
+      "end": 3.32
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 3.32,
+      "end": 3.4
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 3.4,
+      "end": 3.62
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 3.62,
+      "end": 3.84
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 4.78,
+      "end": 4.8
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 4.8,
+      "end": 4.98
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 4.98,
+      "end": 5.26
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 5.26,
+      "end": 5.96
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 5.96,
+      "end": 6.06
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 6.06,
+      "end": 6.44
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 6.98,
+      "end": 7.12
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 7.12,
+      "end": 7.32
+    },
+    {
+      "id": "w-0021",
+      "text": "LibriVox",
+      "start": 7.32,
+      "end": 8.18
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 8.18,
+      "end": 8.66
+    },
+    {
+      "id": "w-0023",
+      "text": "Esab's",
+      "start": 10.16,
+      "end": 10.68
+    },
+    {
+      "id": "w-0024",
+      "text": "Fable,",
+      "start": 10.68,
+      "end": 10.88
+    },
+    {
+      "id": "w-0025",
+      "text": "the",
+      "start": 11.52,
+      "end": 11.52
+    },
+    {
+      "id": "w-0026",
+      "text": "Swollen",
+      "start": 11.52,
+      "end": 11.84
+    },
+    {
+      "id": "w-0027",
+      "text": "Fox.",
+      "start": 11.84,
+      "end": 12.1
+    },
+    {
+      "id": "w-0028",
+      "text": "Read",
+      "start": 13.34,
+      "end": 13.58
+    },
+    {
+      "id": "w-0029",
+      "text": "by",
+      "start": 13.58,
+      "end": 13.82
+    },
+    {
+      "id": "w-0030",
+      "text": "Patrick",
+      "start": 13.82,
+      "end": 14.16
+    },
+    {
+      "id": "w-0031",
+      "text": "McNeil,",
+      "start": 14.16,
+      "end": 14.56
+    },
+    {
+      "id": "w-0032",
+      "text": "Bakersfield,",
+      "start": 15.08,
+      "end": 15.54
+    },
+    {
+      "id": "w-0033",
+      "text": "California.",
+      "start": 15.74,
+      "end": 15.98
+    },
+    {
+      "id": "w-0034",
+      "text": "A",
+      "start": 17.86,
+      "end": 18.38
+    },
+    {
+      "id": "w-0035",
+      "text": "hungry",
+      "start": 18.38,
+      "end": 18.6
+    },
+    {
+      "id": "w-0036",
+      "text": "fox",
+      "start": 18.6,
+      "end": 18.86
+    },
+    {
+      "id": "w-0037",
+      "text": "found",
+      "start": 18.86,
+      "end": 19.2
+    },
+    {
+      "id": "w-0038",
+      "text": "in",
+      "start": 19.2,
+      "end": 19.4
+    },
+    {
+      "id": "w-0039",
+      "text": "a",
+      "start": 19.4,
+      "end": 19.52
+    },
+    {
+      "id": "w-0040",
+      "text": "hollow",
+      "start": 19.52,
+      "end": 19.64
+    },
+    {
+      "id": "w-0041",
+      "text": "tree,",
+      "start": 19.64,
+      "end": 20.02
+    },
+    {
+      "id": "w-0042",
+      "text": "a",
+      "start": 20.28,
+      "end": 20.38
+    },
+    {
+      "id": "w-0043",
+      "text": "quantity",
+      "start": 20.38,
+      "end": 20.7
+    },
+    {
+      "id": "w-0044",
+      "text": "of",
+      "start": 20.7,
+      "end": 20.98
+    },
+    {
+      "id": "w-0045",
+      "text": "bread",
+      "start": 20.98,
+      "end": 21.2
+    },
+    {
+      "id": "w-0046",
+      "text": "and",
+      "start": 21.2,
+      "end": 21.5
+    },
+    {
+      "id": "w-0047",
+      "text": "meat,",
+      "start": 21.5,
+      "end": 21.74
+    },
+    {
+      "id": "w-0048",
+      "text": "which",
+      "start": 22.22,
+      "end": 22.32
+    },
+    {
+      "id": "w-0049",
+      "text": "some",
+      "start": 22.32,
+      "end": 22.56
+    },
+    {
+      "id": "w-0050",
+      "text": "shepherds",
+      "start": 22.56,
+      "end": 22.94
+    },
+    {
+      "id": "w-0051",
+      "text": "had",
+      "start": 22.94,
+      "end": 23.06
+    },
+    {
+      "id": "w-0052",
+      "text": "placed",
+      "start": 23.06,
+      "end": 23.22
+    },
+    {
+      "id": "w-0053",
+      "text": "there",
+      "start": 23.22,
+      "end": 23.48
+    },
+    {
+      "id": "w-0054",
+      "text": "against",
+      "start": 23.48,
+      "end": 23.74
+    },
+    {
+      "id": "w-0055",
+      "text": "their",
+      "start": 23.74,
+      "end": 23.96
+    },
+    {
+      "id": "w-0056",
+      "text": "return.",
+      "start": 23.96,
+      "end": 24.2
+    },
+    {
+      "id": "w-0057",
+      "text": "Delighted",
+      "start": 25.22,
+      "end": 25.66
+    },
+    {
+      "id": "w-0058",
+      "text": "with",
+      "start": 25.66,
+      "end": 25.76
+    },
+    {
+      "id": "w-0059",
+      "text": "his",
+      "start": 25.76,
+      "end": 25.92
+    },
+    {
+      "id": "w-0060",
+      "text": "find,",
+      "start": 25.92,
+      "end": 26.14
+    },
+    {
+      "id": "w-0061",
+      "text": "he",
+      "start": 26.5,
+      "end": 26.6
+    },
+    {
+      "id": "w-0062",
+      "text": "slipped",
+      "start": 26.6,
+      "end": 26.82
+    },
+    {
+      "id": "w-0063",
+      "text": "in",
+      "start": 26.82,
+      "end": 27.08
+    },
+    {
+      "id": "w-0064",
+      "text": "through",
+      "start": 27.08,
+      "end": 27.28
+    },
+    {
+      "id": "w-0065",
+      "text": "the",
+      "start": 27.28,
+      "end": 27.44
+    },
+    {
+      "id": "w-0066",
+      "text": "narrow",
+      "start": 27.44,
+      "end": 27.66
+    },
+    {
+      "id": "w-0067",
+      "text": "aperture",
+      "start": 27.66,
+      "end": 28.06
+    },
+    {
+      "id": "w-0068",
+      "text": "and",
+      "start": 28.06,
+      "end": 28.68
+    },
+    {
+      "id": "w-0069",
+      "text": "greedily",
+      "start": 28.68,
+      "end": 29.04
+    },
+    {
+      "id": "w-0070",
+      "text": "devoured",
+      "start": 29.04,
+      "end": 29.52
+    },
+    {
+      "id": "w-0071",
+      "text": "it",
+      "start": 29.52,
+      "end": 29.66
+    },
+    {
+      "id": "w-0072",
+      "text": "all.",
+      "start": 29.66,
+      "end": 29.88
+    },
+    {
+      "id": "w-0073",
+      "text": "But",
+      "start": 30.52,
+      "end": 30.82
+    },
+    {
+      "id": "w-0074",
+      "text": "when",
+      "start": 30.82,
+      "end": 30.94
+    },
+    {
+      "id": "w-0075",
+      "text": "he",
+      "start": 30.94,
+      "end": 31.1
+    },
+    {
+      "id": "w-0076",
+      "text": "tried",
+      "start": 31.1,
+      "end": 31.26
+    },
+    {
+      "id": "w-0077",
+      "text": "to",
+      "start": 31.26,
+      "end": 31.42
+    },
+    {
+      "id": "w-0078",
+      "text": "get",
+      "start": 31.42,
+      "end": 31.56
+    },
+    {
+      "id": "w-0079",
+      "text": "out",
+      "start": 31.56,
+      "end": 31.74
+    },
+    {
+      "id": "w-0080",
+      "text": "again,",
+      "start": 31.74,
+      "end": 31.92
+    },
+    {
+      "id": "w-0081",
+      "text": "he",
+      "start": 32.22,
+      "end": 32.34
+    },
+    {
+      "id": "w-0082",
+      "text": "found",
+      "start": 32.34,
+      "end": 32.52
+    },
+    {
+      "id": "w-0083",
+      "text": "himself",
+      "start": 32.52,
+      "end": 32.9
+    },
+    {
+      "id": "w-0084",
+      "text": "so",
+      "start": 32.9,
+      "end": 33.18
+    },
+    {
+      "id": "w-0085",
+      "text": "swollen",
+      "start": 33.18,
+      "end": 33.7
+    },
+    {
+      "id": "w-0086",
+      "text": "after",
+      "start": 33.7,
+      "end": 34.0
+    },
+    {
+      "id": "w-0087",
+      "text": "his",
+      "start": 34.0,
+      "end": 34.24
+    },
+    {
+      "id": "w-0088",
+      "text": "big",
+      "start": 34.24,
+      "end": 34.4
+    },
+    {
+      "id": "w-0089",
+      "text": "meal",
+      "start": 34.4,
+      "end": 34.64
+    },
+    {
+      "id": "w-0090",
+      "text": "that",
+      "start": 34.64,
+      "end": 35.1
+    },
+    {
+      "id": "w-0091",
+      "text": "he",
+      "start": 35.1,
+      "end": 35.24
+    },
+    {
+      "id": "w-0092",
+      "text": "could",
+      "start": 35.24,
+      "end": 35.36
+    },
+    {
+      "id": "w-0093",
+      "text": "not",
+      "start": 35.36,
+      "end": 35.52
+    },
+    {
+      "id": "w-0094",
+      "text": "squeeze",
+      "start": 35.52,
+      "end": 35.76
+    },
+    {
+      "id": "w-0095",
+      "text": "through",
+      "start": 35.76,
+      "end": 36.02
+    },
+    {
+      "id": "w-0096",
+      "text": "the",
+      "start": 36.02,
+      "end": 36.2
+    },
+    {
+      "id": "w-0097",
+      "text": "hole",
+      "start": 36.2,
+      "end": 36.4
+    },
+    {
+      "id": "w-0098",
+      "text": "and",
+      "start": 36.4,
+      "end": 37.02
+    },
+    {
+      "id": "w-0099",
+      "text": "fell",
+      "start": 37.02,
+      "end": 37.26
+    },
+    {
+      "id": "w-0100",
+      "text": "to",
+      "start": 37.26,
+      "end": 37.52
+    },
+    {
+      "id": "w-0101",
+      "text": "whining",
+      "start": 37.52,
+      "end": 37.86
+    },
+    {
+      "id": "w-0102",
+      "text": "and",
+      "start": 37.86,
+      "end": 38.22
+    },
+    {
+      "id": "w-0103",
+      "text": "groaning",
+      "start": 38.22,
+      "end": 38.7
+    },
+    {
+      "id": "w-0104",
+      "text": "over",
+      "start": 38.7,
+      "end": 38.98
+    },
+    {
+      "id": "w-0105",
+      "text": "his",
+      "start": 38.98,
+      "end": 39.16
+    },
+    {
+      "id": "w-0106",
+      "text": "misfortune.",
+      "start": 39.16,
+      "end": 39.5
+    },
+    {
+      "id": "w-0107",
+      "text": "Another",
+      "start": 40.56,
+      "end": 41.0
+    },
+    {
+      "id": "w-0108",
+      "text": "fox,",
+      "start": 41.0,
+      "end": 41.3
+    },
+    {
+      "id": "w-0109",
+      "text": "happening",
+      "start": 41.3,
+      "end": 41.9
+    },
+    {
+      "id": "w-0110",
+      "text": "to",
+      "start": 41.9,
+      "end": 42.14
+    },
+    {
+      "id": "w-0111",
+      "text": "pass",
+      "start": 42.14,
+      "end": 42.3
+    },
+    {
+      "id": "w-0112",
+      "text": "that",
+      "start": 42.3,
+      "end": 42.56
+    },
+    {
+      "id": "w-0113",
+      "text": "way,",
+      "start": 42.56,
+      "end": 42.76
+    },
+    {
+      "id": "w-0114",
+      "text": "came",
+      "start": 43.3,
+      "end": 43.48
+    },
+    {
+      "id": "w-0115",
+      "text": "and",
+      "start": 43.48,
+      "end": 43.68
+    },
+    {
+      "id": "w-0116",
+      "text": "asked",
+      "start": 43.68,
+      "end": 43.84
+    },
+    {
+      "id": "w-0117",
+      "text": "him",
+      "start": 43.84,
+      "end": 44.04
+    },
+    {
+      "id": "w-0118",
+      "text": "what",
+      "start": 44.04,
+      "end": 44.2
+    },
+    {
+      "id": "w-0119",
+      "text": "the",
+      "start": 44.2,
+      "end": 44.36
+    },
+    {
+      "id": "w-0120",
+      "text": "matter",
+      "start": 44.36,
+      "end": 44.52
+    },
+    {
+      "id": "w-0121",
+      "text": "was.",
+      "start": 44.52,
+      "end": 44.92
+    },
+    {
+      "id": "w-0122",
+      "text": "And",
+      "start": 45.34,
+      "end": 45.56
+    },
+    {
+      "id": "w-0123",
+      "text": "on",
+      "start": 45.56,
+      "end": 45.7
+    },
+    {
+      "id": "w-0124",
+      "text": "learning",
+      "start": 45.7,
+      "end": 45.92
+    },
+    {
+      "id": "w-0125",
+      "text": "the",
+      "start": 45.92,
+      "end": 46.18
+    },
+    {
+      "id": "w-0126",
+      "text": "state",
+      "start": 46.18,
+      "end": 46.4
+    },
+    {
+      "id": "w-0127",
+      "text": "of",
+      "start": 46.4,
+      "end": 46.58
+    },
+    {
+      "id": "w-0128",
+      "text": "the",
+      "start": 46.58,
+      "end": 46.7
+    },
+    {
+      "id": "w-0129",
+      "text": "case",
+      "start": 46.7,
+      "end": 46.92
+    },
+    {
+      "id": "w-0130",
+      "text": "said,",
+      "start": 46.92,
+      "end": 47.62
+    },
+    {
+      "id": "w-0131",
+      "text": "well,",
+      "start": 48.12,
+      "end": 48.2
+    },
+    {
+      "id": "w-0132",
+      "text": "my",
+      "start": 48.34,
+      "end": 48.44
+    },
+    {
+      "id": "w-0133",
+      "text": "friend,",
+      "start": 48.44,
+      "end": 48.66
+    },
+    {
+      "id": "w-0134",
+      "text": "I",
+      "start": 49.18,
+      "end": 49.32
+    },
+    {
+      "id": "w-0135",
+      "text": "see",
+      "start": 49.32,
+      "end": 49.5
+    },
+    {
+      "id": "w-0136",
+      "text": "nothing",
+      "start": 49.5,
+      "end": 49.7
+    },
+    {
+      "id": "w-0137",
+      "text": "for",
+      "start": 49.7,
+      "end": 49.96
+    },
+    {
+      "id": "w-0138",
+      "text": "it,",
+      "start": 49.96,
+      "end": 50.12
+    },
+    {
+      "id": "w-0139",
+      "text": "but",
+      "start": 50.28,
+      "end": 50.34
+    },
+    {
+      "id": "w-0140",
+      "text": "for",
+      "start": 50.34,
+      "end": 50.52
+    },
+    {
+      "id": "w-0141",
+      "text": "you",
+      "start": 50.52,
+      "end": 50.66
+    },
+    {
+      "id": "w-0142",
+      "text": "to",
+      "start": 50.66,
+      "end": 50.8
+    },
+    {
+      "id": "w-0143",
+      "text": "stay",
+      "start": 50.8,
+      "end": 50.98
+    },
+    {
+      "id": "w-0144",
+      "text": "where",
+      "start": 50.98,
+      "end": 51.16
+    },
+    {
+      "id": "w-0145",
+      "text": "you",
+      "start": 51.16,
+      "end": 51.32
+    },
+    {
+      "id": "w-0146",
+      "text": "are",
+      "start": 51.32,
+      "end": 51.54
+    },
+    {
+      "id": "w-0147",
+      "text": "till",
+      "start": 51.54,
+      "end": 51.84
+    },
+    {
+      "id": "w-0148",
+      "text": "you",
+      "start": 51.84,
+      "end": 52.02
+    },
+    {
+      "id": "w-0149",
+      "text": "shrink",
+      "start": 52.02,
+      "end": 52.18
+    },
+    {
+      "id": "w-0150",
+      "text": "to",
+      "start": 52.18,
+      "end": 52.4
+    },
+    {
+      "id": "w-0151",
+      "text": "your",
+      "start": 52.4,
+      "end": 52.54
+    },
+    {
+      "id": "w-0152",
+      "text": "former",
+      "start": 52.54,
+      "end": 52.8
+    },
+    {
+      "id": "w-0153",
+      "text": "size.",
+      "start": 52.8,
+      "end": 53.2
+    },
+    {
+      "id": "w-0154",
+      "text": "You'll",
+      "start": 53.2,
+      "end": 54.16
+    },
+    {
+      "id": "w-0155",
+      "text": "get",
+      "start": 54.16,
+      "end": 54.3
+    },
+    {
+      "id": "w-0156",
+      "text": "out",
+      "start": 54.3,
+      "end": 54.44
+    },
+    {
+      "id": "w-0157",
+      "text": "then",
+      "start": 54.44,
+      "end": 54.66
+    },
+    {
+      "id": "w-0158",
+      "text": "easily",
+      "start": 54.66,
+      "end": 55.02
+    },
+    {
+      "id": "w-0159",
+      "text": "enough.",
+      "start": 55.02,
+      "end": 55.4
+    },
+    {
+      "id": "w-0160",
+      "text": "End",
+      "start": 56.46,
+      "end": 57.18
+    },
+    {
+      "id": "w-0161",
+      "text": "of",
+      "start": 57.18,
+      "end": 57.34
+    },
+    {
+      "id": "w-0162",
+      "text": "Fable.",
+      "start": 57.34,
+      "end": 57.64
+    }
+  ]
+}

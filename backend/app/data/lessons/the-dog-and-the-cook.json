@@ -1,0 +1,1805 @@
+{
+  "id": "the-dog-and-the-cook",
+  "title": "The Dog and The Cook",
+  "subtitle": "Aesop's Fables, Volume 03",
+  "level": "A2-B1",
+  "duration": 104.9,
+  "audioFileName": "the-dog-and-the-cook.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-3-fables-51-75/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 1.68,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 2.74,
+      "end": 5.18,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 6.12,
+      "end": 11.18,
+      "text": "For more information, or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 11.84,
+      "end": 15.8,
+      "text": "Recorded by Christine Doer, the known as Assa, Florida.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 18.56,
+      "end": 21.8,
+      "text": "Asop's Fables, the Dog, and the Cook.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 23.06,
+      "end": 27.42,
+      "text": "A rich man once invited a number of his friends and acquaintances to a banquet.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 27.42,
+      "end": 33.34,
+      "text": "His dog thought it would be a good opportunity to invite another dog, a friend of his.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 34.02,
+      "end": 37.72,
+      "text": "So he went to him and said, my master is giving a feast.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 38.58,
+      "end": 41.5,
+      "text": "There'll be a fine spread, so come and dine with me tonight.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 42.48,
+      "end": 47.98,
+      "text": "The dog thus invited came, and when he saw the preparations being made in the kitchen,",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 48.48,
+      "end": 51.66,
+      "text": "he said to himself, my word, I'm in luck.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 52.34,
+      "end": 56.28,
+      "text": "I'll take care to eat enough tonight to last me two or three days.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 56.28,
+      "end": 63.78,
+      "text": "At the same time, he wagged his tail briskly by way of showing his friend how delighted he was to have been asked.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 64.94,
+      "end": 70.76,
+      "text": "But just then the Cook caught sight of him, and in his annoyance at seeing a strange dog in the kitchen,",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 71.52,
+      "end": 74.7,
+      "text": "caught him up by the hind legs and threw him out of the window.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 75.66,
+      "end": 80.84,
+      "text": "He had a nasty fall and limped away as quickly as he could, howling dismally.",
+      "note": ""
+    },
+    {
+      "id": "line-016",
+      "start": 81.72,
+      "end": 87.06,
+      "text": "Presently some other dogs met him and said, well, what sort of dinner did you get?",
+      "note": ""
+    },
+    {
+      "id": "line-017",
+      "start": 87.8,
+      "end": 93.94,
+      "text": "To which he replied, I had a splendid time, the wine was so good, and I drank so much of it,",
+      "note": ""
+    },
+    {
+      "id": "line-018",
+      "start": 94.5,
+      "end": 96.8,
+      "text": "that I really don't remember how I got out of the house.",
+      "note": ""
+    },
+    {
+      "id": "line-019",
+      "start": 98.04,
+      "end": 101.6,
+      "text": "Be shy of favors bestowed at the expense of others.",
+      "note": ""
+    },
+    {
+      "id": "line-020",
+      "start": 102.84,
+      "end": 104.9,
+      "text": "End of the dog and the cook.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 0.36
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.36,
+      "end": 0.68
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 0.68,
+      "end": 0.82
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 0.82,
+      "end": 1.38
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 1.38,
+      "end": 1.68
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 2.74,
+      "end": 3.0
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.0,
+      "end": 3.66
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 3.66,
+      "end": 3.94
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 3.94,
+      "end": 4.42
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.42,
+      "end": 4.56
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 4.56,
+      "end": 4.64
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 4.64,
+      "end": 4.88
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 4.88,
+      "end": 5.18
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.12,
+      "end": 6.3
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.3,
+      "end": 6.5
+    },
+    {
+      "id": "w-0015",
+      "text": "information,",
+      "start": 6.5,
+      "end": 6.82
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.62,
+      "end": 7.72
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 7.72,
+      "end": 7.88
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 7.88,
+      "end": 8.34
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 8.98,
+      "end": 9.34
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.34,
+      "end": 9.76
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox",
+      "start": 9.76,
+      "end": 10.56
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 10.56,
+      "end": 11.18
+    },
+    {
+      "id": "w-0023",
+      "text": "Recorded",
+      "start": 11.84,
+      "end": 12.36
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 12.36,
+      "end": 12.84
+    },
+    {
+      "id": "w-0025",
+      "text": "Christine",
+      "start": 12.84,
+      "end": 13.4
+    },
+    {
+      "id": "w-0026",
+      "text": "Doer,",
+      "start": 13.4,
+      "end": 14.0
+    },
+    {
+      "id": "w-0027",
+      "text": "the",
+      "start": 14.7,
+      "end": 14.74
+    },
+    {
+      "id": "w-0028",
+      "text": "known",
+      "start": 14.74,
+      "end": 14.84
+    },
+    {
+      "id": "w-0029",
+      "text": "as",
+      "start": 14.84,
+      "end": 15.06
+    },
+    {
+      "id": "w-0030",
+      "text": "Assa,",
+      "start": 15.06,
+      "end": 15.38
+    },
+    {
+      "id": "w-0031",
+      "text": "Florida.",
+      "start": 15.5,
+      "end": 15.8
+    },
+    {
+      "id": "w-0032",
+      "text": "Asop's",
+      "start": 18.56,
+      "end": 19.12
+    },
+    {
+      "id": "w-0033",
+      "text": "Fables,",
+      "start": 19.12,
+      "end": 19.48
+    },
+    {
+      "id": "w-0034",
+      "text": "the",
+      "start": 20.44,
+      "end": 20.46
+    },
+    {
+      "id": "w-0035",
+      "text": "Dog,",
+      "start": 20.46,
+      "end": 20.68
+    },
+    {
+      "id": "w-0036",
+      "text": "and",
+      "start": 21.42,
+      "end": 21.46
+    },
+    {
+      "id": "w-0037",
+      "text": "the",
+      "start": 21.46,
+      "end": 21.6
+    },
+    {
+      "id": "w-0038",
+      "text": "Cook.",
+      "start": 21.6,
+      "end": 21.8
+    },
+    {
+      "id": "w-0039",
+      "text": "A",
+      "start": 23.06,
+      "end": 23.1
+    },
+    {
+      "id": "w-0040",
+      "text": "rich",
+      "start": 23.1,
+      "end": 23.26
+    },
+    {
+      "id": "w-0041",
+      "text": "man",
+      "start": 23.26,
+      "end": 23.84
+    },
+    {
+      "id": "w-0042",
+      "text": "once",
+      "start": 23.84,
+      "end": 24.2
+    },
+    {
+      "id": "w-0043",
+      "text": "invited",
+      "start": 24.2,
+      "end": 24.64
+    },
+    {
+      "id": "w-0044",
+      "text": "a",
+      "start": 24.64,
+      "end": 25.02
+    },
+    {
+      "id": "w-0045",
+      "text": "number",
+      "start": 25.02,
+      "end": 25.32
+    },
+    {
+      "id": "w-0046",
+      "text": "of",
+      "start": 25.32,
+      "end": 25.46
+    },
+    {
+      "id": "w-0047",
+      "text": "his",
+      "start": 25.46,
+      "end": 25.62
+    },
+    {
+      "id": "w-0048",
+      "text": "friends",
+      "start": 25.62,
+      "end": 25.94
+    },
+    {
+      "id": "w-0049",
+      "text": "and",
+      "start": 25.94,
+      "end": 26.18
+    },
+    {
+      "id": "w-0050",
+      "text": "acquaintances",
+      "start": 26.18,
+      "end": 26.46
+    },
+    {
+      "id": "w-0051",
+      "text": "to",
+      "start": 26.46,
+      "end": 27.08
+    },
+    {
+      "id": "w-0052",
+      "text": "a",
+      "start": 27.08,
+      "end": 27.18
+    },
+    {
+      "id": "w-0053",
+      "text": "banquet.",
+      "start": 27.18,
+      "end": 27.42
+    },
+    {
+      "id": "w-0054",
+      "text": "His",
+      "start": 27.42,
+      "end": 27.86
+    },
+    {
+      "id": "w-0055",
+      "text": "dog",
+      "start": 27.86,
+      "end": 29.2
+    },
+    {
+      "id": "w-0056",
+      "text": "thought",
+      "start": 29.2,
+      "end": 29.48
+    },
+    {
+      "id": "w-0057",
+      "text": "it",
+      "start": 29.48,
+      "end": 29.68
+    },
+    {
+      "id": "w-0058",
+      "text": "would",
+      "start": 29.68,
+      "end": 29.76
+    },
+    {
+      "id": "w-0059",
+      "text": "be",
+      "start": 29.76,
+      "end": 29.94
+    },
+    {
+      "id": "w-0060",
+      "text": "a",
+      "start": 29.94,
+      "end": 30.06
+    },
+    {
+      "id": "w-0061",
+      "text": "good",
+      "start": 30.06,
+      "end": 30.24
+    },
+    {
+      "id": "w-0062",
+      "text": "opportunity",
+      "start": 30.24,
+      "end": 30.66
+    },
+    {
+      "id": "w-0063",
+      "text": "to",
+      "start": 30.66,
+      "end": 31.14
+    },
+    {
+      "id": "w-0064",
+      "text": "invite",
+      "start": 31.14,
+      "end": 31.42
+    },
+    {
+      "id": "w-0065",
+      "text": "another",
+      "start": 31.42,
+      "end": 31.8
+    },
+    {
+      "id": "w-0066",
+      "text": "dog,",
+      "start": 31.8,
+      "end": 32.14
+    },
+    {
+      "id": "w-0067",
+      "text": "a",
+      "start": 32.7,
+      "end": 32.74
+    },
+    {
+      "id": "w-0068",
+      "text": "friend",
+      "start": 32.74,
+      "end": 32.94
+    },
+    {
+      "id": "w-0069",
+      "text": "of",
+      "start": 32.94,
+      "end": 33.12
+    },
+    {
+      "id": "w-0070",
+      "text": "his.",
+      "start": 33.12,
+      "end": 33.34
+    },
+    {
+      "id": "w-0071",
+      "text": "So",
+      "start": 34.02,
+      "end": 34.5
+    },
+    {
+      "id": "w-0072",
+      "text": "he",
+      "start": 34.5,
+      "end": 34.66
+    },
+    {
+      "id": "w-0073",
+      "text": "went",
+      "start": 34.66,
+      "end": 34.82
+    },
+    {
+      "id": "w-0074",
+      "text": "to",
+      "start": 34.82,
+      "end": 35.0
+    },
+    {
+      "id": "w-0075",
+      "text": "him",
+      "start": 35.0,
+      "end": 35.16
+    },
+    {
+      "id": "w-0076",
+      "text": "and",
+      "start": 35.16,
+      "end": 35.32
+    },
+    {
+      "id": "w-0077",
+      "text": "said,",
+      "start": 35.32,
+      "end": 35.56
+    },
+    {
+      "id": "w-0078",
+      "text": "my",
+      "start": 36.34,
+      "end": 36.46
+    },
+    {
+      "id": "w-0079",
+      "text": "master",
+      "start": 36.46,
+      "end": 36.9
+    },
+    {
+      "id": "w-0080",
+      "text": "is",
+      "start": 36.9,
+      "end": 37.12
+    },
+    {
+      "id": "w-0081",
+      "text": "giving",
+      "start": 37.12,
+      "end": 37.32
+    },
+    {
+      "id": "w-0082",
+      "text": "a",
+      "start": 37.32,
+      "end": 37.5
+    },
+    {
+      "id": "w-0083",
+      "text": "feast.",
+      "start": 37.5,
+      "end": 37.72
+    },
+    {
+      "id": "w-0084",
+      "text": "There'll",
+      "start": 38.58,
+      "end": 38.66
+    },
+    {
+      "id": "w-0085",
+      "text": "be",
+      "start": 38.66,
+      "end": 38.78
+    },
+    {
+      "id": "w-0086",
+      "text": "a",
+      "start": 38.78,
+      "end": 38.9
+    },
+    {
+      "id": "w-0087",
+      "text": "fine",
+      "start": 38.9,
+      "end": 39.14
+    },
+    {
+      "id": "w-0088",
+      "text": "spread,",
+      "start": 39.14,
+      "end": 39.48
+    },
+    {
+      "id": "w-0089",
+      "text": "so",
+      "start": 40.24,
+      "end": 40.38
+    },
+    {
+      "id": "w-0090",
+      "text": "come",
+      "start": 40.38,
+      "end": 40.58
+    },
+    {
+      "id": "w-0091",
+      "text": "and",
+      "start": 40.58,
+      "end": 40.76
+    },
+    {
+      "id": "w-0092",
+      "text": "dine",
+      "start": 40.76,
+      "end": 40.98
+    },
+    {
+      "id": "w-0093",
+      "text": "with",
+      "start": 40.98,
+      "end": 41.16
+    },
+    {
+      "id": "w-0094",
+      "text": "me",
+      "start": 41.16,
+      "end": 41.32
+    },
+    {
+      "id": "w-0095",
+      "text": "tonight.",
+      "start": 41.32,
+      "end": 41.5
+    },
+    {
+      "id": "w-0096",
+      "text": "The",
+      "start": 42.48,
+      "end": 42.92
+    },
+    {
+      "id": "w-0097",
+      "text": "dog",
+      "start": 42.92,
+      "end": 43.22
+    },
+    {
+      "id": "w-0098",
+      "text": "thus",
+      "start": 43.22,
+      "end": 43.68
+    },
+    {
+      "id": "w-0099",
+      "text": "invited",
+      "start": 43.68,
+      "end": 44.08
+    },
+    {
+      "id": "w-0100",
+      "text": "came,",
+      "start": 44.08,
+      "end": 44.48
+    },
+    {
+      "id": "w-0101",
+      "text": "and",
+      "start": 45.26,
+      "end": 45.36
+    },
+    {
+      "id": "w-0102",
+      "text": "when",
+      "start": 45.36,
+      "end": 45.5
+    },
+    {
+      "id": "w-0103",
+      "text": "he",
+      "start": 45.5,
+      "end": 45.66
+    },
+    {
+      "id": "w-0104",
+      "text": "saw",
+      "start": 45.66,
+      "end": 45.84
+    },
+    {
+      "id": "w-0105",
+      "text": "the",
+      "start": 45.84,
+      "end": 46.0
+    },
+    {
+      "id": "w-0106",
+      "text": "preparations",
+      "start": 46.0,
+      "end": 46.42
+    },
+    {
+      "id": "w-0107",
+      "text": "being",
+      "start": 46.42,
+      "end": 47.02
+    },
+    {
+      "id": "w-0108",
+      "text": "made",
+      "start": 47.02,
+      "end": 47.34
+    },
+    {
+      "id": "w-0109",
+      "text": "in",
+      "start": 47.34,
+      "end": 47.58
+    },
+    {
+      "id": "w-0110",
+      "text": "the",
+      "start": 47.58,
+      "end": 47.7
+    },
+    {
+      "id": "w-0111",
+      "text": "kitchen,",
+      "start": 47.7,
+      "end": 47.98
+    },
+    {
+      "id": "w-0112",
+      "text": "he",
+      "start": 48.48,
+      "end": 48.56
+    },
+    {
+      "id": "w-0113",
+      "text": "said",
+      "start": 48.56,
+      "end": 48.72
+    },
+    {
+      "id": "w-0114",
+      "text": "to",
+      "start": 48.72,
+      "end": 48.92
+    },
+    {
+      "id": "w-0115",
+      "text": "himself,",
+      "start": 48.92,
+      "end": 49.18
+    },
+    {
+      "id": "w-0116",
+      "text": "my",
+      "start": 50.26,
+      "end": 50.4
+    },
+    {
+      "id": "w-0117",
+      "text": "word,",
+      "start": 50.4,
+      "end": 50.74
+    },
+    {
+      "id": "w-0118",
+      "text": "I'm",
+      "start": 51.16,
+      "end": 51.32
+    },
+    {
+      "id": "w-0119",
+      "text": "in",
+      "start": 51.32,
+      "end": 51.42
+    },
+    {
+      "id": "w-0120",
+      "text": "luck.",
+      "start": 51.42,
+      "end": 51.66
+    },
+    {
+      "id": "w-0121",
+      "text": "I'll",
+      "start": 52.34,
+      "end": 52.78
+    },
+    {
+      "id": "w-0122",
+      "text": "take",
+      "start": 52.78,
+      "end": 52.96
+    },
+    {
+      "id": "w-0123",
+      "text": "care",
+      "start": 52.96,
+      "end": 53.24
+    },
+    {
+      "id": "w-0124",
+      "text": "to",
+      "start": 53.24,
+      "end": 53.48
+    },
+    {
+      "id": "w-0125",
+      "text": "eat",
+      "start": 53.48,
+      "end": 53.66
+    },
+    {
+      "id": "w-0126",
+      "text": "enough",
+      "start": 53.66,
+      "end": 53.94
+    },
+    {
+      "id": "w-0127",
+      "text": "tonight",
+      "start": 53.94,
+      "end": 54.44
+    },
+    {
+      "id": "w-0128",
+      "text": "to",
+      "start": 54.44,
+      "end": 54.9
+    },
+    {
+      "id": "w-0129",
+      "text": "last",
+      "start": 54.9,
+      "end": 55.1
+    },
+    {
+      "id": "w-0130",
+      "text": "me",
+      "start": 55.1,
+      "end": 55.34
+    },
+    {
+      "id": "w-0131",
+      "text": "two",
+      "start": 55.34,
+      "end": 55.5
+    },
+    {
+      "id": "w-0132",
+      "text": "or",
+      "start": 55.5,
+      "end": 55.68
+    },
+    {
+      "id": "w-0133",
+      "text": "three",
+      "start": 55.68,
+      "end": 55.94
+    },
+    {
+      "id": "w-0134",
+      "text": "days.",
+      "start": 55.94,
+      "end": 56.28
+    },
+    {
+      "id": "w-0135",
+      "text": "At",
+      "start": 56.28,
+      "end": 56.9
+    },
+    {
+      "id": "w-0136",
+      "text": "the",
+      "start": 56.9,
+      "end": 57.96
+    },
+    {
+      "id": "w-0137",
+      "text": "same",
+      "start": 57.96,
+      "end": 58.2
+    },
+    {
+      "id": "w-0138",
+      "text": "time,",
+      "start": 58.2,
+      "end": 58.58
+    },
+    {
+      "id": "w-0139",
+      "text": "he",
+      "start": 58.96,
+      "end": 59.02
+    },
+    {
+      "id": "w-0140",
+      "text": "wagged",
+      "start": 59.02,
+      "end": 59.34
+    },
+    {
+      "id": "w-0141",
+      "text": "his",
+      "start": 59.34,
+      "end": 59.52
+    },
+    {
+      "id": "w-0142",
+      "text": "tail",
+      "start": 59.52,
+      "end": 59.7
+    },
+    {
+      "id": "w-0143",
+      "text": "briskly",
+      "start": 59.7,
+      "end": 60.32
+    },
+    {
+      "id": "w-0144",
+      "text": "by",
+      "start": 60.32,
+      "end": 60.62
+    },
+    {
+      "id": "w-0145",
+      "text": "way",
+      "start": 60.62,
+      "end": 60.82
+    },
+    {
+      "id": "w-0146",
+      "text": "of",
+      "start": 60.82,
+      "end": 60.96
+    },
+    {
+      "id": "w-0147",
+      "text": "showing",
+      "start": 60.96,
+      "end": 61.16
+    },
+    {
+      "id": "w-0148",
+      "text": "his",
+      "start": 61.16,
+      "end": 61.44
+    },
+    {
+      "id": "w-0149",
+      "text": "friend",
+      "start": 61.44,
+      "end": 61.7
+    },
+    {
+      "id": "w-0150",
+      "text": "how",
+      "start": 61.7,
+      "end": 62.02
+    },
+    {
+      "id": "w-0151",
+      "text": "delighted",
+      "start": 62.02,
+      "end": 62.4
+    },
+    {
+      "id": "w-0152",
+      "text": "he",
+      "start": 62.4,
+      "end": 62.72
+    },
+    {
+      "id": "w-0153",
+      "text": "was",
+      "start": 62.72,
+      "end": 62.92
+    },
+    {
+      "id": "w-0154",
+      "text": "to",
+      "start": 62.92,
+      "end": 63.2
+    },
+    {
+      "id": "w-0155",
+      "text": "have",
+      "start": 63.2,
+      "end": 63.36
+    },
+    {
+      "id": "w-0156",
+      "text": "been",
+      "start": 63.36,
+      "end": 63.54
+    },
+    {
+      "id": "w-0157",
+      "text": "asked.",
+      "start": 63.54,
+      "end": 63.78
+    },
+    {
+      "id": "w-0158",
+      "text": "But",
+      "start": 64.94,
+      "end": 65.2
+    },
+    {
+      "id": "w-0159",
+      "text": "just",
+      "start": 65.2,
+      "end": 65.4
+    },
+    {
+      "id": "w-0160",
+      "text": "then",
+      "start": 65.4,
+      "end": 65.78
+    },
+    {
+      "id": "w-0161",
+      "text": "the",
+      "start": 65.78,
+      "end": 66.04
+    },
+    {
+      "id": "w-0162",
+      "text": "Cook",
+      "start": 66.04,
+      "end": 66.24
+    },
+    {
+      "id": "w-0163",
+      "text": "caught",
+      "start": 66.24,
+      "end": 66.74
+    },
+    {
+      "id": "w-0164",
+      "text": "sight",
+      "start": 66.74,
+      "end": 67.0
+    },
+    {
+      "id": "w-0165",
+      "text": "of",
+      "start": 67.0,
+      "end": 67.18
+    },
+    {
+      "id": "w-0166",
+      "text": "him,",
+      "start": 67.18,
+      "end": 67.36
+    },
+    {
+      "id": "w-0167",
+      "text": "and",
+      "start": 67.94,
+      "end": 68.14
+    },
+    {
+      "id": "w-0168",
+      "text": "in",
+      "start": 68.14,
+      "end": 68.28
+    },
+    {
+      "id": "w-0169",
+      "text": "his",
+      "start": 68.28,
+      "end": 68.46
+    },
+    {
+      "id": "w-0170",
+      "text": "annoyance",
+      "start": 68.46,
+      "end": 68.82
+    },
+    {
+      "id": "w-0171",
+      "text": "at",
+      "start": 68.82,
+      "end": 69.14
+    },
+    {
+      "id": "w-0172",
+      "text": "seeing",
+      "start": 69.14,
+      "end": 69.34
+    },
+    {
+      "id": "w-0173",
+      "text": "a",
+      "start": 69.34,
+      "end": 69.54
+    },
+    {
+      "id": "w-0174",
+      "text": "strange",
+      "start": 69.54,
+      "end": 69.76
+    },
+    {
+      "id": "w-0175",
+      "text": "dog",
+      "start": 69.76,
+      "end": 70.2
+    },
+    {
+      "id": "w-0176",
+      "text": "in",
+      "start": 70.2,
+      "end": 70.44
+    },
+    {
+      "id": "w-0177",
+      "text": "the",
+      "start": 70.44,
+      "end": 70.54
+    },
+    {
+      "id": "w-0178",
+      "text": "kitchen,",
+      "start": 70.54,
+      "end": 70.76
+    },
+    {
+      "id": "w-0179",
+      "text": "caught",
+      "start": 71.52,
+      "end": 71.76
+    },
+    {
+      "id": "w-0180",
+      "text": "him",
+      "start": 71.76,
+      "end": 72.02
+    },
+    {
+      "id": "w-0181",
+      "text": "up",
+      "start": 72.02,
+      "end": 72.2
+    },
+    {
+      "id": "w-0182",
+      "text": "by",
+      "start": 72.2,
+      "end": 72.44
+    },
+    {
+      "id": "w-0183",
+      "text": "the",
+      "start": 72.44,
+      "end": 72.58
+    },
+    {
+      "id": "w-0184",
+      "text": "hind",
+      "start": 72.58,
+      "end": 72.82
+    },
+    {
+      "id": "w-0185",
+      "text": "legs",
+      "start": 72.82,
+      "end": 73.18
+    },
+    {
+      "id": "w-0186",
+      "text": "and",
+      "start": 73.18,
+      "end": 73.66
+    },
+    {
+      "id": "w-0187",
+      "text": "threw",
+      "start": 73.66,
+      "end": 73.88
+    },
+    {
+      "id": "w-0188",
+      "text": "him",
+      "start": 73.88,
+      "end": 74.1
+    },
+    {
+      "id": "w-0189",
+      "text": "out",
+      "start": 74.1,
+      "end": 74.24
+    },
+    {
+      "id": "w-0190",
+      "text": "of",
+      "start": 74.24,
+      "end": 74.36
+    },
+    {
+      "id": "w-0191",
+      "text": "the",
+      "start": 74.36,
+      "end": 74.48
+    },
+    {
+      "id": "w-0192",
+      "text": "window.",
+      "start": 74.48,
+      "end": 74.7
+    },
+    {
+      "id": "w-0193",
+      "text": "He",
+      "start": 75.66,
+      "end": 76.04
+    },
+    {
+      "id": "w-0194",
+      "text": "had",
+      "start": 76.04,
+      "end": 76.22
+    },
+    {
+      "id": "w-0195",
+      "text": "a",
+      "start": 76.22,
+      "end": 76.36
+    },
+    {
+      "id": "w-0196",
+      "text": "nasty",
+      "start": 76.36,
+      "end": 76.6
+    },
+    {
+      "id": "w-0197",
+      "text": "fall",
+      "start": 76.6,
+      "end": 76.98
+    },
+    {
+      "id": "w-0198",
+      "text": "and",
+      "start": 76.98,
+      "end": 77.66
+    },
+    {
+      "id": "w-0199",
+      "text": "limped",
+      "start": 77.66,
+      "end": 77.98
+    },
+    {
+      "id": "w-0200",
+      "text": "away",
+      "start": 77.98,
+      "end": 78.18
+    },
+    {
+      "id": "w-0201",
+      "text": "as",
+      "start": 78.18,
+      "end": 78.44
+    },
+    {
+      "id": "w-0202",
+      "text": "quickly",
+      "start": 78.44,
+      "end": 78.64
+    },
+    {
+      "id": "w-0203",
+      "text": "as",
+      "start": 78.64,
+      "end": 79.02
+    },
+    {
+      "id": "w-0204",
+      "text": "he",
+      "start": 79.02,
+      "end": 79.18
+    },
+    {
+      "id": "w-0205",
+      "text": "could,",
+      "start": 79.18,
+      "end": 79.42
+    },
+    {
+      "id": "w-0206",
+      "text": "howling",
+      "start": 79.72,
+      "end": 80.18
+    },
+    {
+      "id": "w-0207",
+      "text": "dismally.",
+      "start": 80.18,
+      "end": 80.84
+    },
+    {
+      "id": "w-0208",
+      "text": "Presently",
+      "start": 81.72,
+      "end": 82.24
+    },
+    {
+      "id": "w-0209",
+      "text": "some",
+      "start": 82.24,
+      "end": 82.6
+    },
+    {
+      "id": "w-0210",
+      "text": "other",
+      "start": 82.6,
+      "end": 82.84
+    },
+    {
+      "id": "w-0211",
+      "text": "dogs",
+      "start": 82.84,
+      "end": 83.14
+    },
+    {
+      "id": "w-0212",
+      "text": "met",
+      "start": 83.14,
+      "end": 83.48
+    },
+    {
+      "id": "w-0213",
+      "text": "him",
+      "start": 83.48,
+      "end": 83.74
+    },
+    {
+      "id": "w-0214",
+      "text": "and",
+      "start": 83.74,
+      "end": 84.38
+    },
+    {
+      "id": "w-0215",
+      "text": "said,",
+      "start": 84.38,
+      "end": 84.72
+    },
+    {
+      "id": "w-0216",
+      "text": "well,",
+      "start": 85.1,
+      "end": 85.2
+    },
+    {
+      "id": "w-0217",
+      "text": "what",
+      "start": 85.78,
+      "end": 85.88
+    },
+    {
+      "id": "w-0218",
+      "text": "sort",
+      "start": 85.88,
+      "end": 86.08
+    },
+    {
+      "id": "w-0219",
+      "text": "of",
+      "start": 86.08,
+      "end": 86.24
+    },
+    {
+      "id": "w-0220",
+      "text": "dinner",
+      "start": 86.24,
+      "end": 86.42
+    },
+    {
+      "id": "w-0221",
+      "text": "did",
+      "start": 86.42,
+      "end": 86.7
+    },
+    {
+      "id": "w-0222",
+      "text": "you",
+      "start": 86.7,
+      "end": 86.84
+    },
+    {
+      "id": "w-0223",
+      "text": "get?",
+      "start": 86.84,
+      "end": 87.06
+    },
+    {
+      "id": "w-0224",
+      "text": "To",
+      "start": 87.8,
+      "end": 88.02
+    },
+    {
+      "id": "w-0225",
+      "text": "which",
+      "start": 88.02,
+      "end": 88.2
+    },
+    {
+      "id": "w-0226",
+      "text": "he",
+      "start": 88.2,
+      "end": 88.36
+    },
+    {
+      "id": "w-0227",
+      "text": "replied,",
+      "start": 88.36,
+      "end": 88.62
+    },
+    {
+      "id": "w-0228",
+      "text": "I",
+      "start": 89.4,
+      "end": 89.58
+    },
+    {
+      "id": "w-0229",
+      "text": "had",
+      "start": 89.58,
+      "end": 89.72
+    },
+    {
+      "id": "w-0230",
+      "text": "a",
+      "start": 89.72,
+      "end": 89.8
+    },
+    {
+      "id": "w-0231",
+      "text": "splendid",
+      "start": 89.8,
+      "end": 90.02
+    },
+    {
+      "id": "w-0232",
+      "text": "time,",
+      "start": 90.02,
+      "end": 90.58
+    },
+    {
+      "id": "w-0233",
+      "text": "the",
+      "start": 91.24,
+      "end": 91.36
+    },
+    {
+      "id": "w-0234",
+      "text": "wine",
+      "start": 91.36,
+      "end": 91.54
+    },
+    {
+      "id": "w-0235",
+      "text": "was",
+      "start": 91.54,
+      "end": 91.76
+    },
+    {
+      "id": "w-0236",
+      "text": "so",
+      "start": 91.76,
+      "end": 92.02
+    },
+    {
+      "id": "w-0237",
+      "text": "good,",
+      "start": 92.02,
+      "end": 92.32
+    },
+    {
+      "id": "w-0238",
+      "text": "and",
+      "start": 92.84,
+      "end": 92.86
+    },
+    {
+      "id": "w-0239",
+      "text": "I",
+      "start": 92.86,
+      "end": 93.06
+    },
+    {
+      "id": "w-0240",
+      "text": "drank",
+      "start": 93.06,
+      "end": 93.14
+    },
+    {
+      "id": "w-0241",
+      "text": "so",
+      "start": 93.14,
+      "end": 93.44
+    },
+    {
+      "id": "w-0242",
+      "text": "much",
+      "start": 93.44,
+      "end": 93.66
+    },
+    {
+      "id": "w-0243",
+      "text": "of",
+      "start": 93.66,
+      "end": 93.8
+    },
+    {
+      "id": "w-0244",
+      "text": "it,",
+      "start": 93.8,
+      "end": 93.94
+    },
+    {
+      "id": "w-0245",
+      "text": "that",
+      "start": 94.5,
+      "end": 94.58
+    },
+    {
+      "id": "w-0246",
+      "text": "I",
+      "start": 94.58,
+      "end": 94.7
+    },
+    {
+      "id": "w-0247",
+      "text": "really",
+      "start": 94.7,
+      "end": 94.88
+    },
+    {
+      "id": "w-0248",
+      "text": "don't",
+      "start": 94.88,
+      "end": 95.2
+    },
+    {
+      "id": "w-0249",
+      "text": "remember",
+      "start": 95.2,
+      "end": 95.48
+    },
+    {
+      "id": "w-0250",
+      "text": "how",
+      "start": 95.48,
+      "end": 95.82
+    },
+    {
+      "id": "w-0251",
+      "text": "I",
+      "start": 95.82,
+      "end": 95.98
+    },
+    {
+      "id": "w-0252",
+      "text": "got",
+      "start": 95.98,
+      "end": 96.1
+    },
+    {
+      "id": "w-0253",
+      "text": "out",
+      "start": 96.1,
+      "end": 96.26
+    },
+    {
+      "id": "w-0254",
+      "text": "of",
+      "start": 96.26,
+      "end": 96.38
+    },
+    {
+      "id": "w-0255",
+      "text": "the",
+      "start": 96.38,
+      "end": 96.5
+    },
+    {
+      "id": "w-0256",
+      "text": "house.",
+      "start": 96.5,
+      "end": 96.8
+    },
+    {
+      "id": "w-0257",
+      "text": "Be",
+      "start": 98.04,
+      "end": 98.56
+    },
+    {
+      "id": "w-0258",
+      "text": "shy",
+      "start": 98.56,
+      "end": 98.86
+    },
+    {
+      "id": "w-0259",
+      "text": "of",
+      "start": 98.86,
+      "end": 99.32
+    },
+    {
+      "id": "w-0260",
+      "text": "favors",
+      "start": 99.32,
+      "end": 99.72
+    },
+    {
+      "id": "w-0261",
+      "text": "bestowed",
+      "start": 99.72,
+      "end": 100.04
+    },
+    {
+      "id": "w-0262",
+      "text": "at",
+      "start": 100.04,
+      "end": 100.58
+    },
+    {
+      "id": "w-0263",
+      "text": "the",
+      "start": 100.58,
+      "end": 100.72
+    },
+    {
+      "id": "w-0264",
+      "text": "expense",
+      "start": 100.72,
+      "end": 100.9
+    },
+    {
+      "id": "w-0265",
+      "text": "of",
+      "start": 100.9,
+      "end": 101.32
+    },
+    {
+      "id": "w-0266",
+      "text": "others.",
+      "start": 101.32,
+      "end": 101.6
+    },
+    {
+      "id": "w-0267",
+      "text": "End",
+      "start": 102.84,
+      "end": 103.36
+    },
+    {
+      "id": "w-0268",
+      "text": "of",
+      "start": 103.36,
+      "end": 103.74
+    },
+    {
+      "id": "w-0269",
+      "text": "the",
+      "start": 103.74,
+      "end": 103.92
+    },
+    {
+      "id": "w-0270",
+      "text": "dog",
+      "start": 103.92,
+      "end": 104.24
+    },
+    {
+      "id": "w-0271",
+      "text": "and",
+      "start": 104.24,
+      "end": 104.6
+    },
+    {
+      "id": "w-0272",
+      "text": "the",
+      "start": 104.6,
+      "end": 104.76
+    },
+    {
+      "id": "w-0273",
+      "text": "cook.",
+      "start": 104.76,
+      "end": 104.9
+    }
+  ]
+}

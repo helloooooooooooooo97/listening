@@ -1,0 +1,1048 @@
+{
+  "id": "the-escaped-jackdaw",
+  "title": "The Escaped Jackdaw",
+  "subtitle": "Aesop's Fables, Volume 06",
+  "level": "A2-B1",
+  "duration": 62.4,
+  "audioFileName": "the-escaped-jackdaw.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-6-fables-126-150/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.9,
+      "end": 2.68,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 3.7,
+      "end": 5.96,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 7.04,
+      "end": 11.86,
+      "text": "For more information or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 12.74,
+      "end": 14.1,
+      "text": "Recorded by Kim Braun.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 15.78,
+      "end": 18.58,
+      "text": "Asop's fables, the escaped Jackdaw.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 20.16,
+      "end": 25.62,
+      "text": "A man caught a Jackdaw and tied a piece of string to one of its legs, and then gave it",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 25.62,
+      "end": 26.96,
+      "text": "to his children for a pet.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 27.54,
+      "end": 30.94,
+      "text": "But the Jackdaw didn't at all like having to live with people.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 31.56,
+      "end": 37.12,
+      "text": "So, after a while, when he seemed to have become fairly tame and they didn't watch him so closely,",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 37.66,
+      "end": 39.96,
+      "text": "he slipped away and flew back to his old haunts.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 41.32,
+      "end": 46.72,
+      "text": "Unfortunately, the string was still on his leg, and before long it got entangled in the branches",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 46.72,
+      "end": 50.72,
+      "text": "of a tree, and the Jackdaw couldn't get free, try as he would.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 50.72,
+      "end": 59.08,
+      "text": "He saw it was all up with him and cried in despair, alas and gaining my freedom, I have lost my life.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 60.2,
+      "end": 62.36,
+      "text": "End of the escaped Jackdaw.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.9,
+      "end": 1.46
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.46,
+      "end": 1.72
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.72,
+      "end": 1.86
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.86,
+      "end": 2.42
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.42,
+      "end": 2.68
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.7,
+      "end": 3.82
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.82,
+      "end": 4.52
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 4.52,
+      "end": 4.88
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.88,
+      "end": 5.2
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 5.2,
+      "end": 5.32
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.32,
+      "end": 5.42
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.42,
+      "end": 5.64
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.64,
+      "end": 5.96
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 7.04,
+      "end": 7.14
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 7.14,
+      "end": 7.34
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 7.34,
+      "end": 7.62
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.62,
+      "end": 8.4
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.4,
+      "end": 8.54
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.54,
+      "end": 9.08
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.6,
+      "end": 9.82
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.82,
+      "end": 10.24
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox",
+      "start": 10.24,
+      "end": 11.14
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 11.14,
+      "end": 11.86
+    },
+    {
+      "id": "w-0023",
+      "text": "Recorded",
+      "start": 12.74,
+      "end": 13.2
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 13.2,
+      "end": 13.54
+    },
+    {
+      "id": "w-0025",
+      "text": "Kim",
+      "start": 13.54,
+      "end": 13.8
+    },
+    {
+      "id": "w-0026",
+      "text": "Braun.",
+      "start": 13.8,
+      "end": 14.1
+    },
+    {
+      "id": "w-0027",
+      "text": "Asop's",
+      "start": 15.78,
+      "end": 16.34
+    },
+    {
+      "id": "w-0028",
+      "text": "fables,",
+      "start": 16.34,
+      "end": 16.76
+    },
+    {
+      "id": "w-0029",
+      "text": "the",
+      "start": 17.28,
+      "end": 17.48
+    },
+    {
+      "id": "w-0030",
+      "text": "escaped",
+      "start": 17.48,
+      "end": 17.76
+    },
+    {
+      "id": "w-0031",
+      "text": "Jackdaw.",
+      "start": 17.76,
+      "end": 18.58
+    },
+    {
+      "id": "w-0032",
+      "text": "A",
+      "start": 19.92,
+      "end": 20.2
+    },
+    {
+      "id": "w-0033",
+      "text": "man",
+      "start": 20.2,
+      "end": 20.44
+    },
+    {
+      "id": "w-0034",
+      "text": "caught",
+      "start": 20.44,
+      "end": 20.76
+    },
+    {
+      "id": "w-0035",
+      "text": "a",
+      "start": 20.76,
+      "end": 20.98
+    },
+    {
+      "id": "w-0036",
+      "text": "Jackdaw",
+      "start": 20.98,
+      "end": 21.58
+    },
+    {
+      "id": "w-0037",
+      "text": "and",
+      "start": 21.58,
+      "end": 21.86
+    },
+    {
+      "id": "w-0038",
+      "text": "tied",
+      "start": 21.86,
+      "end": 22.14
+    },
+    {
+      "id": "w-0039",
+      "text": "a",
+      "start": 22.14,
+      "end": 22.36
+    },
+    {
+      "id": "w-0040",
+      "text": "piece",
+      "start": 22.36,
+      "end": 22.52
+    },
+    {
+      "id": "w-0041",
+      "text": "of",
+      "start": 22.52,
+      "end": 22.68
+    },
+    {
+      "id": "w-0042",
+      "text": "string",
+      "start": 22.68,
+      "end": 22.98
+    },
+    {
+      "id": "w-0043",
+      "text": "to",
+      "start": 22.98,
+      "end": 23.34
+    },
+    {
+      "id": "w-0044",
+      "text": "one",
+      "start": 23.34,
+      "end": 23.52
+    },
+    {
+      "id": "w-0045",
+      "text": "of",
+      "start": 23.52,
+      "end": 23.64
+    },
+    {
+      "id": "w-0046",
+      "text": "its",
+      "start": 23.64,
+      "end": 23.78
+    },
+    {
+      "id": "w-0047",
+      "text": "legs,",
+      "start": 23.78,
+      "end": 24.06
+    },
+    {
+      "id": "w-0048",
+      "text": "and",
+      "start": 24.72,
+      "end": 24.86
+    },
+    {
+      "id": "w-0049",
+      "text": "then",
+      "start": 24.86,
+      "end": 25.1
+    },
+    {
+      "id": "w-0050",
+      "text": "gave",
+      "start": 25.1,
+      "end": 25.42
+    },
+    {
+      "id": "w-0051",
+      "text": "it",
+      "start": 25.42,
+      "end": 25.62
+    },
+    {
+      "id": "w-0052",
+      "text": "to",
+      "start": 25.62,
+      "end": 25.76
+    },
+    {
+      "id": "w-0053",
+      "text": "his",
+      "start": 25.76,
+      "end": 25.96
+    },
+    {
+      "id": "w-0054",
+      "text": "children",
+      "start": 25.96,
+      "end": 26.24
+    },
+    {
+      "id": "w-0055",
+      "text": "for",
+      "start": 26.24,
+      "end": 26.62
+    },
+    {
+      "id": "w-0056",
+      "text": "a",
+      "start": 26.62,
+      "end": 26.74
+    },
+    {
+      "id": "w-0057",
+      "text": "pet.",
+      "start": 26.74,
+      "end": 26.96
+    },
+    {
+      "id": "w-0058",
+      "text": "But",
+      "start": 27.54,
+      "end": 28.06
+    },
+    {
+      "id": "w-0059",
+      "text": "the",
+      "start": 28.06,
+      "end": 28.2
+    },
+    {
+      "id": "w-0060",
+      "text": "Jackdaw",
+      "start": 28.2,
+      "end": 28.72
+    },
+    {
+      "id": "w-0061",
+      "text": "didn't",
+      "start": 28.72,
+      "end": 29.14
+    },
+    {
+      "id": "w-0062",
+      "text": "at",
+      "start": 29.14,
+      "end": 29.28
+    },
+    {
+      "id": "w-0063",
+      "text": "all",
+      "start": 29.28,
+      "end": 29.52
+    },
+    {
+      "id": "w-0064",
+      "text": "like",
+      "start": 29.52,
+      "end": 29.82
+    },
+    {
+      "id": "w-0065",
+      "text": "having",
+      "start": 29.82,
+      "end": 30.08
+    },
+    {
+      "id": "w-0066",
+      "text": "to",
+      "start": 30.08,
+      "end": 30.34
+    },
+    {
+      "id": "w-0067",
+      "text": "live",
+      "start": 30.34,
+      "end": 30.52
+    },
+    {
+      "id": "w-0068",
+      "text": "with",
+      "start": 30.52,
+      "end": 30.66
+    },
+    {
+      "id": "w-0069",
+      "text": "people.",
+      "start": 30.66,
+      "end": 30.94
+    },
+    {
+      "id": "w-0070",
+      "text": "So,",
+      "start": 31.56,
+      "end": 31.9
+    },
+    {
+      "id": "w-0071",
+      "text": "after",
+      "start": 32.08,
+      "end": 32.38
+    },
+    {
+      "id": "w-0072",
+      "text": "a",
+      "start": 32.38,
+      "end": 32.54
+    },
+    {
+      "id": "w-0073",
+      "text": "while,",
+      "start": 32.54,
+      "end": 32.82
+    },
+    {
+      "id": "w-0074",
+      "text": "when",
+      "start": 33.18,
+      "end": 33.3
+    },
+    {
+      "id": "w-0075",
+      "text": "he",
+      "start": 33.3,
+      "end": 33.44
+    },
+    {
+      "id": "w-0076",
+      "text": "seemed",
+      "start": 33.44,
+      "end": 33.68
+    },
+    {
+      "id": "w-0077",
+      "text": "to",
+      "start": 33.68,
+      "end": 33.94
+    },
+    {
+      "id": "w-0078",
+      "text": "have",
+      "start": 33.94,
+      "end": 34.1
+    },
+    {
+      "id": "w-0079",
+      "text": "become",
+      "start": 34.1,
+      "end": 34.34
+    },
+    {
+      "id": "w-0080",
+      "text": "fairly",
+      "start": 34.34,
+      "end": 34.76
+    },
+    {
+      "id": "w-0081",
+      "text": "tame",
+      "start": 34.76,
+      "end": 35.08
+    },
+    {
+      "id": "w-0082",
+      "text": "and",
+      "start": 35.08,
+      "end": 35.7
+    },
+    {
+      "id": "w-0083",
+      "text": "they",
+      "start": 35.7,
+      "end": 35.84
+    },
+    {
+      "id": "w-0084",
+      "text": "didn't",
+      "start": 35.84,
+      "end": 36.08
+    },
+    {
+      "id": "w-0085",
+      "text": "watch",
+      "start": 36.08,
+      "end": 36.28
+    },
+    {
+      "id": "w-0086",
+      "text": "him",
+      "start": 36.28,
+      "end": 36.58
+    },
+    {
+      "id": "w-0087",
+      "text": "so",
+      "start": 36.58,
+      "end": 36.74
+    },
+    {
+      "id": "w-0088",
+      "text": "closely,",
+      "start": 36.74,
+      "end": 37.12
+    },
+    {
+      "id": "w-0089",
+      "text": "he",
+      "start": 37.66,
+      "end": 37.82
+    },
+    {
+      "id": "w-0090",
+      "text": "slipped",
+      "start": 37.82,
+      "end": 38.06
+    },
+    {
+      "id": "w-0091",
+      "text": "away",
+      "start": 38.06,
+      "end": 38.42
+    },
+    {
+      "id": "w-0092",
+      "text": "and",
+      "start": 38.42,
+      "end": 38.72
+    },
+    {
+      "id": "w-0093",
+      "text": "flew",
+      "start": 38.72,
+      "end": 38.94
+    },
+    {
+      "id": "w-0094",
+      "text": "back",
+      "start": 38.94,
+      "end": 39.2
+    },
+    {
+      "id": "w-0095",
+      "text": "to",
+      "start": 39.2,
+      "end": 39.44
+    },
+    {
+      "id": "w-0096",
+      "text": "his",
+      "start": 39.44,
+      "end": 39.62
+    },
+    {
+      "id": "w-0097",
+      "text": "old",
+      "start": 39.62,
+      "end": 39.82
+    },
+    {
+      "id": "w-0098",
+      "text": "haunts.",
+      "start": 39.82,
+      "end": 40.08
+    },
+    {
+      "id": "w-0099",
+      "text": "Unfortunately,",
+      "start": 41.32,
+      "end": 41.84
+    },
+    {
+      "id": "w-0100",
+      "text": "the",
+      "start": 42.54,
+      "end": 42.66
+    },
+    {
+      "id": "w-0101",
+      "text": "string",
+      "start": 42.66,
+      "end": 42.92
+    },
+    {
+      "id": "w-0102",
+      "text": "was",
+      "start": 42.92,
+      "end": 43.12
+    },
+    {
+      "id": "w-0103",
+      "text": "still",
+      "start": 43.12,
+      "end": 43.38
+    },
+    {
+      "id": "w-0104",
+      "text": "on",
+      "start": 43.38,
+      "end": 43.56
+    },
+    {
+      "id": "w-0105",
+      "text": "his",
+      "start": 43.56,
+      "end": 43.7
+    },
+    {
+      "id": "w-0106",
+      "text": "leg,",
+      "start": 43.7,
+      "end": 43.98
+    },
+    {
+      "id": "w-0107",
+      "text": "and",
+      "start": 44.44,
+      "end": 44.56
+    },
+    {
+      "id": "w-0108",
+      "text": "before",
+      "start": 44.56,
+      "end": 44.84
+    },
+    {
+      "id": "w-0109",
+      "text": "long",
+      "start": 44.84,
+      "end": 45.14
+    },
+    {
+      "id": "w-0110",
+      "text": "it",
+      "start": 45.14,
+      "end": 45.5
+    },
+    {
+      "id": "w-0111",
+      "text": "got",
+      "start": 45.5,
+      "end": 45.66
+    },
+    {
+      "id": "w-0112",
+      "text": "entangled",
+      "start": 45.66,
+      "end": 45.86
+    },
+    {
+      "id": "w-0113",
+      "text": "in",
+      "start": 45.86,
+      "end": 46.4
+    },
+    {
+      "id": "w-0114",
+      "text": "the",
+      "start": 46.4,
+      "end": 46.52
+    },
+    {
+      "id": "w-0115",
+      "text": "branches",
+      "start": 46.52,
+      "end": 46.72
+    },
+    {
+      "id": "w-0116",
+      "text": "of",
+      "start": 46.72,
+      "end": 47.08
+    },
+    {
+      "id": "w-0117",
+      "text": "a",
+      "start": 47.08,
+      "end": 47.16
+    },
+    {
+      "id": "w-0118",
+      "text": "tree,",
+      "start": 47.16,
+      "end": 47.38
+    },
+    {
+      "id": "w-0119",
+      "text": "and",
+      "start": 47.9,
+      "end": 47.94
+    },
+    {
+      "id": "w-0120",
+      "text": "the",
+      "start": 47.94,
+      "end": 48.04
+    },
+    {
+      "id": "w-0121",
+      "text": "Jackdaw",
+      "start": 48.04,
+      "end": 48.56
+    },
+    {
+      "id": "w-0122",
+      "text": "couldn't",
+      "start": 48.56,
+      "end": 48.98
+    },
+    {
+      "id": "w-0123",
+      "text": "get",
+      "start": 48.98,
+      "end": 49.14
+    },
+    {
+      "id": "w-0124",
+      "text": "free,",
+      "start": 49.14,
+      "end": 49.44
+    },
+    {
+      "id": "w-0125",
+      "text": "try",
+      "start": 49.86,
+      "end": 50.1
+    },
+    {
+      "id": "w-0126",
+      "text": "as",
+      "start": 50.1,
+      "end": 50.36
+    },
+    {
+      "id": "w-0127",
+      "text": "he",
+      "start": 50.36,
+      "end": 50.48
+    },
+    {
+      "id": "w-0128",
+      "text": "would.",
+      "start": 50.48,
+      "end": 50.72
+    },
+    {
+      "id": "w-0129",
+      "text": "He",
+      "start": 50.72,
+      "end": 51.9
+    },
+    {
+      "id": "w-0130",
+      "text": "saw",
+      "start": 51.9,
+      "end": 52.22
+    },
+    {
+      "id": "w-0131",
+      "text": "it",
+      "start": 52.22,
+      "end": 52.44
+    },
+    {
+      "id": "w-0132",
+      "text": "was",
+      "start": 52.44,
+      "end": 52.56
+    },
+    {
+      "id": "w-0133",
+      "text": "all",
+      "start": 52.56,
+      "end": 52.9
+    },
+    {
+      "id": "w-0134",
+      "text": "up",
+      "start": 52.9,
+      "end": 53.1
+    },
+    {
+      "id": "w-0135",
+      "text": "with",
+      "start": 53.1,
+      "end": 53.28
+    },
+    {
+      "id": "w-0136",
+      "text": "him",
+      "start": 53.28,
+      "end": 53.52
+    },
+    {
+      "id": "w-0137",
+      "text": "and",
+      "start": 53.52,
+      "end": 54.02
+    },
+    {
+      "id": "w-0138",
+      "text": "cried",
+      "start": 54.02,
+      "end": 54.3
+    },
+    {
+      "id": "w-0139",
+      "text": "in",
+      "start": 54.3,
+      "end": 54.58
+    },
+    {
+      "id": "w-0140",
+      "text": "despair,",
+      "start": 54.58,
+      "end": 54.94
+    },
+    {
+      "id": "w-0141",
+      "text": "alas",
+      "start": 55.66,
+      "end": 55.82
+    },
+    {
+      "id": "w-0142",
+      "text": "and",
+      "start": 55.82,
+      "end": 56.42
+    },
+    {
+      "id": "w-0143",
+      "text": "gaining",
+      "start": 56.42,
+      "end": 56.62
+    },
+    {
+      "id": "w-0144",
+      "text": "my",
+      "start": 56.62,
+      "end": 56.94
+    },
+    {
+      "id": "w-0145",
+      "text": "freedom,",
+      "start": 56.94,
+      "end": 57.32
+    },
+    {
+      "id": "w-0146",
+      "text": "I",
+      "start": 57.76,
+      "end": 57.9
+    },
+    {
+      "id": "w-0147",
+      "text": "have",
+      "start": 57.9,
+      "end": 58.04
+    },
+    {
+      "id": "w-0148",
+      "text": "lost",
+      "start": 58.04,
+      "end": 58.3
+    },
+    {
+      "id": "w-0149",
+      "text": "my",
+      "start": 58.3,
+      "end": 58.68
+    },
+    {
+      "id": "w-0150",
+      "text": "life.",
+      "start": 58.68,
+      "end": 59.08
+    },
+    {
+      "id": "w-0151",
+      "text": "End",
+      "start": 60.2,
+      "end": 60.84
+    },
+    {
+      "id": "w-0152",
+      "text": "of",
+      "start": 60.84,
+      "end": 61.06
+    },
+    {
+      "id": "w-0153",
+      "text": "the",
+      "start": 61.06,
+      "end": 61.22
+    },
+    {
+      "id": "w-0154",
+      "text": "escaped",
+      "start": 61.22,
+      "end": 61.54
+    },
+    {
+      "id": "w-0155",
+      "text": "Jackdaw.",
+      "start": 61.54,
+      "end": 62.36
+    }
+  ]
+}

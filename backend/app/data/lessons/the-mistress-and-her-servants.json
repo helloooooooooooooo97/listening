@@ -1,0 +1,1020 @@
+{
+  "id": "the-mistress-and-her-servants",
+  "title": "The Mistress and Her Servants",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 62.8,
+  "audioFileName": "the-mistress-and-her-servants.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 13.0,
+      "text": "This is a LibriVox recording. All LibriVox recordings are in the public domain. For more information, or to volunteer, please visit LibriVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 13.54,
+      "end": 36.54,
+      "text": "Asop's fables, the mistress and her servants. A widow, thrifty and industrious, had two servants whom she kept pretty hard at work. They were not allowed to lie along a bed in the mornings, but the old lady had them up and doing as soon as the cock grew. They disliked intensely having to get up at such an hour, especially in the winter time.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 37.54,
+      "end": 48.6,
+      "text": "And they thought that if it were not for the cock waking up their mistress so horribly early, they could sleep longer. So they caught it and wrung its neck. But they weren't prepared for the consequences.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 49.8,
+      "end": 62.76,
+      "text": "For what happened was that their mistress, not hearing the cock crow as usual, waited them up earlier than ever and set them to work in the middle of the night. End of the mistress and her servants.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 0.52
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.52,
+      "end": 0.94
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 0.94,
+      "end": 1.08
+    },
+    {
+      "id": "w-0003",
+      "text": "LibriVox",
+      "start": 1.08,
+      "end": 1.68
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 1.68,
+      "end": 1.94
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 2.9,
+      "end": 3.18
+    },
+    {
+      "id": "w-0006",
+      "text": "LibriVox",
+      "start": 3.18,
+      "end": 3.82
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 3.82,
+      "end": 4.14
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.14,
+      "end": 4.7
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.7,
+      "end": 4.84
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 4.84,
+      "end": 4.92
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 4.92,
+      "end": 5.2
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.2,
+      "end": 5.56
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.3,
+      "end": 6.32
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.32,
+      "end": 6.56
+    },
+    {
+      "id": "w-0015",
+      "text": "information,",
+      "start": 6.56,
+      "end": 6.9
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.86,
+      "end": 7.94
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 7.94,
+      "end": 8.26
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.26,
+      "end": 8.72
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.5,
+      "end": 9.82
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.82,
+      "end": 10.2
+    },
+    {
+      "id": "w-0021",
+      "text": "LibriVox",
+      "start": 10.2,
+      "end": 11.26
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 11.26,
+      "end": 13.0
+    },
+    {
+      "id": "w-0023",
+      "text": "Asop's",
+      "start": 13.54,
+      "end": 14.02
+    },
+    {
+      "id": "w-0024",
+      "text": "fables,",
+      "start": 14.02,
+      "end": 14.48
+    },
+    {
+      "id": "w-0025",
+      "text": "the",
+      "start": 15.24,
+      "end": 15.44
+    },
+    {
+      "id": "w-0026",
+      "text": "mistress",
+      "start": 15.44,
+      "end": 15.8
+    },
+    {
+      "id": "w-0027",
+      "text": "and",
+      "start": 15.8,
+      "end": 16.52
+    },
+    {
+      "id": "w-0028",
+      "text": "her",
+      "start": 16.52,
+      "end": 16.7
+    },
+    {
+      "id": "w-0029",
+      "text": "servants.",
+      "start": 16.7,
+      "end": 17.12
+    },
+    {
+      "id": "w-0030",
+      "text": "A",
+      "start": 17.92,
+      "end": 18.14
+    },
+    {
+      "id": "w-0031",
+      "text": "widow,",
+      "start": 18.14,
+      "end": 18.4
+    },
+    {
+      "id": "w-0032",
+      "text": "thrifty",
+      "start": 18.98,
+      "end": 19.48
+    },
+    {
+      "id": "w-0033",
+      "text": "and",
+      "start": 19.48,
+      "end": 19.74
+    },
+    {
+      "id": "w-0034",
+      "text": "industrious,",
+      "start": 19.74,
+      "end": 20.38
+    },
+    {
+      "id": "w-0035",
+      "text": "had",
+      "start": 20.86,
+      "end": 21.06
+    },
+    {
+      "id": "w-0036",
+      "text": "two",
+      "start": 21.06,
+      "end": 21.28
+    },
+    {
+      "id": "w-0037",
+      "text": "servants",
+      "start": 21.28,
+      "end": 21.78
+    },
+    {
+      "id": "w-0038",
+      "text": "whom",
+      "start": 21.78,
+      "end": 22.42
+    },
+    {
+      "id": "w-0039",
+      "text": "she",
+      "start": 22.42,
+      "end": 22.58
+    },
+    {
+      "id": "w-0040",
+      "text": "kept",
+      "start": 22.58,
+      "end": 22.74
+    },
+    {
+      "id": "w-0041",
+      "text": "pretty",
+      "start": 22.74,
+      "end": 23.02
+    },
+    {
+      "id": "w-0042",
+      "text": "hard",
+      "start": 23.02,
+      "end": 23.38
+    },
+    {
+      "id": "w-0043",
+      "text": "at",
+      "start": 23.38,
+      "end": 23.56
+    },
+    {
+      "id": "w-0044",
+      "text": "work.",
+      "start": 23.56,
+      "end": 23.76
+    },
+    {
+      "id": "w-0045",
+      "text": "They",
+      "start": 24.32,
+      "end": 24.64
+    },
+    {
+      "id": "w-0046",
+      "text": "were",
+      "start": 24.64,
+      "end": 24.74
+    },
+    {
+      "id": "w-0047",
+      "text": "not",
+      "start": 24.74,
+      "end": 24.92
+    },
+    {
+      "id": "w-0048",
+      "text": "allowed",
+      "start": 24.92,
+      "end": 25.24
+    },
+    {
+      "id": "w-0049",
+      "text": "to",
+      "start": 25.24,
+      "end": 25.44
+    },
+    {
+      "id": "w-0050",
+      "text": "lie",
+      "start": 25.44,
+      "end": 25.66
+    },
+    {
+      "id": "w-0051",
+      "text": "along",
+      "start": 25.66,
+      "end": 25.9
+    },
+    {
+      "id": "w-0052",
+      "text": "a",
+      "start": 25.9,
+      "end": 26.04
+    },
+    {
+      "id": "w-0053",
+      "text": "bed",
+      "start": 26.04,
+      "end": 26.24
+    },
+    {
+      "id": "w-0054",
+      "text": "in",
+      "start": 26.24,
+      "end": 26.44
+    },
+    {
+      "id": "w-0055",
+      "text": "the",
+      "start": 26.44,
+      "end": 26.54
+    },
+    {
+      "id": "w-0056",
+      "text": "mornings,",
+      "start": 26.54,
+      "end": 26.84
+    },
+    {
+      "id": "w-0057",
+      "text": "but",
+      "start": 27.36,
+      "end": 27.48
+    },
+    {
+      "id": "w-0058",
+      "text": "the",
+      "start": 27.48,
+      "end": 27.6
+    },
+    {
+      "id": "w-0059",
+      "text": "old",
+      "start": 27.6,
+      "end": 27.8
+    },
+    {
+      "id": "w-0060",
+      "text": "lady",
+      "start": 27.8,
+      "end": 28.1
+    },
+    {
+      "id": "w-0061",
+      "text": "had",
+      "start": 28.1,
+      "end": 28.54
+    },
+    {
+      "id": "w-0062",
+      "text": "them",
+      "start": 28.54,
+      "end": 28.7
+    },
+    {
+      "id": "w-0063",
+      "text": "up",
+      "start": 28.7,
+      "end": 28.86
+    },
+    {
+      "id": "w-0064",
+      "text": "and",
+      "start": 28.86,
+      "end": 29.02
+    },
+    {
+      "id": "w-0065",
+      "text": "doing",
+      "start": 29.02,
+      "end": 29.24
+    },
+    {
+      "id": "w-0066",
+      "text": "as",
+      "start": 29.24,
+      "end": 29.56
+    },
+    {
+      "id": "w-0067",
+      "text": "soon",
+      "start": 29.56,
+      "end": 29.8
+    },
+    {
+      "id": "w-0068",
+      "text": "as",
+      "start": 29.8,
+      "end": 29.98
+    },
+    {
+      "id": "w-0069",
+      "text": "the",
+      "start": 29.98,
+      "end": 30.12
+    },
+    {
+      "id": "w-0070",
+      "text": "cock",
+      "start": 30.12,
+      "end": 30.28
+    },
+    {
+      "id": "w-0071",
+      "text": "grew.",
+      "start": 30.28,
+      "end": 30.7
+    },
+    {
+      "id": "w-0072",
+      "text": "They",
+      "start": 31.4,
+      "end": 31.88
+    },
+    {
+      "id": "w-0073",
+      "text": "disliked",
+      "start": 31.88,
+      "end": 32.2
+    },
+    {
+      "id": "w-0074",
+      "text": "intensely",
+      "start": 32.2,
+      "end": 32.96
+    },
+    {
+      "id": "w-0075",
+      "text": "having",
+      "start": 32.96,
+      "end": 33.38
+    },
+    {
+      "id": "w-0076",
+      "text": "to",
+      "start": 33.38,
+      "end": 33.62
+    },
+    {
+      "id": "w-0077",
+      "text": "get",
+      "start": 33.62,
+      "end": 33.76
+    },
+    {
+      "id": "w-0078",
+      "text": "up",
+      "start": 33.76,
+      "end": 33.94
+    },
+    {
+      "id": "w-0079",
+      "text": "at",
+      "start": 33.94,
+      "end": 34.08
+    },
+    {
+      "id": "w-0080",
+      "text": "such",
+      "start": 34.08,
+      "end": 34.24
+    },
+    {
+      "id": "w-0081",
+      "text": "an",
+      "start": 34.24,
+      "end": 34.44
+    },
+    {
+      "id": "w-0082",
+      "text": "hour,",
+      "start": 34.44,
+      "end": 34.66
+    },
+    {
+      "id": "w-0083",
+      "text": "especially",
+      "start": 35.06,
+      "end": 35.4
+    },
+    {
+      "id": "w-0084",
+      "text": "in",
+      "start": 35.4,
+      "end": 35.86
+    },
+    {
+      "id": "w-0085",
+      "text": "the",
+      "start": 35.86,
+      "end": 35.94
+    },
+    {
+      "id": "w-0086",
+      "text": "winter",
+      "start": 35.94,
+      "end": 36.1
+    },
+    {
+      "id": "w-0087",
+      "text": "time.",
+      "start": 36.1,
+      "end": 36.54
+    },
+    {
+      "id": "w-0088",
+      "text": "And",
+      "start": 37.28,
+      "end": 37.56
+    },
+    {
+      "id": "w-0089",
+      "text": "they",
+      "start": 37.56,
+      "end": 37.72
+    },
+    {
+      "id": "w-0090",
+      "text": "thought",
+      "start": 37.72,
+      "end": 38.04
+    },
+    {
+      "id": "w-0091",
+      "text": "that",
+      "start": 38.04,
+      "end": 38.5
+    },
+    {
+      "id": "w-0092",
+      "text": "if",
+      "start": 38.5,
+      "end": 38.66
+    },
+    {
+      "id": "w-0093",
+      "text": "it",
+      "start": 38.66,
+      "end": 38.74
+    },
+    {
+      "id": "w-0094",
+      "text": "were",
+      "start": 38.74,
+      "end": 38.84
+    },
+    {
+      "id": "w-0095",
+      "text": "not",
+      "start": 38.84,
+      "end": 39.08
+    },
+    {
+      "id": "w-0096",
+      "text": "for",
+      "start": 39.08,
+      "end": 39.3
+    },
+    {
+      "id": "w-0097",
+      "text": "the",
+      "start": 39.3,
+      "end": 39.4
+    },
+    {
+      "id": "w-0098",
+      "text": "cock",
+      "start": 39.4,
+      "end": 39.54
+    },
+    {
+      "id": "w-0099",
+      "text": "waking",
+      "start": 39.54,
+      "end": 39.88
+    },
+    {
+      "id": "w-0100",
+      "text": "up",
+      "start": 39.88,
+      "end": 40.14
+    },
+    {
+      "id": "w-0101",
+      "text": "their",
+      "start": 40.14,
+      "end": 40.32
+    },
+    {
+      "id": "w-0102",
+      "text": "mistress",
+      "start": 40.32,
+      "end": 40.62
+    },
+    {
+      "id": "w-0103",
+      "text": "so",
+      "start": 40.62,
+      "end": 41.04
+    },
+    {
+      "id": "w-0104",
+      "text": "horribly",
+      "start": 41.04,
+      "end": 41.38
+    },
+    {
+      "id": "w-0105",
+      "text": "early,",
+      "start": 41.38,
+      "end": 41.84
+    },
+    {
+      "id": "w-0106",
+      "text": "they",
+      "start": 42.38,
+      "end": 42.42
+    },
+    {
+      "id": "w-0107",
+      "text": "could",
+      "start": 42.42,
+      "end": 42.52
+    },
+    {
+      "id": "w-0108",
+      "text": "sleep",
+      "start": 42.52,
+      "end": 42.76
+    },
+    {
+      "id": "w-0109",
+      "text": "longer.",
+      "start": 42.76,
+      "end": 43.22
+    },
+    {
+      "id": "w-0110",
+      "text": "So",
+      "start": 43.88,
+      "end": 44.38
+    },
+    {
+      "id": "w-0111",
+      "text": "they",
+      "start": 44.38,
+      "end": 44.54
+    },
+    {
+      "id": "w-0112",
+      "text": "caught",
+      "start": 44.54,
+      "end": 44.76
+    },
+    {
+      "id": "w-0113",
+      "text": "it",
+      "start": 44.76,
+      "end": 44.98
+    },
+    {
+      "id": "w-0114",
+      "text": "and",
+      "start": 44.98,
+      "end": 45.46
+    },
+    {
+      "id": "w-0115",
+      "text": "wrung",
+      "start": 45.46,
+      "end": 45.72
+    },
+    {
+      "id": "w-0116",
+      "text": "its",
+      "start": 45.72,
+      "end": 45.86
+    },
+    {
+      "id": "w-0117",
+      "text": "neck.",
+      "start": 45.86,
+      "end": 46.16
+    },
+    {
+      "id": "w-0118",
+      "text": "But",
+      "start": 46.82,
+      "end": 47.0
+    },
+    {
+      "id": "w-0119",
+      "text": "they",
+      "start": 47.0,
+      "end": 47.16
+    },
+    {
+      "id": "w-0120",
+      "text": "weren't",
+      "start": 47.16,
+      "end": 47.48
+    },
+    {
+      "id": "w-0121",
+      "text": "prepared",
+      "start": 47.48,
+      "end": 47.8
+    },
+    {
+      "id": "w-0122",
+      "text": "for",
+      "start": 47.8,
+      "end": 48.14
+    },
+    {
+      "id": "w-0123",
+      "text": "the",
+      "start": 48.14,
+      "end": 48.22
+    },
+    {
+      "id": "w-0124",
+      "text": "consequences.",
+      "start": 48.22,
+      "end": 48.6
+    },
+    {
+      "id": "w-0125",
+      "text": "For",
+      "start": 49.8,
+      "end": 50.04
+    },
+    {
+      "id": "w-0126",
+      "text": "what",
+      "start": 50.04,
+      "end": 50.2
+    },
+    {
+      "id": "w-0127",
+      "text": "happened",
+      "start": 50.2,
+      "end": 50.56
+    },
+    {
+      "id": "w-0128",
+      "text": "was",
+      "start": 50.56,
+      "end": 50.88
+    },
+    {
+      "id": "w-0129",
+      "text": "that",
+      "start": 50.88,
+      "end": 51.48
+    },
+    {
+      "id": "w-0130",
+      "text": "their",
+      "start": 51.48,
+      "end": 51.66
+    },
+    {
+      "id": "w-0131",
+      "text": "mistress,",
+      "start": 51.66,
+      "end": 51.98
+    },
+    {
+      "id": "w-0132",
+      "text": "not",
+      "start": 52.34,
+      "end": 52.54
+    },
+    {
+      "id": "w-0133",
+      "text": "hearing",
+      "start": 52.54,
+      "end": 52.86
+    },
+    {
+      "id": "w-0134",
+      "text": "the",
+      "start": 52.86,
+      "end": 53.16
+    },
+    {
+      "id": "w-0135",
+      "text": "cock",
+      "start": 53.16,
+      "end": 53.38
+    },
+    {
+      "id": "w-0136",
+      "text": "crow",
+      "start": 53.38,
+      "end": 53.7
+    },
+    {
+      "id": "w-0137",
+      "text": "as",
+      "start": 53.7,
+      "end": 53.96
+    },
+    {
+      "id": "w-0138",
+      "text": "usual,",
+      "start": 53.96,
+      "end": 54.34
+    },
+    {
+      "id": "w-0139",
+      "text": "waited",
+      "start": 54.86,
+      "end": 55.06
+    },
+    {
+      "id": "w-0140",
+      "text": "them",
+      "start": 55.06,
+      "end": 55.4
+    },
+    {
+      "id": "w-0141",
+      "text": "up",
+      "start": 55.4,
+      "end": 55.5
+    },
+    {
+      "id": "w-0142",
+      "text": "earlier",
+      "start": 55.5,
+      "end": 55.84
+    },
+    {
+      "id": "w-0143",
+      "text": "than",
+      "start": 55.84,
+      "end": 56.08
+    },
+    {
+      "id": "w-0144",
+      "text": "ever",
+      "start": 56.08,
+      "end": 56.34
+    },
+    {
+      "id": "w-0145",
+      "text": "and",
+      "start": 56.34,
+      "end": 56.84
+    },
+    {
+      "id": "w-0146",
+      "text": "set",
+      "start": 56.84,
+      "end": 57.08
+    },
+    {
+      "id": "w-0147",
+      "text": "them",
+      "start": 57.08,
+      "end": 57.32
+    },
+    {
+      "id": "w-0148",
+      "text": "to",
+      "start": 57.32,
+      "end": 57.46
+    },
+    {
+      "id": "w-0149",
+      "text": "work",
+      "start": 57.46,
+      "end": 57.66
+    },
+    {
+      "id": "w-0150",
+      "text": "in",
+      "start": 57.66,
+      "end": 58.12
+    },
+    {
+      "id": "w-0151",
+      "text": "the",
+      "start": 58.12,
+      "end": 58.28
+    },
+    {
+      "id": "w-0152",
+      "text": "middle",
+      "start": 58.28,
+      "end": 58.56
+    },
+    {
+      "id": "w-0153",
+      "text": "of",
+      "start": 58.56,
+      "end": 58.8
+    },
+    {
+      "id": "w-0154",
+      "text": "the",
+      "start": 58.8,
+      "end": 58.94
+    },
+    {
+      "id": "w-0155",
+      "text": "night.",
+      "start": 58.94,
+      "end": 59.2
+    },
+    {
+      "id": "w-0156",
+      "text": "End",
+      "start": 60.38,
+      "end": 60.94
+    },
+    {
+      "id": "w-0157",
+      "text": "of",
+      "start": 60.94,
+      "end": 61.3
+    },
+    {
+      "id": "w-0158",
+      "text": "the",
+      "start": 61.3,
+      "end": 61.44
+    },
+    {
+      "id": "w-0159",
+      "text": "mistress",
+      "start": 61.44,
+      "end": 61.74
+    },
+    {
+      "id": "w-0160",
+      "text": "and",
+      "start": 61.74,
+      "end": 62.2
+    },
+    {
+      "id": "w-0161",
+      "text": "her",
+      "start": 62.2,
+      "end": 62.38
+    },
+    {
+      "id": "w-0162",
+      "text": "servants.",
+      "start": 62.38,
+      "end": 62.76
+    }
+  ]
+}

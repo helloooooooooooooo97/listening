@@ -1,0 +1,2004 @@
+{
+  "id": "the-town-mouse-and-the-country-mouse",
+  "title": "The Town Mouse and The Country Mouse",
+  "subtitle": "Aesop's Fables, Volume 06",
+  "level": "A2-B1",
+  "duration": 121.7,
+  "audioFileName": "the-town-mouse-and-the-country-mouse.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-6-fables-126-150/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 5.92,
+      "text": "This is a LibraVox recording. All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.8,
+      "end": 12.86,
+      "text": "For more information and to find out how to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 13.46,
+      "end": 17.24,
+      "text": "Recording by Marion Brown, Toronto, Canada.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 18.58,
+      "end": 22.78,
+      "text": "ASOP's Fables, the Town Mouse and the Country Mouse.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 23.8,
+      "end": 24.72,
+      "text": "Chapter 16",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 26.92,
+      "end": 35.82,
+      "text": "A Town Mouse and a Country Mouse were acquaintances, and the Country Mouse one day invited his friend to come and see him at his home in the fields.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 36.46,
+      "end": 44.44,
+      "text": "The Town Mouse came and they sat down to a dinner of barley corns and roots, the latter of which had a distinctly earthy flavor.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 45.28,
+      "end": 53.9,
+      "text": "The fair was not much to the taste of the guest, and presently he broke out with, my poor dear friend, you live here no better than the ants.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 53.9,
+      "end": 64.86,
+      "text": "Now you should just see how I fare. My larder is a regular horn of plenty. You must come and stay with me, and I promise you, you shall live on the fad of the land.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 65.72,
+      "end": 75.58,
+      "text": "So when he returned to town, he took the Country Mouse with him, and showed him into a larder containing flour and oatmeal and figs and honey and dates.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 75.58,
+      "end": 82.64,
+      "text": "The Country Mouse had never seen anything like it, and sat down to enjoy the luxuries his friend provided.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 83.64,
+      "end": 88.42,
+      "text": "But before they had well begun, the door of the larder opened and someone came in.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 88.92,
+      "end": 94.6,
+      "text": "The two mice scampered off and hid themselves in a narrow and exceedingly uncomfortable hole.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 95.3,
+      "end": 101.96,
+      "text": "Presently, when all was quiet, they ventured out again, but someone else came in, and off they scuttled again.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 102.96,
+      "end": 112.34,
+      "text": "This was too much for the visitor. Goodbye, said he, I'm off. You live in the lap of luxury, I can see, but you are surrounded by dangers.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 113.12,
+      "end": 121.74,
+      "text": "Whereas at home I can enjoy my simple dinner of roots and corn in peace. End of the town mouse and the Country Mouse.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 0.9
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.9,
+      "end": 1.3
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.3,
+      "end": 1.44
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.44,
+      "end": 2.02
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.02,
+      "end": 2.34
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.22,
+      "end": 3.36
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.36,
+      "end": 4.08
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 4.08,
+      "end": 4.46
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.46,
+      "end": 5.06
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 5.06,
+      "end": 5.2
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.2,
+      "end": 5.3
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.3,
+      "end": 5.6
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.6,
+      "end": 5.92
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.8,
+      "end": 6.9
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.9,
+      "end": 7.12
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 7.12,
+      "end": 7.48
+    },
+    {
+      "id": "w-0016",
+      "text": "and",
+      "start": 7.48,
+      "end": 8.16
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.16,
+      "end": 8.28
+    },
+    {
+      "id": "w-0018",
+      "text": "find",
+      "start": 8.28,
+      "end": 8.56
+    },
+    {
+      "id": "w-0019",
+      "text": "out",
+      "start": 8.56,
+      "end": 8.82
+    },
+    {
+      "id": "w-0020",
+      "text": "how",
+      "start": 8.82,
+      "end": 9.1
+    },
+    {
+      "id": "w-0021",
+      "text": "to",
+      "start": 9.1,
+      "end": 9.24
+    },
+    {
+      "id": "w-0022",
+      "text": "volunteer,",
+      "start": 9.24,
+      "end": 9.68
+    },
+    {
+      "id": "w-0023",
+      "text": "please",
+      "start": 10.32,
+      "end": 10.58
+    },
+    {
+      "id": "w-0024",
+      "text": "visit",
+      "start": 10.58,
+      "end": 11.06
+    },
+    {
+      "id": "w-0025",
+      "text": "LibraVox",
+      "start": 11.06,
+      "end": 12.0
+    },
+    {
+      "id": "w-0026",
+      "text": ".org.",
+      "start": 12.0,
+      "end": 12.86
+    },
+    {
+      "id": "w-0027",
+      "text": "Recording",
+      "start": 13.46,
+      "end": 13.94
+    },
+    {
+      "id": "w-0028",
+      "text": "by",
+      "start": 13.94,
+      "end": 14.42
+    },
+    {
+      "id": "w-0029",
+      "text": "Marion",
+      "start": 14.42,
+      "end": 15.2
+    },
+    {
+      "id": "w-0030",
+      "text": "Brown,",
+      "start": 15.2,
+      "end": 15.62
+    },
+    {
+      "id": "w-0031",
+      "text": "Toronto,",
+      "start": 16.04,
+      "end": 16.26
+    },
+    {
+      "id": "w-0032",
+      "text": "Canada.",
+      "start": 16.94,
+      "end": 17.24
+    },
+    {
+      "id": "w-0033",
+      "text": "ASOP's",
+      "start": 18.58,
+      "end": 19.3
+    },
+    {
+      "id": "w-0034",
+      "text": "Fables,",
+      "start": 19.3,
+      "end": 19.74
+    },
+    {
+      "id": "w-0035",
+      "text": "the",
+      "start": 20.5,
+      "end": 20.58
+    },
+    {
+      "id": "w-0036",
+      "text": "Town",
+      "start": 20.58,
+      "end": 20.8
+    },
+    {
+      "id": "w-0037",
+      "text": "Mouse",
+      "start": 20.8,
+      "end": 21.18
+    },
+    {
+      "id": "w-0038",
+      "text": "and",
+      "start": 21.18,
+      "end": 21.98
+    },
+    {
+      "id": "w-0039",
+      "text": "the",
+      "start": 21.98,
+      "end": 22.12
+    },
+    {
+      "id": "w-0040",
+      "text": "Country",
+      "start": 22.12,
+      "end": 22.3
+    },
+    {
+      "id": "w-0041",
+      "text": "Mouse.",
+      "start": 22.3,
+      "end": 22.78
+    },
+    {
+      "id": "w-0042",
+      "text": "Chapter",
+      "start": 23.8,
+      "end": 24.14
+    },
+    {
+      "id": "w-0043",
+      "text": "16",
+      "start": 24.14,
+      "end": 24.72
+    },
+    {
+      "id": "w-0044",
+      "text": "A",
+      "start": 26.92,
+      "end": 27.44
+    },
+    {
+      "id": "w-0045",
+      "text": "Town",
+      "start": 27.44,
+      "end": 27.96
+    },
+    {
+      "id": "w-0046",
+      "text": "Mouse",
+      "start": 27.96,
+      "end": 28.24
+    },
+    {
+      "id": "w-0047",
+      "text": "and",
+      "start": 28.24,
+      "end": 28.52
+    },
+    {
+      "id": "w-0048",
+      "text": "a",
+      "start": 28.52,
+      "end": 28.6
+    },
+    {
+      "id": "w-0049",
+      "text": "Country",
+      "start": 28.6,
+      "end": 28.76
+    },
+    {
+      "id": "w-0050",
+      "text": "Mouse",
+      "start": 28.76,
+      "end": 29.22
+    },
+    {
+      "id": "w-0051",
+      "text": "were",
+      "start": 29.22,
+      "end": 29.52
+    },
+    {
+      "id": "w-0052",
+      "text": "acquaintances,",
+      "start": 29.52,
+      "end": 29.92
+    },
+    {
+      "id": "w-0053",
+      "text": "and",
+      "start": 31.08,
+      "end": 31.12
+    },
+    {
+      "id": "w-0054",
+      "text": "the",
+      "start": 31.12,
+      "end": 31.24
+    },
+    {
+      "id": "w-0055",
+      "text": "Country",
+      "start": 31.24,
+      "end": 31.4
+    },
+    {
+      "id": "w-0056",
+      "text": "Mouse",
+      "start": 31.4,
+      "end": 31.84
+    },
+    {
+      "id": "w-0057",
+      "text": "one",
+      "start": 31.84,
+      "end": 32.14
+    },
+    {
+      "id": "w-0058",
+      "text": "day",
+      "start": 32.14,
+      "end": 32.42
+    },
+    {
+      "id": "w-0059",
+      "text": "invited",
+      "start": 32.42,
+      "end": 32.76
+    },
+    {
+      "id": "w-0060",
+      "text": "his",
+      "start": 32.76,
+      "end": 33.26
+    },
+    {
+      "id": "w-0061",
+      "text": "friend",
+      "start": 33.26,
+      "end": 33.54
+    },
+    {
+      "id": "w-0062",
+      "text": "to",
+      "start": 33.54,
+      "end": 33.82
+    },
+    {
+      "id": "w-0063",
+      "text": "come",
+      "start": 33.82,
+      "end": 34.0
+    },
+    {
+      "id": "w-0064",
+      "text": "and",
+      "start": 34.0,
+      "end": 34.16
+    },
+    {
+      "id": "w-0065",
+      "text": "see",
+      "start": 34.16,
+      "end": 34.38
+    },
+    {
+      "id": "w-0066",
+      "text": "him",
+      "start": 34.38,
+      "end": 34.62
+    },
+    {
+      "id": "w-0067",
+      "text": "at",
+      "start": 34.62,
+      "end": 34.8
+    },
+    {
+      "id": "w-0068",
+      "text": "his",
+      "start": 34.8,
+      "end": 34.94
+    },
+    {
+      "id": "w-0069",
+      "text": "home",
+      "start": 34.94,
+      "end": 35.2
+    },
+    {
+      "id": "w-0070",
+      "text": "in",
+      "start": 35.2,
+      "end": 35.4
+    },
+    {
+      "id": "w-0071",
+      "text": "the",
+      "start": 35.4,
+      "end": 35.52
+    },
+    {
+      "id": "w-0072",
+      "text": "fields.",
+      "start": 35.52,
+      "end": 35.82
+    },
+    {
+      "id": "w-0073",
+      "text": "The",
+      "start": 36.46,
+      "end": 36.94
+    },
+    {
+      "id": "w-0074",
+      "text": "Town",
+      "start": 36.94,
+      "end": 37.12
+    },
+    {
+      "id": "w-0075",
+      "text": "Mouse",
+      "start": 37.12,
+      "end": 37.46
+    },
+    {
+      "id": "w-0076",
+      "text": "came",
+      "start": 37.46,
+      "end": 37.78
+    },
+    {
+      "id": "w-0077",
+      "text": "and",
+      "start": 37.78,
+      "end": 38.28
+    },
+    {
+      "id": "w-0078",
+      "text": "they",
+      "start": 38.28,
+      "end": 38.42
+    },
+    {
+      "id": "w-0079",
+      "text": "sat",
+      "start": 38.42,
+      "end": 38.64
+    },
+    {
+      "id": "w-0080",
+      "text": "down",
+      "start": 38.64,
+      "end": 38.98
+    },
+    {
+      "id": "w-0081",
+      "text": "to",
+      "start": 38.98,
+      "end": 39.2
+    },
+    {
+      "id": "w-0082",
+      "text": "a",
+      "start": 39.2,
+      "end": 39.32
+    },
+    {
+      "id": "w-0083",
+      "text": "dinner",
+      "start": 39.32,
+      "end": 39.5
+    },
+    {
+      "id": "w-0084",
+      "text": "of",
+      "start": 39.5,
+      "end": 39.84
+    },
+    {
+      "id": "w-0085",
+      "text": "barley",
+      "start": 39.84,
+      "end": 40.1
+    },
+    {
+      "id": "w-0086",
+      "text": "corns",
+      "start": 40.1,
+      "end": 40.7
+    },
+    {
+      "id": "w-0087",
+      "text": "and",
+      "start": 40.7,
+      "end": 40.86
+    },
+    {
+      "id": "w-0088",
+      "text": "roots,",
+      "start": 40.86,
+      "end": 41.12
+    },
+    {
+      "id": "w-0089",
+      "text": "the",
+      "start": 41.76,
+      "end": 42.0
+    },
+    {
+      "id": "w-0090",
+      "text": "latter",
+      "start": 42.0,
+      "end": 42.22
+    },
+    {
+      "id": "w-0091",
+      "text": "of",
+      "start": 42.22,
+      "end": 42.54
+    },
+    {
+      "id": "w-0092",
+      "text": "which",
+      "start": 42.54,
+      "end": 42.7
+    },
+    {
+      "id": "w-0093",
+      "text": "had",
+      "start": 42.7,
+      "end": 42.94
+    },
+    {
+      "id": "w-0094",
+      "text": "a",
+      "start": 42.94,
+      "end": 43.06
+    },
+    {
+      "id": "w-0095",
+      "text": "distinctly",
+      "start": 43.06,
+      "end": 43.42
+    },
+    {
+      "id": "w-0096",
+      "text": "earthy",
+      "start": 43.42,
+      "end": 44.22
+    },
+    {
+      "id": "w-0097",
+      "text": "flavor.",
+      "start": 44.22,
+      "end": 44.44
+    },
+    {
+      "id": "w-0098",
+      "text": "The",
+      "start": 45.28,
+      "end": 45.78
+    },
+    {
+      "id": "w-0099",
+      "text": "fair",
+      "start": 45.78,
+      "end": 45.98
+    },
+    {
+      "id": "w-0100",
+      "text": "was",
+      "start": 45.98,
+      "end": 46.24
+    },
+    {
+      "id": "w-0101",
+      "text": "not",
+      "start": 46.24,
+      "end": 46.52
+    },
+    {
+      "id": "w-0102",
+      "text": "much",
+      "start": 46.52,
+      "end": 46.76
+    },
+    {
+      "id": "w-0103",
+      "text": "to",
+      "start": 46.76,
+      "end": 47.02
+    },
+    {
+      "id": "w-0104",
+      "text": "the",
+      "start": 47.02,
+      "end": 47.12
+    },
+    {
+      "id": "w-0105",
+      "text": "taste",
+      "start": 47.12,
+      "end": 47.3
+    },
+    {
+      "id": "w-0106",
+      "text": "of",
+      "start": 47.3,
+      "end": 47.6
+    },
+    {
+      "id": "w-0107",
+      "text": "the",
+      "start": 47.6,
+      "end": 47.72
+    },
+    {
+      "id": "w-0108",
+      "text": "guest,",
+      "start": 47.72,
+      "end": 47.9
+    },
+    {
+      "id": "w-0109",
+      "text": "and",
+      "start": 48.58,
+      "end": 48.74
+    },
+    {
+      "id": "w-0110",
+      "text": "presently",
+      "start": 48.74,
+      "end": 49.06
+    },
+    {
+      "id": "w-0111",
+      "text": "he",
+      "start": 49.06,
+      "end": 49.46
+    },
+    {
+      "id": "w-0112",
+      "text": "broke",
+      "start": 49.46,
+      "end": 49.64
+    },
+    {
+      "id": "w-0113",
+      "text": "out",
+      "start": 49.64,
+      "end": 49.98
+    },
+    {
+      "id": "w-0114",
+      "text": "with,",
+      "start": 49.98,
+      "end": 50.14
+    },
+    {
+      "id": "w-0115",
+      "text": "my",
+      "start": 50.7,
+      "end": 50.82
+    },
+    {
+      "id": "w-0116",
+      "text": "poor",
+      "start": 50.82,
+      "end": 51.12
+    },
+    {
+      "id": "w-0117",
+      "text": "dear",
+      "start": 51.12,
+      "end": 51.42
+    },
+    {
+      "id": "w-0118",
+      "text": "friend,",
+      "start": 51.42,
+      "end": 51.76
+    },
+    {
+      "id": "w-0119",
+      "text": "you",
+      "start": 52.24,
+      "end": 52.34
+    },
+    {
+      "id": "w-0120",
+      "text": "live",
+      "start": 52.34,
+      "end": 52.54
+    },
+    {
+      "id": "w-0121",
+      "text": "here",
+      "start": 52.54,
+      "end": 52.82
+    },
+    {
+      "id": "w-0122",
+      "text": "no",
+      "start": 52.82,
+      "end": 53.02
+    },
+    {
+      "id": "w-0123",
+      "text": "better",
+      "start": 53.02,
+      "end": 53.26
+    },
+    {
+      "id": "w-0124",
+      "text": "than",
+      "start": 53.26,
+      "end": 53.52
+    },
+    {
+      "id": "w-0125",
+      "text": "the",
+      "start": 53.52,
+      "end": 53.62
+    },
+    {
+      "id": "w-0126",
+      "text": "ants.",
+      "start": 53.62,
+      "end": 53.9
+    },
+    {
+      "id": "w-0127",
+      "text": "Now",
+      "start": 53.9,
+      "end": 54.9
+    },
+    {
+      "id": "w-0128",
+      "text": "you",
+      "start": 54.9,
+      "end": 55.12
+    },
+    {
+      "id": "w-0129",
+      "text": "should",
+      "start": 55.12,
+      "end": 55.32
+    },
+    {
+      "id": "w-0130",
+      "text": "just",
+      "start": 55.32,
+      "end": 55.54
+    },
+    {
+      "id": "w-0131",
+      "text": "see",
+      "start": 55.54,
+      "end": 55.76
+    },
+    {
+      "id": "w-0132",
+      "text": "how",
+      "start": 55.76,
+      "end": 55.98
+    },
+    {
+      "id": "w-0133",
+      "text": "I",
+      "start": 55.98,
+      "end": 56.28
+    },
+    {
+      "id": "w-0134",
+      "text": "fare.",
+      "start": 56.28,
+      "end": 56.56
+    },
+    {
+      "id": "w-0135",
+      "text": "My",
+      "start": 57.14,
+      "end": 57.32
+    },
+    {
+      "id": "w-0136",
+      "text": "larder",
+      "start": 57.32,
+      "end": 57.78
+    },
+    {
+      "id": "w-0137",
+      "text": "is",
+      "start": 57.78,
+      "end": 57.94
+    },
+    {
+      "id": "w-0138",
+      "text": "a",
+      "start": 57.94,
+      "end": 58.06
+    },
+    {
+      "id": "w-0139",
+      "text": "regular",
+      "start": 58.06,
+      "end": 58.4
+    },
+    {
+      "id": "w-0140",
+      "text": "horn",
+      "start": 58.4,
+      "end": 58.84
+    },
+    {
+      "id": "w-0141",
+      "text": "of",
+      "start": 58.84,
+      "end": 59.04
+    },
+    {
+      "id": "w-0142",
+      "text": "plenty.",
+      "start": 59.04,
+      "end": 59.3
+    },
+    {
+      "id": "w-0143",
+      "text": "You",
+      "start": 60.04,
+      "end": 60.32
+    },
+    {
+      "id": "w-0144",
+      "text": "must",
+      "start": 60.32,
+      "end": 60.5
+    },
+    {
+      "id": "w-0145",
+      "text": "come",
+      "start": 60.5,
+      "end": 60.8
+    },
+    {
+      "id": "w-0146",
+      "text": "and",
+      "start": 60.8,
+      "end": 60.96
+    },
+    {
+      "id": "w-0147",
+      "text": "stay",
+      "start": 60.96,
+      "end": 61.26
+    },
+    {
+      "id": "w-0148",
+      "text": "with",
+      "start": 61.26,
+      "end": 61.46
+    },
+    {
+      "id": "w-0149",
+      "text": "me,",
+      "start": 61.46,
+      "end": 61.7
+    },
+    {
+      "id": "w-0150",
+      "text": "and",
+      "start": 62.0,
+      "end": 62.1
+    },
+    {
+      "id": "w-0151",
+      "text": "I",
+      "start": 62.1,
+      "end": 62.22
+    },
+    {
+      "id": "w-0152",
+      "text": "promise",
+      "start": 62.22,
+      "end": 62.5
+    },
+    {
+      "id": "w-0153",
+      "text": "you,",
+      "start": 62.5,
+      "end": 62.9
+    },
+    {
+      "id": "w-0154",
+      "text": "you",
+      "start": 63.12,
+      "end": 63.22
+    },
+    {
+      "id": "w-0155",
+      "text": "shall",
+      "start": 63.22,
+      "end": 63.42
+    },
+    {
+      "id": "w-0156",
+      "text": "live",
+      "start": 63.42,
+      "end": 63.66
+    },
+    {
+      "id": "w-0157",
+      "text": "on",
+      "start": 63.66,
+      "end": 63.86
+    },
+    {
+      "id": "w-0158",
+      "text": "the",
+      "start": 63.86,
+      "end": 63.98
+    },
+    {
+      "id": "w-0159",
+      "text": "fad",
+      "start": 63.98,
+      "end": 64.28
+    },
+    {
+      "id": "w-0160",
+      "text": "of",
+      "start": 64.28,
+      "end": 64.4
+    },
+    {
+      "id": "w-0161",
+      "text": "the",
+      "start": 64.4,
+      "end": 64.56
+    },
+    {
+      "id": "w-0162",
+      "text": "land.",
+      "start": 64.56,
+      "end": 64.86
+    },
+    {
+      "id": "w-0163",
+      "text": "So",
+      "start": 65.72,
+      "end": 66.24
+    },
+    {
+      "id": "w-0164",
+      "text": "when",
+      "start": 66.24,
+      "end": 66.42
+    },
+    {
+      "id": "w-0165",
+      "text": "he",
+      "start": 66.42,
+      "end": 66.6
+    },
+    {
+      "id": "w-0166",
+      "text": "returned",
+      "start": 66.6,
+      "end": 66.8
+    },
+    {
+      "id": "w-0167",
+      "text": "to",
+      "start": 66.8,
+      "end": 67.18
+    },
+    {
+      "id": "w-0168",
+      "text": "town,",
+      "start": 67.18,
+      "end": 67.46
+    },
+    {
+      "id": "w-0169",
+      "text": "he",
+      "start": 67.66,
+      "end": 67.74
+    },
+    {
+      "id": "w-0170",
+      "text": "took",
+      "start": 67.74,
+      "end": 67.9
+    },
+    {
+      "id": "w-0171",
+      "text": "the",
+      "start": 67.9,
+      "end": 68.1
+    },
+    {
+      "id": "w-0172",
+      "text": "Country",
+      "start": 68.1,
+      "end": 68.42
+    },
+    {
+      "id": "w-0173",
+      "text": "Mouse",
+      "start": 68.42,
+      "end": 68.68
+    },
+    {
+      "id": "w-0174",
+      "text": "with",
+      "start": 68.68,
+      "end": 68.96
+    },
+    {
+      "id": "w-0175",
+      "text": "him,",
+      "start": 68.96,
+      "end": 69.22
+    },
+    {
+      "id": "w-0176",
+      "text": "and",
+      "start": 69.74,
+      "end": 69.96
+    },
+    {
+      "id": "w-0177",
+      "text": "showed",
+      "start": 69.96,
+      "end": 70.2
+    },
+    {
+      "id": "w-0178",
+      "text": "him",
+      "start": 70.2,
+      "end": 70.52
+    },
+    {
+      "id": "w-0179",
+      "text": "into",
+      "start": 70.52,
+      "end": 70.8
+    },
+    {
+      "id": "w-0180",
+      "text": "a",
+      "start": 70.8,
+      "end": 71.0
+    },
+    {
+      "id": "w-0181",
+      "text": "larder",
+      "start": 71.0,
+      "end": 71.44
+    },
+    {
+      "id": "w-0182",
+      "text": "containing",
+      "start": 71.44,
+      "end": 71.86
+    },
+    {
+      "id": "w-0183",
+      "text": "flour",
+      "start": 71.86,
+      "end": 72.36
+    },
+    {
+      "id": "w-0184",
+      "text": "and",
+      "start": 72.36,
+      "end": 72.86
+    },
+    {
+      "id": "w-0185",
+      "text": "oatmeal",
+      "start": 72.86,
+      "end": 73.26
+    },
+    {
+      "id": "w-0186",
+      "text": "and",
+      "start": 73.26,
+      "end": 73.78
+    },
+    {
+      "id": "w-0187",
+      "text": "figs",
+      "start": 73.78,
+      "end": 74.44
+    },
+    {
+      "id": "w-0188",
+      "text": "and",
+      "start": 74.44,
+      "end": 74.64
+    },
+    {
+      "id": "w-0189",
+      "text": "honey",
+      "start": 74.64,
+      "end": 74.88
+    },
+    {
+      "id": "w-0190",
+      "text": "and",
+      "start": 74.88,
+      "end": 75.34
+    },
+    {
+      "id": "w-0191",
+      "text": "dates.",
+      "start": 75.34,
+      "end": 75.58
+    },
+    {
+      "id": "w-0192",
+      "text": "The",
+      "start": 75.58,
+      "end": 76.48
+    },
+    {
+      "id": "w-0193",
+      "text": "Country",
+      "start": 76.48,
+      "end": 76.92
+    },
+    {
+      "id": "w-0194",
+      "text": "Mouse",
+      "start": 76.92,
+      "end": 77.28
+    },
+    {
+      "id": "w-0195",
+      "text": "had",
+      "start": 77.28,
+      "end": 77.5
+    },
+    {
+      "id": "w-0196",
+      "text": "never",
+      "start": 77.5,
+      "end": 77.74
+    },
+    {
+      "id": "w-0197",
+      "text": "seen",
+      "start": 77.74,
+      "end": 78.02
+    },
+    {
+      "id": "w-0198",
+      "text": "anything",
+      "start": 78.02,
+      "end": 78.52
+    },
+    {
+      "id": "w-0199",
+      "text": "like",
+      "start": 78.52,
+      "end": 78.82
+    },
+    {
+      "id": "w-0200",
+      "text": "it,",
+      "start": 78.82,
+      "end": 79.06
+    },
+    {
+      "id": "w-0201",
+      "text": "and",
+      "start": 79.42,
+      "end": 79.7
+    },
+    {
+      "id": "w-0202",
+      "text": "sat",
+      "start": 79.7,
+      "end": 79.94
+    },
+    {
+      "id": "w-0203",
+      "text": "down",
+      "start": 79.94,
+      "end": 80.3
+    },
+    {
+      "id": "w-0204",
+      "text": "to",
+      "start": 80.3,
+      "end": 80.52
+    },
+    {
+      "id": "w-0205",
+      "text": "enjoy",
+      "start": 80.52,
+      "end": 80.82
+    },
+    {
+      "id": "w-0206",
+      "text": "the",
+      "start": 80.82,
+      "end": 81.08
+    },
+    {
+      "id": "w-0207",
+      "text": "luxuries",
+      "start": 81.08,
+      "end": 81.52
+    },
+    {
+      "id": "w-0208",
+      "text": "his",
+      "start": 81.52,
+      "end": 81.82
+    },
+    {
+      "id": "w-0209",
+      "text": "friend",
+      "start": 81.82,
+      "end": 82.14
+    },
+    {
+      "id": "w-0210",
+      "text": "provided.",
+      "start": 82.14,
+      "end": 82.64
+    },
+    {
+      "id": "w-0211",
+      "text": "But",
+      "start": 83.64,
+      "end": 83.96
+    },
+    {
+      "id": "w-0212",
+      "text": "before",
+      "start": 83.96,
+      "end": 84.3
+    },
+    {
+      "id": "w-0213",
+      "text": "they",
+      "start": 84.3,
+      "end": 84.56
+    },
+    {
+      "id": "w-0214",
+      "text": "had",
+      "start": 84.56,
+      "end": 84.74
+    },
+    {
+      "id": "w-0215",
+      "text": "well",
+      "start": 84.74,
+      "end": 85.04
+    },
+    {
+      "id": "w-0216",
+      "text": "begun,",
+      "start": 85.04,
+      "end": 85.28
+    },
+    {
+      "id": "w-0217",
+      "text": "the",
+      "start": 85.9,
+      "end": 86.0
+    },
+    {
+      "id": "w-0218",
+      "text": "door",
+      "start": 86.0,
+      "end": 86.22
+    },
+    {
+      "id": "w-0219",
+      "text": "of",
+      "start": 86.22,
+      "end": 86.4
+    },
+    {
+      "id": "w-0220",
+      "text": "the",
+      "start": 86.4,
+      "end": 86.52
+    },
+    {
+      "id": "w-0221",
+      "text": "larder",
+      "start": 86.52,
+      "end": 86.86
+    },
+    {
+      "id": "w-0222",
+      "text": "opened",
+      "start": 86.86,
+      "end": 87.1
+    },
+    {
+      "id": "w-0223",
+      "text": "and",
+      "start": 87.1,
+      "end": 87.52
+    },
+    {
+      "id": "w-0224",
+      "text": "someone",
+      "start": 87.52,
+      "end": 87.76
+    },
+    {
+      "id": "w-0225",
+      "text": "came",
+      "start": 87.76,
+      "end": 88.22
+    },
+    {
+      "id": "w-0226",
+      "text": "in.",
+      "start": 88.22,
+      "end": 88.42
+    },
+    {
+      "id": "w-0227",
+      "text": "The",
+      "start": 88.92,
+      "end": 89.22
+    },
+    {
+      "id": "w-0228",
+      "text": "two",
+      "start": 89.22,
+      "end": 89.4
+    },
+    {
+      "id": "w-0229",
+      "text": "mice",
+      "start": 89.4,
+      "end": 89.64
+    },
+    {
+      "id": "w-0230",
+      "text": "scampered",
+      "start": 89.64,
+      "end": 90.28
+    },
+    {
+      "id": "w-0231",
+      "text": "off",
+      "start": 90.28,
+      "end": 90.5
+    },
+    {
+      "id": "w-0232",
+      "text": "and",
+      "start": 90.5,
+      "end": 90.82
+    },
+    {
+      "id": "w-0233",
+      "text": "hid",
+      "start": 90.82,
+      "end": 91.06
+    },
+    {
+      "id": "w-0234",
+      "text": "themselves",
+      "start": 91.06,
+      "end": 91.4
+    },
+    {
+      "id": "w-0235",
+      "text": "in",
+      "start": 91.4,
+      "end": 91.88
+    },
+    {
+      "id": "w-0236",
+      "text": "a",
+      "start": 91.88,
+      "end": 91.98
+    },
+    {
+      "id": "w-0237",
+      "text": "narrow",
+      "start": 91.98,
+      "end": 92.34
+    },
+    {
+      "id": "w-0238",
+      "text": "and",
+      "start": 92.34,
+      "end": 92.66
+    },
+    {
+      "id": "w-0239",
+      "text": "exceedingly",
+      "start": 92.66,
+      "end": 93.02
+    },
+    {
+      "id": "w-0240",
+      "text": "uncomfortable",
+      "start": 93.02,
+      "end": 93.92
+    },
+    {
+      "id": "w-0241",
+      "text": "hole.",
+      "start": 93.92,
+      "end": 94.6
+    },
+    {
+      "id": "w-0242",
+      "text": "Presently,",
+      "start": 95.3,
+      "end": 95.9
+    },
+    {
+      "id": "w-0243",
+      "text": "when",
+      "start": 95.9,
+      "end": 96.34
+    },
+    {
+      "id": "w-0244",
+      "text": "all",
+      "start": 96.34,
+      "end": 96.52
+    },
+    {
+      "id": "w-0245",
+      "text": "was",
+      "start": 96.52,
+      "end": 96.7
+    },
+    {
+      "id": "w-0246",
+      "text": "quiet,",
+      "start": 96.7,
+      "end": 97.06
+    },
+    {
+      "id": "w-0247",
+      "text": "they",
+      "start": 97.62,
+      "end": 97.74
+    },
+    {
+      "id": "w-0248",
+      "text": "ventured",
+      "start": 97.74,
+      "end": 97.92
+    },
+    {
+      "id": "w-0249",
+      "text": "out",
+      "start": 97.92,
+      "end": 98.34
+    },
+    {
+      "id": "w-0250",
+      "text": "again,",
+      "start": 98.34,
+      "end": 98.56
+    },
+    {
+      "id": "w-0251",
+      "text": "but",
+      "start": 99.18,
+      "end": 99.38
+    },
+    {
+      "id": "w-0252",
+      "text": "someone",
+      "start": 99.38,
+      "end": 99.6
+    },
+    {
+      "id": "w-0253",
+      "text": "else",
+      "start": 99.6,
+      "end": 99.9
+    },
+    {
+      "id": "w-0254",
+      "text": "came",
+      "start": 99.9,
+      "end": 100.22
+    },
+    {
+      "id": "w-0255",
+      "text": "in,",
+      "start": 100.22,
+      "end": 100.42
+    },
+    {
+      "id": "w-0256",
+      "text": "and",
+      "start": 100.7,
+      "end": 100.78
+    },
+    {
+      "id": "w-0257",
+      "text": "off",
+      "start": 100.78,
+      "end": 101.02
+    },
+    {
+      "id": "w-0258",
+      "text": "they",
+      "start": 101.02,
+      "end": 101.28
+    },
+    {
+      "id": "w-0259",
+      "text": "scuttled",
+      "start": 101.28,
+      "end": 101.7
+    },
+    {
+      "id": "w-0260",
+      "text": "again.",
+      "start": 101.7,
+      "end": 101.96
+    },
+    {
+      "id": "w-0261",
+      "text": "This",
+      "start": 102.72,
+      "end": 103.0
+    },
+    {
+      "id": "w-0262",
+      "text": "was",
+      "start": 103.0,
+      "end": 103.22
+    },
+    {
+      "id": "w-0263",
+      "text": "too",
+      "start": 103.22,
+      "end": 103.52
+    },
+    {
+      "id": "w-0264",
+      "text": "much",
+      "start": 103.52,
+      "end": 103.82
+    },
+    {
+      "id": "w-0265",
+      "text": "for",
+      "start": 103.82,
+      "end": 104.08
+    },
+    {
+      "id": "w-0266",
+      "text": "the",
+      "start": 104.08,
+      "end": 104.18
+    },
+    {
+      "id": "w-0267",
+      "text": "visitor.",
+      "start": 104.18,
+      "end": 104.46
+    },
+    {
+      "id": "w-0268",
+      "text": "Goodbye,",
+      "start": 105.18,
+      "end": 105.4
+    },
+    {
+      "id": "w-0269",
+      "text": "said",
+      "start": 105.62,
+      "end": 105.98
+    },
+    {
+      "id": "w-0270",
+      "text": "he,",
+      "start": 105.98,
+      "end": 106.18
+    },
+    {
+      "id": "w-0271",
+      "text": "I'm",
+      "start": 106.48,
+      "end": 106.68
+    },
+    {
+      "id": "w-0272",
+      "text": "off.",
+      "start": 106.68,
+      "end": 106.82
+    },
+    {
+      "id": "w-0273",
+      "text": "You",
+      "start": 107.64,
+      "end": 107.82
+    },
+    {
+      "id": "w-0274",
+      "text": "live",
+      "start": 107.82,
+      "end": 108.04
+    },
+    {
+      "id": "w-0275",
+      "text": "in",
+      "start": 108.04,
+      "end": 108.24
+    },
+    {
+      "id": "w-0276",
+      "text": "the",
+      "start": 108.24,
+      "end": 108.34
+    },
+    {
+      "id": "w-0277",
+      "text": "lap",
+      "start": 108.34,
+      "end": 108.56
+    },
+    {
+      "id": "w-0278",
+      "text": "of",
+      "start": 108.56,
+      "end": 108.74
+    },
+    {
+      "id": "w-0279",
+      "text": "luxury,",
+      "start": 108.74,
+      "end": 109.14
+    },
+    {
+      "id": "w-0280",
+      "text": "I",
+      "start": 109.5,
+      "end": 109.68
+    },
+    {
+      "id": "w-0281",
+      "text": "can",
+      "start": 109.68,
+      "end": 109.86
+    },
+    {
+      "id": "w-0282",
+      "text": "see,",
+      "start": 109.86,
+      "end": 110.14
+    },
+    {
+      "id": "w-0283",
+      "text": "but",
+      "start": 110.66,
+      "end": 110.86
+    },
+    {
+      "id": "w-0284",
+      "text": "you",
+      "start": 110.86,
+      "end": 111.04
+    },
+    {
+      "id": "w-0285",
+      "text": "are",
+      "start": 111.04,
+      "end": 111.18
+    },
+    {
+      "id": "w-0286",
+      "text": "surrounded",
+      "start": 111.18,
+      "end": 111.6
+    },
+    {
+      "id": "w-0287",
+      "text": "by",
+      "start": 111.6,
+      "end": 111.98
+    },
+    {
+      "id": "w-0288",
+      "text": "dangers.",
+      "start": 111.98,
+      "end": 112.34
+    },
+    {
+      "id": "w-0289",
+      "text": "Whereas",
+      "start": 113.12,
+      "end": 113.3
+    },
+    {
+      "id": "w-0290",
+      "text": "at",
+      "start": 113.3,
+      "end": 113.58
+    },
+    {
+      "id": "w-0291",
+      "text": "home",
+      "start": 113.58,
+      "end": 113.8
+    },
+    {
+      "id": "w-0292",
+      "text": "I",
+      "start": 113.8,
+      "end": 114.2
+    },
+    {
+      "id": "w-0293",
+      "text": "can",
+      "start": 114.2,
+      "end": 114.36
+    },
+    {
+      "id": "w-0294",
+      "text": "enjoy",
+      "start": 114.36,
+      "end": 114.62
+    },
+    {
+      "id": "w-0295",
+      "text": "my",
+      "start": 114.62,
+      "end": 114.9
+    },
+    {
+      "id": "w-0296",
+      "text": "simple",
+      "start": 114.9,
+      "end": 115.22
+    },
+    {
+      "id": "w-0297",
+      "text": "dinner",
+      "start": 115.22,
+      "end": 115.54
+    },
+    {
+      "id": "w-0298",
+      "text": "of",
+      "start": 115.54,
+      "end": 115.92
+    },
+    {
+      "id": "w-0299",
+      "text": "roots",
+      "start": 115.92,
+      "end": 116.18
+    },
+    {
+      "id": "w-0300",
+      "text": "and",
+      "start": 116.18,
+      "end": 116.46
+    },
+    {
+      "id": "w-0301",
+      "text": "corn",
+      "start": 116.46,
+      "end": 116.8
+    },
+    {
+      "id": "w-0302",
+      "text": "in",
+      "start": 116.8,
+      "end": 117.58
+    },
+    {
+      "id": "w-0303",
+      "text": "peace.",
+      "start": 117.58,
+      "end": 117.96
+    },
+    {
+      "id": "w-0304",
+      "text": "End",
+      "start": 118.68,
+      "end": 119.14
+    },
+    {
+      "id": "w-0305",
+      "text": "of",
+      "start": 119.14,
+      "end": 119.48
+    },
+    {
+      "id": "w-0306",
+      "text": "the",
+      "start": 119.48,
+      "end": 119.64
+    },
+    {
+      "id": "w-0307",
+      "text": "town",
+      "start": 119.64,
+      "end": 119.88
+    },
+    {
+      "id": "w-0308",
+      "text": "mouse",
+      "start": 119.88,
+      "end": 120.26
+    },
+    {
+      "id": "w-0309",
+      "text": "and",
+      "start": 120.26,
+      "end": 120.92
+    },
+    {
+      "id": "w-0310",
+      "text": "the",
+      "start": 120.92,
+      "end": 121.08
+    },
+    {
+      "id": "w-0311",
+      "text": "Country",
+      "start": 121.08,
+      "end": 121.38
+    },
+    {
+      "id": "w-0312",
+      "text": "Mouse.",
+      "start": 121.38,
+      "end": 121.74
+    }
+  ]
+}

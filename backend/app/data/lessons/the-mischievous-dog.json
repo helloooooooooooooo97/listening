@@ -1,0 +1,976 @@
+{
+  "id": "the-mischievous-dog",
+  "title": "The Mischievous Dog",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 77.3,
+  "audioFileName": "the-mischievous-dog.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 2.18,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 3.4,
+      "end": 5.78,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 6.94,
+      "end": 12.54,
+      "text": "For more information or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 28.14,
+      "end": 29.98,
+      "text": "Recording by Kristen Luoma.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 29.98,
+      "end": 35.08,
+      "text": "There was once a dog who used to snap at people and bite them without any provocation,",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 36.06,
+      "end": 39.26,
+      "text": "and who was a great nuisance to everyone who came to his master's house.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 40.06,
+      "end": 45.0,
+      "text": "So his master fastened a bell round his neck to warn people of his prisons.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 45.94,
+      "end": 50.8,
+      "text": "The dog was very proud of the bell and strutted about tinkling it with immense satisfaction.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 51.9,
+      "end": 54.68,
+      "text": "But an old dog came up to him and said,",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 55.74,
+      "end": 58.46,
+      "text": "Fewer heirs you give yourself the better, my friend.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 59.32,
+      "end": 63.4,
+      "text": "You don't think, do you, that your bell was given you as a reward of merit?",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 64.32,
+      "end": 67.22,
+      "text": "On the contrary, it is a badge of disgrace.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 70.36,
+      "end": 72.96,
+      "text": "Notariety is often mistaken for fame.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 75.56,
+      "end": 77.34,
+      "text": "End of the mischief's dog.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 0.78
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.78,
+      "end": 1.28
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.28,
+      "end": 1.42
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.42,
+      "end": 1.88
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 1.88,
+      "end": 2.18
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.4,
+      "end": 3.46
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.46,
+      "end": 4.08
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 4.08,
+      "end": 4.52
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.52,
+      "end": 5.04
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 5.04,
+      "end": 5.16
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.16,
+      "end": 5.24
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.24,
+      "end": 5.5
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.5,
+      "end": 5.78
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.94,
+      "end": 6.96
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.96,
+      "end": 7.16
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 7.16,
+      "end": 7.58
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.58,
+      "end": 8.32
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.32,
+      "end": 8.52
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.52,
+      "end": 9.12
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.76,
+      "end": 10.06
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 10.06,
+      "end": 10.48
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox",
+      "start": 10.48,
+      "end": 11.58
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 11.58,
+      "end": 12.54
+    },
+    {
+      "id": "w-0023",
+      "text": "Recording",
+      "start": 28.14,
+      "end": 29.06
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 29.06,
+      "end": 29.98
+    },
+    {
+      "id": "w-0025",
+      "text": "Kristen",
+      "start": 29.98,
+      "end": 29.98
+    },
+    {
+      "id": "w-0026",
+      "text": "Luoma.",
+      "start": 29.98,
+      "end": 29.98
+    },
+    {
+      "id": "w-0027",
+      "text": "There",
+      "start": 29.98,
+      "end": 30.4
+    },
+    {
+      "id": "w-0028",
+      "text": "was",
+      "start": 30.4,
+      "end": 30.54
+    },
+    {
+      "id": "w-0029",
+      "text": "once",
+      "start": 30.54,
+      "end": 30.84
+    },
+    {
+      "id": "w-0030",
+      "text": "a",
+      "start": 30.84,
+      "end": 31.16
+    },
+    {
+      "id": "w-0031",
+      "text": "dog",
+      "start": 31.16,
+      "end": 31.5
+    },
+    {
+      "id": "w-0032",
+      "text": "who",
+      "start": 31.5,
+      "end": 31.88
+    },
+    {
+      "id": "w-0033",
+      "text": "used",
+      "start": 31.88,
+      "end": 32.08
+    },
+    {
+      "id": "w-0034",
+      "text": "to",
+      "start": 32.08,
+      "end": 32.28
+    },
+    {
+      "id": "w-0035",
+      "text": "snap",
+      "start": 32.28,
+      "end": 32.6
+    },
+    {
+      "id": "w-0036",
+      "text": "at",
+      "start": 32.6,
+      "end": 32.86
+    },
+    {
+      "id": "w-0037",
+      "text": "people",
+      "start": 32.86,
+      "end": 33.16
+    },
+    {
+      "id": "w-0038",
+      "text": "and",
+      "start": 33.16,
+      "end": 33.46
+    },
+    {
+      "id": "w-0039",
+      "text": "bite",
+      "start": 33.46,
+      "end": 33.76
+    },
+    {
+      "id": "w-0040",
+      "text": "them",
+      "start": 33.76,
+      "end": 34.08
+    },
+    {
+      "id": "w-0041",
+      "text": "without",
+      "start": 34.08,
+      "end": 34.4
+    },
+    {
+      "id": "w-0042",
+      "text": "any",
+      "start": 34.4,
+      "end": 34.76
+    },
+    {
+      "id": "w-0043",
+      "text": "provocation,",
+      "start": 34.76,
+      "end": 35.08
+    },
+    {
+      "id": "w-0044",
+      "text": "and",
+      "start": 36.06,
+      "end": 36.22
+    },
+    {
+      "id": "w-0045",
+      "text": "who",
+      "start": 36.22,
+      "end": 36.36
+    },
+    {
+      "id": "w-0046",
+      "text": "was",
+      "start": 36.36,
+      "end": 36.5
+    },
+    {
+      "id": "w-0047",
+      "text": "a",
+      "start": 36.5,
+      "end": 36.58
+    },
+    {
+      "id": "w-0048",
+      "text": "great",
+      "start": 36.58,
+      "end": 36.76
+    },
+    {
+      "id": "w-0049",
+      "text": "nuisance",
+      "start": 36.76,
+      "end": 37.06
+    },
+    {
+      "id": "w-0050",
+      "text": "to",
+      "start": 37.06,
+      "end": 37.44
+    },
+    {
+      "id": "w-0051",
+      "text": "everyone",
+      "start": 37.44,
+      "end": 37.74
+    },
+    {
+      "id": "w-0052",
+      "text": "who",
+      "start": 37.74,
+      "end": 38.0
+    },
+    {
+      "id": "w-0053",
+      "text": "came",
+      "start": 38.0,
+      "end": 38.18
+    },
+    {
+      "id": "w-0054",
+      "text": "to",
+      "start": 38.18,
+      "end": 38.4
+    },
+    {
+      "id": "w-0055",
+      "text": "his",
+      "start": 38.4,
+      "end": 38.54
+    },
+    {
+      "id": "w-0056",
+      "text": "master's",
+      "start": 38.54,
+      "end": 38.74
+    },
+    {
+      "id": "w-0057",
+      "text": "house.",
+      "start": 38.74,
+      "end": 39.26
+    },
+    {
+      "id": "w-0058",
+      "text": "So",
+      "start": 40.06,
+      "end": 40.5
+    },
+    {
+      "id": "w-0059",
+      "text": "his",
+      "start": 40.5,
+      "end": 40.64
+    },
+    {
+      "id": "w-0060",
+      "text": "master",
+      "start": 40.64,
+      "end": 40.94
+    },
+    {
+      "id": "w-0061",
+      "text": "fastened",
+      "start": 40.94,
+      "end": 41.98
+    },
+    {
+      "id": "w-0062",
+      "text": "a",
+      "start": 41.98,
+      "end": 42.1
+    },
+    {
+      "id": "w-0063",
+      "text": "bell",
+      "start": 42.1,
+      "end": 42.26
+    },
+    {
+      "id": "w-0064",
+      "text": "round",
+      "start": 42.26,
+      "end": 42.78
+    },
+    {
+      "id": "w-0065",
+      "text": "his",
+      "start": 42.78,
+      "end": 43.02
+    },
+    {
+      "id": "w-0066",
+      "text": "neck",
+      "start": 43.02,
+      "end": 43.26
+    },
+    {
+      "id": "w-0067",
+      "text": "to",
+      "start": 43.26,
+      "end": 43.64
+    },
+    {
+      "id": "w-0068",
+      "text": "warn",
+      "start": 43.64,
+      "end": 43.86
+    },
+    {
+      "id": "w-0069",
+      "text": "people",
+      "start": 43.86,
+      "end": 44.28
+    },
+    {
+      "id": "w-0070",
+      "text": "of",
+      "start": 44.28,
+      "end": 44.52
+    },
+    {
+      "id": "w-0071",
+      "text": "his",
+      "start": 44.52,
+      "end": 44.68
+    },
+    {
+      "id": "w-0072",
+      "text": "prisons.",
+      "start": 44.68,
+      "end": 45.0
+    },
+    {
+      "id": "w-0073",
+      "text": "The",
+      "start": 45.94,
+      "end": 46.24
+    },
+    {
+      "id": "w-0074",
+      "text": "dog",
+      "start": 46.24,
+      "end": 46.52
+    },
+    {
+      "id": "w-0075",
+      "text": "was",
+      "start": 46.52,
+      "end": 46.74
+    },
+    {
+      "id": "w-0076",
+      "text": "very",
+      "start": 46.74,
+      "end": 46.94
+    },
+    {
+      "id": "w-0077",
+      "text": "proud",
+      "start": 46.94,
+      "end": 47.26
+    },
+    {
+      "id": "w-0078",
+      "text": "of",
+      "start": 47.26,
+      "end": 47.52
+    },
+    {
+      "id": "w-0079",
+      "text": "the",
+      "start": 47.52,
+      "end": 47.64
+    },
+    {
+      "id": "w-0080",
+      "text": "bell",
+      "start": 47.64,
+      "end": 47.86
+    },
+    {
+      "id": "w-0081",
+      "text": "and",
+      "start": 47.86,
+      "end": 48.22
+    },
+    {
+      "id": "w-0082",
+      "text": "strutted",
+      "start": 48.22,
+      "end": 48.68
+    },
+    {
+      "id": "w-0083",
+      "text": "about",
+      "start": 48.68,
+      "end": 48.94
+    },
+    {
+      "id": "w-0084",
+      "text": "tinkling",
+      "start": 48.94,
+      "end": 49.52
+    },
+    {
+      "id": "w-0085",
+      "text": "it",
+      "start": 49.52,
+      "end": 49.72
+    },
+    {
+      "id": "w-0086",
+      "text": "with",
+      "start": 49.72,
+      "end": 49.94
+    },
+    {
+      "id": "w-0087",
+      "text": "immense",
+      "start": 49.94,
+      "end": 50.16
+    },
+    {
+      "id": "w-0088",
+      "text": "satisfaction.",
+      "start": 50.16,
+      "end": 50.8
+    },
+    {
+      "id": "w-0089",
+      "text": "But",
+      "start": 51.9,
+      "end": 52.5
+    },
+    {
+      "id": "w-0090",
+      "text": "an",
+      "start": 52.5,
+      "end": 52.64
+    },
+    {
+      "id": "w-0091",
+      "text": "old",
+      "start": 52.64,
+      "end": 52.82
+    },
+    {
+      "id": "w-0092",
+      "text": "dog",
+      "start": 52.82,
+      "end": 53.2
+    },
+    {
+      "id": "w-0093",
+      "text": "came",
+      "start": 53.2,
+      "end": 53.56
+    },
+    {
+      "id": "w-0094",
+      "text": "up",
+      "start": 53.56,
+      "end": 53.74
+    },
+    {
+      "id": "w-0095",
+      "text": "to",
+      "start": 53.74,
+      "end": 53.9
+    },
+    {
+      "id": "w-0096",
+      "text": "him",
+      "start": 53.9,
+      "end": 54.1
+    },
+    {
+      "id": "w-0097",
+      "text": "and",
+      "start": 54.1,
+      "end": 54.36
+    },
+    {
+      "id": "w-0098",
+      "text": "said,",
+      "start": 54.36,
+      "end": 54.68
+    },
+    {
+      "id": "w-0099",
+      "text": "Fewer",
+      "start": 55.74,
+      "end": 56.3
+    },
+    {
+      "id": "w-0100",
+      "text": "heirs",
+      "start": 56.3,
+      "end": 56.5
+    },
+    {
+      "id": "w-0101",
+      "text": "you",
+      "start": 56.5,
+      "end": 56.76
+    },
+    {
+      "id": "w-0102",
+      "text": "give",
+      "start": 56.76,
+      "end": 56.92
+    },
+    {
+      "id": "w-0103",
+      "text": "yourself",
+      "start": 56.92,
+      "end": 57.16
+    },
+    {
+      "id": "w-0104",
+      "text": "the",
+      "start": 57.16,
+      "end": 57.52
+    },
+    {
+      "id": "w-0105",
+      "text": "better,",
+      "start": 57.52,
+      "end": 57.74
+    },
+    {
+      "id": "w-0106",
+      "text": "my",
+      "start": 57.94,
+      "end": 58.14
+    },
+    {
+      "id": "w-0107",
+      "text": "friend.",
+      "start": 58.14,
+      "end": 58.46
+    },
+    {
+      "id": "w-0108",
+      "text": "You",
+      "start": 59.32,
+      "end": 59.46
+    },
+    {
+      "id": "w-0109",
+      "text": "don't",
+      "start": 59.46,
+      "end": 59.78
+    },
+    {
+      "id": "w-0110",
+      "text": "think,",
+      "start": 59.78,
+      "end": 60.02
+    },
+    {
+      "id": "w-0111",
+      "text": "do",
+      "start": 60.1,
+      "end": 60.42
+    },
+    {
+      "id": "w-0112",
+      "text": "you,",
+      "start": 60.42,
+      "end": 60.64
+    },
+    {
+      "id": "w-0113",
+      "text": "that",
+      "start": 60.78,
+      "end": 60.98
+    },
+    {
+      "id": "w-0114",
+      "text": "your",
+      "start": 60.98,
+      "end": 61.18
+    },
+    {
+      "id": "w-0115",
+      "text": "bell",
+      "start": 61.18,
+      "end": 61.44
+    },
+    {
+      "id": "w-0116",
+      "text": "was",
+      "start": 61.44,
+      "end": 61.72
+    },
+    {
+      "id": "w-0117",
+      "text": "given",
+      "start": 61.72,
+      "end": 61.94
+    },
+    {
+      "id": "w-0118",
+      "text": "you",
+      "start": 61.94,
+      "end": 62.26
+    },
+    {
+      "id": "w-0119",
+      "text": "as",
+      "start": 62.26,
+      "end": 62.4
+    },
+    {
+      "id": "w-0120",
+      "text": "a",
+      "start": 62.4,
+      "end": 62.5
+    },
+    {
+      "id": "w-0121",
+      "text": "reward",
+      "start": 62.5,
+      "end": 62.84
+    },
+    {
+      "id": "w-0122",
+      "text": "of",
+      "start": 62.84,
+      "end": 63.08
+    },
+    {
+      "id": "w-0123",
+      "text": "merit?",
+      "start": 63.08,
+      "end": 63.4
+    },
+    {
+      "id": "w-0124",
+      "text": "On",
+      "start": 64.32,
+      "end": 64.58
+    },
+    {
+      "id": "w-0125",
+      "text": "the",
+      "start": 64.58,
+      "end": 64.7
+    },
+    {
+      "id": "w-0126",
+      "text": "contrary,",
+      "start": 64.7,
+      "end": 65.08
+    },
+    {
+      "id": "w-0127",
+      "text": "it",
+      "start": 65.74,
+      "end": 65.88
+    },
+    {
+      "id": "w-0128",
+      "text": "is",
+      "start": 65.88,
+      "end": 66.0
+    },
+    {
+      "id": "w-0129",
+      "text": "a",
+      "start": 66.0,
+      "end": 66.18
+    },
+    {
+      "id": "w-0130",
+      "text": "badge",
+      "start": 66.18,
+      "end": 66.5
+    },
+    {
+      "id": "w-0131",
+      "text": "of",
+      "start": 66.5,
+      "end": 66.78
+    },
+    {
+      "id": "w-0132",
+      "text": "disgrace.",
+      "start": 66.78,
+      "end": 67.22
+    },
+    {
+      "id": "w-0133",
+      "text": "Notariety",
+      "start": 70.36,
+      "end": 70.92
+    },
+    {
+      "id": "w-0134",
+      "text": "is",
+      "start": 70.92,
+      "end": 71.48
+    },
+    {
+      "id": "w-0135",
+      "text": "often",
+      "start": 71.48,
+      "end": 71.76
+    },
+    {
+      "id": "w-0136",
+      "text": "mistaken",
+      "start": 71.76,
+      "end": 72.16
+    },
+    {
+      "id": "w-0137",
+      "text": "for",
+      "start": 72.16,
+      "end": 72.66
+    },
+    {
+      "id": "w-0138",
+      "text": "fame.",
+      "start": 72.66,
+      "end": 72.96
+    },
+    {
+      "id": "w-0139",
+      "text": "End",
+      "start": 75.56,
+      "end": 76.12
+    },
+    {
+      "id": "w-0140",
+      "text": "of",
+      "start": 76.12,
+      "end": 76.36
+    },
+    {
+      "id": "w-0141",
+      "text": "the",
+      "start": 76.36,
+      "end": 76.54
+    },
+    {
+      "id": "w-0142",
+      "text": "mischief's",
+      "start": 76.54,
+      "end": 77.02
+    },
+    {
+      "id": "w-0143",
+      "text": "dog.",
+      "start": 77.02,
+      "end": 77.34
+    }
+  ]
+}

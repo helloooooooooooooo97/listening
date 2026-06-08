@@ -1,0 +1,957 @@
+{
+  "id": "the-spendthrift-and-the-swallow",
+  "title": "The Spendthrift and the Swallow",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 70.8,
+  "audioFileName": "the-spendthrift-and-the-swallow.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 1.56,
+      "end": 3.94,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 5.06,
+      "end": 7.48,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 8.64,
+      "end": 13.78,
+      "text": "For more information or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 14.88,
+      "end": 17.88,
+      "text": "Recording by Kristin Luoma.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 18.52,
+      "end": 22.04,
+      "text": "GreenKRI.com.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 22.22,
+      "end": 23.68,
+      "text": "ASAP's Fables.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 25.96,
+      "end": 27.8,
+      "text": "The Spend Thrift and the Swallow.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 29.02,
+      "end": 37.88,
+      "text": "A Spend Thrift who had wasted his fortune and had nothing left but the clothes in which he stood saw Swallow one fine day in early spring.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 39.18,
+      "end": 44.96,
+      "text": "Thinking that summer had come and that he could now do without his coat, he went and sold it for what it would fetch.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 46.04,
+      "end": 52.28,
+      "text": "A change, however, took place in the weather, and there came a sharp frost which killed the unfortunate Swallow.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 53.12,
+      "end": 60.38,
+      "text": "When the Spend Thrift saw its dead body, he cried, miserable bird, thanks to you I am perishing of cold myself.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 62.76,
+      "end": 65.16,
+      "text": "One Swallow does not make summer.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 67.98,
+      "end": 70.82,
+      "text": "End of the Spend Thrift and the Swallow.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 1.56,
+      "end": 2.6
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 2.6,
+      "end": 2.86
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 2.86,
+      "end": 3.02
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 3.02,
+      "end": 3.56
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 3.56,
+      "end": 3.94
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 5.06,
+      "end": 5.16
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 5.16,
+      "end": 5.8
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 5.8,
+      "end": 6.08
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 6.08,
+      "end": 6.62
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 6.62,
+      "end": 6.76
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 6.76,
+      "end": 6.84
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 6.84,
+      "end": 7.12
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 7.12,
+      "end": 7.48
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 8.64,
+      "end": 8.66
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 8.66,
+      "end": 8.88
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 8.88,
+      "end": 9.26
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 9.26,
+      "end": 9.92
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 9.92,
+      "end": 10.08
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 10.08,
+      "end": 10.6
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 11.2,
+      "end": 11.4
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 11.4,
+      "end": 11.88
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox",
+      "start": 11.88,
+      "end": 12.88
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 12.88,
+      "end": 13.78
+    },
+    {
+      "id": "w-0023",
+      "text": "Recording",
+      "start": 14.88,
+      "end": 15.92
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 15.92,
+      "end": 16.48
+    },
+    {
+      "id": "w-0025",
+      "text": "Kristin",
+      "start": 16.48,
+      "end": 17.16
+    },
+    {
+      "id": "w-0026",
+      "text": "Luoma.",
+      "start": 17.16,
+      "end": 17.88
+    },
+    {
+      "id": "w-0027",
+      "text": "GreenKRI",
+      "start": 18.52,
+      "end": 19.5
+    },
+    {
+      "id": "w-0028",
+      "text": ".com.",
+      "start": 19.5,
+      "end": 22.04
+    },
+    {
+      "id": "w-0029",
+      "text": "ASAP's",
+      "start": 22.22,
+      "end": 23.26
+    },
+    {
+      "id": "w-0030",
+      "text": "Fables.",
+      "start": 23.26,
+      "end": 23.68
+    },
+    {
+      "id": "w-0031",
+      "text": "The",
+      "start": 25.96,
+      "end": 25.98
+    },
+    {
+      "id": "w-0032",
+      "text": "Spend",
+      "start": 25.98,
+      "end": 26.32
+    },
+    {
+      "id": "w-0033",
+      "text": "Thrift",
+      "start": 26.32,
+      "end": 26.84
+    },
+    {
+      "id": "w-0034",
+      "text": "and",
+      "start": 26.84,
+      "end": 27.14
+    },
+    {
+      "id": "w-0035",
+      "text": "the",
+      "start": 27.14,
+      "end": 27.42
+    },
+    {
+      "id": "w-0036",
+      "text": "Swallow.",
+      "start": 27.42,
+      "end": 27.8
+    },
+    {
+      "id": "w-0037",
+      "text": "A",
+      "start": 29.02,
+      "end": 29.5
+    },
+    {
+      "id": "w-0038",
+      "text": "Spend",
+      "start": 29.5,
+      "end": 29.8
+    },
+    {
+      "id": "w-0039",
+      "text": "Thrift",
+      "start": 29.8,
+      "end": 30.34
+    },
+    {
+      "id": "w-0040",
+      "text": "who",
+      "start": 30.34,
+      "end": 30.84
+    },
+    {
+      "id": "w-0041",
+      "text": "had",
+      "start": 30.84,
+      "end": 30.98
+    },
+    {
+      "id": "w-0042",
+      "text": "wasted",
+      "start": 30.98,
+      "end": 31.3
+    },
+    {
+      "id": "w-0043",
+      "text": "his",
+      "start": 31.3,
+      "end": 31.56
+    },
+    {
+      "id": "w-0044",
+      "text": "fortune",
+      "start": 31.56,
+      "end": 31.86
+    },
+    {
+      "id": "w-0045",
+      "text": "and",
+      "start": 31.86,
+      "end": 32.36
+    },
+    {
+      "id": "w-0046",
+      "text": "had",
+      "start": 32.36,
+      "end": 32.56
+    },
+    {
+      "id": "w-0047",
+      "text": "nothing",
+      "start": 32.56,
+      "end": 32.86
+    },
+    {
+      "id": "w-0048",
+      "text": "left",
+      "start": 32.86,
+      "end": 33.12
+    },
+    {
+      "id": "w-0049",
+      "text": "but",
+      "start": 33.12,
+      "end": 33.44
+    },
+    {
+      "id": "w-0050",
+      "text": "the",
+      "start": 33.44,
+      "end": 33.56
+    },
+    {
+      "id": "w-0051",
+      "text": "clothes",
+      "start": 33.56,
+      "end": 33.8
+    },
+    {
+      "id": "w-0052",
+      "text": "in",
+      "start": 33.8,
+      "end": 34.16
+    },
+    {
+      "id": "w-0053",
+      "text": "which",
+      "start": 34.16,
+      "end": 34.32
+    },
+    {
+      "id": "w-0054",
+      "text": "he",
+      "start": 34.32,
+      "end": 34.48
+    },
+    {
+      "id": "w-0055",
+      "text": "stood",
+      "start": 34.48,
+      "end": 34.82
+    },
+    {
+      "id": "w-0056",
+      "text": "saw",
+      "start": 34.82,
+      "end": 35.66
+    },
+    {
+      "id": "w-0057",
+      "text": "Swallow",
+      "start": 35.66,
+      "end": 36.18
+    },
+    {
+      "id": "w-0058",
+      "text": "one",
+      "start": 36.18,
+      "end": 36.46
+    },
+    {
+      "id": "w-0059",
+      "text": "fine",
+      "start": 36.46,
+      "end": 36.7
+    },
+    {
+      "id": "w-0060",
+      "text": "day",
+      "start": 36.7,
+      "end": 37.02
+    },
+    {
+      "id": "w-0061",
+      "text": "in",
+      "start": 37.02,
+      "end": 37.26
+    },
+    {
+      "id": "w-0062",
+      "text": "early",
+      "start": 37.26,
+      "end": 37.5
+    },
+    {
+      "id": "w-0063",
+      "text": "spring.",
+      "start": 37.5,
+      "end": 37.88
+    },
+    {
+      "id": "w-0064",
+      "text": "Thinking",
+      "start": 39.18,
+      "end": 39.66
+    },
+    {
+      "id": "w-0065",
+      "text": "that",
+      "start": 39.66,
+      "end": 39.92
+    },
+    {
+      "id": "w-0066",
+      "text": "summer",
+      "start": 39.92,
+      "end": 40.14
+    },
+    {
+      "id": "w-0067",
+      "text": "had",
+      "start": 40.14,
+      "end": 40.4
+    },
+    {
+      "id": "w-0068",
+      "text": "come",
+      "start": 40.4,
+      "end": 40.68
+    },
+    {
+      "id": "w-0069",
+      "text": "and",
+      "start": 40.68,
+      "end": 41.02
+    },
+    {
+      "id": "w-0070",
+      "text": "that",
+      "start": 41.02,
+      "end": 41.2
+    },
+    {
+      "id": "w-0071",
+      "text": "he",
+      "start": 41.2,
+      "end": 41.34
+    },
+    {
+      "id": "w-0072",
+      "text": "could",
+      "start": 41.34,
+      "end": 41.48
+    },
+    {
+      "id": "w-0073",
+      "text": "now",
+      "start": 41.48,
+      "end": 41.72
+    },
+    {
+      "id": "w-0074",
+      "text": "do",
+      "start": 41.72,
+      "end": 41.92
+    },
+    {
+      "id": "w-0075",
+      "text": "without",
+      "start": 41.92,
+      "end": 42.14
+    },
+    {
+      "id": "w-0076",
+      "text": "his",
+      "start": 42.14,
+      "end": 42.38
+    },
+    {
+      "id": "w-0077",
+      "text": "coat,",
+      "start": 42.38,
+      "end": 42.6
+    },
+    {
+      "id": "w-0078",
+      "text": "he",
+      "start": 43.32,
+      "end": 43.38
+    },
+    {
+      "id": "w-0079",
+      "text": "went",
+      "start": 43.38,
+      "end": 43.52
+    },
+    {
+      "id": "w-0080",
+      "text": "and",
+      "start": 43.52,
+      "end": 43.68
+    },
+    {
+      "id": "w-0081",
+      "text": "sold",
+      "start": 43.68,
+      "end": 43.92
+    },
+    {
+      "id": "w-0082",
+      "text": "it",
+      "start": 43.92,
+      "end": 44.12
+    },
+    {
+      "id": "w-0083",
+      "text": "for",
+      "start": 44.12,
+      "end": 44.32
+    },
+    {
+      "id": "w-0084",
+      "text": "what",
+      "start": 44.32,
+      "end": 44.48
+    },
+    {
+      "id": "w-0085",
+      "text": "it",
+      "start": 44.48,
+      "end": 44.6
+    },
+    {
+      "id": "w-0086",
+      "text": "would",
+      "start": 44.6,
+      "end": 44.72
+    },
+    {
+      "id": "w-0087",
+      "text": "fetch.",
+      "start": 44.72,
+      "end": 44.96
+    },
+    {
+      "id": "w-0088",
+      "text": "A",
+      "start": 46.04,
+      "end": 46.46
+    },
+    {
+      "id": "w-0089",
+      "text": "change,",
+      "start": 46.46,
+      "end": 46.64
+    },
+    {
+      "id": "w-0090",
+      "text": "however,",
+      "start": 46.64,
+      "end": 47.1
+    },
+    {
+      "id": "w-0091",
+      "text": "took",
+      "start": 47.36,
+      "end": 47.44
+    },
+    {
+      "id": "w-0092",
+      "text": "place",
+      "start": 47.44,
+      "end": 47.66
+    },
+    {
+      "id": "w-0093",
+      "text": "in",
+      "start": 47.66,
+      "end": 47.9
+    },
+    {
+      "id": "w-0094",
+      "text": "the",
+      "start": 47.9,
+      "end": 48.0
+    },
+    {
+      "id": "w-0095",
+      "text": "weather,",
+      "start": 48.0,
+      "end": 48.22
+    },
+    {
+      "id": "w-0096",
+      "text": "and",
+      "start": 48.88,
+      "end": 48.92
+    },
+    {
+      "id": "w-0097",
+      "text": "there",
+      "start": 48.92,
+      "end": 49.04
+    },
+    {
+      "id": "w-0098",
+      "text": "came",
+      "start": 49.04,
+      "end": 49.22
+    },
+    {
+      "id": "w-0099",
+      "text": "a",
+      "start": 49.22,
+      "end": 49.36
+    },
+    {
+      "id": "w-0100",
+      "text": "sharp",
+      "start": 49.36,
+      "end": 49.58
+    },
+    {
+      "id": "w-0101",
+      "text": "frost",
+      "start": 49.58,
+      "end": 49.9
+    },
+    {
+      "id": "w-0102",
+      "text": "which",
+      "start": 49.9,
+      "end": 50.68
+    },
+    {
+      "id": "w-0103",
+      "text": "killed",
+      "start": 50.68,
+      "end": 51.0
+    },
+    {
+      "id": "w-0104",
+      "text": "the",
+      "start": 51.0,
+      "end": 51.26
+    },
+    {
+      "id": "w-0105",
+      "text": "unfortunate",
+      "start": 51.26,
+      "end": 51.7
+    },
+    {
+      "id": "w-0106",
+      "text": "Swallow.",
+      "start": 51.7,
+      "end": 52.28
+    },
+    {
+      "id": "w-0107",
+      "text": "When",
+      "start": 53.12,
+      "end": 53.7
+    },
+    {
+      "id": "w-0108",
+      "text": "the",
+      "start": 53.7,
+      "end": 53.84
+    },
+    {
+      "id": "w-0109",
+      "text": "Spend",
+      "start": 53.84,
+      "end": 54.08
+    },
+    {
+      "id": "w-0110",
+      "text": "Thrift",
+      "start": 54.08,
+      "end": 54.52
+    },
+    {
+      "id": "w-0111",
+      "text": "saw",
+      "start": 54.52,
+      "end": 54.8
+    },
+    {
+      "id": "w-0112",
+      "text": "its",
+      "start": 54.8,
+      "end": 55.02
+    },
+    {
+      "id": "w-0113",
+      "text": "dead",
+      "start": 55.02,
+      "end": 55.2
+    },
+    {
+      "id": "w-0114",
+      "text": "body,",
+      "start": 55.2,
+      "end": 55.5
+    },
+    {
+      "id": "w-0115",
+      "text": "he",
+      "start": 55.72,
+      "end": 55.72
+    },
+    {
+      "id": "w-0116",
+      "text": "cried,",
+      "start": 55.72,
+      "end": 56.0
+    },
+    {
+      "id": "w-0117",
+      "text": "miserable",
+      "start": 56.96,
+      "end": 57.34
+    },
+    {
+      "id": "w-0118",
+      "text": "bird,",
+      "start": 57.34,
+      "end": 58.02
+    },
+    {
+      "id": "w-0119",
+      "text": "thanks",
+      "start": 58.58,
+      "end": 58.62
+    },
+    {
+      "id": "w-0120",
+      "text": "to",
+      "start": 58.62,
+      "end": 58.88
+    },
+    {
+      "id": "w-0121",
+      "text": "you",
+      "start": 58.88,
+      "end": 59.04
+    },
+    {
+      "id": "w-0122",
+      "text": "I",
+      "start": 59.04,
+      "end": 59.18
+    },
+    {
+      "id": "w-0123",
+      "text": "am",
+      "start": 59.18,
+      "end": 59.32
+    },
+    {
+      "id": "w-0124",
+      "text": "perishing",
+      "start": 59.32,
+      "end": 59.76
+    },
+    {
+      "id": "w-0125",
+      "text": "of",
+      "start": 59.76,
+      "end": 59.92
+    },
+    {
+      "id": "w-0126",
+      "text": "cold",
+      "start": 59.92,
+      "end": 60.1
+    },
+    {
+      "id": "w-0127",
+      "text": "myself.",
+      "start": 60.1,
+      "end": 60.38
+    },
+    {
+      "id": "w-0128",
+      "text": "One",
+      "start": 62.76,
+      "end": 63.34
+    },
+    {
+      "id": "w-0129",
+      "text": "Swallow",
+      "start": 63.34,
+      "end": 63.82
+    },
+    {
+      "id": "w-0130",
+      "text": "does",
+      "start": 63.82,
+      "end": 64.32
+    },
+    {
+      "id": "w-0131",
+      "text": "not",
+      "start": 64.32,
+      "end": 64.56
+    },
+    {
+      "id": "w-0132",
+      "text": "make",
+      "start": 64.56,
+      "end": 64.82
+    },
+    {
+      "id": "w-0133",
+      "text": "summer.",
+      "start": 64.82,
+      "end": 65.16
+    },
+    {
+      "id": "w-0134",
+      "text": "End",
+      "start": 67.98,
+      "end": 68.56
+    },
+    {
+      "id": "w-0135",
+      "text": "of",
+      "start": 68.56,
+      "end": 68.88
+    },
+    {
+      "id": "w-0136",
+      "text": "the",
+      "start": 68.88,
+      "end": 69.12
+    },
+    {
+      "id": "w-0137",
+      "text": "Spend",
+      "start": 69.12,
+      "end": 69.36
+    },
+    {
+      "id": "w-0138",
+      "text": "Thrift",
+      "start": 69.36,
+      "end": 69.88
+    },
+    {
+      "id": "w-0139",
+      "text": "and",
+      "start": 69.88,
+      "end": 70.18
+    },
+    {
+      "id": "w-0140",
+      "text": "the",
+      "start": 70.18,
+      "end": 70.44
+    },
+    {
+      "id": "w-0141",
+      "text": "Swallow.",
+      "start": 70.44,
+      "end": 70.82
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiClock, HiTag, HiCog6Tooth, HiChartBar, HiHeart, HiFolderOpen } from 'react-icons/hi2';
 
-export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'collections' | 'stats' | 'favorites' | 'settings';
 
 interface Props {
   activeSection: NavSection;
@@ -9,7 +8,7 @@ interface Props {
   lessonCount: number;
   clipsCount: number;
   wordCount: number;
-  favCount: number;
+
   collectionCount: number;
 }
 
@@ -20,10 +19,9 @@ const NAV_ITEMS: [NavSection, string, React.ComponentType<{size:number}>, number
   ['words', '单词', HiTag, 0],
   ['collections', '合集', HiFolderOpen, 0],
   ['stats', '统计', HiChartBar, 0],
-  ['favorites', '收藏', HiHeart, 0],
 ];
 
-export default function Sidebar({ activeSection, onSectionChange, lessonCount, clipsCount, wordCount, favCount, collectionCount }: Props) {
+export default function Sidebar({ activeSection, onSectionChange, lessonCount, clipsCount, wordCount, collectionCount }: Props) {
   const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const navRef = useRef<HTMLElement>(null);
   const [indicatorStyle, setIndicatorStyle] = useState<{ top: number; height: number }>({ top: 0, height: 0 });
@@ -32,7 +30,7 @@ export default function Sidebar({ activeSection, onSectionChange, lessonCount, c
     courses: lessonCount,
     clips: clipsCount,
     words: wordCount,
-    favorites: favCount,
+    
     collections: collectionCount,
   };
 
@@ -51,7 +49,7 @@ export default function Sidebar({ activeSection, onSectionChange, lessonCount, c
         ? prev
         : next
     ));
-  }, [activeSection, lessonCount, clipsCount, wordCount, favCount, collectionCount]);
+  }, [activeSection, lessonCount, clipsCount, wordCount, collectionCount]);
 
   return (
     <aside className="w-56 flex-shrink-0 flex flex-col h-full glass border-r border-[var(--border-primary)] select-none">
