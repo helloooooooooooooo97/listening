@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { LyricDisplayMode } from '../types/lesson';
 
 const KEY = 'playback-memory';
 const SETTINGS_KEY = 'app-settings';
@@ -8,6 +9,7 @@ interface AppSettings {
   defaultSpeed: number;     // default playback rate (0.5 - 2.0)
   defaultLoopCount: number; // default clip/word/sentence loop count (1 - 10)
   dailyGoalMinutes: number; // daily learning goal in minutes (0 = off)
+  lyricDisplayMode: LyricDisplayMode;
 }
 
 const DEFAULTS: AppSettings = {
@@ -15,6 +17,7 @@ const DEFAULTS: AppSettings = {
   defaultSpeed: 1,
   defaultLoopCount: 3,
   dailyGoalMinutes: 0,
+  lyricDisplayMode: 'bilingual',
 };
 
 function loadSettings(): AppSettings {
@@ -56,6 +59,7 @@ interface SettingsState {
   setDefaultSpeed: (speed: number) => void;
   setDefaultLoopCount: (count: number) => void;
   setDailyGoalMinutes: (minutes: number) => void;
+  setLyricDisplayMode: (mode: LyricDisplayMode) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
@@ -115,5 +119,13 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     if (minutes > 0 && typeof Notification !== 'undefined' && Notification.permission === 'default') {
       Notification.requestPermission();
     }
+  },
+
+  setLyricDisplayMode: (mode) => {
+    set((s) => {
+      const updated = { ...s.settings, lyricDisplayMode: mode };
+      saveSettings(updated);
+      return { settings: updated };
+    });
   },
 }));

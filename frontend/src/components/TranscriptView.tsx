@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from 'react';
-import { HiBookmark, HiPlay, HiCheck, HiHeart, HiMagnifyingGlass } from 'react-icons/hi2';
-import type { TranscriptLine, TranscriptWord, AudioClip } from '../types/lesson';
+import { HiBookmark, HiPlay, HiCheck, HiHeart, HiMagnifyingGlass, HiSparkles } from 'react-icons/hi2';
+import type { TranscriptLine, TranscriptWord, AudioClip, LyricDisplayMode } from '../types/lesson';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useToastStore } from '../stores/toastStore';
 import { useAudioStore, getAudio } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { getKnownWords, getDictationSentences, setWordKnown, type SentenceDictation } from '../lib/api';
+import { useAiStore } from '../stores/aiStore';
 import WordBadges from './dictation/WordBadges';
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
   flashSentence?: number | null;
   activeTab?: 'clips' | 'dictation' | 'favorites';
   dictationWordResults?: (import('../stores/dictationStore').WordResult[] | null)[];
+  lyricDisplayMode?: LyricDisplayMode;
 }
 
 interface ContextMenu {
@@ -28,7 +30,7 @@ interface ContextMenu {
 
 interface WordSelection { startWord: TranscriptWord; endWord: TranscriptWord; }
 
-export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId, activeTab, dictationWordResults }: Props) {
+export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId, activeTab, dictationWordResults, lyricDisplayMode = 'bilingual' }: Props) {
   const activeLineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const addClip = useClipsStore(s => s.addClip);
@@ -44,11 +46,16 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const [sentenceScores, setSentenceScores] = useState<SentenceDictation[]>([]);
   const [ctxMenu, setCtxMenu] = useState<ContextMenu | null>(null);
   const [focusedSentence, setFocusedSentence] = useState<number>(-1);
+  const [translatingIdx, setTranslatingIdx] = useState<number | null>(null);
+  const [translations, setTranslations] = useState<Map<number, string>>(new Map());
+  const [translationErrors, setTranslationErrors] = useState<Set<number>>(new Set());
+  const translate = useAiStore(s => s.translate);
+  const hasProvider = useAiStore(s => s.providers.length > 0);
+  const defaultLoopCount = useSettingsStore(s => s.settings.defaultLoopCount);
   const isFav = useFavoritesStore(s => s.isFav);
   const favToggle = useFavoritesStore(s => s.toggle);
   const playClip = useAudioStore(s => s.playClip);
   const setLoopTarget = useAudioStore(s => s.setLoopTarget);
-  const defaultLoopCount = useSettingsStore(s => s.settings.defaultLoopCount);
 
   useEffect(() => {
     getKnownWords().then(words => setKnownWords(new Set(words))).catch(() => {});
@@ -236,6 +243,20 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     playClip(lineClip, contextLesson);
   };
 
+  const handleTranslate = async (lineIdx: number, text: string) => {
+    if (translations.has(lineIdx)) return;
+    setTranslatingIdx(lineIdx);
+    setTranslationErrors(prev => { const n = new Set(prev); n.delete(lineIdx); return n; });
+    try {
+      const result = await translate(text);
+      setTranslations(prev => { const n = new Map(prev); n.set(lineIdx, result); return n; });
+    } catch {
+      setTranslationErrors(prev => { const n = new Set(prev); n.add(lineIdx); return n; });
+    } finally {
+      setTranslatingIdx(null);
+    }
+  };
+
   // Anchor each clip to exactly one word, so the play button appears once per clip.
   const clipByAnchorWordId = useMemo(() => {
     const m = new Map<string, AudioClip>();
@@ -304,7 +325,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
           return (
             <div key={line.id} ref={isActive?activeLineRef:null}
               data-sentence-idx={lineIdx}
-              className={`transcript-line ${isActive?'active':''} ${focusedSentence===lineIdx?'ring-1 ring-[var(--accent)]/30 rounded-lg':''} flex items-start gap-4 px-4 py-2.5`}
+              className={`transcript-line ${isActive?'active':''} ${focusedSentence===lineIdx?'ring-1 ring-[var(--accent)]/30 rounded-lg':''} group flex items-start gap-4 px-4 py-2.5`}
               onClick={()=>onSeek(line.start)}>
               {/* Line number + timestamp */}
               <div className="flex-shrink-0 flex items-center gap-2 pt-0.5 text-sm font-mono text-tertiary select-none">
@@ -312,7 +333,8 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                 <span className="w-12 text-left text-tertiary">{Math.floor(line.start/60)}:{Math.floor(line.start%60).toString().padStart(2,'0')}</span>
               </div>
               {/* Words */}
-              <p className="flex-1 text-base leading-relaxed text-secondary select-none">
+              <div className="flex-1 min-w-0">
+                <p className={`text-base leading-relaxed select-none ${lyricDisplayMode === 'chinese-only' ? 'text-tertiary/30' : 'text-secondary'}`}>
                 {showDictation && dictationWordResults?.[lineIdx] ? (
                   <span className="inline-flex flex-wrap gap-1 align-baseline"><WordBadges results={dictationWordResults[lineIdx]!} /></span>
                 ) : lineWords.length>0
@@ -378,8 +400,42 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                     {sentData.avg_score}%
                   </button>
                 )}
-              </p>
-              {line.note && <p className="text-xs text-tertiary mt-1 italic">{line.note}</p>}
+                </p>
+
+                {/* Note / translation section */}
+                <div className={`${lyricDisplayMode === 'hover-reveal' ? 'opacity-0 group-hover:opacity-100 transition-opacity duration-200' : ''} ${lyricDisplayMode === 'english-only' ? 'hidden' : ''}`}>
+                  {/* Show existing note */}
+                  {(lyricDisplayMode !== 'english-only') && line.note && (
+                    <p className={`text-xs mt-1 ${lyricDisplayMode === 'chinese-only' ? 'text-primary font-medium' : 'text-tertiary italic'}`}>
+                      {line.note}
+                    </p>
+                  )}
+
+                  {/* AI translation result */}
+                  {lyricDisplayMode !== 'english-only' && translations.has(lineIdx) && (
+                    <p className="text-xs text-[var(--accent)]/80 mt-1">{translations.get(lineIdx)}</p>
+                  )}
+
+                  {/* Translate button or error */}
+                  {lyricDisplayMode !== 'english-only' && !line.note && !translations.has(lineIdx) && hasProvider && (
+                    <div className="mt-1">
+                      {translatingIdx === lineIdx ? (
+                        <span className="text-[10px] text-tertiary">翻译中...</span>
+                      ) : translationErrors.has(lineIdx) ? (
+                        <button onClick={e => { e.stopPropagation(); handleTranslate(lineIdx, line.text || lineWords.map(w => w.text).join(' ')); }}
+                          className="text-[10px] text-red-400 hover:underline cursor-pointer">
+                          翻译失败，重试
+                        </button>
+                      ) : (
+                        <button onClick={e => { e.stopPropagation(); handleTranslate(lineIdx, line.text || lineWords.map(w => w.text).join(' ')); }}
+                          className="text-[10px] text-blue-400 hover:text-blue-300 transition-colors cursor-pointer flex items-center gap-1">
+                          <HiSparkles size={10} /> 翻译
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div> {/* end flex-1 min-w-0 */}
             </div>
           );
         })}

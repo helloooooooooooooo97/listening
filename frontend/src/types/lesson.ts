@@ -90,3 +90,18 @@ export interface CollectionItem {
 export interface CollectionDetail extends CollectionSummary {
   items: CollectionItem[];
 }
+
+// ── AI / Translation ──
+
+export type AiProviderId = 'openai' | 'deepseek' | 'anthropic' | 'custom';
+
+export interface AiProvider {
+  id: AiProviderId;
+  name: string;
+  apiBase: string;
+  apiKey: string;
+  model: string;
+  isDefault: boolean;
+}
+
+export type LyricDisplayMode = 'english-only' | 'bilingual' | 'chinese-only' | 'hover-reveal';

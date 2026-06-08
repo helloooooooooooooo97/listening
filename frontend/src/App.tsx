@@ -13,6 +13,7 @@ import PlayerBar from './components/PlayerBar';
 import ToastContainer from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import { useFavoritesStore } from './stores/favoritesStore';
+import { useAiStore } from './stores/aiStore';
 import QueuePanel from './components/QueuePanel';
 
 function AppContent() {
@@ -47,6 +48,7 @@ function AppContent() {
     useClipsStore.getState().loadClips();
     loadFavorites();
     useCollectionsStore.getState().loadCollections();
+    useAiStore.getState().loadProviders();
   }, []);
 
   const handleDeleteClip = (id: string) => {

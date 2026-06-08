@@ -8,6 +8,7 @@ import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
+import { useSettingsStore } from '../stores/settingsStore';
 import type { WordResult } from '../stores/dictationStore';
 import WordBadges from './dictation/WordBadges';
 import TranscriptView from './TranscriptView';
@@ -41,6 +42,7 @@ export default function PlaybackDetailTabs({
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
   const [editNote, setEditNote] = useState('');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
+  const lyricDisplayMode = useSettingsStore(s => s.settings.lyricDisplayMode);
   const clips = useClipsStore(s => s.clips);
   const removeClip = useClipsStore(s => s.removeClip);
   const updateClip = useClipsStore(s => s.updateClip);
@@ -131,6 +133,31 @@ export default function PlaybackDetailTabs({
   return (
     <div className={`grid gap-6 ${collapsed ? 'lg:grid-cols-[minmax(0,1fr)_48px]' : 'lg:grid-cols-[minmax(0,1fr)_360px]'} transition-all duration-300`}>
       <section className="min-w-0">
+        {/* Lyric display mode toggle */}
+        <div className="flex items-center gap-0.5 px-1 py-1.5 mb-1 border-b border-[var(--border-secondary)]">
+          {([
+            { mode: 'bilingual' as const, label: '中英', tip: '中英对照' },
+            { mode: 'english-only' as const, label: '仅英文', tip: '仅显示英文' },
+            { mode: 'chinese-only' as const, label: '仅中文', tip: '仅显示中文' },
+            { mode: 'hover-reveal' as const, label: '悬浮', tip: '悬浮显示翻译' },
+          ] as const).map(({ mode, label, tip }) => (
+            <button key={mode} onClick={() => { const s = useSettingsStore.getState(); s.setLyricDisplayMode(mode); }}
+              className={`text-[11px] px-2 py-1 rounded-md transition-colors cursor-pointer ${
+                lyricDisplayMode === mode
+                  ? 'bg-[var(--bg-active)] text-primary font-medium'
+                  : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+              }`}
+              title={tip}>
+              {label}
+            </button>
+          ))}
+          <div className="flex-1" />
+          <span className="text-[10px] text-tertiary">
+            {lyricDisplayMode === 'bilingual' ? '中英对照' :
+             lyricDisplayMode === 'english-only' ? '仅英文' :
+             lyricDisplayMode === 'chinese-only' ? '仅中文' : '悬浮显示'}
+          </span>
+        </div>
         <TranscriptView
           lessonId={lesson.id}
           lessonTitle={lesson.title}
@@ -143,6 +170,7 @@ export default function PlaybackDetailTabs({
           activeClipId={activeClipId}
           activeTab={sideTab}
           dictationWordResults={dictationBySentence.map(s => s.wordResults)}
+          lyricDisplayMode={lyricDisplayMode}
         />
       </section>
 
