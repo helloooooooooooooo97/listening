@@ -163,26 +163,6 @@ export default function PlayerBar({ onQueueToggle }: Props) {
                 title={isDictating ? '退出听写' : '听写模式'}>
                 <HiPencil size={13} />
               </button>
-              <button onClick={e=>{e.stopPropagation();
-                const allClips = useClipsStore.getState().getClipsByLesson(lesson.id).map(c => ({ kind: 'clip' as const, clip: c, lesson }));
-                const q = usePlaylistStore.getState();
-                q.addAllToQueue(allClips);
-                addToast(`已添加 ${allClips.length} 个片段到队列`, 'success');
-              }}
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
-                title="全部片段加入队列">
-                <HiPlusCircle size={13} />
-              </button>
-              <button onClick={e=>{e.stopPropagation();
-                const q = usePlaylistStore.getState();
-                q.cycleRepeatMode();
-                const labels: Record<string,string> = { sequential:'顺序', 'repeat-all':'全部循环', shuffle:'随机', 'repeat-one':'单曲循环' };
-                addToast(labels[q.repeatMode] || q.repeatMode, 'info');
-              }}
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
-                title="切换播放模式">
-                <HiArrowPath size={13} />
-              </button>
               {isC && (
                 <button onClick={e=>{e.stopPropagation();
                   const q = usePlaylistStore.getState();

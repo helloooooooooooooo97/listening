@@ -21,6 +21,7 @@ interface Props {
   activeTab?: 'clips' | 'dictation' | 'favorites';
   dictationWordResults?: (import('../stores/dictationStore').WordResult[] | null)[];
   lyricDisplayMode?: LyricDisplayMode;
+  translationEnabled?: boolean;
 }
 
 interface ContextMenu {
@@ -30,7 +31,7 @@ interface ContextMenu {
 
 interface WordSelection { startWord: TranscriptWord; endWord: TranscriptWord; }
 
-export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId, activeTab, dictationWordResults, lyricDisplayMode = 'bilingual' }: Props) {
+export default function TranscriptView({ lessonId, lessonTitle, lines, words, currentTime, onSeek, onOpenDictation, hoveredClipId, activeClipId, activeTab, dictationWordResults, lyricDisplayMode = 'bilingual', translationEnabled = false }: Props) {
   const activeLineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const addClip = useClipsStore(s => s.addClip);
@@ -257,6 +258,16 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     }
   };
 
+  // Auto-translate sentences without notes when translation toggle is on
+  useEffect(() => {
+    if (!translationEnabled || !hasProvider) return;
+    for (let i = 0; i < lines.length; i++) {
+      if (!lines[i].note && !translations.has(i)) {
+        handleTranslate(i, lines[i].text || words.filter(w => w.start >= lines[i].start - 0.05 && w.end <= lines[i].end + 0.05).map(w => w.text).join(' '));
+      }
+    }
+  }, [translationEnabled]);
+
   // Anchor each clip to exactly one word, so the play button appears once per clip.
   const clipByAnchorWordId = useMemo(() => {
     const m = new Map<string, AudioClip>();
@@ -333,8 +344,8 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                 <span className="w-12 text-left text-tertiary">{Math.floor(line.start/60)}:{Math.floor(line.start%60).toString().padStart(2,'0')}</span>
               </div>
               {/* Words */}
-              <div className="flex-1 min-w-0">
-                <p className={`text-base leading-relaxed select-none ${lyricDisplayMode === 'chinese-only' ? 'text-tertiary/30' : 'text-secondary'}`}>
+              <div className={`flex-1 min-w-0 ${lyricDisplayMode === 'chinese-only' ? 'opacity-20' : ''} ${lyricDisplayMode === 'hover-reveal' ? 'opacity-0 group-hover:opacity-100 transition-opacity duration-200' : ''}`}>
+                <p className={`text-base leading-relaxed select-none ${lyricDisplayMode === 'chinese-only' ? 'text-tertiary' : 'text-secondary'}`}>
                 {showDictation && dictationWordResults?.[lineIdx] ? (
                   <span className="inline-flex flex-wrap gap-1 align-baseline"><WordBadges results={dictationWordResults[lineIdx]!} /></span>
                 ) : lineWords.length>0
@@ -416,23 +427,19 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                     <p className="text-xs text-[var(--accent)]/80 mt-1">{translations.get(lineIdx)}</p>
                   )}
 
-                  {/* Translate button or error */}
-                  {lyricDisplayMode !== 'english-only' && !line.note && !translations.has(lineIdx) && hasProvider && (
-                    <div className="mt-1">
-                      {translatingIdx === lineIdx ? (
-                        <span className="text-[10px] text-tertiary">翻译中...</span>
+                  {/* Auto-translate when toggle is on */}
+                  {translationEnabled && lyricDisplayMode !== 'english-only' && !line.note && (
+                    <>
+                      {translations.has(lineIdx) ? (
+                        <p className="text-xs text-[var(--accent)]/80 mt-1">{translations.get(lineIdx)}</p>
+                      ) : translatingIdx === lineIdx ? (
+                        <span className="text-[10px] text-tertiary block mt-1">翻译中...</span>
                       ) : translationErrors.has(lineIdx) ? (
-                        <button onClick={e => { e.stopPropagation(); handleTranslate(lineIdx, line.text || lineWords.map(w => w.text).join(' ')); }}
-                          className="text-[10px] text-red-400 hover:underline cursor-pointer">
-                          翻译失败，重试
-                        </button>
-                      ) : (
-                        <button onClick={e => { e.stopPropagation(); handleTranslate(lineIdx, line.text || lineWords.map(w => w.text).join(' ')); }}
-                          className="text-[10px] text-blue-400 hover:text-blue-300 transition-colors cursor-pointer flex items-center gap-1">
-                          <HiSparkles size={10} /> 翻译
-                        </button>
-                      )}
-                    </div>
+                        <span className="text-[10px] text-red-400/60 block mt-1">翻译失败</span>
+                      ) : hasProvider ? (
+                        <span className="text-[10px] text-tertiary/50 block mt-1">...</span>
+                      ) : null}
+                    </>
                   )}
                 </div>
               </div> {/* end flex-1 min-w-0 */}

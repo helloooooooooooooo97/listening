@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlusCircle, HiPlay } from 'react-icons/hi2';
+import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlusCircle, HiPlay, HiSparkles } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
 import { alignDictation } from '../lib/dictationAligner';
@@ -42,6 +42,7 @@ export default function PlaybackDetailTabs({
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
   const [editNote, setEditNote] = useState('');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
+  const [translationEnabled, setTranslationEnabled] = useState(false);
   const lyricDisplayMode = useSettingsStore(s => s.settings.lyricDisplayMode);
   const clips = useClipsStore(s => s.clips);
   const removeClip = useClipsStore(s => s.removeClip);
@@ -171,6 +172,7 @@ export default function PlaybackDetailTabs({
           activeTab={sideTab}
           dictationWordResults={dictationBySentence.map(s => s.wordResults)}
           lyricDisplayMode={lyricDisplayMode}
+          translationEnabled={translationEnabled}
         />
       </section>
 
@@ -191,6 +193,13 @@ export default function PlaybackDetailTabs({
           <div className="rounded-xl border border-[var(--border-secondary)] overflow-hidden bg-[var(--bg-primary)]">
             <div className="flex border-b border-[var(--border-secondary)] p-1">
               <SideTabButton active={sideTab === 'clips'} icon={<HiBookmark size={13} />} label="片段" count={lessonClips.length} onClick={() => setSideTab('clips')} />
+              <button onClick={() => setTranslationEnabled(!translationEnabled)}
+                className={`flex-1 min-w-0 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
+                  translationEnabled ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+                }`}>
+                <HiSparkles size={13} />
+                <span>译</span>
+              </button>
               <SideTabButton active={sideTab === 'dictation'} icon={<HiPencil size={13} />} label="听写" count={dictationRecords.length} onClick={() => setSideTab('dictation')} />
               <SideTabButton active={sideTab === 'favorites'} icon={<HiHeart size={13} />} label="收藏" count={lessonFavs.length} onClick={() => setSideTab('favorites')} />
               <button onClick={() => setCollapsed(true)}
