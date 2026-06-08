@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from database import init_db
 
@@ -94,6 +96,11 @@ def save_translation(data: dict):
         "source_type": row[3], "extra_data": row[4],
     }
 
+
+# Serve frontend static files for desktop production mode
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), '../../frontend/dist')
+if os.path.isdir(FRONTEND_DIR) and os.path.exists(os.path.join(FRONTEND_DIR, 'index.html')):
+    app.mount('/', StaticFiles(directory=FRONTEND_DIR, html=True), name='frontend')
 
 @app.get("/api/health")
 def health():

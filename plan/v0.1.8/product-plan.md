@@ -15,32 +15,36 @@
 | Electron | ~150 MB | Node.js + Chromium | child_process 启动 | 简单 |
 | PyWebView | ~30 MB | Python + WebView | 原生 Python | 中等 |
 
-**推荐：Tauri 2.0**
+**实际方案：Python FastAPI serve 前端 + macOS .app 启动器**
 
-理由：
-- 体积最小（5MB vs Electron 的 150MB）
-- macOS 和 Windows 原生窗口，使用系统 WebView（Safari / Edge WebView2）
-- 成熟的 sidecar 机制可管理 Python 后端的生命周期
-- 安全模型好（无 Node.js 在渲染进程）
-- 社区活跃，文档完善
+说明：
+- 由于当前网络环境无法下载 Rust/Tauri 依赖，改用轻量级方案
+- Python 后端（FastAPI）通过 `StaticFiles` 直接 serve 前端构建产物
+- macOS .app 通过 `osacompile` 创建，双击即可启动
+- 后端 + 前端 + 浏览器 = 一个 .app 搞定
+- 后续网络通畅后可升级到 Tauri
 
 ### 架构
 
 ```
-┌─────────────────────────────────────┐
-│  Tauri Desktop App                  │
-│                                     │
-│  ┌───────────┐  ┌────────────────┐  │
-│  │ WebView   │  │ Python Sidecar │  │
-│  │ (React    │←→│ (FastAPI       │  │
-│  │  Frontend)│  │  localhost:8000)│  │
-│  └───────────┘  └────────────────┘  │
-│        │                │           │
-│  Tauri Core (Rust) ─────┘           │
-│  - 启动/停止 sidecar                 │
-│  - 窗口管理                          │
-│  - 系统托盘                           │
-└─────────────────────────────────────┘
+┌────────────────────────────────────────────┐
+│  双击 97 LISTENING.app                     │
+│                                            │
+│  ┌──────────────────────────────────────┐  │
+│  │  start.command (Shell Script)        │  │
+│  │  1. python3 -m uvicorn app.main:app  │  │
+│  │  2. open http://localhost:8000       │  │
+│  └──────────────────────────────────────┘  │
+│              │         │                    │
+│              ▼         ▼                    │
+│  ┌──────────────┐  ┌──────────────────┐    │
+│  │ Python       │  │ Safari/Chrome    │    │
+│  │ FastAPI      │←→│ (用户浏览器)      │    │
+│  │ :8000        │  │                  │    │
+│  │ - API 路由   │  │ Frontend (React) │    │
+│  │ - StaticFiles│  │ dist/index.html  │    │
+│  └──────────────┘  └──────────────────┘    │
+└────────────────────────────────────────────┘
 ```
 
 ---
@@ -106,26 +110,20 @@ Python 后端需要打包为独立可执行文件：
 
 ### 🔴 P0 — 基础搭建
 
-- [ ] **3.1 安装 Tauri**：添加 `@tauri-apps/cli` 依赖，初始化 `src-tauri`
-- [ ] **3.2 Tauri 配置**：`tauri.conf.json` 窗口/标识/权限配置
-- [ ] **3.3 开发模式验证**：`npm run tauri dev` 启动桌面窗口
+- [x] **3.1 Python 后端 serve 前端**：FastAPI 添加 StaticFiles 挂载 `frontend/dist/`
+- [x] **3.2 启动脚本**：`start.command` — 启动后端 + 打开浏览器
+- [x] **3.3 macOS .app**：`osacompile` 创建双击可运行的应用程序包
 
-### 🟡 P1 — Python 后端集成
+### 🟡 P1 — 跨平台支持
 
-- [ ] **3.4 Sidecar 脚本**：编写启动/停止 Python 后端的脚本
-- [ ] **3.5 PyInstaller 打包**：将 Python 后端打包为独立二进制
-- [ ] **3.6 Rust 侧 sidecar 管理**：Tauri 命令启动/监控 Python 进程
+- [ ] **3.4 Windows 启动脚本**：`start.bat` — 启动后端 + 打开浏览器
+- [ ] **3.5 PyInstaller 打包**：将 Python 后端打包为独立 exe（可选）
+- [ ] **3.6 图标美化**：自定义应用图标
 
-### 🟡 P1 — 前端适配
+### 🟢 P2 — 后续升级
 
-- [ ] **3.7 API 地址**：前端请求地址从相对路径改为 `http://127.0.0.1:8000`
-- [ ] **3.8 窗口设置**：最小窗口大小、标题栏、系统托盘
-
-### 🟢 P2 — 打包发布
-
-- [ ] **3.9 macOS 打包**：生成 `.dmg` 安装包
-- [ ] **3.10 Windows 打包**：在 Windows 环境中生成 `.msi`（交叉编译或在 Windows 上执行）
-- [ ] **3.11 签名/公证**：macOS 公证、Windows 代码签名（可选）
+- [ ] **3.7 Tauri 升级**：网络通畅后迁移到 Tauri 原生窗口
+- [ ] **3.8 自动更新**：Sparkle (macOS) / Squirrel (Windows)
 
 ---
 
