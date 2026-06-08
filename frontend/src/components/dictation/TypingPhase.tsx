@@ -6,10 +6,11 @@ interface Props {
   userInput: string;
   onInputChange: (v: string) => void;
   onSubmit: () => void;
+  onSkip?: () => void;
   onPlaySentence: () => void;
 }
 
-export default function TypingPhase({ inputRef, userInput, onInputChange, onSubmit, onPlaySentence }: Props) {
+export default function TypingPhase({ inputRef, userInput, onInputChange, onSubmit, onSkip, onPlaySentence }: Props) {
   useEffect(() => {
     inputRef.current?.focus();
   }, [inputRef]);
@@ -40,6 +41,12 @@ export default function TypingPhase({ inputRef, userInput, onInputChange, onSubm
           className="flex items-center gap-1.5 px-8 py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] disabled:bg-[var(--bg-tertiary)] disabled:text-tertiary on-accent font-semibold rounded-full text-sm transition-colors cursor-pointer">
           提交 <HiArrowRight size={14} />
         </button>
+        {onSkip && (
+          <button onClick={onSkip}
+            className="px-5 py-2.5 rounded-full bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] transition-colors cursor-pointer text-secondary text-sm">
+            跳过
+          </button>
+        )}
       </div>
     </div>
   );

@@ -29,20 +29,17 @@ export default function DictationView() {
   const skip = useDictationStore(s => s.skip);
   const reset = useDictationStore(s => s.reset);
 
-  if (!active || mode.kind !== 'lesson') return null;
-
-  const sentences = mode.lesson.transcript;
+  const lesson = mode.kind === 'lesson' ? mode.lesson : null;
+  const sentences = lesson?.transcript ?? [];
   const currentSentence = sentences[sentenceIndex];
-  if (!currentSentence) {
-    return <CompletionScreen scores={scores} onReset={reset} />;
-  }
 
-  const sentenceWords = mode.lesson.words.filter(
-    w => w.start >= currentSentence.start - 0.05 && w.end <= currentSentence.end + 0.05
-  );
+  const sentenceWords = lesson && currentSentence
+    ? lesson.words.filter(w => w.start >= currentSentence.start - 0.05 && w.end <= currentSentence.end + 0.05)
+    : [];
   const expectedWords = sentenceWords.map(w => w.text);
 
   const handlePlaySentence = () => {
+    if (!currentSentence) return;
     seek(currentSentence.start);
     setTimeout(() => useAudioStore.getState().togglePlay(), 150);
   };
@@ -54,8 +51,9 @@ export default function DictationView() {
     setTimeout(() => {
       const state = useDictationStore.getState();
       const latestScore = state.scores[state.scores.length - 1] || 0;
+      if (!lesson) return;
       postDictation({
-        audio_id: mode.lesson!.id, audio_title: mode.lesson!.title,
+        audio_id: lesson.id, audio_title: lesson.title,
         sentence_index: sentenceIndex, score: latestScore,
         user_input: userInput.trim(),
         expected_text: expectedJoined,
@@ -65,9 +63,10 @@ export default function DictationView() {
 
   // Auto-play sentence
   useEffect(() => {
+    if (!active || !currentSentence) return;
     seek(currentSentence.start);
     setTimeout(() => useAudioStore.getState().togglePlay(), 150);
-  }, [sentenceIndex]);
+  }, [active, currentSentence, seek]);
 
   // Stop at sentence end
   useEffect(() => {
@@ -76,6 +75,12 @@ export default function DictationView() {
       useAudioStore.getState().togglePlay();
     }
   }, [currentTime, isPlaying, currentSentence]);
+
+  if (!active || !lesson) return null;
+
+  if (!currentSentence) {
+    return <CompletionScreen scores={scores} onReset={reset} />;
+  }
 
   const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
 

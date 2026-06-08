@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { CollectionSummary, CollectionDetail, CollectionItem } from '../types/lesson';
+import type { CollectionSummary, CollectionDetail } from '../types/lesson';
 import {
   getCollections as apiGetCollections,
   getCollection as apiGetCollection,
@@ -9,7 +9,6 @@ import {
   refreshCollection as apiRefreshCollection,
   addCollectionItem as apiAddItem,
   removeCollectionItem as apiRemoveItem,
-  reorderCollectionItems as apiReorder,
   clearCollectionItems as apiClear,
 } from '../lib/api';
 
@@ -41,7 +40,7 @@ interface CollectionsState {
   clearItems: (collectionId: number) => Promise<void>;
 }
 
-export const useCollectionsStore = create<CollectionsState>((set, get) => ({
+export const useCollectionsStore = create<CollectionsState>((set) => ({
   collections: [],
   current: null,
   loaded: false,

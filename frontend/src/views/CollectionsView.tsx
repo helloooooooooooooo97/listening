@@ -6,7 +6,7 @@ import { usePlaylistStore } from '../stores/playlistStore';
 import { useAudioStore } from '../stores/audioStore';
 import { useToastStore } from '../stores/toastStore';
 import { getCollection } from '../lib/api';
-import type { CollectionSummary, CollectionItem, AudioClip } from '../types/lesson';
+import type { CollectionSummary, AudioClip } from '../types/lesson';
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>> = {
   HiHeart: HiHeart, HiClock: HiClock, HiPencil: HiPencil,
@@ -82,7 +82,7 @@ function getAlbumStyle(col: CollectionSummary): AlbumStyle {
 }
 
 function DecorHeart() { return (<svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100" fill="none"><path d="M50 85C50 85 15 60 15 38C15 28 23 20 33 20C40 20 46 25 50 30C54 25 60 20 67 20C77 20 85 28 85 38C85 60 50 85 50 85Z" fill="white" /><path d="M50 75C50 75 25 55 25 40C25 33 31 27 38 27C43 27 48 31 50 35C52 31 57 27 62 27C69 27 75 33 75 40C75 55 50 75 50 75Z" fill="white" opacity="0.5" /></svg>); }
-function DecorWaveform() { return (<svg className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 100 100" fill="none">{[5,15,25,35,45,55,65,75,85,95].map((x,i)=><rect key={i} x={x-2} y={30+Math.sin(i*1.2)*20} width={4} height={40-Math.sin(i*1.2)*20} rx={2} fill="white" opacity={0.3+Math.random()*0.4}/>)}</svg>); }
+function DecorWaveform() { return (<svg className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 100 100" fill="none">{[5,15,25,35,45,55,65,75,85,95].map((x,i)=><rect key={i} x={x-2} y={30+Math.sin(i*1.2)*20} width={4} height={40-Math.sin(i*1.2)*20} rx={2} fill="white" opacity={0.3+((i*7)%5)*0.08}/>)}</svg>); }
 function DecorGrid() { return (<svg className="absolute inset-0 w-full h-full opacity-12" viewBox="0 0 100 100" fill="none">{[[0,25,50,75,100].map(y=><line key={`h${y}`} x1="0" y1={y} x2="100" y2={y} stroke="white" strokeWidth="0.5"/>),[0,25,50,75,100].map(x=><line key={`v${x}`} x1={x} y1="0" x2={x} y2="100" stroke="white" strokeWidth="0.5"/>),<circle cx="50" cy="50" r="18" stroke="white" strokeWidth="1" fill="none" opacity="0.3"/>]}</svg>); }
 function DecorDots() { return (<svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">{Array.from({length:5},(_,r)=>Array.from({length:5},(_,c)=><circle key={`${r}-${c}`} cx={10+c*20} cy={10+r*20} r={1.5+((r+c)%3)*0.8} fill="white" opacity={0.2+((r+c)%4)*0.15}/>))}</svg>); }
 function DecorStripes() { return (<svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 100 100">{[5,15,25,35,45,55,65,75,85,95].map(x=><rect key={x} x={x-1} y="0" width={2} height={100} fill="white" opacity={0.25} rx={1}/>)}</svg>); }
@@ -185,25 +185,7 @@ export default function CollectionsView() {
       ps.addAllToQueue(queueItems);
       ps.setCurrentIndex(0);
 
-      const first = queueItems[0];
-      const as = useAudioStore.getState();
-      if (first.kind === 'lesson') as.playLesson(first.lesson);
-      else if (first.kind === 'sentence') {
-        const lid = first.lessonId;
-        if (!lessonCache[lid]) {
-          const { getLessonById } = await import('../lib/api');
-          lessonCache[lid] = await getLessonById(lid);
-        }
-        const lesson = lessonCache[lid];
-        const clip: AudioClip = {
-          id: `col-${lid}-s${first.sentenceIndex}`, lessonId: lid, lessonTitle: first.lessonTitle,
-          startWordId: '', endWordId: '', startTime: first.start, endTime: first.end || first.start + 5,
-          text: first.text, note: '', color: '#8b5cf6', createdAt: '',
-        };
-        as.playClip(clip, lesson);
-      } else if (first.kind === 'clip') {
-        as.playClip(first.clip, first.lesson ?? null);
-      }
+      useAudioStore.getState().playQueueItem(queueItems[0]);
 
       addToast(`即将播放 ${queueItems.length} 项`, 'success');
     } catch {

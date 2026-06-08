@@ -9,7 +9,7 @@ import { getLessonById } from '../lib/api';
 import type { AudioClip, CollectionItem } from '../types/lesson';
 import type { QueueItem } from '../stores/playlistStore';
 
-const TYPE_META: Record<string, { icon: React.ComponentType<{ size?: number; className?: string }>; label: string }> = {
+const TYPE_META: Record<string, { icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>; label: string }> = {
   audio: { icon: HiMusicalNote, label: '音频' },
   clip: { icon: HiBookmark, label: '片段' },
   sentence: { icon: HiClock, label: '句子' },
@@ -84,7 +84,7 @@ export default function CollectionDetailView() {
       } else if (item.item_type === 'word') {
         addToast('单词暂不支持直接播放', 'info');
       }
-    } catch (e) {
+    } catch {
       addToast('播放失败', 'error');
     }
   };
@@ -150,31 +150,7 @@ export default function CollectionDetailView() {
     // Mark currentIndex = 0 so playNext() advances to index 1 when first item ends
     playlistStore.setCurrentIndex(0);
 
-    const first = queueItems[0];
-    if (first.kind === 'lesson') {
-      playLesson(first.lesson);
-    } else if (first.kind === 'sentence') {
-      try {
-        const lesson = await fetchLesson(first.lessonId);
-        const clip: AudioClip = {
-          id: `col-all-s-${first.lessonId}-${first.sentenceIndex}`,
-          lessonId: first.lessonId,
-          lessonTitle: first.lessonTitle,
-          startWordId: '', endWordId: '',
-          startTime: first.start,
-          endTime: first.end || first.start + 5,
-          text: first.text,
-          note: '',
-          color: '#8b5cf6',
-          createdAt: '',
-        };
-        playClip(clip, lesson);
-      } catch {
-        addToast('播放失败', 'error');
-      }
-    } else if (first.kind === 'clip') {
-      playClip(first.clip, first.lesson ?? null);
-    }
+    useAudioStore.getState().playQueueItem(queueItems[0]);
 
     addToast(`即将播放 ${queueItems.length} 项`, 'success');
   };

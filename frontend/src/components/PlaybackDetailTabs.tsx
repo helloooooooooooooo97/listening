@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlusCircle, HiPlay, HiSparkles } from 'react-icons/hi2';
+import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlay, HiSparkles } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
 import { alignDictation } from '../lib/dictationAligner';
@@ -61,8 +61,6 @@ export default function PlaybackDetailTabs({
   const audioMode = useAudioStore(s => s.mode);
   const addToast = useToastStore(s => s.addToast);
   const addToQueue = usePlaylistStore(s => s.addToQueue);
-  const addAllToQueue = usePlaylistStore(s => s.addAllToQueue);
-  const playNow = usePlaylistStore(s => s.playNow);
   const playClipsFrom = usePlaylistStore(s => s.playClipsFrom);
   const activeClipId = audioMode.kind === 'clip' ? audioMode.clip.id : null;
 
@@ -306,7 +304,7 @@ export default function PlaybackDetailTabs({
                     <button onClick={() => {
                       if (lessonClips.length === 0) return;
                       playClipsFrom(lessonClips, lesson, 0);
-                      setTimeout(() => playClip(lessonClips[0].clip, lesson), 50);
+                      setTimeout(() => playClip(lessonClips[0], lesson), 50);
                       addToast(`即将播放 ${lessonClips.length} 个片段`, 'success');
                     }}
                       className="text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer px-2 py-1 flex items-center gap-1">
@@ -633,4 +631,3 @@ function SideTabButton({
     </button>
   );
 }
-

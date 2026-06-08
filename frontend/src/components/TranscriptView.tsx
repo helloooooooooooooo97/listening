@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useLayoutEffect } from 'react';
-import { HiBookmark, HiPlay, HiCheck, HiHeart, HiMagnifyingGlass, HiSparkles } from 'react-icons/hi2';
+import { HiBookmark, HiPlay, HiCheck, HiHeart, HiSparkles } from 'react-icons/hi2';
 import type { TranscriptLine, TranscriptWord, AudioClip, LyricDisplayMode } from '../types/lesson';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';

@@ -4,7 +4,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { useThemeStore } from '../stores/themeStore';
 import { useAudioStore } from '../stores/audioStore';
 import { useAiStore } from '../stores/aiStore';
-import type { AiProvider, AiProviderId } from '../types/lesson';
+import type { AiProviderId } from '../types/lesson';
 
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2.0];
 const LOOP_COUNTS = [1, 2, 3, 5, 8, 10];

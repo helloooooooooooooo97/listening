@@ -13,7 +13,14 @@ let _currentSrc = '';
 
 let _savedRate = 1;
 export function getSavedRate() { return _savedRate; }
-export function setSavedRate(r: number) { _savedRate = r; }
+export function applyPlaybackRate(a: HTMLAudioElement = getAudio(), rate = _savedRate) {
+  _savedRate = rate;
+  if (a.defaultPlaybackRate !== rate) a.defaultPlaybackRate = rate;
+  if (a.playbackRate !== rate) a.playbackRate = rate;
+}
+export function setSavedRate(r: number) {
+  applyPlaybackRate(getAudio(), r);
+}
 
 export function switchSource(lessonId: string, onSwitch?: () => void): boolean {
   const url = `/api/lessons/${lessonId}/audio`;
@@ -22,9 +29,10 @@ export function switchSource(lessonId: string, onSwitch?: () => void): boolean {
   _currentSrc = url;
   const a = getAudio();
   a.src = url;
+  a.defaultPlaybackRate = _savedRate;
   a.load();
   // Chromium resets playbackRate to 1 on load(); restore it
-  a.playbackRate = _savedRate;
+  applyPlaybackRate(a);
   return true;
 }
 

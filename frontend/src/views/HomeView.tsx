@@ -27,7 +27,7 @@ const COLLECTION_COLORS: Record<string, string> = {
   frequent_wrong_words: '#10b981',
 };
 
-const COLLECTION_ICONS: Record<string, React.ComponentType<{size?: number}>> = {
+const COLLECTION_ICONS: Record<string, React.ComponentType<{size?: number; style?: React.CSSProperties}>> = {
   favorites: HiHeart,
   today_practice: HiClock,
   recent_dictation_errors: HiClock,

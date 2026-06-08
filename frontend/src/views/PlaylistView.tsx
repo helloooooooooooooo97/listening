@@ -1,7 +1,6 @@
 import { usePlaylistStore, queueItemLabel, queueItemSub } from '../stores/playlistStore';
 import { useAudioStore } from '../stores/audioStore';
 import { HiMusicalNote, HiTrash, HiPlay, HiQueueList, HiClock, HiBookmark, HiPencil, HiTag, HiArrowPath } from 'react-icons/hi2';
-import type { AudioClip } from '../types/lesson';
 
 const REPEAT_LABELS: Record<string, string> = {
   sequential: '顺序', 'repeat-all': '全部循环', shuffle: '随机', 'repeat-one': '单曲循环',
@@ -27,32 +26,11 @@ export default function PlaylistView() {
   const cycleRepeatMode = usePlaylistStore(s => s.cycleRepeatMode);
   const setCurrentIndex = usePlaylistStore(s => s.setCurrentIndex);
   const queueContext = usePlaylistStore(s => s.queueContext);
-  const playLesson = useAudioStore(s => s.playLesson);
-  const playClip = useAudioStore(s => s.playClip);
+  const playQueueItem = useAudioStore(s => s.playQueueItem);
 
   const handlePlay = (item: typeof queue[number], idx?: number) => {
     if (idx !== undefined) setCurrentIndex(idx);
-    if (item.kind === 'lesson') playLesson(item.lesson);
-    else if (item.kind === 'clip') playClip(item.clip, item.lesson ?? null);
-    else if (item.kind === 'sentence') {
-      const clip: AudioClip = {
-        id: `q-${item.lessonId}-s${item.sentenceIndex}`,
-        lessonId: item.lessonId, lessonTitle: item.lessonTitle,
-        startWordId: '', endWordId: '',
-        startTime: item.start, endTime: item.end,
-        text: item.text, note: '', color: '#facc15', createdAt: '',
-      };
-      playClip(clip);
-    } else if (item.kind === 'word') {
-      const clip: AudioClip = {
-        id: `q-${item.lessonId}-w${item.word}`,
-        lessonId: item.lessonId, lessonTitle: item.lessonTitle,
-        startWordId: '', endWordId: '',
-        startTime: Math.max(0, item.start - 2), endTime: item.end + 2,
-        text: item.word, note: 'word', color: '#facc15', createdAt: '',
-      };
-      playClip(clip);
-    }
+    playQueueItem(item);
   };
 
   return (

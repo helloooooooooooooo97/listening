@@ -13,11 +13,8 @@ interface Props {
 
 export default function EmbeddedDictation({ lesson }: Props) {
   const seek = useAudioStore(s => s.seek);
-  const isPlaying = useAudioStore(s => s.isPlaying);
-  const currentTime = useAudioStore(s => s.currentTime);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const active = useDictationStore(s => s.active);
   const sentenceIndex = useDictationStore(s => s.sentenceIndex);
   const userInput = useDictationStore(s => s.userInput);
   const results = useDictationStore(s => s.results);
@@ -27,7 +24,6 @@ export default function EmbeddedDictation({ lesson }: Props) {
   const submit = useDictationStore(s => s.submit);
   const nextSentence = useDictationStore(s => s.nextSentence);
   const prevSentence = useDictationStore(s => s.prevSentence);
-  const reset = useDictationStore(s => s.reset);
 
   const sentences = lesson.transcript;
   const currentSentence = sentences[sentenceIndex];

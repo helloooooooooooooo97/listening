@@ -1,26 +1,15 @@
 import { create } from 'zustand';
 import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
-import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio, setSavedRate } from '../lib/audioEngine';
+import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio, setSavedRate, applyPlaybackRate } from '../lib/audioEngine';
 import { trackPlay, flushTrack, setLessonInfoProvider } from '../lib/playTracking';
-import { usePlaylistStore } from './playlistStore';
+import { usePlaylistStore, type QueueItem } from './playlistStore';
+import { queueItemToClip } from '../lib/queueItems';
 
 export { getAudio, preloadLessonAudio };
 
 /* ── Guard: prevent double playNext() when clip-end fires multiple timeupdate events ── */
 let _clipEndHandled = false;
-
-/* ── Settings defaults ── */
-function getSettingDefault(key: string, fallback: number): number {
-  try {
-    const raw = localStorage.getItem('app-settings');
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (typeof parsed[key] === 'number') return parsed[key];
-    }
-  } catch {}
-  return fallback;
-}
 
 /* ── State ── */
 export type PlayerMode =
@@ -50,6 +39,7 @@ interface AudioState {
   jumpToPrevSentence: () => void;
   jumpToNextSentence: () => void;
   setRate: (rate: number) => void;
+  playQueueItem: (item: QueueItem) => void;
   cycleLoopMode: () => void;
   setLoopTarget: (n: number) => void;
   setContextLesson: (lesson: ListeningLesson) => void;
@@ -68,8 +58,24 @@ setLessonInfoProvider(() => {
 export const useAudioStore = create<AudioState>((set, get) => {
   const audio = getAudio();
   const initialRate = useSettingsStore.getState().settings.defaultSpeed || 1;
-  audio.playbackRate = initialRate;
-  setSavedRate(initialRate);
+  applyPlaybackRate(audio, initialRate);
+
+  const playQueueItem = (item: QueueItem) => {
+    if (item.kind === 'lesson') {
+      get().playLesson(item.lesson);
+    } else if (item.kind === 'clip') {
+      get().playClip(item.clip, item.lesson ?? null);
+    } else if (item.kind === 'sentence') {
+      get().playClip(queueItemToClip(item));
+    } else {
+      const offset = useSettingsStore.getState().settings.wordPlayOffset || 2;
+      get().playClip(queueItemToClip(item, offset));
+    }
+  };
+
+  const playQueueItemLater = (item: QueueItem, delayMs: number) => {
+    window.setTimeout(() => playQueueItem(item), delayMs);
+  };
 
   audio.addEventListener('timeupdate', () => {
     const state = get();
@@ -91,31 +97,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
           // Try to play next in queue (after clip loop is done)
           const next = usePlaylistStore.getState().playNext();
           if (next) {
-            if (next.kind === 'lesson') {
-              setTimeout(() => get().playLesson(next.lesson), 50);
-            } else if (next.kind === 'clip') {
-              setTimeout(() => get().playClip(next.clip, next.lesson ?? null), 50);
-            } else if (next.kind === 'sentence') {
-              setTimeout(() => {
-                get().playClip({
-                  id: `q-s-${next.lessonId}-${next.sentenceIndex}`,
-                  lessonId: next.lessonId, lessonTitle: next.lessonTitle,
-                  startWordId: '', endWordId: '',
-                  startTime: next.start, endTime: next.end,
-                  text: next.text, note: '', color: '#facc15', createdAt: '',
-                });
-              }, 50);
-            } else if (next.kind === 'word') {
-              setTimeout(() => {
-                get().playClip({
-                  id: `q-w-${next.lessonId}-${next.word}`,
-                  lessonId: next.lessonId, lessonTitle: next.lessonTitle,
-                  startWordId: '', endWordId: '',
-                  startTime: Math.max(0, next.start - 2), endTime: next.end + 2,
-                  text: next.word, note: 'word', color: '#facc15', createdAt: '',
-                });
-              }, 50);
-            }
+            playQueueItemLater(next, 50);
           }
         }
         return;
@@ -139,9 +121,20 @@ export const useAudioStore = create<AudioState>((set, get) => {
     }
   });
 
-  audio.addEventListener('loadedmetadata', () => set({ duration: audio.duration, isLoading: false }));
-  audio.addEventListener('canplay', () => set({ isLoading: false }));
-  audio.addEventListener('play', () => { set({ isPlaying: true }); trackPlay(); });
+  const restorePlaybackRate = () => {
+    applyPlaybackRate(audio, get().playbackRate);
+  };
+
+  audio.addEventListener('ratechange', () => {
+    if (Math.abs(audio.playbackRate - get().playbackRate) > 0.001) {
+      window.setTimeout(restorePlaybackRate, 0);
+    }
+  });
+  audio.addEventListener('loadedmetadata', () => { restorePlaybackRate(); set({ duration: audio.duration, isLoading: false }); });
+  audio.addEventListener('loadeddata', restorePlaybackRate);
+  audio.addEventListener('canplay', () => { restorePlaybackRate(); set({ isLoading: false }); });
+  audio.addEventListener('playing', restorePlaybackRate);
+  audio.addEventListener('play', () => { restorePlaybackRate(); set({ isPlaying: true }); trackPlay(); });
   audio.addEventListener('pause', () => { set({ isPlaying: false }); flushTrack(); });
   audio.addEventListener('ended', () => {
     set({ isPlaying: false }); flushTrack();
@@ -157,46 +150,14 @@ export const useAudioStore = create<AudioState>((set, get) => {
     if (mode === 'repeat-one') {
       const store = useAudioStore.getState();
       const m = store.mode;
-      if (m.kind === 'lesson') setTimeout(() => store.playLesson(m.lesson), 100);
-      else if (m.kind === 'clip') setTimeout(() => store.playClip(m.clip, m.lesson), 100);
+      if (m.kind === 'lesson') window.setTimeout(() => store.playLesson(m.lesson), 100);
+      else if (m.kind === 'clip') window.setTimeout(() => store.playClip(m.clip, m.lesson), 100);
       return;
     }
     // Auto-play next in queue
     const next = usePlaylistStore.getState().playNext();
     if (next) {
-      if (next.kind === 'lesson') {
-        setTimeout(() => useAudioStore.getState().playLesson(next.lesson), 100);
-      } else if (next.kind === 'clip') {
-        setTimeout(() => useAudioStore.getState().playClip(next.clip, next.lesson ?? null), 100);
-      } else if (next.kind === 'sentence') {
-        setTimeout(() => {
-          const store = useAudioStore.getState();
-          const clip: AudioClip = {
-            id: `queue-sent-${next.lessonId}-${next.sentenceIndex}`,
-            lessonId: next.lessonId,
-            lessonTitle: next.lessonTitle,
-            startWordId: '', endWordId: '',
-            startTime: next.start, endTime: next.end,
-            text: next.text, note: '', color: '#facc15', createdAt: '',
-          };
-          store.playClip(clip);
-        }, 100);
-      } else if (next.kind === 'word') {
-        setTimeout(() => {
-          const store = useAudioStore.getState();
-          const offset = useSettingsStore.getState().settings.wordPlayOffset || 2;
-          const clip: AudioClip = {
-            id: `queue-word-${next.lessonId}-${next.word}`,
-            lessonId: next.lessonId,
-            lessonTitle: next.lessonTitle,
-            startWordId: '', endWordId: '',
-            startTime: Math.max(0, next.start - offset),
-            endTime: next.end + offset,
-            text: next.word, note: 'word', color: '#facc15', createdAt: '',
-          };
-          store.playClip(clip);
-        }, 100);
-      }
+      playQueueItemLater(next, 100);
     }
   });
 
@@ -238,8 +199,8 @@ export const useAudioStore = create<AudioState>((set, get) => {
         if (saved && saved.position > 5) {
           a.currentTime = saved.position;
         }
+        applyPlaybackRate(a, rate);
         a.play();
-        a.playbackRate = rate;
       });
     },
 
@@ -249,7 +210,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
       if (switched) set({ isLoading: true });
       set({ mode: { kind: 'lesson', lesson }, loopCount: 0 });
       waitForReady(getAudio(), () => {
-        getAudio().playbackRate = rate;
+        applyPlaybackRate(getAudio(), rate);
       });
     },
 
@@ -263,8 +224,8 @@ export const useAudioStore = create<AudioState>((set, get) => {
       waitForReady(getAudio(), () => {
         const a = getAudio();
         a.currentTime = clip.startTime;
+        applyPlaybackRate(a, rate);
         a.play();
-        a.playbackRate = rate;
       });
     },
 
@@ -275,7 +236,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
       set({ mode: { kind: 'clip', clip, lesson: contextLesson ?? null }, loopCount: 0, loopMode: 'clip' });
       waitForReady(getAudio(), () => {
         const a = getAudio();
-        a.playbackRate = rate;
+        applyPlaybackRate(a, rate);
         a.currentTime = clip.startTime;
       });
     },
@@ -288,7 +249,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
           a.currentTime = mode.clip.startTime;
           set({ loopCount: 0 });
         }
-        a.playbackRate = playbackRate;
+        applyPlaybackRate(a, playbackRate);
         a.play();
       } else {
         a.pause();
@@ -337,11 +298,13 @@ export const useAudioStore = create<AudioState>((set, get) => {
 
     setRate: (rate) => {
       const a = getAudio();
-      a.playbackRate = rate;
-      setSavedRate(rate);
       set({ playbackRate: rate });
+      setSavedRate(rate);
+      applyPlaybackRate(a, rate);
       useSettingsStore.getState().setDefaultSpeed(rate);
     },
+
+    playQueueItem,
 
     cycleLoopMode: () => {
       const current = get().loopMode;

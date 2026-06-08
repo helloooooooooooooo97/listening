@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { HiXMark, HiMusicalNote, HiBookmark, HiClock, HiTag, HiTrash, HiPlay, HiArrowPath, HiQueueList } from 'react-icons/hi2';
+import { HiXMark, HiMusicalNote, HiBookmark, HiClock, HiTag, HiTrash, HiArrowPath, HiQueueList } from 'react-icons/hi2';
 import { usePlaylistStore, queueItemLabel, queueItemSub, type QueueItem } from '../stores/playlistStore';
 import { useAudioStore } from '../stores/audioStore';
-import type { AudioClip } from '../types/lesson';
 
 interface Props {
   open: boolean;
@@ -32,8 +31,7 @@ export default function QueuePanel({ open, onClose }: Props) {
   const clearQueue = usePlaylistStore(s => s.clearQueue);
   const setCurrentIndex = usePlaylistStore(s => s.setCurrentIndex);
   const cycleRepeatMode = usePlaylistStore(s => s.cycleRepeatMode);
-  const playLesson = useAudioStore(s => s.playLesson);
-  const playClip = useAudioStore(s => s.playClip);
+  const playQueueItem = useAudioStore(s => s.playQueueItem);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Close on Escape
@@ -58,27 +56,7 @@ export default function QueuePanel({ open, onClose }: Props) {
 
   const handlePlay = (item: QueueItem, idx?: number) => {
     if (idx !== undefined) setCurrentIndex(idx);
-    if (item.kind === 'lesson') playLesson(item.lesson);
-    else if (item.kind === 'clip') playClip(item.clip, item.lesson ?? null);
-    else if (item.kind === 'sentence') {
-      const clip: AudioClip = {
-        id: `q-${item.lessonId}-s${item.sentenceIndex}`,
-        lessonId: item.lessonId, lessonTitle: item.lessonTitle,
-        startWordId: '', endWordId: '',
-        startTime: item.start, endTime: item.end,
-        text: item.text, note: '', color: '#facc15', createdAt: '',
-      };
-      playClip(clip);
-    } else if (item.kind === 'word') {
-      const clip: AudioClip = {
-        id: `q-${item.lessonId}-w${item.word}`,
-        lessonId: item.lessonId, lessonTitle: item.lessonTitle,
-        startWordId: '', endWordId: '',
-        startTime: Math.max(0, item.start - 2), endTime: item.end + 2,
-        text: item.word, note: 'word', color: '#facc15', createdAt: '',
-      };
-      playClip(clip);
-    }
+    playQueueItem(item);
   };
 
   return (

@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiPencil, HiTag, HiPlusCircle, HiChevronRight, HiQueueList, HiChevronLeft, HiSpeakerWave } from 'react-icons/hi2';
+import { HiPlay, HiPause, HiBackward, HiForward, HiBookmark, HiMusicalNote, HiArrowPath, HiChevronDown, HiPencil, HiTag, HiChevronRight, HiQueueList, HiSpeakerWave } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { findSentenceIndex } from '../lib/audioEngine';
 import { useDictationStore } from '../stores/dictationStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
-import { useClipsStore } from '../stores/clipsStore';
 import { useToastStore } from '../stores/toastStore';
 import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
@@ -13,8 +12,6 @@ import Waveform from './Waveform';
 import HeartButton from './HeartButton';
 import EmbeddedDictation from './dictation/EmbeddedDictation';
 import PlaybackDetailTabs from './PlaybackDetailTabs';
-
-function fmt(t: number) { const m=Math.floor(t/60); return `${m}:${Math.floor(t%60).toString().padStart(2,'0')}`; }
 
 interface Props {
   onQueueToggle?: () => void;
@@ -43,11 +40,10 @@ export default function PlayerBar({ onQueueToggle }: Props) {
   const loopT = useAudioStore(s=>s.loopTarget);
   const toggle = useAudioStore(s=>s.togglePlay);
   const seek = useAudioStore(s=>s.seek);
-  const prevS = useAudioStore(s=>s.jumpToPrevSentence);
-  const nextS = useAudioStore(s=>s.jumpToNextSentence);
   const setRate = useAudioStore(s=>s.setRate);
   const cycleLoop = useAudioStore(s=>s.cycleLoopMode);
   const setLoopT = useAudioStore(s=>s.setLoopTarget);
+  const playQueueItem = useAudioStore(s=>s.playQueueItem);
   const playPrev = usePlaylistStore(s=>s.playPrev);
   const playNext = usePlaylistStore(s=>s.playNext);
   const queueLen = usePlaylistStore(s => s.queue.length);
@@ -58,8 +54,6 @@ export default function PlayerBar({ onQueueToggle }: Props) {
   const isWord = isC && mode.clip.note === 'word';
   const title = hasContent ? (isL ? mode.lesson.title : isWord ? mode.clip.text : `"${mode.clip.text}"`) : '未在播放';
   const sub = hasContent ? (isL ? mode.lesson.subtitle : mode.clip.lessonTitle) : '选择音频开始练习';
-  const dTime = cur;
-  const dDur = dur;
   const li = LOOP[loop];
   const dictation = useDictationStore();
   const isDictating = dictation.active;
@@ -70,49 +64,13 @@ export default function PlayerBar({ onQueueToggle }: Props) {
   const handlePlayPrev = () => {
     const prev = playPrev();
     if (!prev) return;
-    const store = useAudioStore.getState();
-    if (prev.kind === 'lesson') store.playLesson(prev.lesson);
-    else if (prev.kind === 'clip') store.playClip(prev.clip, prev.lesson ?? null);
-    else if (prev.kind === 'sentence') {
-      const clip: import('../types/lesson').AudioClip = {
-        id: `q-${prev.lessonId}-s${prev.sentenceIndex}`, lessonId: prev.lessonId,
-        lessonTitle: prev.lessonTitle, startWordId: '', endWordId: '',
-        startTime: prev.start, endTime: prev.end, text: prev.text, note: '', color: '#facc15', createdAt: '',
-      };
-      store.playClip(clip);
-    } else if (prev.kind === 'word') {
-      const o = 2;
-      const clip: import('../types/lesson').AudioClip = {
-        id: `q-${prev.lessonId}-w${prev.word}`, lessonId: prev.lessonId,
-        lessonTitle: prev.lessonTitle, startWordId: '', endWordId: '',
-        startTime: Math.max(0, prev.start - o), endTime: prev.end + o, text: prev.word, note: 'word', color: '#facc15', createdAt: '',
-      };
-      store.playClip(clip);
-    }
+    playQueueItem(prev);
   };
 
   const handlePlayNext = () => {
     const next = playNext();
     if (!next) return;
-    const store = useAudioStore.getState();
-    if (next.kind === 'lesson') store.playLesson(next.lesson);
-    else if (next.kind === 'clip') store.playClip(next.clip, next.lesson ?? null);
-    else if (next.kind === 'sentence') {
-      const clip: import('../types/lesson').AudioClip = {
-        id: `q-${next.lessonId}-s${next.sentenceIndex}`, lessonId: next.lessonId,
-        lessonTitle: next.lessonTitle, startWordId: '', endWordId: '',
-        startTime: next.start, endTime: next.end, text: next.text, note: '', color: '#facc15', createdAt: '',
-      };
-      store.playClip(clip);
-    } else if (next.kind === 'word') {
-      const o = 2;
-      const clip: import('../types/lesson').AudioClip = {
-        id: `q-${next.lessonId}-w${next.word}`, lessonId: next.lessonId,
-        lessonTitle: next.lessonTitle, startWordId: '', endWordId: '',
-        startTime: Math.max(0, next.start - o), endTime: next.end + o, text: next.word, note: 'word', color: '#facc15', createdAt: '',
-      };
-      store.playClip(clip);
-    }
+    playQueueItem(next);
   };
 
   const favId = isL ? mode.lesson.id : isC ? mode.clip.id : '';
@@ -158,7 +116,11 @@ export default function PlayerBar({ onQueueToggle }: Props) {
             </div>
             {/* Quick actions */}
             <div className="flex items-center gap-1 flex-shrink-0">
-              <button onClick={e=>{e.stopPropagation();isDictating ? dictation.reset() : dictation.startFrom(Math.max(0, findSentenceIndex(mode.lesson, cur)));}}
+              <button onClick={e=>{
+                e.stopPropagation();
+                if (isDictating) dictation.reset();
+                else dictation.startFrom(Math.max(0, findSentenceIndex(lesson, cur)));
+              }}
                 className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors cursor-pointer ${isDictating ? 'text-[var(--accent)] bg-[var(--accent-soft)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'}`}
                 title={isDictating ? '退出听写' : '听写模式'}>
                 <HiPencil size={13} />

@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { HiMusicalNote, HiMagnifyingGlass, HiHeart, HiCloudArrowUp, HiCheck, HiXMark, HiArrowPath } from 'react-icons/hi2';
+import { HiMusicalNote, HiMagnifyingGlass, HiHeart, HiCloudArrowUp, HiXMark, HiArrowPath } from 'react-icons/hi2';
 import type { LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';

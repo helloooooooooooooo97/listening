@@ -1,4 +1,4 @@
-import { HiHome, HiBookOpen, HiBookmark, HiHeart, HiQueueList, HiCog6Tooth, HiChartBar, HiFolderOpen } from 'react-icons/hi2';
+import { HiHome, HiBookOpen, HiBookmark, HiHeart, HiCog6Tooth, HiChartBar, HiFolderOpen } from 'react-icons/hi2';
 import type { NavSection } from './Sidebar';
 
 interface Props {

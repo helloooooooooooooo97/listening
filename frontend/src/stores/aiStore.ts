@@ -126,11 +126,6 @@ async function callAnthropic(text: string, apiKey: string, _apiBase: string, mod
 
 export type TranslateStatus = 'idle' | 'loading' | 'success' | 'error';
 
-interface TranslationState {
-  // Per-sentence translation statuses
-  translations: Map<number, { status: TranslateStatus; result?: string }>;
-}
-
 interface AiState {
   providers: AiProvider[];
   loaded: boolean;
