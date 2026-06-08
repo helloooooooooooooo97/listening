@@ -50,7 +50,9 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
   const [translatingIdx, setTranslatingIdx] = useState<number | null>(null);
   const [translations, setTranslations] = useState<Map<number, string>>(new Map());
   const [translationErrors, setTranslationErrors] = useState<Set<number>>(new Set());
+  const [wordCard, setWordCard] = useState<{ word: string; analysis: import('../types/lesson').WordAnalysis | null; loading: boolean; error: boolean } | null>(null);
   const translate = useAiStore(s => s.translate);
+  const lookupWord = useAiStore(s => s.lookupWord);
   const hasProvider = useAiStore(s => s.providers.length > 0);
   const defaultLoopCount = useSettingsStore(s => s.settings.defaultLoopCount);
   const isFav = useFavoritesStore(s => s.isFav);
@@ -493,12 +495,88 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
             {isFav(ctxMenu.word.text.toLowerCase(), 'word') ? '取消收藏' : '收藏单词'}
           </button>
           <button onClick={() => {
-            window.open(`https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(ctxMenu.word.text.toLowerCase())}`, '_blank');
+            const w = ctxMenu.word.text.toLowerCase();
+            setWordCard({ word: w, analysis: null, loading: true, error: false });
             closeContextMenu();
+            lookupWord(w)
+              .then(analysis => setWordCard({ word: w, analysis, loading: false, error: false }))
+              .catch(() => setWordCard({ word: w, analysis: null, loading: false, error: true }));
           }} className="w-full text-left px-4 py-2.5 text-xs text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-center gap-2">
-            <HiMagnifyingGlass size={12} className="text-tertiary"/> 查词典
+            <HiSparkles size={12} className="text-tertiary"/> AI 解析
           </button>
         </div>
+      )}
+
+      {/* Word Analysis Card */}
+      {wordCard && (
+        <>
+          <div className="fixed inset-0 z-[99] bg-black/20" onClick={() => setWordCard(null)} />
+          <div className="fixed z-[100] animate-fade-in"
+          style={{
+            left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)',
+            maxWidth: '420px', width: '90vw',
+          }}>
+          <div className="rounded-xl shadow-2xl border border-[var(--border-primary)] overflow-hidden"
+            style={{ background: 'var(--bg-secondary)', backdropFilter: 'blur(20px)' }}>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-secondary)]">
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-bold text-primary">{wordCard.word}</span>
+                {wordCard.analysis?.pronunciation && (
+                  <span className="text-xs font-mono text-tertiary">{wordCard.analysis.pronunciation}</span>
+                )}
+              </div>
+              <button onClick={() => setWordCard(null)}
+                className="text-tertiary hover:text-secondary transition-colors cursor-pointer text-lg leading-none">&times;</button>
+            </div>
+            <div className="px-4 py-3 max-h-[50vh] overflow-y-auto">
+              {wordCard.loading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="w-5 h-5 border-2 border-white/10 border-t-[var(--accent)] rounded-full animate-spin" />
+                </div>
+              ) : wordCard.error ? (
+                <p className="text-xs text-red-400 text-center py-4">解析失败，请重试</p>
+              ) : wordCard.analysis ? (
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-[11px] font-medium text-[var(--accent)] bg-[var(--accent)]/10 px-2 py-0.5 rounded">
+                      {wordCard.analysis.partOfSpeech}
+                    </span>
+                    <p className="text-sm text-primary mt-1.5 leading-relaxed">{wordCard.analysis.definition}</p>
+                  </div>
+                  {wordCard.analysis.examples.length > 0 && (
+                    <div>
+                      <p className="text-[11px] text-tertiary font-medium mb-1">例句</p>
+                      {wordCard.analysis.examples.map((ex, i) => (
+                        <div key={i} className="mb-1.5 last:mb-0">
+                          <p className="text-sm text-secondary">{ex.en}</p>
+                          <p className="text-xs text-tertiary">{ex.zh}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {wordCard.analysis.synonyms && wordCard.analysis.synonyms.length > 0 && (
+                    <div>
+                      <p className="text-[11px] text-tertiary font-medium mb-1">同义词</p>
+                      <div className="flex flex-wrap gap-1">
+                        {wordCard.analysis.synonyms.map((s, i) => (
+                          <span key={i} className="text-xs px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-secondary">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {wordCard.analysis.usage && (
+                    <div className="pt-1">
+                      <p className="text-[11px] text-tertiary font-medium mb-0.5">用法</p>
+                      <p className="text-xs text-tertiary leading-relaxed">{wordCard.analysis.usage}</p>
+                    </div>
+                  )}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+        </>
       )}
     </div>
   );

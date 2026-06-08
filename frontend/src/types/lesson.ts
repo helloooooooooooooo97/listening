@@ -105,3 +105,20 @@ export interface AiProvider {
 }
 
 export type LyricDisplayMode = 'english-only' | 'bilingual' | 'chinese-only' | 'hover-reveal';
+
+// ── AI Word Analysis ──
+
+export interface WordExample {
+  en: string;
+  zh: string;
+}
+
+export interface WordAnalysis {
+  word: string;
+  pronunciation: string;
+  partOfSpeech: string;
+  definition: string;
+  examples: WordExample[];
+  synonyms?: string[];
+  usage?: string;
+}

@@ -5,7 +5,8 @@ import type { AiProvider, AiProviderId } from '../types/lesson';
 
 const STORAGE_KEY = 'ai-providers';
 const CACHE_KEY = 'app-translation-cache';
-const CACHE_MAX = 200;
+const WORD_CACHE_KEY = 'app-word-cache';
+const CACHE_MAX = 10000;
 
 /* ── Provider presets ── */
 
@@ -118,6 +119,34 @@ function cacheSet(text: string, result: string) {
   saveCacheToStorage();
 }
 
+/* ── Word analysis cache (localStorage only) ── */
+
+function wordCacheGet(word: string): import('../types/lesson').WordAnalysis | null {
+  try {
+    const raw = localStorage.getItem(WORD_CACHE_KEY);
+    if (!raw) return null;
+    const cache = JSON.parse(raw) as Record<string, { data: import('../types/lesson').WordAnalysis; timestamp: number }>;
+    const entry = cache[word.toLowerCase()];
+    if (!entry) return null;
+    if (Date.now() - entry.timestamp > 30 * 24 * 60 * 60 * 1000) return null;
+    return entry.data;
+  } catch { return null; }
+}
+
+function wordCacheSet(word: string, analysis: import('../types/lesson').WordAnalysis) {
+  try {
+    const raw = localStorage.getItem(WORD_CACHE_KEY);
+    const cache = raw ? JSON.parse(raw) : {};
+    cache[word.toLowerCase()] = { data: analysis, timestamp: Date.now() };
+    const keys = Object.keys(cache);
+    if (keys.length > 10000) {
+      const sorted = keys.sort((a, b) => cache[b].timestamp - cache[a].timestamp);
+      for (let i = 200; i < sorted.length; i++) delete cache[sorted[i]];
+    }
+    localStorage.setItem(WORD_CACHE_KEY, JSON.stringify(cache));
+  } catch {}
+}
+
 /* ── AI API calls ── */
 
 async function callOpenAICompat(text: string, apiKey: string, apiBase: string, model: string): Promise<string> {
@@ -180,6 +209,7 @@ interface AiState {
   getDefaultProvider: () => AiProvider | null;
 
   translate: (text: string) => Promise<string>;
+  lookupWord: (word: string) => Promise<import('../types/lesson').WordAnalysis>;
   testConnection: (provider: AiProvider) => Promise<boolean>;
 }
 
@@ -249,6 +279,50 @@ export const useAiStore = create<AiState>((set, get) => ({
 
     cacheSet(text, result);
     return result;
+  },
+
+  lookupWord: async (word: string) => {
+    // Check cache
+    const cached = wordCacheGet(word);
+    if (cached) return cached;
+
+    const provider = get().getDefaultProvider();
+    if (!provider) throw new Error('未配置 AI Token');
+    if (!provider.apiKey) throw new Error('API Key 未配置');
+
+    const systemPrompt = `你是一个英语学习助手。分析以下英文单词，返回严格的 JSON 格式，不要包含 markdown 代码块标记：
+
+{
+  "word": "单词",
+  "pronunciation": "音标 (IPA)",
+  "partOfSpeech": "词性 (verb/noun/adj/adv 等)",
+  "definition": "中文释义",
+  "examples": [
+    { "en": "英文例句", "zh": "中文翻译" }
+  ],
+  "synonyms": ["同义词1", "同义词2"],
+  "usage": "用法说明（可选）"
+}`;
+
+    const response = await fetch(`${provider.apiBase.replace(/\/+$/, '')}/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${provider.apiKey}` },
+      body: JSON.stringify({
+        model: provider.model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: word },
+        ],
+        temperature: 0.3,
+        max_tokens: 512,
+      }),
+    });
+    if (!response.ok) throw new Error(`API error: ${response.status}`);
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content?.trim() || '';
+    const analysis = JSON.parse(text) as import('../types/lesson').WordAnalysis;
+    wordCacheSet(word, analysis);
+    return analysis;
   },
 
   testConnection: async (provider: AiProvider): Promise<boolean> => {
