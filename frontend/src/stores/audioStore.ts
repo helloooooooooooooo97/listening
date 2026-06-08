@@ -234,12 +234,12 @@ export const useAudioStore = create<AudioState>((set, get) => {
       }
       waitForReady(getAudio(), () => {
         const a = getAudio();
-        a.playbackRate = rate;
         const saved = useSettingsStore.getState().getPosition(lesson.id);
         if (saved && saved.position > 5) {
           a.currentTime = saved.position;
         }
         a.play();
+        a.playbackRate = rate;
       });
     },
 
@@ -262,9 +262,9 @@ export const useAudioStore = create<AudioState>((set, get) => {
       _clipEndHandled = false;
       waitForReady(getAudio(), () => {
         const a = getAudio();
-        a.playbackRate = rate;
         a.currentTime = clip.startTime;
         a.play();
+        a.playbackRate = rate;
       });
     },
 
