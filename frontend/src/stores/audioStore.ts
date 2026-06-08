@@ -67,7 +67,7 @@ setLessonInfoProvider(() => {
 
 export const useAudioStore = create<AudioState>((set, get) => {
   const audio = getAudio();
-  const initialRate = getSettingDefault('defaultSpeed', 1);
+  const initialRate = useSettingsStore.getState().settings.defaultSpeed || 1;
   audio.playbackRate = initialRate;
 
   audio.addEventListener('timeupdate', () => {
@@ -216,7 +216,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
     isLoading: false,
     playbackRate: initialRate,
     loopMode: 'all',
-    loopTarget: getSettingDefault('defaultLoopCount', 3),
+    loopTarget: useSettingsStore.getState().settings.defaultLoopCount || 3,
     loopCount: 0,
     currentSentenceIndex: -1,
 
@@ -338,13 +338,8 @@ export const useAudioStore = create<AudioState>((set, get) => {
       const a = getAudio();
       a.playbackRate = rate;
       set({ playbackRate: rate });
-      // Persist preference
-      try {
-        const raw = localStorage.getItem('app-settings');
-        const s = raw ? JSON.parse(raw) : {};
-        s.defaultSpeed = rate;
-        localStorage.setItem('app-settings', JSON.stringify(s));
-      } catch {}
+      // Persist via settingsStore (auto-synced by zustand persist)
+      useSettingsStore.getState().setDefaultSpeed(rate);
     },
 
     cycleLoopMode: () => {
