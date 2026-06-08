@@ -62,3 +62,14 @@ models/
 # Logs
 *.log
 backend/data/*.db*
+
+# Build artifacts
+backend/dist/
+backend/build/
+backend/*.spec
+frontend/src-tauri/target/
+
+# Desktop app
+*.app
+*.dmg
+.cargo/

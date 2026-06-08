@@ -2,15 +2,20 @@
 
 import type { AudioClip, LessonSummary, ListeningLesson, CollectionSummary, CollectionItem, CollectionDetail } from '../types/lesson';
 
+// ── API Base URL (absolute URL for Tauri desktop mode) ──
+const API_BASE = 'http://127.0.0.1:8000';
+
 // ── Helpers ──
 
 async function get<T>(url: string): Promise<T> {
+  url = API_BASE + url;
   const r = await fetch(url);
   if (!r.ok) throw new Error(await r.text().catch(() => r.statusText));
   return r.json();
 }
 
 async function post<T>(url: string, body: unknown): Promise<T> {
+  url = API_BASE + url;
   const r = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -21,6 +26,7 @@ async function post<T>(url: string, body: unknown): Promise<T> {
 }
 
 async function del(url: string): Promise<void> {
+  url = API_BASE + url;
   const r = await fetch(url, { method: 'DELETE' });
   if (!r.ok) throw new Error(await r.text().catch(() => r.statusText));
 }
