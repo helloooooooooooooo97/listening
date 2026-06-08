@@ -10,6 +10,7 @@ interface AppSettings {
   defaultLoopCount: number; // default clip/word/sentence loop count (1 - 10)
   dailyGoalMinutes: number; // daily learning goal in minutes (0 = off)
   lyricDisplayMode: LyricDisplayMode;
+  translationEnabled: boolean;
 }
 
 const DEFAULTS: AppSettings = {
@@ -18,6 +19,7 @@ const DEFAULTS: AppSettings = {
   defaultLoopCount: 3,
   dailyGoalMinutes: 0,
   lyricDisplayMode: 'bilingual',
+  translationEnabled: true,
 };
 
 function loadSettings(): AppSettings {
@@ -60,6 +62,7 @@ interface SettingsState {
   setDefaultLoopCount: (count: number) => void;
   setDailyGoalMinutes: (minutes: number) => void;
   setLyricDisplayMode: (mode: LyricDisplayMode) => void;
+  setTranslationEnabled: (enabled: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
@@ -124,6 +127,14 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   setLyricDisplayMode: (mode) => {
     set((s) => {
       const updated = { ...s.settings, lyricDisplayMode: mode };
+      saveSettings(updated);
+      return { settings: updated };
+    });
+  },
+
+  setTranslationEnabled: (enabled) => {
+    set((s) => {
+      const updated = { ...s.settings, translationEnabled: enabled };
       saveSettings(updated);
       return { settings: updated };
     });

@@ -336,16 +336,25 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
           return (
             <div key={line.id} ref={isActive?activeLineRef:null}
               data-sentence-idx={lineIdx}
-              className={`transcript-line ${isActive?'active':''} ${focusedSentence===lineIdx?'ring-1 ring-[var(--accent)]/30 rounded-lg':''} group flex items-start gap-4 px-4 py-2.5`}
+              className={`transcript-line ${isActive?'active':''} ${focusedSentence===lineIdx?'ring-1 ring-[var(--accent)]/30 rounded-lg':''} group flex items-start gap-3 px-4 py-2.5`}
               onClick={()=>onSeek(line.start)}>
               {/* Line number + timestamp */}
-              <div className="flex-shrink-0 flex items-center gap-2 pt-0.5 text-sm font-mono text-tertiary select-none">
-                <span className="w-5 text-right text-tertiary">{lineIdx + 1}</span>
-                <span className="w-12 text-left text-tertiary">{Math.floor(line.start/60)}:{Math.floor(line.start%60).toString().padStart(2,'0')}</span>
+              <div className="flex-shrink-0 flex items-start gap-3 pt-1 select-none">
+                <span className={`min-w-[1.5rem] text-center text-xs font-mono font-semibold leading-5 rounded-md transition-colors ${
+                  isActive
+                    ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
+                    : 'text-tertiary/50 group-hover:text-tertiary'
+                }`}>
+                  {lineIdx + 1}
+                </span>
+                <span className="text-[10px] font-mono tabular-nums text-tertiary/40 pt-[2px] whitespace-nowrap">
+                  {Math.floor(line.start/60)}:{Math.floor(line.start%60).toString().padStart(2,'0')}
+                </span>
+                <div className="w-px h-4 bg-[var(--border-secondary)] self-center" />
               </div>
               {/* Words */}
-              <div className={`flex-1 min-w-0 ${lyricDisplayMode === 'chinese-only' ? 'opacity-20' : ''} ${lyricDisplayMode === 'hover-reveal' ? 'opacity-0 group-hover:opacity-100 transition-opacity duration-200' : ''}`}>
-                <p className={`text-base leading-relaxed select-none ${lyricDisplayMode === 'chinese-only' ? 'text-tertiary' : 'text-secondary'}`}>
+              <div className={`flex-1 min-w-0 ${lyricDisplayMode === 'hover-reveal' ? 'opacity-0 group-hover:opacity-100 transition-opacity duration-200' : ''}`}>
+                <p className={`text-base leading-relaxed select-none transition-all ${lyricDisplayMode === 'chinese-only' ? 'hidden' : ''}`}>
                 {showDictation && dictationWordResults?.[lineIdx] ? (
                   <span className="inline-flex flex-wrap gap-1 align-baseline"><WordBadges results={dictationWordResults[lineIdx]!} /></span>
                 ) : lineWords.length>0
@@ -422,16 +431,13 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                     </p>
                   )}
 
-                  {/* AI translation result */}
-                  {lyricDisplayMode !== 'english-only' && translations.has(lineIdx) && (
-                    <p className="text-xs text-[var(--accent)]/80 mt-1">{translations.get(lineIdx)}</p>
-                  )}
-
                   {/* Auto-translate when toggle is on */}
                   {translationEnabled && lyricDisplayMode !== 'english-only' && !line.note && (
                     <>
                       {translations.has(lineIdx) ? (
-                        <p className="text-xs text-[var(--accent)]/80 mt-1">{translations.get(lineIdx)}</p>
+                        <p className={`text-xs mt-1 ${lyricDisplayMode === 'chinese-only' ? 'text-primary font-medium' : 'text-tertiary italic'}`}>
+                          {translations.get(lineIdx)}
+                        </p>
                       ) : translatingIdx === lineIdx ? (
                         <span className="text-[10px] text-tertiary block mt-1">翻译中...</span>
                       ) : translationErrors.has(lineIdx) ? (

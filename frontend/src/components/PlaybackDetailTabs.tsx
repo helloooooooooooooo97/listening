@@ -42,8 +42,9 @@ export default function PlaybackDetailTabs({
   const [editingClipId, setEditingClipId] = useState<string | null>(null);
   const [editNote, setEditNote] = useState('');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
-  const [translationEnabled, setTranslationEnabled] = useState(false);
   const lyricDisplayMode = useSettingsStore(s => s.settings.lyricDisplayMode);
+  const translationEnabled = useSettingsStore(s => s.settings.translationEnabled);
+  const setTranslationEnabled = useSettingsStore(s => s.setTranslationEnabled);
   const clips = useClipsStore(s => s.clips);
   const removeClip = useClipsStore(s => s.removeClip);
   const updateClip = useClipsStore(s => s.updateClip);
@@ -136,6 +137,15 @@ export default function PlaybackDetailTabs({
       <section className="min-w-0">
         {/* Lyric display mode toggle */}
         <div className="flex items-center gap-0.5 px-1 py-1.5 mb-1 border-b border-[var(--border-secondary)]">
+          <button onClick={() => setTranslationEnabled(!translationEnabled)}
+            className={`text-[11px] px-2 py-1 rounded-md transition-colors cursor-pointer flex items-center gap-1 ${
+              translationEnabled ? 'bg-[var(--accent)]/15 text-[var(--accent)] font-medium' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+            }`}
+            title="AI 翻译">
+            <HiSparkles size={11} />
+            <span>译</span>
+          </button>
+          <span className="w-px h-4 bg-[var(--border-secondary)] mx-1" />
           {([
             { mode: 'bilingual' as const, label: '中英', tip: '中英对照' },
             { mode: 'english-only' as const, label: '仅英文', tip: '仅显示英文' },
@@ -193,13 +203,6 @@ export default function PlaybackDetailTabs({
           <div className="rounded-xl border border-[var(--border-secondary)] overflow-hidden bg-[var(--bg-primary)]">
             <div className="flex border-b border-[var(--border-secondary)] p-1">
               <SideTabButton active={sideTab === 'clips'} icon={<HiBookmark size={13} />} label="片段" count={lessonClips.length} onClick={() => setSideTab('clips')} />
-              <button onClick={() => setTranslationEnabled(!translationEnabled)}
-                className={`flex-1 min-w-0 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
-                  translationEnabled ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
-                }`}>
-                <HiSparkles size={13} />
-                <span>译</span>
-              </button>
               <SideTabButton active={sideTab === 'dictation'} icon={<HiPencil size={13} />} label="听写" count={dictationRecords.length} onClick={() => setSideTab('dictation')} />
               <SideTabButton active={sideTab === 'favorites'} icon={<HiHeart size={13} />} label="收藏" count={lessonFavs.length} onClick={() => setSideTab('favorites')} />
               <button onClick={() => setCollapsed(true)}

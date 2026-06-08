@@ -75,18 +75,14 @@ export default function EmbeddedDictation({ lesson }: Props) {
       {/* Phase */}
       {phase === 'typing' && (
         <div className="w-full max-w-lg flex flex-col items-center gap-6">
-          {/* Play row: prev | current/total | play | current/total | next */}
+          {/* Play row: prev | current/total | next */}
           <div className="w-full flex items-center justify-center gap-4">
             <button onClick={prevSentence} disabled={sentenceIndex <= 0}
               className="w-10 h-10 rounded-full flex items-center justify-center text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer disabled:opacity-30">
               <HiChevronLeft size={20} />
             </button>
             <span className="text-lg font-bold text-secondary font-mono min-w-[2ch] text-right tabular-nums">{sentenceIndex + 1}</span>
-            <button onClick={handlePlaySentence}
-              className="flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--bg-tertiary)] hover:bg-[var(--bg-active)] transition-colors cursor-pointer text-secondary text-base font-semibold">
-              <HiChevronRight size={18} className="text-[var(--accent)]" /> 播放
-            </button>
-            <span className="text-lg font-bold text-secondary font-mono min-w-[2ch] tabular-nums">{sentences.length}</span>
+            <span className="text-sm text-tertiary">/ {sentences.length}</span>
             <button onClick={nextSentence} disabled={sentenceIndex >= sentences.length - 1}
               className="w-10 h-10 rounded-full flex items-center justify-center text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer disabled:opacity-30">
               <HiChevronRight size={20} />

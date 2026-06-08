@@ -24,6 +24,7 @@ export default function TypingPhase({ inputRef, userInput, onInputChange, onSubm
           onChange={e => onInputChange(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') onSubmit(); }}
           placeholder="输入你听到的内容..."
+          size={Math.max(24, userInput.length + 2)}
           className="w-full px-6 py-4 text-2xl text-center bg-transparent border-2 border-[var(--border-primary)] rounded-2xl text-primary placeholder:text-tertiary focus:outline-none focus:border-[#fa2d48]/50 focus:ring-2 focus:ring-[#fa2d48]/10 transition-all"
           autoComplete="off"
           spellCheck={false}

@@ -4,6 +4,7 @@ import type { AiProvider, AiProviderId } from '../types/lesson';
 /* ── Storage ── */
 
 const STORAGE_KEY = 'ai-providers';
+const CACHE_KEY = 'app-translation-cache';
 const CACHE_MAX = 200;
 
 /* ── Provider presets ── */
@@ -54,13 +55,49 @@ function persist(providers: AiProvider[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
 }
 
-/* ── Translation cache (in-memory, session-scoped) ── */
+/* ── Translation cache (memory + localStorage) ── */
 
 interface CacheEntry {
   result: string;
   timestamp: number;
 }
 const translationCache = new Map<string, CacheEntry>();
+
+function loadCacheFromStorage() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw) as Record<string, CacheEntry>;
+    const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    for (const [text, entry] of Object.entries(data)) {
+      if (entry.timestamp > cutoff) {
+        translationCache.set(text, entry);
+      }
+    }
+  } catch {}
+}
+
+function saveCacheToStorage() {
+  try {
+    const obj: Record<string, CacheEntry> = {};
+    for (const [text, entry] of translationCache) {
+      obj[text] = entry;
+    }
+    localStorage.setItem(CACHE_KEY, JSON.stringify(obj));
+  } catch {
+    try {
+      localStorage.removeItem(CACHE_KEY);
+      const recent = [...translationCache.entries()]
+        .sort((a, b) => b[1].timestamp - a[1].timestamp)
+        .slice(0, 50);
+      const obj: Record<string, CacheEntry> = {};
+      for (const [text, entry] of recent) { obj[text] = entry; }
+      localStorage.setItem(CACHE_KEY, JSON.stringify(obj));
+    } catch {}
+  }
+}
+
+loadCacheFromStorage();
 
 function cacheGet(text: string): string | null {
   const entry = translationCache.get(text);
@@ -70,7 +107,6 @@ function cacheGet(text: string): string | null {
 
 function cacheSet(text: string, result: string) {
   if (translationCache.size >= CACHE_MAX) {
-    // Evict oldest entry
     let oldestKey = '';
     let oldestTime = Infinity;
     for (const [k, v] of translationCache) {
@@ -79,6 +115,7 @@ function cacheSet(text: string, result: string) {
     if (oldestKey) translationCache.delete(oldestKey);
   }
   translationCache.set(text, { result, timestamp: Date.now() });
+  saveCacheToStorage();
 }
 
 /* ── AI API calls ── */
