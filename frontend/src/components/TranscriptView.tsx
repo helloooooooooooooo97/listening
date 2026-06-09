@@ -253,11 +253,11 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
     }
   };
 
-  // Auto-translate sentences without notes when translation toggle is on
+  // Auto-translate sentences — checks backend cache first, falls back to AI if configured
   useEffect(() => {
-    if (!translationEnabled || !hasProvider) return;
+    if (!translationEnabled) return;
     for (let i = 0; i < lines.length; i++) {
-      if (!lines[i].note && !translations.has(i)) {
+      if (!lines[i].note && !translations.has(i) && !translationErrors.has(i)) {
         handleTranslate(i, lines[i].text || words.filter(w => w.start >= lines[i].start - 0.05 && w.end <= lines[i].end + 0.05).map(w => w.text).join(' '));
       }
     }
@@ -438,7 +438,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                       ) : translatingIdx === lineIdx ? (
                         <span className="text-[10px] text-tertiary block mt-1">翻译中...</span>
                       ) : translationErrors.has(lineIdx) ? (
-                        <span className="text-[10px] text-red-400/60 block mt-1">翻译失败</span>
+                        <span className="text-[10px] text-red-400/60 block mt-1">{hasProvider ? '翻译失败' : '需配置 AI'}</span>
                       ) : hasProvider ? (
                         <span className="text-[10px] text-tertiary/50 block mt-1">...</span>
                       ) : null}
