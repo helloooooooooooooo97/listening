@@ -6,9 +6,12 @@ import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
+import { useAiStore } from '../stores/aiStore';
 import { getLessonById } from '../lib/api';
 import { collectionItemToQueueItem, collectionItemsToQueueItems } from '../lib/collectionQueue';
-import type { AudioClip, CollectionItem } from '../types/lesson';
+import type { AudioClip, CollectionItem, ClipAnalysis } from '../types/lesson';
+import ClipActions from '../components/ClipActions';
+import ClipAnalysisModal from '../components/ClipAnalysisModal';
 
 const TYPE_META: Record<string, { icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>; label: string }> = {
   audio: { icon: HiMusicalNote, label: '音频' },
@@ -58,6 +61,28 @@ export default function CollectionDetailView() {
   const [playTypes, setPlayTypes] = useState<Set<string>>(new Set(['audio', 'clip', 'sentence', 'word']));
   const [playShuffle, setPlayShuffle] = useState(false);
   const [playColors, setPlayColors] = useState<Set<string>>(new Set());
+
+  // AI analysis state
+  const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
+  const [analyzingClips, setAnalyzingClips] = useState<Set<string>>(new Set());
+  const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
+  const analyzeClipFn = useAiStore(s => s.analyzeClip);
+  const updateClip = useClipsStore(s => s.updateClip);
+  const removeClip = useClipsStore(s => s.removeClip);
+
+  const handleAnalyzeClip = (text: string) => {
+    if (clipAnalyses.has(text) || analyzingClips.has(text)) return;
+    setAnalyzingClips(prev => new Set(prev).add(text));
+    analyzeClipFn(text)
+      .then(analysis => {
+        setClipAnalyses(prev => new Map(prev).set(text, analysis));
+        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
+      })
+      .catch(() => {
+        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
+        addToast('AI 分析失败', 'error');
+      });
+  };
 
   useEffect(() => {
     if (collectionId) {
@@ -315,17 +340,39 @@ export default function CollectionDetailView() {
                       {item.start_time > 0 && ` · ${Math.floor(item.start_time / 60)}:${Math.floor(item.start_time % 60).toString().padStart(2, '0')}`}
                     </p>
                   </div>
-                  <button onClick={e => { e.stopPropagation(); handleAddItemToQueue(item); }}
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-blue-400 hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100"
-                    title="加入队列">
-                    <HiPlusCircle size={12} />
-                  </button>
-                  {!isDynamic && (
-                    <button onClick={e => { e.stopPropagation(); handleRemoveItem(item); }}
-                      className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-[var(--accent)] hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100"
-                      title="移除">
-                      <HiTrash size={12} />
-                    </button>
+                  {item.item_type === 'clip' ? (() => {
+                    const clip = allClips.find(c => c.id === String(item.item_ref));
+                    if (!clip) return null;
+                    return (
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ClipActions
+                          clip={clip}
+                          size="sm"
+                          analysis={clipAnalyses.get(clip.text) ?? null}
+                          isAnalyzing={analyzingClips.has(clip.text)}
+                          onAnalyze={handleAnalyzeClip}
+                          onViewAnalysis={setViewingAnalysis}
+                          onEdit={(id, data) => updateClip(id, data)}
+                          onDelete={id => removeClip(id)}
+                          onAddToQueue={c => { addToQueue({ kind: 'clip', clip: c }); addToast('已加入队列', 'success'); }}
+                        />
+                      </div>
+                    );
+                  })() : (
+                    <>
+                      <button onClick={e => { e.stopPropagation(); handleAddItemToQueue(item); }}
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-blue-400 hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100"
+                        title="加入队列">
+                        <HiPlusCircle size={12} />
+                      </button>
+                      {!isDynamic && (
+                        <button onClick={e => { e.stopPropagation(); handleRemoveItem(item); }}
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-[var(--accent)] hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100"
+                          title="移除">
+                          <HiTrash size={12} />
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
               );
@@ -334,6 +381,10 @@ export default function CollectionDetailView() {
         )}
       </div>
     </div>
+
+      {viewingAnalysis && (
+        <ClipAnalysisModal analysis={viewingAnalysis} onClose={() => setViewingAnalysis(null)} />
+      )}
   );
 }
 

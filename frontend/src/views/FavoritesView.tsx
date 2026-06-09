@@ -1,9 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { HiHeart, HiPlay, HiMusicalNote, HiBookmark, HiTag, HiCheckCircle, HiTrash } from 'react-icons/hi2';
+import type { ClipAnalysis } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
-import { removeFavorite } from '../lib/api';
-import { getLessonById } from '../lib/api';
+import { useClipsStore } from '../stores/clipsStore';
+import { usePlaylistStore } from '../stores/playlistStore';
+import { useToastStore } from '../stores/toastStore';
+import { useAiStore } from '../stores/aiStore';
+import { removeFavorite, getLessonById } from '../lib/api';
+import ClipActions from '../components/ClipActions';
+import ClipAnalysisModal from '../components/ClipAnalysisModal';
 
 const TYPE_META = {
   audio: { icon: HiMusicalNote, gradient: 'var(--card-gradient)', label: '音频' },
@@ -17,11 +23,20 @@ export default function FavoritesView() {
   const loaded = useFavoritesStore(s => s.loaded);
   const toggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
+  const clips = useClipsStore(s => s.clips);
+  const updateClip = useClipsStore(s => s.updateClip);
+  const removeClip = useClipsStore(s => s.removeClip);
   const playLesson = useAudioStore(s => s.playLesson);
   const playClip = useAudioStore(s => s.playClip);
+  const addToast = useToastStore(s => s.addToast);
+  const addToQueue = usePlaylistStore(s => s.addToQueue);
+  const analyzeClipFn = useAiStore(s => s.analyzeClip);
 
   const [selectMode, setSelectMode] = useState(false);
   const [selected, setSelected] = useState<Set<number>>(new Set());
+  const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
+  const [analyzingClips, setAnalyzingClips] = useState<Set<string>>(new Set());
+  const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
 
   useEffect(() => {
     if (!loaded) loadFavorites();
@@ -75,6 +90,32 @@ export default function FavoritesView() {
       }
     } catch (e) { console.error('播放收藏失败', e); }
   };
+
+  const handleAnalyze = (text: string) => {
+    if (clipAnalyses.has(text) || analyzingClips.has(text)) return;
+    setAnalyzingClips(prev => new Set(prev).add(text));
+    analyzeClipFn(text)
+      .then(analysis => {
+        setClipAnalyses(prev => new Map(prev).set(text, analysis));
+        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
+      })
+      .catch(() => {
+        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
+        addToast('AI 分析失败', 'error');
+      });
+  };
+
+  // Group clip favorites by audio for play-all
+  const clipFavoritesByAudio = useMemo(() => {
+    const g = new Map<string, typeof items>();
+    for (const item of items) {
+      if (item.item_type !== 'clip') continue;
+      const key = item.subtitle || '未知';
+      if (!g.has(key)) g.set(key, []);
+      g.get(key)!.push(item);
+    }
+    return g;
+  }, [items]);
 
   return (
     <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
@@ -143,7 +184,80 @@ export default function FavoritesView() {
           </div>
         ) : (
           <div className="space-y-3">
-            {activeItems.map(item => {
+            {/* Show grouped clips with play-all when viewing clips tab */}
+            {activeTab === 'clip' && clipFavoritesByAudio.size > 0 && (
+              <div className="space-y-6">
+                {[...clipFavoritesByAudio.entries()].map(([audioTitle, clipItems]) => (
+                  <div key={audioTitle}>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-xs font-semibold text-tertiary uppercase tracking-wider">{audioTitle} · {clipItems.length} 个片段</p>
+                      <button onClick={() => {
+                        const qItems = clipItems.flatMap(item => {
+                          const clip = clips.find(c => c.id === item.item_id);
+                          return clip ? [{ kind: 'clip' as const, clip }] : [];
+                        });
+                        if (qItems.length === 0) { addToast('没有可播放的片段', 'info'); return; }
+                        const ps = usePlaylistStore.getState();
+                        ps.clearQueue();
+                        ps.addAllToQueue(qItems);
+                        ps.setCurrentIndex(0);
+                        playClip(qItems[0].clip);
+                        addToast(`即将播放 ${qItems.length} 个片段`, 'success');
+                      }}
+                        className="flex items-center gap-1 text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">
+                        <HiPlay size={11} /> 播放全部
+                      </button>
+                    </div>
+                    <div className="space-y-1">
+                      {clipItems.map(item => {
+                        const clip = clips.find(c => c.id === item.item_id);
+                        const clipColor = clip?.color;
+                        return (
+                          <div key={item.id}
+                            className="group rounded-xl p-3 transition-all duration-200 cursor-pointer hover:bg-[var(--bg-tertiary)]"
+                            onClick={() => handlePlay(item)}>
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                                style={{ background: clipColor ? clipColor + '30' : 'var(--clip-gradient)' }}>
+                                <HiBookmark size={16} style={{ color: clipColor || undefined }} />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-[14px] text-secondary leading-relaxed line-clamp-2">"{item.title}"</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  {item.created_at && <span className="text-xs text-tertiary">{item.created_at.slice(0, 10)}</span>}
+                                </div>
+                              </div>
+                              <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                                {clip && (
+                                  <ClipActions
+                                    clip={clip}
+                                    size="sm"
+                                    analysis={clipAnalyses.get(clip.text) ?? null}
+                                    isAnalyzing={analyzingClips.has(clip.text)}
+                                    onAnalyze={handleAnalyze}
+                                    onViewAnalysis={setViewingAnalysis}
+                                    onEdit={(id, data) => updateClip(id, data)}
+                                    onDelete={id => removeClip(id)}
+                                    onAddToQueue={c => { addToQueue({ kind: 'clip', clip: c }); addToast('已加入队列', 'success'); }}
+                                  />
+                                )}
+                                <button onClick={e => { e.stopPropagation(); toggle({ item_id: item.item_id, item_type: item.item_type, title: item.title }); }}
+                                  className="p-1.5 text-[var(--accent)] transition-colors cursor-pointer">
+                                  <HiHeart size={13} />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Default list view for non-clip tabs */}
+            {activeTab !== 'clip' && activeItems.map(item => {
               const meta = TYPE_META[item.item_type] || TYPE_META.audio;
               const Icon = meta.icon;
               const fav = isFav(item.item_id, item.item_type);
@@ -204,6 +318,10 @@ export default function FavoritesView() {
           </div>
         )}
       </div>
+
+      {viewingAnalysis && (
+        <ClipAnalysisModal analysis={viewingAnalysis} onClose={() => setViewingAnalysis(null)} />
+      )}
     </div>
   );
 }
