@@ -54,13 +54,13 @@ export default function CollectionDetailView() {
   const addToQueue = usePlaylistStore(s => s.addToQueue);
   const addToast = useToastStore(s => s.addToast);
   const allClips = useClipsStore(s => s.clips ?? []);
+  const items = current?.items || [];
   const [playConfigOpen, setPlayConfigOpen] = useState(false);
-  const [playTypes, setPlayTypes] = useState<Set<string>>(new Set(['audio', 'clip', 'sentence', 'word']));
   const [playShuffle, setPlayShuffle] = useState(false);
-  const [playColors, setPlayColors] = useState<Set<string>>(new Set());
   const updateClip = useClipsStore(s => s.updateClip);
   const removeClip = useClipsStore(s => s.removeClip);
   const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+  const { playTypes, setPlayTypes, playColors, setPlayColors, filteredItems, filteredCount } = useCollectionFilter(items, allClips);
 
   useEffect(() => {
     if (collectionId) {
@@ -174,21 +174,6 @@ export default function CollectionDetailView() {
     await clearItems(collectionId);
     addToast('已清空合集', 'info');
   };
-
-  const items = current?.items || [];
-
-  // Filtered item count based on play config
-  const filteredItems = useMemo(() => {
-    return items.filter(item => {
-      if (!playTypes.has(item.item_type)) return false;
-      if (item.item_type === 'clip' && playColors.size > 0 && playColors.size < COLOR_HEX.length) {
-        const clipColor = getCollectionClipColor(item, allClips);
-        return playColors.has(clipColor);
-      }
-      return true;
-    });
-  }, [items, playTypes, playColors, allClips]);
-  const filteredCount = filteredItems.length;
 
   if (loading && !current) {
     return (

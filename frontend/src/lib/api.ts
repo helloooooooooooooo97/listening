@@ -272,6 +272,8 @@ export function getWords(params: {
   order?: string;
   limit?: number;
   offset?: number;
+  category?: string;
+  collection?: string;
 } = {}): Promise<{ total: number; words: WordItem[] }> {
   const sp = new URLSearchParams();
   if (params.q) sp.set('q', params.q);
@@ -279,6 +281,8 @@ export function getWords(params: {
   if (params.order) sp.set('order', params.order);
   if (params.limit) sp.set('limit', String(params.limit));
   if (params.offset) sp.set('offset', String(params.offset));
+  if (params.category) sp.set('category', params.category);
+  if (params.collection) sp.set('collection', params.collection);
   const qs = sp.toString();
   return get(`/api/words${qs ? `?${qs}` : ''}`);
 }

@@ -15,6 +15,7 @@ PUNCT = re.compile(r"^[.,!?;:\-\"'`]+|[.,!?;:\-\"'`]+$")
 # ── Cache ──
 _cache: list[dict] | None = None
 _cache_total: int = 0
+_cache_cat_map: dict[str, str] = {}  # lesson_id → category
 
 
 def _clean(word: str) -> str:
@@ -23,7 +24,10 @@ def _clean(word: str) -> str:
 
 def _build_cache():
     """Precompute word index from all lesson JSONs."""
-    global _cache, _cache_total
+    global _cache, _cache_total, _cache_cat_map
+    from services import list_lessons
+    _cache_cat_map = {lesson.id: lesson.category or 'Other' for lesson in list_lessons()}
+
     word_map: dict[str, dict] = defaultdict(lambda: {"count": 0, "lessons": defaultdict(list)})
 
     if LESSONS_DIR.exists():
@@ -72,15 +76,58 @@ def get_words(
     order: str = Query(default="desc", description="Order: asc or desc"),
     limit: int = Query(default=200, ge=10, le=1000),
     offset: int = Query(default=0, ge=0),
+    category: str = Query(default="", description="Filter by lesson category (IELTS, Aesop's Fables, etc)"),
+    collection: str = Query(default="", description="Filter by smart collection type (all_clips, favorites, etc)"),
 ):
     """Return deduplicated word list with frequency and lesson occurrences."""
     _ensure_cache()
 
+    # Resolve collection → lesson IDs
+    collection_lesson_ids: set[str] | None = None
+    if collection:
+        # Handle category-based collections (category:IELTS → category filter)
+        if collection.startswith("category:"):
+            category = collection[len("category:"):]
+            collection = ""
+        from database import get_conn
+        import json as _json
+        from services.collection_service import DYNAMIC_QUERIES
+        sql = DYNAMIC_QUERIES.get(collection)
+        if sql:
+            conn = get_conn()
+            rows = conn.execute(sql).fetchall()
+            collection_lesson_ids = set()
+            for r in rows:
+                lid = r["lesson_id"] if r["lesson_id"] else None
+                if not lid:
+                    # Try extra_data for clip favorites
+                    try:
+                        extra = r["extra_data"]
+                        if extra:
+                            ed = _json.loads(extra)
+                            lid = ed.get("lessonId")
+                    except (_json.JSONDecodeError, TypeError):
+                        pass
+                if not lid and collection in ('favorites', 'all_audio', 'today_practice'):
+                    # For audio-type items, item_ref is the lesson ID
+                    lid = r["item_ref"]
+                if lid:
+                    collection_lesson_ids.add(lid)
+
     # Filter
+    filtered = _cache
     if q:
-        filtered = [w for w in _cache if q.lower() in w["word"]]
-    else:
-        filtered = list(_cache)
+        filtered = [w for w in filtered if q.lower() in w["word"]]
+    if category:
+        filtered = [
+            w for w in filtered
+            if any(_cache_cat_map.get(l["id"]) == category for l in w["lessons"])
+        ]
+    if collection_lesson_ids is not None:
+        filtered = [
+            w for w in filtered
+            if any(l["id"] in collection_lesson_ids for l in w["lessons"])
+        ]
 
     # Sort
     desc = order != "asc"
