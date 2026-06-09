@@ -65,6 +65,15 @@ export default function PlaybackDetailTabs({
     return [...filtered].sort((a, b) => a.startTime - b.startTime);
   }, [clips, lesson.id, clipSort]);
 
+  // Auto-analyze clips: trigger AI analysis so sparkle buttons show correct state
+  useEffect(() => {
+    for (const clip of lessonClips) {
+      if (!clipAnalyses.has(clip.text) && !analyzingClips.has(clip.text)) {
+        handleAnalyze(clip.text);
+      }
+    }
+  }, [lessonClips.length]);
+
   const handleExportClips = () => {
     const text = lessonClips.map(c =>
       `[${fmt(c.startTime)}-${fmt(c.endTime)}] ${c.text}${c.note ? ' (' + c.note + ')' : ''}`
