@@ -43,7 +43,7 @@ export default function WordsView() {
   const viewClip = useAudioStore(s => s.viewClip);
   const togglePlay = useAudioStore(s => s.togglePlay);
   const wordOffset = useSettingsStore(s => s.settings.wordPlayOffset);
-  const loaderRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const loadWords = useCallback((query: string, sm: SortMode, off: number, append: boolean, cat?: string, coll?: string) => {
     if (off === 0) setLoading(true);
@@ -90,13 +90,14 @@ export default function WordsView() {
     return () => clearTimeout(timer);
   }, [search, reviewFilter]);
 
-  // Infinite scroll — volatile state (loading/wordsLen/total) via ref to avoid observer re-creation loop
-  const obsRef = useRef({ loading: false, loadingMore: false, wordsLen: 0, total: 0 });
-  obsRef.current = { loading, loadingMore, wordsLen: words.length, total };
-  useEffect(() => {
-    const el = loaderRef.current;
-    if (!el || reviewFilter) return;
-    const observer = new IntersectionObserver(entries => {
+  // Infinite scroll — callback ref fires when loader enters DOM (decouples from effect deps)
+  const obsRef = useRef({ loading: false, loadingMore: false, wordsLen: 0, total: 0, reviewFilter: false });
+  obsRef.current = { loading, loadingMore, wordsLen: words.length, total, reviewFilter };
+  const loadMoreRef = useCallback((node: HTMLDivElement | null) => {
+    const ob = observerRef.current;
+    if (ob) { ob.disconnect(); observerRef.current = null; }
+    if (!node || obsRef.current.reviewFilter) return;
+    observerRef.current = new IntersectionObserver(entries => {
       const s = obsRef.current;
       if (entries[0].isIntersecting && !s.loading && !s.loadingMore && s.wordsLen < s.total) {
         const newOff = s.wordsLen;
@@ -104,9 +105,8 @@ export default function WordsView() {
         loadWords(search, sortMode, newOff, true, [...categoryFilter][0] || undefined, collectionFilter || undefined);
       }
     }, { rootMargin: '200px' });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [reviewFilter, loadWords, search, sortMode, categoryFilter, collectionFilter]);
+    observerRef.current.observe(node);
+  }, [loadWords, search, sortMode, categoryFilter, collectionFilter]);
 
   const toggleKnown = (word: string) => {
     const known = !knownWords.has(word);
@@ -350,7 +350,7 @@ export default function WordsView() {
                 ))}
               </div>
               {/* Loader trigger */}
-              <div ref={loaderRef} className="h-4" />
+              <div ref={loadMoreRef} className="h-4" />
               {loadingMore && (
                 <div className="flex justify-center py-4">
                   <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
