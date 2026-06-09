@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HiBookmark, HiMagnifyingGlass, HiPlay } from 'react-icons/hi2';
+import { HiBookmark, HiHeart, HiMagnifyingGlass, HiPlay } from 'react-icons/hi2';
 import type { AudioClip, ClipAnalysis } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';

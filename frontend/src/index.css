@@ -120,12 +120,15 @@
     transition: box-shadow 0.2s, background 1ms;
     background: transparent;
     border-radius: 4px;
+    border-left: 2px solid transparent;
   }
   .transcript-line:hover {
     background: var(--bg-hover);
+    border-left-color: var(--accent);
   }
   .transcript-line.active {
     background: var(--bg-active);
+    border-left-color: var(--accent);
   }
   .transcript-word {
     @apply inline rounded px-0.5;

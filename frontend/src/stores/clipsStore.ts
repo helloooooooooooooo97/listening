@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { AudioClip } from '../types/lesson';
-import { getClips, createClip as apiCreateClip, deleteClip as apiDeleteClip } from '../lib/api';
+import { getClips, createClip as apiCreateClip, deleteClip as apiDeleteClip, updateClip as apiUpdateClip } from '../lib/api';
 
 interface ClipApiRow {
   id: number;
@@ -70,7 +70,7 @@ interface ClipsState {
   loadClips: () => Promise<void>;
   addClip: (clip: Omit<AudioClip, 'id' | 'createdAt'>) => Promise<AudioClip | null>;
   removeClip: (id: string) => Promise<void>;
-  updateClip: (id: string, patch: Partial<Pick<AudioClip, 'note' | 'text' | 'color'>>) => void;
+  updateClip: (id: string, patch: Partial<Pick<AudioClip, 'note' | 'text' | 'color'>>) => Promise<void>;
   getClipsByLesson: (lessonId: string) => AudioClip[];
 }
 
@@ -96,10 +96,16 @@ export const useClipsStore = create<ClipsState>((set, get) => ({
     set(s => ({ clips: s.clips.filter(c => c.id !== id) }));
   },
 
-  updateClip: (id, patch) => {
+  updateClip: async (id, patch) => {
+    // Optimistic update
     set(s => ({
       clips: s.clips.map(c => (c.id === id ? { ...c, ...patch } : c)),
     }));
+    try {
+      await apiUpdateClip(id, patch);
+    } catch {
+      // Local change preserved silently
+    }
   },
 
   getClipsByLesson: (lessonId) => {

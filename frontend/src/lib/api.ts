@@ -25,6 +25,17 @@ async function post<T>(url: string, body: unknown): Promise<T> {
   return r.json();
 }
 
+async function put<T>(url: string, body: unknown): Promise<T> {
+  url = API_BASE + url;
+  const r = await fetch(url, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!r.ok) throw new Error(await r.text().catch(() => r.statusText));
+  return r.json();
+}
+
 async function del(url: string): Promise<void> {
   url = API_BASE + url;
   const r = await fetch(url, { method: 'DELETE' });
@@ -65,6 +76,10 @@ export function createClip(clip: {
 
 export function deleteClip(id: string): Promise<void> {
   return del(`/api/clips/${id}`);
+}
+
+export function updateClip(id: string, data: { note?: string; color?: string; text?: string }): Promise<AudioClip> {
+  return put<AudioClip>(`/api/clips/${id}`, data);
 }
 
 // ── Progress ──

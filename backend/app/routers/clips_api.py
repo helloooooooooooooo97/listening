@@ -1,7 +1,9 @@
 """Clips CRUD API backed by SQLite."""
 from __future__ import annotations
 
-from fastapi import APIRouter
+from typing import Optional
+
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from database import get_conn, locked
@@ -17,6 +19,12 @@ class ClipCreate(BaseModel):
     text: str
     note: str = ""
     color: str = "#facc15"
+
+
+class ClipUpdate(BaseModel):
+    text: Optional[str] = None
+    note: Optional[str] = None
+    color: Optional[str] = None
 
 
 @router.get("/")
@@ -37,6 +45,33 @@ def create_clip(data: ClipCreate):
     )
     conn.commit()
     row = conn.execute("SELECT * FROM clips WHERE id=?", [cur.lastrowid]).fetchone()
+    return dict(row)
+
+
+@router.put("/{clip_id}")
+@locked
+def update_clip(clip_id: int, data: ClipUpdate):
+    conn = get_conn()
+    existing = conn.execute("SELECT * FROM clips WHERE id=?", [clip_id]).fetchone()
+    if not existing:
+        raise HTTPException(status_code=404, detail="Clip not found")
+
+    updates = {}
+    if data.text is not None:
+        updates["text"] = data.text
+    if data.note is not None:
+        updates["note"] = data.note
+    if data.color is not None:
+        updates["color"] = data.color
+
+    if not updates:
+        return dict(existing)
+
+    sets = ", ".join(f"{k}=?" for k in updates)
+    values = list(updates.values()) + [clip_id]
+    conn.execute(f"UPDATE clips SET {sets} WHERE id=?", values)
+    conn.commit()
+    row = conn.execute("SELECT * FROM clips WHERE id=?", [clip_id]).fetchone()
     return dict(row)
 
 
