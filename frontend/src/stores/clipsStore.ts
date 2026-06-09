@@ -12,6 +12,7 @@ interface ClipApiRow {
   note: string;
   color: string;
   created_at: string;
+  ai_analysis?: string | null;
 }
 
 function toAudioClip(c: ClipApiRow): AudioClip {
@@ -27,6 +28,7 @@ function toAudioClip(c: ClipApiRow): AudioClip {
     note: c.note || '',
     color: c.color || '#facc15',
     createdAt: c.created_at || '',
+    ai_analysis: c.ai_analysis ?? null,
   };
 }
 

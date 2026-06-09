@@ -43,7 +43,7 @@ export default function PlaybackDetailTabs({
   const [collapsed, setCollapsed] = useState(false);
   const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
-  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis(lessonClips);
   const lyricDisplayMode = useSettingsStore(s => s.settings.lyricDisplayMode);
   const translationEnabled = useSettingsStore(s => s.settings.translationEnabled);
   const setTranslationEnabled = useSettingsStore(s => s.setTranslationEnabled);
@@ -64,15 +64,6 @@ export default function PlaybackDetailTabs({
     if (clipSort === 'date') return [...filtered].sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
     return [...filtered].sort((a, b) => a.startTime - b.startTime);
   }, [clips, lesson.id, clipSort]);
-
-  // Auto-analyze clips: trigger AI analysis so sparkle buttons show correct state
-  useEffect(() => {
-    for (const clip of lessonClips) {
-      if (!clipAnalyses.has(clip.text) && !analyzingClips.has(clip.text)) {
-        handleAnalyze(clip.text);
-      }
-    }
-  }, [lessonClips.length]);
 
   const handleExportClips = () => {
     const text = lessonClips.map(c =>

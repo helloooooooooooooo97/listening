@@ -31,7 +31,10 @@ export default function FavoritesView() {
   const addToQueue = usePlaylistStore(s => s.addToQueue);
   const [selectMode, setSelectMode] = useState(false);
   const [selected, setSelected] = useState<Set<number>>(new Set());
-  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+  const favClips = useMemo(() => {
+    return items.filter(i => i.item_type === 'clip').map(i => clips.find(c => c.id === i.item_id)).filter(Boolean) as AudioClip[];
+  }, [items.length, clips.length]);
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis(favClips);
 
   useEffect(() => {
     if (!loaded) loadFavorites();

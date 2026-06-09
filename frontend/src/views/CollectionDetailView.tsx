@@ -59,7 +59,10 @@ export default function CollectionDetailView() {
   const [playShuffle, setPlayShuffle] = useState(false);
   const updateClip = useClipsStore(s => s.updateClip);
   const removeClip = useClipsStore(s => s.removeClip);
-  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+  const collectionClips = useMemo(() => {
+    return allClips.filter(c => items.some(i => i.item_type === 'clip' && String(i.item_ref) === c.id));
+  }, [items.length, allClips.length]);
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis(collectionClips);
   const { playTypes, setPlayTypes, playColors, setPlayColors, filteredItems, filteredCount } = useCollectionFilter(items, allClips);
 
   useEffect(() => {

@@ -1,8 +1,24 @@
 from __future__ import annotations
 
+import hashlib
 import sqlite3
 
 from models.clip import ClipOut, ClipCreate, ClipUpdate
+
+
+def _resolve_ai(clip: ClipOut, translations: dict[str, str]) -> ClipOut:
+    h = hashlib.md5(clip.text.encode()).hexdigest()
+    if h in translations:
+        clip.ai_analysis = translations[h]
+    return clip
+
+
+def _fetch_translations(conn: sqlite3.Connection) -> dict[str, str]:
+    """Return {source_hash: translated_text} for all clip translations."""
+    rows = conn.execute(
+        "SELECT source_hash, translated_text FROM translations WHERE source_type='clip'"
+    ).fetchall()
+    return {r[0]: r[1] for r in rows}
 
 
 class ClipRepository:
@@ -11,11 +27,17 @@ class ClipRepository:
 
     def list_all(self) -> list[ClipOut]:
         rows = self._conn.execute("SELECT * FROM clips ORDER BY created_at DESC").fetchall()
-        return [ClipOut.model_validate(dict(r)) for r in rows]
+        trans = _fetch_translations(self._conn)
+        clips = [ClipOut.model_validate(dict(r)) for r in rows]
+        return [_resolve_ai(c, trans) for c in clips]
 
     def get_by_id(self, clip_id: int) -> ClipOut | None:
         row = self._conn.execute("SELECT * FROM clips WHERE id=?", [clip_id]).fetchone()
-        return ClipOut.model_validate(dict(row)) if row else None
+        if not row:
+            return None
+        clip = ClipOut.model_validate(dict(row))
+        trans = _fetch_translations(self._conn)
+        return _resolve_ai(clip, trans)
 
     def create(self, data: ClipCreate) -> ClipOut:
         cur = self._conn.execute(

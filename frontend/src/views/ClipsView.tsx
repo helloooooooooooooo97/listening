@@ -20,7 +20,7 @@ function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',
 export default function ClipsView({ clips, onDeleteClip }: Props) {
   const [search, setSearch] = useState('');
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
-  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis(fC);
 
   const playClip = useAudioStore(s => s.playClip);
   const favToggle = useFavoritesStore(s => s.toggle);

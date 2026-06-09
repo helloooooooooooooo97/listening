@@ -45,7 +45,7 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
   const playClip = useAudioStore(s => s.playClip);
   const addToQueue = usePlaylistStore(s => s.addToQueue);
   const addToast = useToastStore(s => s.addToast);
-  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis(lessonClips);
 
   const lessonFavs = favItems.filter(i =>
     i.item_type === 'word' ||
