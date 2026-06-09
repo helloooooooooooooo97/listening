@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { HiXMark, HiPlay, HiBookmark, HiHeart, HiTag } from 'react-icons/hi2';
+import type { AudioClip, ClipAnalysis } from '../types/lesson';
 import { getDictationRecords, type DictRecord, type AudioGroup } from '../lib/api';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useAudioStore } from '../stores/audioStore';
-import type { AudioClip } from '../types/lesson';
+import { usePlaylistStore } from '../stores/playlistStore';
+import { useToastStore } from '../stores/toastStore';
+import { useAiStore } from '../stores/aiStore';
+import ClipActions from './ClipActions';
+import ClipAnalysisModal from './ClipAnalysisModal';
 
 export type PanelTab = 'dictation' | 'clips' | 'favorites' | null;
 
@@ -30,12 +35,21 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
   const [loading, setLoading] = useState(false);
 
   const clips = useClipsStore(s => s.clips);
+  const updateClip = useClipsStore(s => s.updateClip);
+  const removeClip = useClipsStore(s => s.removeClip);
   const lessonClips = useMemo(
     () => clips.filter(c => c.lessonId === lessonId),
     [clips, lessonId]
   );
   const favItems = useFavoritesStore(s => s.items);
   const playClip = useAudioStore(s => s.playClip);
+  const addToQueue = usePlaylistStore(s => s.addToQueue);
+  const addToast = useToastStore(s => s.addToast);
+  const analyzeClipFn = useAiStore(s => s.analyzeClip);
+
+  const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
+  const [analyzingClips, setAnalyzingClips] = useState<Set<string>>(new Set());
+  const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
 
   const lessonFavs = favItems.filter(i =>
     i.item_type === 'word' ||
@@ -61,6 +75,20 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
   const handlePlayClip = (clip: AudioClip) => {
     playClip(clip);
     onClose();
+  };
+
+  const handleAnalyze = (text: string) => {
+    if (clipAnalyses.has(text) || analyzingClips.has(text)) return;
+    setAnalyzingClips(prev => new Set(prev).add(text));
+    analyzeClipFn(text)
+      .then(analysis => {
+        setClipAnalyses(prev => new Map(prev).set(text, analysis));
+        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
+      })
+      .catch(() => {
+        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
+        addToast('AI 分析失败', 'error');
+      });
   };
 
   return (
@@ -145,7 +173,7 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
                       return (
                         <div key={clip.id}
                           onClick={() => handlePlayClip(clip)}
-                          className="px-5 py-3 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-start gap-3"
+                          className="px-5 py-3 hover:bg-[var(--bg-hover)] transition-all cursor-pointer flex items-start gap-3 border-l-2 border-transparent hover:border-l-[var(--accent)]"
                         >
                           <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
                             style={{ background: clip.color + '30' }}>
@@ -159,9 +187,17 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
                               {clip.note && <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-secondary">{clip.note}</span>}
                             </div>
                           </div>
-                          <button className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-tertiary hover:text-secondary hover:bg-[var(--bg-active)] transition-colors cursor-pointer">
-                            <HiPlay size={12} />
-                          </button>
+                          <ClipActions
+                            clip={clip}
+                            size="sm"
+                            analysis={clipAnalyses.get(clip.text) ?? null}
+                            isAnalyzing={analyzingClips.has(clip.text)}
+                            onAnalyze={handleAnalyze}
+                            onViewAnalysis={setViewingAnalysis}
+                            onEdit={(id, data) => updateClip(id, data)}
+                            onDelete={id => removeClip(id)}
+                            onAddToQueue={c => { addToQueue({ kind: 'clip', clip: c }); addToast('已加入队列', 'success'); }}
+                          />
                         </div>
                       );
                     })
@@ -199,6 +235,10 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
           )}
         </div>
       </div>
+
+      {viewingAnalysis && (
+        <ClipAnalysisModal analysis={viewingAnalysis} onClose={() => setViewingAnalysis(null)} />
+      )}
     </>
   );
 }

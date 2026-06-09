@@ -322,7 +322,7 @@ export default function PlaybackDetailTabs({
                     const isHovered = hoveredClipId === clip.id;
                     return (
                   <div key={clip.id}
-                    className={`transition-colors ${isActive ? 'bg-[var(--accent-soft)]' : isHovered ? 'bg-[var(--bg-hover)]' : ''}`}>
+                    className={`transition-all border-l-2 ${isActive ? 'bg-[var(--accent-soft)] border-l-[var(--accent)]' : isHovered ? 'bg-[var(--bg-hover)] border-l-transparent' : 'border-l-transparent'}`}>
                     <div className="px-5 py-3">
                       {/* Row 1: icon + text + actions */}
                       <div className="flex items-start gap-3">

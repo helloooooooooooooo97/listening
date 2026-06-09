@@ -244,6 +244,7 @@ export default function CollectionDetailView() {
   const isDynamic = current.is_dynamic;
 
   return (
+    <>
     <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
       {/* Header */}
       <div className="flex-shrink-0 px-8 pt-10 pb-4 border-b border-[var(--border-secondary)]">
@@ -326,7 +327,7 @@ export default function CollectionDetailView() {
               const itemColor = item.item_type === 'clip' ? getCollectionClipColor(item, allClips) : '';
               return (
                 <div key={item.id || idx}
-                  className="group flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-[var(--bg-tertiary)] cursor-pointer"
+                  className="group flex items-center gap-3 pl-3 py-2.5 rounded-xl transition-all hover:bg-[var(--bg-tertiary)] cursor-pointer border-l-2 border-transparent hover:border-l-[var(--accent)]"
                   onClick={() => handlePlayItem(item)}>
                   <span className="text-xs text-tertiary tabular-nums w-6 text-right">{idx + 1}</span>
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -385,6 +386,7 @@ export default function CollectionDetailView() {
       {viewingAnalysis && (
         <ClipAnalysisModal analysis={viewingAnalysis} onClose={() => setViewingAnalysis(null)} />
       )}
+    </>
   );
 }
 
