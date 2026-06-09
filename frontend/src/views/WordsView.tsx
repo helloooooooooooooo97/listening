@@ -128,12 +128,23 @@ export default function WordsView() {
   const handleSelectWord = (w: WordSummary) => {
     // Already showing this word — no-op
     if (selected?.word === w.word) return;
+    // Optimistic: immediately highlight word while detail loads
+    if (detailCache.current.has(w.word)) {
+      setSelected(detailCache.current.get(w.word)!);
+      return;
+    }
     setLoadingDetail(true);
     getWordDetail(w.word)
-      .then(detail => setSelected(detail))
+      .then(detail => {
+        detailCache.current.set(w.word, detail);
+        setSelected(detail);
+      })
       .catch(() => {})
       .finally(() => setLoadingDetail(false));
   };
+
+  // Cache fetched word details to avoid re-fetching
+  const detailCache = useRef(new Map<string, WordDetail>());
 
   const handleReviewWord = (word: string) => {
     // Mark as reviewed with a good score (simplified: user clicks = correct)
@@ -280,7 +291,7 @@ export default function WordsView() {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto px-6 pb-8">
-          {loading || dueWordsLoading ? (
+          {loading ? (
             <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
               {Array.from({length: 40}).map((_,i)=>(
                 <div key={i} className="h-8 rounded-lg bg-[var(--bg-tertiary)] animate-pulse" style={{animationDelay:`${i*20}ms`}}/>
@@ -288,7 +299,11 @@ export default function WordsView() {
             </div>
           ) : reviewFilter ? (
             <>
-              {dueWords.length === 0 ? (
+              {dueWordsLoading ? (
+                <div className="flex items-center justify-center py-16">
+                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
+                </div>
+              ) : dueWords.length === 0 ? (
                 <p className="text-tertiary text-sm py-8">暂无待复习单词 🎉</p>
               ) : (
                 <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
