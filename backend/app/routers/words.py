@@ -79,7 +79,7 @@ def get_words(
     category: str = Query(default="", description="Filter by lesson category (IELTS, Aesop's Fables, etc)"),
     collection: str = Query(default="", description="Filter by smart collection type (all_clips, favorites, etc)"),
 ):
-    """Return deduplicated word list with frequency and lesson occurrences."""
+    """Return deduplicated word list (lightweight — only word + count)."""
     _ensure_cache()
 
     # Resolve collection → lesson IDs
@@ -138,4 +138,20 @@ def get_words(
 
     total = len(filtered)
     page = filtered[offset:offset + limit]
-    return {"total": total, "words": page}
+    # Lightweight response — only word + count; occurrences are fetched on demand
+    return {
+        "total": total,
+        "words": [{"word": w["word"], "count": w["count"]} for w in page],
+    }
+
+
+@router.get("/words/{word}")
+def get_word_detail(word: str):
+    """Return full word detail with lesson occurrences (audio timestamps)."""
+    _ensure_cache()
+    # Binary search on sorted cache (words are sorted by count desc, so linear scan)
+    for w in _cache:
+        if w["word"] == word:
+            return w
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail=f"Word '{word}' not found")
