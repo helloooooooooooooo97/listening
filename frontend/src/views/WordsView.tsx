@@ -90,23 +90,23 @@ export default function WordsView() {
     return () => clearTimeout(timer);
   }, [search, reviewFilter]);
 
-  // Infinite scroll
+  // Infinite scroll — volatile state (loading/wordsLen/total) via ref to avoid observer re-creation loop
+  const obsRef = useRef({ loading: false, loadingMore: false, wordsLen: 0, total: 0 });
+  obsRef.current = { loading, loadingMore, wordsLen: words.length, total };
   useEffect(() => {
-    if (reviewFilter) return;
     const el = loaderRef.current;
-    if (!el) return;
+    if (!el || reviewFilter) return;
     const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && !loading && !loadingMore && words.length < total) {
-        const newOff = offset + PAGE_SIZE;
+      const s = obsRef.current;
+      if (entries[0].isIntersecting && !s.loading && !s.loadingMore && s.wordsLen < s.total) {
+        const newOff = s.wordsLen;
         setOffset(newOff);
-        const cat = [...categoryFilter][0] || undefined;
-        const coll = collectionFilter || undefined;
-        loadWords(search, sortMode, newOff, true, cat, coll);
+        loadWords(search, sortMode, newOff, true, [...categoryFilter][0] || undefined, collectionFilter || undefined);
       }
     }, { rootMargin: '200px' });
     observer.observe(el);
     return () => observer.disconnect();
-  }, [loading, loadingMore, words.length, total, search, sortMode, offset, loadWords, categoryFilter, collectionFilter, reviewFilter]);
+  }, [reviewFilter, loadWords, search, sortMode, categoryFilter, collectionFilter]);
 
   const toggleKnown = (word: string) => {
     const known = !knownWords.has(word);
@@ -292,10 +292,8 @@ export default function WordsView() {
         </div>
         <div className="flex-1 overflow-y-auto px-6 pb-8">
           {loading ? (
-            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
-              {Array.from({length: 40}).map((_,i)=>(
-                <div key={i} className="h-8 rounded-lg bg-[var(--bg-tertiary)] animate-pulse" style={{animationDelay:`${i*20}ms`}}/>
-              ))}
+            <div className="flex items-center justify-center py-16">
+              <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
             </div>
           ) : reviewFilter ? (
             <>
