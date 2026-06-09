@@ -1,10 +1,14 @@
 /** Waveform data extraction using Web Audio API. */
 
-let _audioContext: AudioContext | null = null;
+/** OfflineAudioContext for decoding — no autoplay restrictions (unlike AudioContext in Chrome/Edge). */
+let _offlineCtx: OfflineAudioContext | null = null;
 
-function getAudioContext(): AudioContext {
-  if (!_audioContext) _audioContext = new AudioContext();
-  return _audioContext;
+function getAudioContext(): OfflineAudioContext {
+  if (!_offlineCtx) {
+    // Length and sample rate don't matter for decodeAudioData — we only use it for decoding
+    _offlineCtx = new OfflineAudioContext(1, 1, 44100);
+  }
+  return _offlineCtx;
 }
 
 export interface WaveformData {

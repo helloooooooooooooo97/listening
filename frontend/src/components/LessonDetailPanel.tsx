@@ -94,7 +94,7 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
         <div className="overflow-y-auto max-md:max-h-[55vh] md:h-[calc(100%-64px)]">
           {loading ? (
             <div className="flex items-center justify-center py-16">
-              <div className="w-5 h-5 border-2 border-white/10 border-t-[var(--accent)] rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-white/10 border-t-[var(--accent)] rounded-full" />
             </div>
           ) : (
             <>
@@ -148,8 +148,8 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
                           className="px-5 py-3 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer flex items-start gap-3"
                         >
                           <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                            style={{ background: 'var(--clip-gradient)' }}>
-                            <HiBookmark size={13} className="text-tertiary" />
+                            style={{ background: clip.color + '30' }}>
+                            <HiBookmark size={13} style={{ color: clip.color }} />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
@@ -178,7 +178,11 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
                     lessonFavs.map(item => (
                       <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                          style={{ background: item.item_type === 'word' ? 'var(--word-gradient)' : 'var(--clip-gradient)' }}>
+                          style={{
+                            background: item.item_type === 'word'
+                              ? 'var(--word-gradient)'
+                              : (() => { const c = clips.find(cc => cc.id === item.item_id)?.color; return c ? c + '30' : 'var(--clip-gradient)'; })()
+                          }}>
                           {item.item_type === 'word' ? <HiTag size={13} className="text-primary" /> : <HiBookmark size={13} className="text-tertiary" />}
                         </div>
                         <div className="flex-1 min-w-0">

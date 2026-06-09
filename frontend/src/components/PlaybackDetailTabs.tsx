@@ -337,7 +337,7 @@ export default function PlaybackDetailTabs({
                           onMouseLeave={() => setHoveredClipId(null)}
                           className="flex-1 text-left min-w-0 flex items-start gap-3 cursor-pointer"
                         >
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: clip.color + '20', border: `1px solid ${clip.color}40` }}>
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: clip.color + '30' }}>
                             <HiBookmark size={13} style={{ color: clip.color }} />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -446,8 +446,13 @@ export default function PlaybackDetailTabs({
                     }
                   }}
                   className="px-5 py-3 flex items-center gap-3 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: item.item_type === 'word' ? 'var(--word-gradient)' : 'var(--clip-gradient)' }}>
-                    {item.item_type === 'word' ? <HiTag size={13} className="text-primary" /> : <HiBookmark size={13} className="text-tertiary" />}
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{
+                      background: item.item_type === 'word'
+                        ? 'var(--word-gradient)'
+                        : (() => { const c = clips.find(cc => cc.id === item.item_id)?.color; return c ? c + '30' : 'var(--clip-gradient)'; })()
+                    }}>
+                    {item.item_type === 'word' ? <HiTag size={13} className="text-primary" /> : <HiBookmark size={13} style={{ color: clips.find(cc => cc.id === item.item_id)?.color || undefined }} />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-primary">{item.title}</p>

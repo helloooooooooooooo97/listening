@@ -6,7 +6,8 @@ import { usePlaylistStore } from '../stores/playlistStore';
 import { useAudioStore } from '../stores/audioStore';
 import { useToastStore } from '../stores/toastStore';
 import { getCollection } from '../lib/api';
-import type { CollectionSummary, AudioClip } from '../types/lesson';
+import { collectionItemsToQueueItems } from '../lib/collectionQueue';
+import type { CollectionSummary } from '../types/lesson';
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>> = {
   HiHeart: HiHeart, HiClock: HiClock, HiPencil: HiPencil,
@@ -152,31 +153,7 @@ export default function CollectionsView() {
       const items = detail.items || [];
       if (items.length === 0) { addToast('合集为空', 'info'); return; }
 
-      const queueItems: import('../stores/playlistStore').QueueItem[] = [];
-      const lessonCache: Record<string, any> = {};
-
-      for (const item of items) {
-        try {
-          if (item.item_type === 'audio') {
-            const lid = item.lesson_id || item.item_ref;
-            if (!lessonCache[lid]) {
-              const { getLessonById } = await import('../lib/api');
-              lessonCache[lid] = await getLessonById(lid);
-            }
-            queueItems.push({ kind: 'lesson', lesson: lessonCache[lid] });
-          } else if (item.item_type === 'sentence') {
-            const si = parseInt(item.item_ref.split(':').pop() || '0', 10);
-            queueItems.push({ kind: 'sentence', lessonId: item.lesson_id, lessonTitle: item.lesson_title || item.subtitle, sentenceIndex: si, start: item.start_time, end: item.end_time, text: item.title });
-          } else if (item.item_type === 'clip') {
-            const clip: AudioClip = {
-              id: item.item_ref, lessonId: item.lesson_id, lessonTitle: item.lesson_title || item.subtitle,
-              startWordId: '', endWordId: '', startTime: item.start_time, endTime: item.end_time || item.start_time + 10,
-              text: item.title, note: item.subtitle, color: '#facc15', createdAt: item.added_at,
-            };
-            queueItems.push({ kind: 'clip', clip, lesson: null });
-          }
-        } catch {}
-      }
+      const queueItems = await collectionItemsToQueueItems(items);
 
       if (queueItems.length === 0) { addToast('没有可播放的条目', 'info'); return; }
 
@@ -199,7 +176,7 @@ export default function CollectionsView() {
     return (
       <div className="h-full flex flex-col bg-[var(--bg-primary)]">
         <div className="flex-1 flex items-center justify-center">
-          <div className="w-6 h-6 border-2 border-white/10 border-t-[var(--accent)] rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-white/10 border-t-[var(--accent)] rounded-full" />
         </div>
       </div>
     );
@@ -312,13 +289,10 @@ function AlbumCard({ collection, onPlay, onDetail, onRefresh, playing }: { colle
   const Icon = ICON_MAP[collection.icon] || HiQueueList;
   const style = getAlbumStyle(collection);
   const decor = getDecor(style.decor);
-  const [refreshing, setRefreshing] = useState(false);
 
   const handleRefresh = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    setRefreshing(true);
     await onRefresh();
-    setTimeout(() => setRefreshing(false), 500);
   };
 
   return (
@@ -350,7 +324,7 @@ function AlbumCard({ collection, onPlay, onDetail, onRefresh, playing }: { colle
             <HiInformationCircle size={13} />
           </button>
           <button onClick={handleRefresh}
-            className={`w-7 h-7 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer ${refreshing ? 'animate-spin' : 'opacity-0 group-hover:opacity-100'}`}
+            className={`w-7 h-7 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-white transition-all cursor-pointer opacity-0 group-hover:opacity-100`}
             title="刷新">
             <HiArrowPath size={12} />
           </button>

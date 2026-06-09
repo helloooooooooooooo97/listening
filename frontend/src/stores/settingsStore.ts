@@ -11,6 +11,7 @@ interface AppSettings {
   dailyGoalMinutes: number; // daily learning goal in minutes (0 = off)
   lyricDisplayMode: LyricDisplayMode;
   translationEnabled: boolean;
+  volume: number;           // 0.0 - 1.0
 }
 
 const DEFAULTS: AppSettings = {
@@ -20,6 +21,7 @@ const DEFAULTS: AppSettings = {
   dailyGoalMinutes: 0,
   lyricDisplayMode: 'bilingual',
   translationEnabled: true,
+  volume: 1,
 };
 
 interface Memory {
@@ -48,6 +50,7 @@ interface SettingsState {
   setDailyGoalMinutes: (minutes: number) => void;
   setLyricDisplayMode: (mode: LyricDisplayMode) => void;
   setTranslationEnabled: (enabled: boolean) => void;
+  setVolume: (volume: number) => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -101,6 +104,12 @@ export const useSettingsStore = create<SettingsState>()(
 
       setTranslationEnabled: (enabled) => {
         set((s) => ({ settings: { ...s.settings, translationEnabled: enabled } }));
+      },
+
+      setVolume: (volume) => {
+        set((s) => ({ settings: { ...s.settings, volume: Math.max(0, Math.min(1, volume)) } }));
+        const a = document.querySelector('audio');
+        if (a) a.volume = volume;
       },
     }),
     {

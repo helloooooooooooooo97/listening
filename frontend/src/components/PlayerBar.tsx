@@ -6,6 +6,7 @@ import { useDictationStore } from '../stores/dictationStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
+import { useSettingsStore } from '../stores/settingsStore';
 import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
 import Waveform from './Waveform';
@@ -35,6 +36,7 @@ export default function PlayerBar({ onQueueToggle }: Props) {
   const dur = useAudioStore(s=>s.duration);
   const playing = useAudioStore(s=>s.isPlaying);
   const loading = useAudioStore(s=>s.isLoading);
+  const error = useAudioStore(s=>s.error);
   const rate = useAudioStore(s=>s.playbackRate);
   const loop = useAudioStore(s=>s.loopMode);
   const loopT = useAudioStore(s=>s.loopTarget);
@@ -164,8 +166,6 @@ export default function PlayerBar({ onQueueToggle }: Props) {
       <div className={`fixed bottom-0 right-0 z-40 transition-all duration-300 ${expanded ? 'left-0' : 'left-0 md:left-56'}`}
         style={{
           background: 'var(--glass-bg)',
-          backdropFilter: 'blur(40px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
           borderTop: '1px solid var(--border-primary)',
         }}>
         <div className="px-4 pt-1.5 pb-0.5">
@@ -178,6 +178,14 @@ export default function PlayerBar({ onQueueToggle }: Props) {
               height={28}
               selectionRange={isC ? { start: mode.clip.startTime, end: mode.clip.endTime } : null}
             />
+          )}
+          {error && (
+            <div className="px-2 py-1">
+              <p className="text-[11px] text-red-400/80 font-medium flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-400/60" />
+                {error}
+              </p>
+            </div>
           )}
         </div>
 
@@ -199,8 +207,8 @@ export default function PlayerBar({ onQueueToggle }: Props) {
             }}
             style={{ cursor: (isL || isC) ? 'pointer' : 'default' }}>
             <div className={`w-11 h-11 rounded-lg flex items-center justify-center text-primary flex-shrink-0 shadow-lg transition-opacity ${hasContent ? 'opacity-100' : 'opacity-30'}`}
-              style={{ background: isWord ? 'var(--word-gradient)' : isC ? 'var(--clip-accent-gradient)' : 'var(--accent-gradient)' }}>
-              {isWord ? <HiTag size={18}/> : isC ? <HiBookmark size={18}/> : <HiMusicalNote size={18}/>}
+              style={{ background: isWord ? 'var(--word-gradient)' : isC ? (mode.clip.color || '#facc15') + '30' : 'var(--accent-gradient)' }}>
+              {isWord ? <HiTag size={18}/> : isC ? <HiBookmark size={18} style={{ color: mode.clip.color || '#f59e0b' }} /> : <HiMusicalNote size={18}/>}
             </div>
             <div className="min-w-0">
               <p className={`text-[14px] font-semibold truncate ${hasContent ? 'text-primary' : 'text-tertiary'}`}>{title}</p>
@@ -218,7 +226,7 @@ export default function PlayerBar({ onQueueToggle }: Props) {
           </div>
 
           {/* Center controls */}
-          <div className="flex-1 flex items-center justify-center gap-1.5 md:gap-3">
+          <div className="flex-1 flex items-center justify-center gap-1.5 md:gap-3 group">
             {(isL || isC) && <>
               <button onClick={e=>{e.stopPropagation();cycleLoop();}} className="text-tertiary hover:text-secondary transition-colors cursor-pointer" title={`循环模式: ${LOOP[loop].label}`}>{li.icon}</button>
               <button onClick={e=>{e.stopPropagation();handlePlayPrev();}} className="text-secondary hover:text-primary transition-colors cursor-pointer" title="上一首"><HiBackward size={15}/></button>
@@ -237,13 +245,16 @@ export default function PlayerBar({ onQueueToggle }: Props) {
               }`}
               style={hasContent && !loading ? { boxShadow: '0 4px 20px rgba(0,0,0,0.4)' } : {}}>
               {loading
-                ? <span className="animate-spin"><HiBackward size={18}/></span>
+                ? <span className=""><HiBackward size={18}/></span>
                 : playing ? <span className={hasContent ? 'text-black' : 'text-tertiary'}><HiPause size={20}/></span>
                 : <span className={hasContent ? 'text-black' : 'text-tertiary'}><HiPlay size={20}/></span>}
             </button>
 
             {(isL || isC) && <>
               <button onClick={e=>{e.stopPropagation();handlePlayNext();}} className="text-secondary hover:text-primary transition-colors cursor-pointer" title="下一首"><HiForward size={15}/></button>
+              <span className="text-[11px] text-tertiary font-mono tabular-nums min-w-[70px] text-center select-none opacity-0 group-hover:opacity-100 transition-opacity">
+                {hasContent ? `${Math.floor(cur/60)}:${Math.floor(cur%60).toString().padStart(2,'0')} / ${Math.floor(dur/60)}:${Math.floor(dur%60).toString().padStart(2,'0')}` : '--:-- / --:--'}
+              </span>
               <div className="relative volume-dropdown">
                 <button onClick={e => { e.stopPropagation(); setVolumeOpen(!volumeOpen); setSpeedOpen(false); setLoopOpen(false); }}
                   className="flex items-center justify-center w-8 h-8 rounded-lg text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-all cursor-pointer"
@@ -252,9 +263,10 @@ export default function PlayerBar({ onQueueToggle }: Props) {
                 </button>
                 {volumeOpen && (
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 py-3 px-2 rounded-xl shadow-xl border border-[var(--border-primary)] flex flex-col items-center gap-2"
-                    style={{ background: "var(--glass-bg)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
-                    <input type="range" min="0" max="1" step="0.05" defaultValue="1"
-                      onChange={e => { const a = document.querySelector("audio"); if (a) { a.volume = parseFloat(e.target.value); localStorage.setItem("app-volume", e.target.value); }}}
+                    style={{ background: 'var(--bg-secondary)' }}>
+                    <input type="range" min="0" max="1" step="0.05"
+                      defaultValue={useSettingsStore.getState().settings.volume}
+                      onChange={e => { useSettingsStore.getState().setVolume(parseFloat(e.target.value)); }}
                       className="h-20 w-1 accent-[var(--accent)] cursor-pointer"
                       style={{ writingMode: "vertical-lr" }} />
                   </div>
@@ -269,7 +281,7 @@ export default function PlayerBar({ onQueueToggle }: Props) {
                 </button>
                 {speedOpen && (
                   <div className="absolute bottom-full left-0 mb-1 rounded-lg shadow-xl border border-[var(--border-primary)] overflow-hidden z-50"
-                    style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+                    style={{ background: 'var(--bg-secondary)' }}>
                     {[0.5, 0.75, 1, 1.25, 1.5, 2.0].map(r => (
                       <button key={r}
                         onPointerDown={e=>{e.stopPropagation();setRate(r);setSpeedPop(r);setTimeout(()=>setSpeedPop(null),300);setSpeedOpen(false);}}
@@ -292,7 +304,7 @@ export default function PlayerBar({ onQueueToggle }: Props) {
                   </button>
                   {loopOpen && (
                     <div className="absolute bottom-full left-0 mb-1 rounded-lg shadow-xl border border-[var(--border-primary)] overflow-hidden z-50"
-                      style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+                      style={{ background: 'var(--bg-secondary)' }}>
                       {[1, 2, 3, 5, 10, 20].map(n => (
                         <button key={n}
                           onPointerDown={e=>{e.stopPropagation();setLoopT(n);setLoopOpen(false);}}

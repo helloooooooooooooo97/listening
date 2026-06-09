@@ -23,6 +23,7 @@ interface AudioState {
   duration: number;
   isPlaying: boolean;
   isLoading: boolean;
+  error: string | null;
   playbackRate: number;
   loopMode: LoopMode;
   loopTarget: number;
@@ -57,8 +58,10 @@ setLessonInfoProvider(() => {
 
 export const useAudioStore = create<AudioState>((set, get) => {
   const audio = getAudio();
-  const initialRate = useSettingsStore.getState().settings.defaultSpeed || 1;
+  const settings = useSettingsStore.getState().settings;
+  const initialRate = settings.defaultSpeed || 1;
   applyPlaybackRate(audio, initialRate);
+  audio.volume = settings.volume ?? 1;
 
   const playQueueItem = (item: QueueItem) => {
     if (item.kind === 'lesson') {
@@ -113,7 +116,11 @@ export const useAudioStore = create<AudioState>((set, get) => {
     let sentenceIdx = -1;
     if (mode.kind === 'lesson') sentenceIdx = findSentenceIndex(mode.lesson, t);
     else if (mode.kind === 'clip' && mode.lesson) sentenceIdx = findSentenceIndex(mode.lesson, t);
-    set({ currentTime: t, currentSentenceIndex: sentenceIdx });
+    // Only trigger re-render when values actually change
+    const prev = get();
+    if (sentenceIdx !== prev.currentSentenceIndex || Math.abs(prev.currentTime - t) > 0.05) {
+      set({ currentTime: t, currentSentenceIndex: sentenceIdx });
+    }
 
     // Save position every 5 seconds
     if (mode.kind === 'lesson' && Math.floor(t) % 5 === 0 && t > 0.5) {
@@ -130,12 +137,17 @@ export const useAudioStore = create<AudioState>((set, get) => {
       window.setTimeout(restorePlaybackRate, 0);
     }
   });
-  audio.addEventListener('loadedmetadata', () => { restorePlaybackRate(); set({ duration: audio.duration, isLoading: false }); });
+  audio.addEventListener('loadedmetadata', () => { restorePlaybackRate(); set({ duration: audio.duration, isLoading: false, error: null }); });
   audio.addEventListener('loadeddata', restorePlaybackRate);
   audio.addEventListener('canplay', () => { restorePlaybackRate(); set({ isLoading: false }); });
   audio.addEventListener('playing', restorePlaybackRate);
-  audio.addEventListener('play', () => { restorePlaybackRate(); set({ isPlaying: true }); trackPlay(); });
+  audio.addEventListener('play', () => { restorePlaybackRate(); set({ isPlaying: true, error: null }); trackPlay(); });
   audio.addEventListener('pause', () => { set({ isPlaying: false }); flushTrack(); });
+  audio.addEventListener('error', () => {
+    const code = audio.error?.code ?? -1;
+    const msg = code === 4 ? '音频文件不存在或无法访问' : `音频加载失败 (${code})`;
+    set({ isLoading: false, isPlaying: false, error: msg });
+  });
   audio.addEventListener('ended', () => {
     set({ isPlaying: false }); flushTrack();
     if (get().mode.kind === 'empty') return;
@@ -176,6 +188,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
     duration: 0,
     isPlaying: false,
     isLoading: false,
+    error: null,
     playbackRate: initialRate,
     loopMode: 'all',
     loopTarget: useSettingsStore.getState().settings.defaultLoopCount || 3,

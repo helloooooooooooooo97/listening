@@ -63,8 +63,9 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
                           className={`group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)] ${removingIds.has(clip.id) ? 'animate-collapse-out' : ''}`}
                           style={{background:'var(--bg-tertiary)'}}>
                           <div className="flex items-start gap-3">
-                            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{background:'var(--clip-gradient)'}}>
-                              <span className="text-tertiary group-hover:text-secondary transition-colors"><HiBookmark size={16}/></span>
+                            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                              style={{ background: clip.color ? clip.color + '30' : 'var(--clip-gradient)' }}>
+                              <span style={{ color: clip.color || undefined }}><HiBookmark size={16}/></span>
                             </div>
                             <div className="flex-1 min-w-0">
                               <p className="text-[14px] text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>

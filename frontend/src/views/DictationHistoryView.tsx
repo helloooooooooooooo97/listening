@@ -63,7 +63,7 @@ export default function DictationHistoryView() {
   if (loading) {
     return (
       <div className="h-full flex items-center justify-center bg-[var(--bg-primary)]">
-        <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+        <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
       </div>
     );
   }

@@ -525,7 +525,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
             <div className="px-4 py-3 max-h-[50vh] overflow-y-auto">
               {wordCard.loading ? (
                 <div className="flex items-center justify-center py-8">
-                  <div className="w-5 h-5 border-2 border-white/10 border-t-[var(--accent)] rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-white/10 border-t-[var(--accent)] rounded-full" />
                 </div>
               ) : wordCard.error ? (
                 <p className="text-xs text-red-400 text-center py-4">解析失败，请重试</p>

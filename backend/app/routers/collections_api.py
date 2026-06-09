@@ -126,7 +126,7 @@ DYNAMIC_QUERIES = {
     'all_clips': """
         SELECT id AS item_ref, 'clip' AS item_type,
                text AS title, audio_title AS subtitle,
-               '{}' AS extra_data,
+               json_object('color', color) AS extra_data,
                audio_id AS lesson_id, audio_title AS lesson_title,
                start_time, end_time
         FROM clips

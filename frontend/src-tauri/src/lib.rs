@@ -3,6 +3,28 @@ use std::sync::Mutex;
 
 static BACKEND: Mutex<Option<Child>> = Mutex::new(None);
 
+fn start_backend(path: &std::path::Path) -> Option<Child> {
+    let run_script = path.join("run.sh");
+    if !run_script.exists() {
+        eprintln!("Backend run.sh not found at {:?}", run_script);
+        return None;
+    }
+    match Command::new("sh")
+        .arg(&run_script)
+        .current_dir(path)
+        .spawn()
+    {
+        Ok(child) => {
+            println!("Backend started (pid={}) from {:?}", child.id(), path);
+            Some(child)
+        }
+        Err(e) => {
+            eprintln!("Backend start error: {}", e);
+            None
+        }
+    }
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -17,22 +39,17 @@ pub fn run() {
 
             if let Ok(exe) = std::env::current_exe() {
                 if let Some(exe_dir) = exe.parent() {
-                    let backend_path = if exe_dir.ends_with("MacOS") {
+                    let backend_dir = if exe_dir.ends_with("MacOS") {
                         exe_dir.parent()
-                            .map(|p| p.join("Resources").join("backend").join("listening-backend"))
+                            .map(|p| p.join("Resources").join("backend"))
                     } else {
-                        Some(exe_dir.join("listening-backend"))
+                        Some(exe_dir.join("backend"))
                     };
 
-                    if let Some(ref path) = backend_path {
-                        if path.exists() {
-                            match Command::new(path).spawn() {
-                                Ok(child) => {
-                                    if let Ok(mut guard) = BACKEND.lock() {
-                                        *guard = Some(child);
-                                    }
-                                }
-                                Err(e) => eprintln!("Backend start error: {}", e),
+                    if let Some(ref dir) = backend_dir {
+                        if let Some(child) = start_backend(dir) {
+                            if let Ok(mut guard) = BACKEND.lock() {
+                                *guard = Some(child);
                             }
                         }
                     }

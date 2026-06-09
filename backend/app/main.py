@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from database import init_db
+from database import init_db, get_conn as get_db
 
 init_db()
 
@@ -14,7 +14,7 @@ app = FastAPI(title="英语听力 API", version="0.3.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -97,11 +97,18 @@ def save_translation(data: dict):
     }
 
 
-# Serve frontend static files for desktop production mode
+@app.get("/api/health")
+def health():
+    return {"status": "ok"}
+
+
+# Serve frontend static files (must be last — mount at `/` catches everything)
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), '../../frontend/dist')
 if os.path.isdir(FRONTEND_DIR) and os.path.exists(os.path.join(FRONTEND_DIR, 'index.html')):
     app.mount('/', StaticFiles(directory=FRONTEND_DIR, html=True), name='frontend')
 
-@app.get("/api/health")
-def health():
-    return {"status": "ok"}
+
+# ── Direct server entry (used by PyInstaller bundles) ──
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000, reload=False, log_level="info")

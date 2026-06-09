@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { HiCloudArrowUp, HiCheck, HiXMark, HiMusicalNote, HiArrowPath } from 'react-icons/hi2';
+import { API_BASE } from '../lib/api';
 
 const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -35,7 +36,7 @@ export default function ImportView() {
     setPolling(true);
     const poll = async () => {
       try {
-        const r = await fetch(`/api/lessons/import/${taskId}`);
+        const r = await fetch(`${API_BASE}/api/lessons/import/${taskId}`);
         const data: ImportTask = await r.json();
         setTask(data);
         if (data.status === 'completed' || data.status === 'failed') {
@@ -59,7 +60,7 @@ export default function ImportView() {
     form.append('level', level);
     form.append('source_url', sourceUrl.trim());
     try {
-      const r = await fetch('/api/lessons/import', { method: 'POST', body: form });
+      const r = await fetch(`${API_BASE}/api/lessons/import`, { method: 'POST', body: form });
       const data = await r.json();
       setTask({ ...data, progress: 0 });
       pollStatus(data.task_id);
@@ -162,7 +163,7 @@ export default function ImportView() {
                 {task.status === 'completed' && <HiCheck size={20} className="text-emerald-500" />}
                 {task.status === 'failed' && <HiXMark size={20} className="text-red-500" />}
                 {['pending', 'transcribing', 'aligning'].includes(task.status) && (
-                  <HiArrowPath size={16} className="text-tertiary animate-spin" />
+                  <HiArrowPath size={16} className="text-tertiary" />
                 )}
               </div>
               <div className="h-1.5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">

@@ -2,3 +2,10 @@
 # will have compiled files and executables
 /target/
 /gen/schemas
+
+# Backend bundle (auto-created before Tauri build)
+backend-bundle/
+
+# Legacy PyInstaller binary (replaced by directory packaging)
+listening-backend
+test-backend

@@ -12,10 +12,10 @@ const REPEAT_LABELS: Record<string, string> = {
   sequential: '顺序', 'repeat-all': '全部循环', shuffle: '随机', 'repeat-one': '单曲循环',
 };
 
-function ItemIcon({ kind }: { kind: string }) {
+function ItemIcon({ kind, color }: { kind: string; color?: string }) {
   switch (kind) {
     case 'lesson': return <HiMusicalNote size={14} className="text-tertiary" />;
-    case 'clip': return <HiBookmark size={14} className="text-amber-500" />;
+    case 'clip': return <HiBookmark size={14} style={{ color: color || '#f59e0b' }} />;
     case 'sentence': return <HiClock size={14} className="text-violet-400" />;
     case 'word': return <HiTag size={14} className="text-blue-400" />;
     default: return <HiMusicalNote size={14} className="text-tertiary" />;
@@ -123,8 +123,8 @@ export default function QueuePanel({ open, onClose }: Props) {
                     onClick={() => handlePlay(item, idx)}>
                     <span className="text-[10px] text-tertiary font-mono w-4 text-right flex-shrink-0">{idx + 1}</span>
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'var(--card-gradient)' }}>
-                      <ItemIcon kind={item.kind} />
+                      style={{ background: item.kind === 'clip' ? (item.clip.color || '#facc15') + '30' : 'var(--card-gradient)' }}>
+                      <ItemIcon kind={item.kind} color={item.kind === 'clip' ? item.clip.color : undefined} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-medium text-primary truncate">{title}</p>
@@ -149,8 +149,8 @@ export default function QueuePanel({ open, onClose }: Props) {
                       className="group flex items-center gap-3 px-5 py-2 hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
                       onClick={() => handlePlay(item)}>
                       <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'var(--card-gradient)' }}>
-                        <ItemIcon kind={item.kind} />
+                        style={{ background: item.kind === 'clip' ? (item.clip.color || '#facc15') + '30' : 'var(--card-gradient)' }}>
+                        <ItemIcon kind={item.kind} color={item.kind === 'clip' ? item.clip.color : undefined} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs text-primary truncate">{queueItemLabel(item)}</p>

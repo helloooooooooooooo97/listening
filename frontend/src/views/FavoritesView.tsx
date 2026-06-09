@@ -133,7 +133,7 @@ export default function FavoritesView() {
       <div className="flex-1 overflow-y-auto px-8 py-6">
         {!loaded ? (
           <div className="flex items-center justify-center py-16">
-            <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
           </div>
         ) : activeItems.length === 0 ? (
           <div className="text-center py-16">

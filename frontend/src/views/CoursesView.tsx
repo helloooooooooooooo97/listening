@@ -1,9 +1,9 @@
 import { useState, useRef, useCallback } from 'react';
-import { HiMusicalNote, HiMagnifyingGlass, HiHeart, HiCloudArrowUp, HiXMark, HiArrowPath } from 'react-icons/hi2';
+import { HiMusicalNote, HiMagnifyingGlass, HiHeart, HiCloudArrowUp, HiXMark, HiArrowPath, HiChevronDown } from 'react-icons/hi2';
 import type { LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
-import { getLessonById } from '../lib/api';
+import { API_BASE, getLessonById } from '../lib/api';
 
 interface Props {
   lessons: LessonSummary[];
@@ -12,6 +12,8 @@ interface Props {
 function fmtDuration(s: number) { const m = Math.floor(s/60); return `${m}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
 
 const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+
+const PAGE_SIZE = 30;
 
 export default function CoursesView({ lessons }: Props) {
   const [search, setSearch] = useState('');
@@ -24,6 +26,7 @@ export default function CoursesView({ lessons }: Props) {
   const [sourceUrl, setSourceUrl] = useState('');
   const [importing, setImporting] = useState(false);
   const [importTask, setImportTask] = useState<{ status: string; progress: number; error?: string } | null>(null);
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
   const fileRef = useRef<HTMLInputElement>(null);
 
   const playLesson = useAudioStore(s => s.playLesson);
@@ -58,14 +61,14 @@ export default function CoursesView({ lessons }: Props) {
       formData.append('subtitle', subtitle.trim() || title.trim());
       formData.append('level', level);
       formData.append('source_url', sourceUrl);
-      const r = await fetch('/api/import/upload', { method: 'POST', body: formData });
+      const r = await fetch(`${API_BASE}/api/import/upload`, { method: 'POST', body: formData });
       const data = await r.json();
       if (data.task_id) {
         setImportTask({ status: 'processing', progress: 0 });
         // Poll for completion
         const poll = setInterval(async () => {
           try {
-            const res = await fetch(`/api/import/status/${data.task_id}`);
+            const res = await fetch(`${API_BASE}/api/import/status/${data.task_id}`);
             const st = await res.json();
             setImportTask(st);
             if (st.status === 'completed' || st.status === 'error') {
@@ -112,7 +115,7 @@ export default function CoursesView({ lessons }: Props) {
 
             {importing && importTask ? (
               <div className="text-center py-6">
-                <HiArrowPath size={24} className="text-[var(--accent)] mx-auto mb-3 animate-spin" />
+                <HiArrowPath size={24} className="text-[var(--accent)] mx-auto mb-3" />
                 <p className="text-sm text-secondary">
                   {importTask.status === 'uploading' ? '上传中...' :
                    importTask.status === 'processing' ? '转写中（约1-3分钟）...' :
@@ -164,14 +167,17 @@ export default function CoursesView({ lessons }: Props) {
 
       <div className="flex-1 overflow-y-auto px-8 pb-8">
         {fL.length===0 ? <p className="text-center text-tertiary py-16">{search?'无匹配音频':'暂无音频'}</p> : (
-          Object.entries(grouped).map(([category, items]) => (
+          Object.entries(grouped).map(([category, items]) => {
+            const expanded = expandedCategories.has(category) || !!search;
+            const visible = expanded ? items : items.slice(0, PAGE_SIZE);
+            return (
             <div key={category} className="mb-8">
               <div className="flex items-center gap-2 mb-3">
                 <h2 className="text-sm font-bold text-secondary uppercase tracking-wider">{category}</h2>
                 <span className="text-xs text-tertiary">{items.length} 节</span>
               </div>
               <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2">
-                {items.map(l=>{
+                {visible.map(l=>{
                   const fav = isFav(l.id, 'audio');
                   return (
                   <div key={l.id} onClick={()=>getLessonById(l.id).then(d=>playLesson(d))}
@@ -193,8 +199,15 @@ export default function CoursesView({ lessons }: Props) {
                   );
                 })}
               </div>
+              {!expanded && items.length > PAGE_SIZE && (
+                <button onClick={() => setExpandedCategories(s => new Set(s).add(category))}
+                  className="mt-3 flex items-center gap-1 text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">
+                  <HiChevronDown size={12} /> 显示全部 {items.length} 节
+                </button>
+              )}
             </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>

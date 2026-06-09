@@ -81,7 +81,6 @@
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
     background: var(--bg-primary);
     font-size: 16px;
-    transition: background 0.3s, color 0.3s;
   }
 
   ::-webkit-scrollbar { width: 4px; }
@@ -91,16 +90,12 @@
 }
 
 @layer components {
-  /* ── Frosted glass ── */
+  /* ── Surface (no backdrop-filter — Safari doesn't GPU-accelerate it) ── */
   .glass {
     background: var(--glass-bg);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
   }
   .glass-light {
     background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
   }
 
   /* ── Surface helpers ── */
@@ -122,8 +117,9 @@
   /* ── Transcript — professional reading style ── */
   .transcript-line {
     cursor: pointer;
-    transition: background 0.2s;
+    transition: box-shadow 0.2s, background 1ms;
     background: transparent;
+    border-radius: 4px;
   }
   .transcript-line:hover {
     background: var(--bg-hover);
@@ -133,7 +129,8 @@
   }
   .transcript-word {
     @apply inline rounded px-0.5;
-    transition: background 0.2s ease-out, transform 0.2s ease-out, color 0.2s ease-out;
+    transition: transform 0.2s ease-out;
+    will-change: transform;
   }
   .transcript-word.active {
     background: var(--accent-soft);
@@ -159,10 +156,10 @@
     from { transform: scale(0.92); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
   }
-  .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-  .animate-slide-down { animation: slide-down 0.3s ease-in forwards; }
-  .animate-fade-in { animation: fade-in 0.5s ease-out; }
-  .animate-scale-in { animation: scale-in 0.3s ease-out; }
+  .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
+  .animate-slide-down { animation: slide-down 0.3s ease-in forwards; will-change: transform, opacity; }
+  .animate-fade-in { animation: fade-in 0.5s ease-out; will-change: transform, opacity; }
+  .animate-scale-in { animation: scale-in 0.3s ease-out; will-change: transform, opacity; }
 
   @keyframes slide-down {
     from { transform: translateY(0); opacity: 1; }

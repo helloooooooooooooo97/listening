@@ -315,7 +315,7 @@ export default function SettingsView() {
                 </button>
                 <button onClick={handleTest} disabled={!apiKey.trim() || testing}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-[var(--border-primary)] text-secondary hover:bg-[var(--bg-tertiary)] disabled:opacity-40 transition-colors cursor-pointer">
-                  {testing ? <HiArrowPath size={13} className="animate-spin" /> : testResult === 'ok' ? <HiCheck size={13} className="text-emerald-500" /> : testResult === 'fail' ? <HiXMark size={13} className="text-red-500" /> : null}
+                  {testing ? <HiArrowPath size={13} /> : testResult === 'ok' ? <HiCheck size={13} className="text-emerald-500" /> : testResult === 'fail' ? <HiXMark size={13} className="text-red-500" /> : null}
                   {testing ? '测试中...' : testResult === 'ok' ? '连接成功' : testResult === 'fail' ? '连接失败' : '测试连接'}
                 </button>
                 {providers.find(p => p.id === selectedId) && (

@@ -1,4 +1,4 @@
-.PHONY: backend frontend dev build clean clear restart install
+.PHONY: backend frontend dev build clean clear restart install bundle-backend desktop build-mac
 
 # 默认目标：同时启动前后端
 dev:
@@ -67,7 +67,38 @@ help:
 	@echo "  make backend  仅启动后端 API"
 	@echo "  make frontend 仅启动前端"
 	@echo "  make install  安装所有依赖"
-	@echo "  make build    构建前端生产版本"
-	@echo "  make clean    清理构建产物"
-	@echo "  make clear    清空数据库（删除所有记录）"
-	@echo "  make restart  杀掉端口进程后重新启动"
+	@echo "  make build      构建前端生产版本"
+	@echo "  make clean      清理构建产物"
+	@echo "  make clear      清空数据库（删除所有记录）"
+	@echo "  make restart    杀掉端口进程后重新启动"
+	@echo "  make desktop     启动桌面应用 (Tauri dev)"
+	@echo "  make build-mac   构建 .dmg 安装包（mac 桌面版）"
+
+# 停止所有服务
+stop:
+	@echo "🛑 停止后端..."
+	@lsof -ti:8000 | xargs kill -9 2>/dev/null || true
+	@echo "   ✅ 后端已停止"
+	@echo "🛑 停止前端..."
+	@lsof -ti:5173 | xargs kill -9 2>/dev/null || true
+	@echo "   ✅ 前端已停止"
+	@echo "🛑 停止 Tauri..."
+	@-kill $$(ps aux | grep -i "97 LISTENING.app" | grep -v grep | awk '{print $$2}') 2>/dev/null || true
+	@echo "   ✅ Tauri 已停止"
+	@echo "✨ 全部已停止"
+
+# 打包后端（将 venv + 代码 + 数据打包进 Tauri .app 的 Resources/）
+bundle-backend:
+	@echo "📦 后端已配置为 Tauri 目录打包 (tauri.conf.json → resources)"
+	@echo "   打包时自动包含: backend/{app,data,.venv,run.sh}"
+	@echo "   无需额外步骤。运行 'make desktop' 或 'npx tauri build' 即可"
+
+# 启动桌面应用（Tauri dev 模式）
+desktop:
+	@echo "🖥️  启动桌面应用..."
+	@cd frontend && npx tauri dev
+
+# 构建 macOS 桌面版 .dmg 安装包
+build-mac:
+	@echo "📦 构建 macOS 桌面版..."
+	@bash scripts/build-mac.sh

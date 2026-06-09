@@ -156,7 +156,7 @@ export default function WordsView() {
               <div ref={loaderRef} className="h-4" />
               {loadingMore && (
                 <div className="flex justify-center py-4">
-                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
                 </div>
               )}
               {words.length===0&&!loading&&<p className="text-tertiary text-sm py-8">无匹配单词</p>}

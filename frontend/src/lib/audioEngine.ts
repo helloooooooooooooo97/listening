@@ -1,4 +1,5 @@
 /** Audio element singleton and lifecycle management. */
+import { API_BASE } from './api';
 
 let _audio: HTMLAudioElement | null = null;
 export function getAudio(): HTMLAudioElement {
@@ -23,7 +24,7 @@ export function setSavedRate(r: number) {
 }
 
 export function switchSource(lessonId: string, onSwitch?: () => void): boolean {
-  const url = `/api/lessons/${lessonId}/audio`;
+  const url = `${API_BASE}/api/lessons/${lessonId}/audio`;
   if (_currentSrc === url) return false;
   onSwitch?.();
   _currentSrc = url;
@@ -59,7 +60,7 @@ export function preloadLessonAudio(lessonIds: string[]) {
     if (_preloadPool.has(id)) continue;
     const el = new Audio();
     el.preload = 'auto';
-    el.src = `/api/lessons/${id}/audio`;
+    el.src = `${API_BASE}/api/lessons/${id}/audio`;
     el.load();
     el.volume = 0;
     _preloadPool.set(id, el);

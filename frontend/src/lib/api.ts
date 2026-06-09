@@ -3,7 +3,7 @@
 import type { AudioClip, LessonSummary, ListeningLesson, CollectionSummary, CollectionItem, CollectionDetail } from '../types/lesson';
 
 // ── API Base URL (absolute URL for Tauri desktop mode) ──
-const API_BASE = 'http://127.0.0.1:8000';
+export const API_BASE = 'http://127.0.0.1:8000';
 
 // ── Helpers ──
 
@@ -230,11 +230,11 @@ export function addFavorite(data: {
 }
 
 export function removeFavorite(id: number): Promise<{ ok: boolean }> {
-  return fetch(`/api/favorites/${id}`, { method: 'DELETE' }).then(r => r.json());
+  return fetch(`${API_BASE}/api/favorites/${id}`, { method: 'DELETE' }).then(r => r.json());
 }
 
 export function removeFavoriteByItem(item_type: string, item_id: string): Promise<{ ok: boolean }> {
-  return fetch(`/api/favorites/by-item/${item_type}/${encodeURIComponent(item_id)}`, { method: 'DELETE' }).then(r => r.json());
+  return fetch(`${API_BASE}/api/favorites/by-item/${item_type}/${encodeURIComponent(item_id)}`, { method: 'DELETE' }).then(r => r.json());
 }
 
 // ── Dictation Sentences ──
@@ -283,7 +283,7 @@ export function createCollection(data: { name: string; icon?: string; color?: st
 }
 
 export function updateCollection(id: number, data: { name?: string; icon?: string; color?: string }): Promise<CollectionSummary> {
-  return fetch(`/api/collections/${id}`, {
+  return fetch(`${API_BASE}/api/collections/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -317,7 +317,7 @@ export function removeCollectionItem(collectionId: number, itemId: number): Prom
 }
 
 export function reorderCollectionItems(collectionId: number, itemIds: number[]): Promise<{ ok: boolean }> {
-  return fetch(`/api/collections/${collectionId}/items/reorder`, {
+  return fetch(`${API_BASE}/api/collections/${collectionId}/items/reorder`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ item_ids: itemIds }),

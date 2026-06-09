@@ -1,6 +1,15 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { extractWaveform, cacheWaveform, getCachedWaveform } from '../lib/waveform';
 import { useThemeStore } from '../stores/themeStore';
+import { API_BASE } from '../lib/api';
+
+/** Build the audio URL: relative path in browser dev mode (Vite proxy), full URL in Tauri. */
+function audioUrl(lessonId: string): string {
+  const isBrowser = typeof window !== 'undefined' && (window.location.protocol === 'http:' || window.location.protocol === 'https:');
+  return isBrowser
+    ? `/api/lessons/${lessonId}/audio`           // Vite proxy handles it
+    : `${API_BASE}/api/lessons/${lessonId}/audio`; // Tauri production
+}
 
 /** Resolve a CSS variable value for use in Canvas 2D context. */
 function cssVar(name: string, fallback = '#fa2d48'): string {
@@ -72,7 +81,7 @@ export default function Waveform({
         return;
       }
       try {
-        const data = await extractWaveform(`/api/lessons/${lessonId}/audio`);
+        const data = await extractWaveform(audioUrl(lessonId));
         cacheWaveform(key, data);
         peaksRef.current = data.peaks;
         if (!cancelled) setReady(true);

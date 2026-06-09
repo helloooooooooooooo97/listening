@@ -6,12 +6,9 @@ from datetime import datetime, timedelta
 from fastapi import APIRouter, Query
 
 from database import get_conn, locked
-from services import LESSONS_DIR, _load_lesson
+from services import list_lessons, get_stats as get_lesson_stats
 
 router = APIRouter(prefix="/api/stats", tags=["stats"])
-
-# Count audio JSON files once at module load
-_audio_file_count: int = len(list(LESSONS_DIR.glob("*.json"))) if LESSONS_DIR.exists() else 0
 
 
 @router.get("/overview")
@@ -50,7 +47,7 @@ def overview():
         streak += 1
         d -= timedelta(days=1)
 
-    # Total words — from occurrences table, else scan lesson JSONs
+    # Total words — from occurrences table, else use cached lesson stats
     total_words = 0
     try:
         wc = conn.execute("SELECT COUNT(DISTINCT word) FROM word_occurrences").fetchone()[0]
@@ -59,16 +56,12 @@ def overview():
     except Exception:
         pass
     if total_words == 0:
-        try:
-            all_w = {w.text.strip().lower() for f in LESSONS_DIR.glob("*.json") for w in _load_lesson(f).words}
-            total_words = len(all_w)
-        except Exception:
-            pass
+        total_words = get_lesson_stats().get("uniqueWords", 0)
 
     return {
         "total_listening_seconds": total_sec,
         "completed_audios": completed,
-        "total_audios": max(total_audios, _audio_file_count),
+        "total_audios": max(total_audios, len(list_lessons())),
         "avg_dictation_score": round(avg_score, 1),
         "dictation_total_sentences": dict_sentences,
         "words_mastered": words_mastered,
