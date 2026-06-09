@@ -52,7 +52,7 @@ from .words import router as words_router
 from .progress_api import router as progress_router
 from .stats_api import router as stats_router
 from .import_api import router as import_router
-from .collections_api import router as collections_router
+from .collections import router as collections_router
 
 routers = [
     router,             # lessons
