@@ -252,9 +252,6 @@ export default function PlayerBar({ onQueueToggle }: Props) {
 
             {(isL || isC) && <>
               <button onClick={e=>{e.stopPropagation();handlePlayNext();}} className="text-secondary hover:text-primary transition-colors cursor-pointer" title="下一首"><HiForward size={15}/></button>
-              <span className="text-[11px] text-tertiary font-mono tabular-nums min-w-[70px] text-center select-none opacity-0 group-hover:opacity-100 transition-opacity">
-                {hasContent ? `${Math.floor(cur/60)}:${Math.floor(cur%60).toString().padStart(2,'0')} / ${Math.floor(dur/60)}:${Math.floor(dur%60).toString().padStart(2,'0')}` : '--:-- / --:--'}
-              </span>
               <div className="relative volume-dropdown">
                 <button onClick={e => { e.stopPropagation(); setVolumeOpen(!volumeOpen); setSpeedOpen(false); setLoopOpen(false); }}
                   className="flex items-center justify-center w-8 h-8 rounded-lg text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-all cursor-pointer"

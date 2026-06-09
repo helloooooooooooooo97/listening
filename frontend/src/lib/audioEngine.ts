@@ -53,6 +53,27 @@ export function findSentenceIndex(lesson: { transcript: { start: number }[] } | 
   return 0;
 }
 
+/**
+ * Safely call audio.play() — Safari/WKWebView rejects the Promise when
+ * auto-advancing between clips (different audio sources) without a user gesture.
+ * We catch the rejection silently so the error doesn't bubble, and return
+ * whether playback actually started.
+ */
+export function safePlay(a: HTMLAudioElement): Promise<boolean> {
+  const p = a.play();
+  if (p === undefined) return Promise.resolve(false);
+  return p.then(() => true).catch((err: DOMException) => {
+    if (err.name === 'NotAllowedError' || err.name === 'AbortError') {
+      // Safari: autoplay blocked on src change without user gesture.
+      // Chrome/Firefox: AbortError when play() is interrupted by pause().
+      // Both are expected in the clip-to-clip transition path.
+      return false;
+    }
+    // Unexpected error — rethrow to let the error handler set the UI state
+    throw err;
+  });
+}
+
 // Preload pool
 const _preloadPool = new Map<string, HTMLAudioElement>();
 export function preloadLessonAudio(lessonIds: string[]) {
