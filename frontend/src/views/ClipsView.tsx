@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { HiBookmark, HiHeart, HiMagnifyingGlass, HiPlay } from 'react-icons/hi2';
-import type { AudioClip, ClipAnalysis } from '../types/lesson';
+import type { AudioClip } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
-import { useAiStore } from '../stores/aiStore';
+import { useClipAnalysis } from '../hooks/useClipAnalysis';
 import ClipActions from '../components/ClipActions';
 import ClipAnalysisModal from '../components/ClipAnalysisModal';
 
@@ -20,15 +20,12 @@ function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',
 export default function ClipsView({ clips, onDeleteClip }: Props) {
   const [search, setSearch] = useState('');
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
-  const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
-  const [analyzingClips, setAnalyzingClips] = useState<Set<string>>(new Set());
-  const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
 
   const playClip = useAudioStore(s => s.playClip);
   const favToggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
   const updateClip = useClipsStore(s => s.updateClip);
-  const analyzeClipFn = useAiStore(s => s.analyzeClip);
   const addToast = useToastStore(s => s.addToast);
   const addToQueue = usePlaylistStore(s => s.addToQueue);
 
@@ -41,20 +38,6 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
       onDeleteClip(id);
       setRemovingIds(prev => { const next = new Set(prev); next.delete(id); return next; });
     }, 280);
-  };
-
-  const handleAnalyze = (text: string) => {
-    if (clipAnalyses.has(text) || analyzingClips.has(text)) return;
-    setAnalyzingClips(prev => new Set(prev).add(text));
-    analyzeClipFn(text)
-      .then(analysis => {
-        setClipAnalyses(prev => new Map(prev).set(text, analysis));
-        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
-      })
-      .catch(() => {
-        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
-        addToast('AI 分析失败', 'error');
-      });
   };
 
   const handlePlayAll = () => {

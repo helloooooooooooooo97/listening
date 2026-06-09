@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { HiArrowLeft, HiPlay, HiMusicalNote, HiBookmark, HiClock, HiTag, HiTrash, HiQueueList, HiPlusCircle, HiAdjustmentsHorizontal } from 'react-icons/hi2';
 import { useCollectionsStore } from '../stores/collectionsStore';
@@ -6,10 +6,12 @@ import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
-import { useAiStore } from '../stores/aiStore';
 import { getLessonById } from '../lib/api';
 import { collectionItemToQueueItem, collectionItemsToQueueItems } from '../lib/collectionQueue';
-import type { AudioClip, CollectionItem, ClipAnalysis } from '../types/lesson';
+import { useClipAnalysis } from '../hooks/useClipAnalysis';
+import { useCollectionFilter, COLOR_HEX } from '../hooks/useCollectionFilter';
+import { normalizeColor } from '../constants/colors';
+import type { AudioClip, CollectionItem } from '../types/lesson';
 import ClipActions from '../components/ClipActions';
 import ClipAnalysisModal from '../components/ClipAnalysisModal';
 
@@ -28,11 +30,6 @@ function getExtraColor(extraData?: string): string {
   } catch {
     return '';
   }
-}
-
-function normalizeColor(color?: string): string {
-  const value = color?.trim().toLowerCase() || '';
-  return value.length === 9 && value.endsWith('ff') ? value.slice(0, 7) : value;
 }
 
 function getCollectionClipColor(item: CollectionItem, allClips: AudioClip[]): string {
@@ -61,28 +58,9 @@ export default function CollectionDetailView() {
   const [playTypes, setPlayTypes] = useState<Set<string>>(new Set(['audio', 'clip', 'sentence', 'word']));
   const [playShuffle, setPlayShuffle] = useState(false);
   const [playColors, setPlayColors] = useState<Set<string>>(new Set());
-
-  // AI analysis state
-  const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
-  const [analyzingClips, setAnalyzingClips] = useState<Set<string>>(new Set());
-  const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
-  const analyzeClipFn = useAiStore(s => s.analyzeClip);
   const updateClip = useClipsStore(s => s.updateClip);
   const removeClip = useClipsStore(s => s.removeClip);
-
-  const handleAnalyzeClip = (text: string) => {
-    if (clipAnalyses.has(text) || analyzingClips.has(text)) return;
-    setAnalyzingClips(prev => new Set(prev).add(text));
-    analyzeClipFn(text)
-      .then(analysis => {
-        setClipAnalyses(prev => new Map(prev).set(text, analysis));
-        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
-      })
-      .catch(() => {
-        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
-        addToast('AI 分析失败', 'error');
-      });
-  };
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
 
   useEffect(() => {
     if (collectionId) {
@@ -351,7 +329,7 @@ export default function CollectionDetailView() {
                           size="sm"
                           analysis={clipAnalyses.get(clip.text) ?? null}
                           isAnalyzing={analyzingClips.has(clip.text)}
-                          onAnalyze={handleAnalyzeClip}
+                          onAnalyze={handleAnalyze}
                           onViewAnalysis={setViewingAnalysis}
                           onEdit={(id, data) => updateClip(id, data)}
                           onDelete={id => removeClip(id)}
@@ -391,7 +369,6 @@ export default function CollectionDetailView() {
 }
 
 /* ── Play Config Panel ── */
-const COLOR_HEX = ['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'];
 
 function PlayConfigPanel({
   items,

@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { HiHeart, HiPlay, HiMusicalNote, HiBookmark, HiTag, HiCheckCircle, HiTrash } from 'react-icons/hi2';
-import type { ClipAnalysis } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useClipsStore } from '../stores/clipsStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
-import { useAiStore } from '../stores/aiStore';
 import { removeFavorite, getLessonById } from '../lib/api';
+import { useClipAnalysis } from '../hooks/useClipAnalysis';
 import ClipActions from '../components/ClipActions';
 import ClipAnalysisModal from '../components/ClipAnalysisModal';
 
@@ -30,13 +29,9 @@ export default function FavoritesView() {
   const playClip = useAudioStore(s => s.playClip);
   const addToast = useToastStore(s => s.addToast);
   const addToQueue = usePlaylistStore(s => s.addToQueue);
-  const analyzeClipFn = useAiStore(s => s.analyzeClip);
-
   const [selectMode, setSelectMode] = useState(false);
   const [selected, setSelected] = useState<Set<number>>(new Set());
-  const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
-  const [analyzingClips, setAnalyzingClips] = useState<Set<string>>(new Set());
-  const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
 
   useEffect(() => {
     if (!loaded) loadFavorites();
@@ -89,20 +84,6 @@ export default function FavoritesView() {
         playClip({ id: item.item_id, lessonId, lessonTitle: lesson.title, startWordId: '', endWordId: '', startTime: data.start || 0, endTime: data.end || 0, text: item.subtitle || '', note: '', color: '#facc15', createdAt: '' }, lesson);
       }
     } catch (e) { console.error('播放收藏失败', e); }
-  };
-
-  const handleAnalyze = (text: string) => {
-    if (clipAnalyses.has(text) || analyzingClips.has(text)) return;
-    setAnalyzingClips(prev => new Set(prev).add(text));
-    analyzeClipFn(text)
-      .then(analysis => {
-        setClipAnalyses(prev => new Map(prev).set(text, analysis));
-        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
-      })
-      .catch(() => {
-        setAnalyzingClips(prev => { const n = new Set(prev); n.delete(text); return n; });
-        addToast('AI 分析失败', 'error');
-      });
   };
 
   // Group clip favorites by audio for play-all
