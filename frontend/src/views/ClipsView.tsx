@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import { HiBookmark, HiMagnifyingGlass, HiTrash, HiHeart } from 'react-icons/hi2';
+import { HiBookmark, HiHeart, HiMagnifyingGlass, HiPlay } from 'react-icons/hi2';
 import type { AudioClip } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
+import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
+import { usePlaylistStore } from '../stores/playlistStore';
+import { useToastStore } from '../stores/toastStore';
+import { useClipAnalysis } from '../hooks/useClipAnalysis';
+import ClipActions from '../components/ClipActions';
+import ClipAnalysisModal from '../components/ClipAnalysisModal';
 
 interface Props {
   clips: AudioClip[];
@@ -14,9 +20,15 @@ function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',
 export default function ClipsView({ clips, onDeleteClip }: Props) {
   const [search, setSearch] = useState('');
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+
   const playClip = useAudioStore(s => s.playClip);
   const favToggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
+  const updateClip = useClipsStore(s => s.updateClip);
+  const addToast = useToastStore(s => s.addToast);
+  const addToQueue = usePlaylistStore(s => s.addToQueue);
+
   const q = search.toLowerCase();
   const fC = clips.filter(c => c.text.toLowerCase().includes(q) || c.note.toLowerCase().includes(q) || c.lessonTitle.toLowerCase().includes(q));
 
@@ -28,15 +40,38 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
     }, 280);
   };
 
+  const handlePlayAll = () => {
+    if (fC.length === 0) {
+      addToast('没有可播放的条目', 'info');
+      return;
+    }
+    const ps = usePlaylistStore.getState();
+    const queueItems = fC.map(c => ({ kind: 'clip' as const, clip: c }));
+    ps.clearQueue();
+    ps.addAllToQueue(queueItems);
+    ps.setCurrentIndex(0);
+    playClip(fC[0]);
+    addToast(`即将播放 ${fC.length} 个片段`, 'success');
+  };
+
   return (
     <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
       <div className="flex-shrink-0 px-8 pt-10 pb-4">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-extrabold text-primary tracking-tight">片段</h1>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary"><HiMagnifyingGlass size={13} /></span>
-            <input type="text" placeholder="搜索片段" value={search} onChange={e=>setSearch(e.target.value)}
-              className="w-56 pl-8 pr-3 py-1.5 text-xs bg-[var(--bg-tertiary)] border-0 rounded-md focus:outline-none focus:ring-1 focus:ring-white/10 text-primary placeholder:text-tertiary"/>
+          <div className="flex items-center gap-3">
+            {fC.length > 0 && (
+              <button onClick={handlePlayAll}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold on-accent transition-all hover:opacity-90 cursor-pointer shadow-lg shadow-[var(--accent)]/20"
+                style={{ background: 'var(--accent)' }}>
+                <HiPlay size={14} /> 播放全部
+              </button>
+            )}
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary"><HiMagnifyingGlass size={13} /></span>
+              <input type="text" placeholder="搜索片段" value={search} onChange={e=>setSearch(e.target.value)}
+                className="w-56 pl-8 pr-3 py-1.5 text-xs bg-[var(--bg-tertiary)] border-0 rounded-md focus:outline-none focus:ring-1 focus:ring-white/10 text-primary placeholder:text-tertiary"/>
+            </div>
           </div>
         </div>
       </div>
@@ -79,8 +114,17 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
                                 className={`p-1.5 rounded-lg transition-colors cursor-pointer ${isFav(clip.id,'clip') ? 'text-[var(--accent)]' : 'text-tertiary opacity-0 group-hover:opacity-100 hover:text-tertiary'}`}>
                                 <HiHeart size={13} />
                               </button>
-                              <button onClick={e=>{e.stopPropagation();handleDelete(clip.id);}}
-                                className="text-tertiary hover:text-[var(--accent)] transition-colors opacity-0 group-hover:opacity-100"><HiTrash size={13}/></button>
+                              <ClipActions
+                                clip={clip}
+                                size="sm"
+                                analysis={clipAnalyses.get(clip.text) ?? null}
+                                isAnalyzing={analyzingClips.has(clip.text)}
+                                onAnalyze={handleAnalyze}
+                                onViewAnalysis={setViewingAnalysis}
+                                onEdit={(id, data) => updateClip(id, data)}
+                                onDelete={handleDelete}
+                                onAddToQueue={c => { addToQueue({ kind: 'clip', clip: c }); addToast('已加入队列', 'success'); }}
+                              />
                             </div>
                           </div>
                         </div>
@@ -93,6 +137,10 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
           </div>
         )}
       </div>
+
+      {viewingAnalysis && (
+        <ClipAnalysisModal analysis={viewingAnalysis} onClose={() => setViewingAnalysis(null)} />
+      )}
     </div>
   );
 }

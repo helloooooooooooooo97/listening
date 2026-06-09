@@ -9,11 +9,12 @@ import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
 import { useSettingsStore } from '../stores/settingsStore';
-import { useAiStore } from '../stores/aiStore';
 import type { WordResult } from '../stores/dictationStore';
-import type { ClipAnalysis } from '../types/lesson';
+import { useClipAnalysis } from '../hooks/useClipAnalysis';
 import WordBadges from './dictation/WordBadges';
 import TranscriptView from './TranscriptView';
+import ClipActions from './ClipActions';
+import ClipAnalysisModal from './ClipAnalysisModal';
 
 type SideTab = 'clips' | 'dictation' | 'favorites';
 
@@ -41,14 +42,8 @@ export default function PlaybackDetailTabs({
   const [hoveredClipId, setHoveredClipId] = useState<string | null>(null);
   const [collapsed, setCollapsed] = useState(false);
   const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
-  const [editingClipId, setEditingClipId] = useState<string | null>(null);
-  const [editNote, setEditNote] = useState('');
-  const [editingColor, setEditingColor] = useState('#facc15');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
-  const [clipAnalyses, setClipAnalyses] = useState<Map<string, ClipAnalysis>>(new Map());
-  const [viewingAnalysis, setViewingAnalysis] = useState<ClipAnalysis | null>(null);
-  const [analyzingClips, setAnalyzingClips] = useState<Set<string>>(new Set());
-  const analyzeClipFn = useAiStore(s => s.analyzeClip);
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
   const lyricDisplayMode = useSettingsStore(s => s.settings.lyricDisplayMode);
   const translationEnabled = useSettingsStore(s => s.settings.translationEnabled);
   const setTranslationEnabled = useSettingsStore(s => s.setTranslationEnabled);
@@ -69,23 +64,6 @@ export default function PlaybackDetailTabs({
     if (clipSort === 'date') return [...filtered].sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
     return [...filtered].sort((a, b) => a.startTime - b.startTime);
   }, [clips, lesson.id, clipSort]);
-
-  // Auto-analyze clips when they load
-  useEffect(() => {
-    for (const clip of lessonClips) {
-      if (!clipAnalyses.has(clip.text) && !analyzingClips.has(clip.text)) {
-        setAnalyzingClips(prev => new Set(prev).add(clip.text));
-        analyzeClipFn(clip.text)
-          .then(analysis => {
-            setClipAnalyses(prev => new Map(prev).set(clip.text, analysis));
-            setAnalyzingClips(prev => { const n = new Set(prev); n.delete(clip.text); return n; });
-          })
-          .catch(() => {
-            setAnalyzingClips(prev => { const n = new Set(prev); n.delete(clip.text); return n; });
-          });
-      }
-    }
-  }, [lessonClips.length]);
 
   const handleExportClips = () => {
     const text = lessonClips.map(c =>
@@ -322,7 +300,7 @@ export default function PlaybackDetailTabs({
                     const isHovered = hoveredClipId === clip.id;
                     return (
                   <div key={clip.id}
-                    className={`transition-colors ${isActive ? 'bg-[var(--accent-soft)]' : isHovered ? 'bg-[var(--bg-hover)]' : ''}`}>
+                    className={`transition-all border-l-2 ${isActive ? 'bg-[var(--accent-soft)] border-l-[var(--accent)]' : isHovered ? 'bg-[var(--bg-hover)] border-l-transparent' : 'border-l-transparent'}`}>
                     <div className="px-5 py-3">
                       {/* Row 1: icon + text + actions */}
                       <div className="flex items-start gap-3">
@@ -348,83 +326,21 @@ export default function PlaybackDetailTabs({
                             </div>
                           </div>
                         </button>
-                        {/* More actions */}
-                        <div className="relative flex-shrink-0 flex items-center gap-1">
-                          {clipAnalyses.has(clip.text) ? (
-                            <button onClick={e => { e.stopPropagation(); setViewingAnalysis(clipAnalyses.get(clip.text)!); }}
-                              className="text-amber-400/70 hover:text-amber-400 transition-colors cursor-pointer p-1"
-                              title="查看解析">
-                              <HiSparkles size={11} />
-                            </button>
-                          ) : analyzingClips.has(clip.text) ? (
-                            <span className="p-1 text-tertiary/50" title="解析中...">
-                              <HiSparkles size={11} className="animate-pulse" />
-                            </span>
-                          ) : null}
-<button onClick={e => { e.stopPropagation(); setEditingClipId(clip.id); setEditNote(clip.note || ''); setEditingColor(clip.color); }}
-                            className="text-tertiary hover:text-secondary transition-colors cursor-pointer p-1">
-                            <HiPencil size={11} />
-                          </button>
-                          <button onClick={e => { e.stopPropagation(); removeClip(clip.id); addToast('片段已删除', 'info'); }}
-                            className="text-tertiary hover:text-[var(--accent)] transition-colors cursor-pointer p-1">
-                            <HiTrash size={11} />
-                          </button>
-                        </div>
+                        <ClipActions
+                          clip={clip}
+                          size="sm"
+                          analysis={clipAnalyses.get(clip.text) ?? null}
+                          isAnalyzing={analyzingClips.has(clip.text)}
+                          onAnalyze={handleAnalyze}
+                          onViewAnalysis={setViewingAnalysis}
+                          onEdit={(id, data) => updateClip(id, data)}
+                          onDelete={id => removeClip(id)}
+                          onAddToQueue={c => { addToQueue({ kind: 'clip', clip: c }); addToast('已加入队列', 'success'); }}
+                        />
                       </div>
                     </div>
                   </div>
                   );})}
-                
-{/* ── Edit Clip Modal ── */}
-{editingClipId && (() => {
-  const clip = lessonClips.find(c => c.id === editingClipId);
-  if (!clip) return null;
-  return (
-  <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setEditingClipId(null)}>
-    <div className="absolute inset-0 bg-black/40" />
-    <div className="relative w-full max-w-sm rounded-2xl shadow-2xl border border-[var(--border-primary)] overflow-hidden animate-scale-in"
-      style={{ background: 'var(--bg-secondary)' }}
-      onClick={e => e.stopPropagation()}>
-      <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-secondary)]">
-        <h3 className="text-sm font-bold text-primary">编辑片段</h3>
-        <button onClick={() => setEditingClipId(null)}
-          className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer text-sm">&times;</button>
-      </div>
-      <div className="px-5 py-4 space-y-4">
-        <p className="text-xs text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
-        <div>
-          <label className="text-[11px] text-tertiary font-medium block mb-1.5">备注</label>
-          <input type="text" value={editNote}
-            onChange={e => setEditNote(e.target.value)}
-            onKeyDown={e => { if (e.key === 'Enter') { updateClip(clip.id, { note: editNote, color: editingColor }); setEditingClipId(null); } }}
-            placeholder="添加备注..."
-            className="w-full text-sm bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3.5 py-2.5 text-primary outline-none focus:ring-1 focus:ring-[var(--accent)]/30 placeholder:text-tertiary" />
-        </div>
-        <div>
-          <label className="text-[11px] text-tertiary font-medium block mb-1.5">颜色</label>
-          <div className="flex items-center gap-2">
-            {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
-              <button key={c} onClick={() => setEditingColor(c)}
-                className={`rounded-full transition-all cursor-pointer hover:scale-125 ${editingColor === c ? 'w-7 h-7 shadow-sm ring-2 ring-white/30' : 'w-6 h-6 opacity-60 hover:opacity-100'}`}
-                style={{ backgroundColor: c }} />
-            ))}
-          </div>
-        </div>
-        <div className="flex items-center gap-2 pt-1">
-          <button onClick={() => { updateClip(clip.id, { note: editNote, color: editingColor }); setEditingClipId(null); }}
-            className="flex-1 text-sm py-2.5 rounded-xl bg-[var(--accent)] on-accent font-medium hover:bg-[var(--accent-hover)] transition-colors cursor-pointer">
-            保存
-          </button>
-          <button onClick={() => setEditingClipId(null)}
-            className="flex-1 text-sm py-2.5 rounded-xl bg-[var(--bg-tertiary)] text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
-            取消
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  );
-})()}
 </>
               )
             )}
@@ -467,134 +383,10 @@ export default function PlaybackDetailTabs({
       </aside>
     </div>
 
-    {/* ── Clip Analysis Popup ── */}
     {viewingAnalysis && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setViewingAnalysis(null)}>
-    <div className="absolute inset-0 bg-black/40" />
-    <div className="relative w-full max-w-xl rounded-2xl shadow-2xl border border-[var(--border-primary)] overflow-hidden animate-scale-in"
-      style={{ background: 'var(--bg-secondary)' }}
-      onClick={e => e.stopPropagation()}>
-      {/* Gradient header */}
-      <div className="px-5 py-4" style={{ background: 'linear-gradient(135deg, rgba(250,45,72,0.12), rgba(250,45,72,0.04))' }}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'rgba(250,45,72,0.15)' }}>
-              <HiSparkles size={15} className="text-amber-400" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-primary">片段解析</h3>
-              <p className="text-[10px] text-tertiary">AI 智能分析</p>
-            </div>
-          </div>
-          <button onClick={() => setViewingAnalysis(null)}
-            className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer text-sm">&times;</button>
-        </div>
-      </div>
+      <ClipAnalysisModal analysis={viewingAnalysis} onClose={() => setViewingAnalysis(null)} />
+    )}
 
-      <div className="px-5 py-4 max-h-[55vh] overflow-y-auto space-y-4">
-        <div className="p-3.5 rounded-xl surface-card">
-          <p className="text-[10px] text-tertiary font-semibold uppercase tracking-wider mb-1.5">内容总结</p>
-          <p className="text-sm text-primary leading-relaxed">{viewingAnalysis.summary}</p>
-        </div>
-
-        {viewingAnalysis.keywords.length > 0 && (
-          <div>
-            <p className="text-[10px] text-tertiary font-semibold uppercase tracking-wider mb-2">关键词汇</p>
-            <div className="flex flex-wrap gap-1.5">
-              {viewingAnalysis.keywords.map((kw, i) => (
-                <div key={i}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs"
-                  style={{ background: 'rgba(250,45,72,0.08)' }}>
-                  <span className="font-semibold text-[var(--accent)]">{kw.word}</span>
-                  <span className="text-tertiary">/</span>
-                  <span className="text-secondary">{kw.definition}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="flex gap-3">
-          <div className="flex-1 p-3.5 rounded-xl surface-card">
-            <p className="text-[10px] text-tertiary font-semibold uppercase tracking-wider mb-1.5">语法要点</p>
-            <p className="text-xs text-secondary leading-relaxed">{viewingAnalysis.grammar}</p>
-          </div>
-          <div className="flex-shrink-0 w-20 p-3.5 rounded-xl surface-card flex flex-col items-center justify-center gap-1">
-            <p className="text-[10px] text-tertiary font-semibold uppercase tracking-wider">难度</p>
-            <span className={`text-sm font-bold ${
-              viewingAnalysis.difficulty === 'easy' ? 'text-emerald-400' :
-              viewingAnalysis.difficulty === 'medium' ? 'text-amber-400' :
-              'text-red-400'
-            }`}>
-              {viewingAnalysis.difficulty === 'easy' ? '简单' : viewingAnalysis.difficulty === 'medium' ? '中等' : '困难'}
-            </span>
-          </div>
-        </div>
-
-        <div className="p-3.5 rounded-xl" style={{ background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.1)' }}>
-          <div className="flex items-start gap-2">
-            <span className="text-sm flex-shrink-0 mt-0.5">💡</span>
-            <div>
-              <p className="text-[10px] text-amber-400/70 font-semibold uppercase tracking-wider mb-1">练习建议</p>
-              <p className="text-xs text-amber-200/80 leading-relaxed">{viewingAnalysis.practiceTip}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
-{/* ── Edit Clip Modal ── */}
-{editingClipId && (() => {
-  const clip = lessonClips.find(c => c.id === editingClipId);
-  if (!clip) return null;
-  return (
-  <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setEditingClipId(null)}>
-    <div className="absolute inset-0 bg-black/40" />
-    <div className="relative w-full max-w-sm rounded-2xl shadow-2xl border border-[var(--border-primary)] overflow-hidden animate-scale-in"
-      style={{ background: 'var(--bg-secondary)' }}
-      onClick={e => e.stopPropagation()}>
-      <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--border-secondary)]">
-        <h3 className="text-sm font-bold text-primary">编辑片段</h3>
-        <button onClick={() => setEditingClipId(null)}
-          className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer text-sm">&times;</button>
-      </div>
-      <div className="px-5 py-4 space-y-4">
-        <p className="text-xs text-secondary leading-relaxed line-clamp-2">"{clip.text}"</p>
-        <div>
-          <label className="text-[11px] text-tertiary font-medium block mb-1.5">备注</label>
-          <input type="text" value={editNote}
-            onChange={e => setEditNote(e.target.value)}
-            onKeyDown={e => { if (e.key === 'Enter') { updateClip(clip.id, { note: editNote, color: editingColor }); setEditingClipId(null); } }}
-            placeholder="添加备注..."
-            className="w-full text-sm bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl px-3.5 py-2.5 text-primary outline-none focus:ring-1 focus:ring-[var(--accent)]/30 placeholder:text-tertiary" />
-        </div>
-        <div>
-          <label className="text-[11px] text-tertiary font-medium block mb-1.5">颜色</label>
-          <div className="flex items-center gap-2">
-            {['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'].map(c => (
-              <button key={c} onClick={() => setEditingColor(c)}
-                className={`rounded-full transition-all cursor-pointer hover:scale-125 ${editingColor === c ? 'w-7 h-7 shadow-sm ring-2 ring-white/30' : 'w-6 h-6 opacity-60 hover:opacity-100'}`}
-                style={{ backgroundColor: c }} />
-            ))}
-          </div>
-        </div>
-        <div className="flex items-center gap-2 pt-1">
-          <button onClick={() => { updateClip(clip.id, { note: editNote, color: editingColor }); setEditingClipId(null); }}
-            className="flex-1 text-sm py-2.5 rounded-xl bg-[var(--accent)] on-accent font-medium hover:bg-[var(--accent-hover)] transition-colors cursor-pointer">
-            保存
-          </button>
-          <button onClick={() => setEditingClipId(null)}
-            className="flex-1 text-sm py-2.5 rounded-xl bg-[var(--bg-tertiary)] text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
-            取消
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  );
-})()}
 </>
   );
 }

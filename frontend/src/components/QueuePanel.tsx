@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HiXMark, HiMusicalNote, HiBookmark, HiClock, HiTag, HiTrash, HiArrowPath, HiQueueList } from 'react-icons/hi2';
 import { usePlaylistStore, queueItemLabel, queueItemSub, type QueueItem } from '../stores/playlistStore';
 import { useAudioStore } from '../stores/audioStore';
@@ -31,8 +31,19 @@ export default function QueuePanel({ open, onClose }: Props) {
   const clearQueue = usePlaylistStore(s => s.clearQueue);
   const setCurrentIndex = usePlaylistStore(s => s.setCurrentIndex);
   const cycleRepeatMode = usePlaylistStore(s => s.cycleRepeatMode);
+  const reorder = usePlaylistStore(s => s.reorder);
   const playQueueItem = useAudioStore(s => s.playQueueItem);
   const panelRef = useRef<HTMLDivElement>(null);
+  const currentRef = useRef<HTMLDivElement>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const dragIndexRef = useRef<number>(-1);
+
+  // Auto-scroll to current item when index changes
+  useEffect(() => {
+    if (currentRef.current) {
+      currentRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [currentIndex, open]);
 
   // Close on Escape
   useEffect(() => {
@@ -115,11 +126,18 @@ export default function QueuePanel({ open, onClose }: Props) {
                 const title = queueItemLabel(item);
                 const sub = queueItemSub(item);
                 const isCurrent = idx === currentIndex;
+                const isDragOver = dragOverIndex === idx;
                 return (
                   <div key={`${item.kind}-${idx}`}
-                    className={`group flex items-center gap-3 px-5 py-2.5 transition-colors cursor-pointer ${
-                      isCurrent ? 'bg-[var(--bg-active)]' : 'hover:bg-[var(--bg-hover)]'
-                    }`}
+                    ref={isCurrent ? currentRef : undefined}
+                    draggable
+                    onDragStart={() => { dragIndexRef.current = idx; }}
+                    onDragOver={e => { e.preventDefault(); setDragOverIndex(idx); }}
+                    onDragLeave={() => setDragOverIndex(null)}
+                    onDrop={() => { reorder(dragIndexRef.current, idx); setDragOverIndex(null); }}
+                    className={`group flex items-center gap-3 px-5 py-2.5 transition-all cursor-pointer border-l-2 ${
+                      isCurrent ? 'bg-[var(--bg-active)] border-l-[var(--accent)]' : 'hover:bg-[var(--bg-hover)] border-l-transparent'
+                    } ${isDragOver ? 'border-t-2 border-[var(--accent)]' : 'border-t-2 border-transparent'}`}
                     onClick={() => handlePlay(item, idx)}>
                     <span className="text-[10px] text-tertiary font-mono w-4 text-right flex-shrink-0">{idx + 1}</span>
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"

@@ -1,8 +1,9 @@
+"""Routers — centralized registration of all API routers."""
+
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
-
 from services import get_audio_path, get_lesson, get_stats, list_lessons
 
 router = APIRouter(prefix="/api/lessons", tags=["lessons"])
@@ -40,3 +41,27 @@ def get_lesson_audio(lesson_id: str):
         media_type="audio/mpeg",
         filename=f"{lesson_id}.mp3",
     )
+
+
+# ── Collect all routers for centralized registration in main.py ──
+
+from .clips import router as clips_router
+from .favorites import router as favorites_router
+from .translation import router as translation_router
+from .words import router as words_router
+from .progress_api import router as progress_router
+from .stats_api import router as stats_router
+from .import_api import router as import_router
+from .collections import router as collections_router
+
+routers = [
+    router,             # lessons
+    clips_router,
+    favorites_router,
+    translation_router,
+    words_router,
+    progress_router,
+    stats_router,
+    import_router,
+    collections_router,
+]

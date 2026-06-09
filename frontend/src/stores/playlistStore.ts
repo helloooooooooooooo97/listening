@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type { ListeningLesson, AudioClip } from '../types/lesson';
 
 export type QueueItem =
@@ -51,11 +52,13 @@ interface PlaylistState {
   cycleRepeatMode: () => void;
 }
 
-export const usePlaylistStore = create<PlaylistState>((set, get) => ({
+export const usePlaylistStore = create<PlaylistState>()(
+  persist(
+    (set, get) => ({
   queue: [],
   currentIndex: -1,
   history: [],
-  repeatMode: 'sequential',
+  repeatMode: 'repeat-all',
   queueContext: null,
 
   addToQueue: (item) => {
@@ -184,4 +187,7 @@ export const usePlaylistStore = create<PlaylistState>((set, get) => ({
     const nextIdx = (order.indexOf(current) + 1) % order.length;
     set({ repeatMode: order[nextIdx] });
   },
-}));
+}),
+    { name: 'playlist-queue' },
+  )
+);

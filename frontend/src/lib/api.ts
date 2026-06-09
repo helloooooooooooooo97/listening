@@ -25,6 +25,17 @@ async function post<T>(url: string, body: unknown): Promise<T> {
   return r.json();
 }
 
+async function put<T>(url: string, body: unknown): Promise<T> {
+  url = API_BASE + url;
+  const r = await fetch(url, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!r.ok) throw new Error(await r.text().catch(() => r.statusText));
+  return r.json();
+}
+
 async function del(url: string): Promise<void> {
   url = API_BASE + url;
   const r = await fetch(url, { method: 'DELETE' });
@@ -65,6 +76,10 @@ export function createClip(clip: {
 
 export function deleteClip(id: string): Promise<void> {
   return del(`/api/clips/${id}`);
+}
+
+export function updateClip(id: string, data: { note?: string; color?: string; text?: string }): Promise<AudioClip> {
+  return put<AudioClip>(`/api/clips/${id}`, data);
 }
 
 // ── Progress ──
@@ -257,6 +272,8 @@ export function getWords(params: {
   order?: string;
   limit?: number;
   offset?: number;
+  category?: string;
+  collection?: string;
 } = {}): Promise<{ total: number; words: WordItem[] }> {
   const sp = new URLSearchParams();
   if (params.q) sp.set('q', params.q);
@@ -264,6 +281,8 @@ export function getWords(params: {
   if (params.order) sp.set('order', params.order);
   if (params.limit) sp.set('limit', String(params.limit));
   if (params.offset) sp.set('offset', String(params.offset));
+  if (params.category) sp.set('category', params.category);
+  if (params.collection) sp.set('collection', params.collection);
   const qs = sp.toString();
   return get(`/api/words${qs ? `?${qs}` : ''}`);
 }

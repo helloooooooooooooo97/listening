@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { HiArrowLeft, HiPlay, HiMusicalNote, HiBookmark, HiClock, HiTag, HiTrash, HiQueueList, HiPlusCircle, HiAdjustmentsHorizontal } from 'react-icons/hi2';
 import { useCollectionsStore } from '../stores/collectionsStore';
@@ -8,7 +8,12 @@ import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
 import { getLessonById } from '../lib/api';
 import { collectionItemToQueueItem, collectionItemsToQueueItems } from '../lib/collectionQueue';
+import { useClipAnalysis } from '../hooks/useClipAnalysis';
+import { useCollectionFilter, COLOR_HEX } from '../hooks/useCollectionFilter';
+import { normalizeColor } from '../constants/colors';
 import type { AudioClip, CollectionItem } from '../types/lesson';
+import ClipActions from '../components/ClipActions';
+import ClipAnalysisModal from '../components/ClipAnalysisModal';
 
 const TYPE_META: Record<string, { icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>; label: string }> = {
   audio: { icon: HiMusicalNote, label: '音频' },
@@ -25,11 +30,6 @@ function getExtraColor(extraData?: string): string {
   } catch {
     return '';
   }
-}
-
-function normalizeColor(color?: string): string {
-  const value = color?.trim().toLowerCase() || '';
-  return value.length === 9 && value.endsWith('ff') ? value.slice(0, 7) : value;
 }
 
 function getCollectionClipColor(item: CollectionItem, allClips: AudioClip[]): string {
@@ -54,10 +54,13 @@ export default function CollectionDetailView() {
   const addToQueue = usePlaylistStore(s => s.addToQueue);
   const addToast = useToastStore(s => s.addToast);
   const allClips = useClipsStore(s => s.clips ?? []);
+  const items = current?.items || [];
   const [playConfigOpen, setPlayConfigOpen] = useState(false);
-  const [playTypes, setPlayTypes] = useState<Set<string>>(new Set(['audio', 'clip', 'sentence', 'word']));
   const [playShuffle, setPlayShuffle] = useState(false);
-  const [playColors, setPlayColors] = useState<Set<string>>(new Set());
+  const updateClip = useClipsStore(s => s.updateClip);
+  const removeClip = useClipsStore(s => s.removeClip);
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+  const { playTypes, setPlayTypes, playColors, setPlayColors, filteredItems, filteredCount } = useCollectionFilter(items, allClips);
 
   useEffect(() => {
     if (collectionId) {
@@ -172,21 +175,6 @@ export default function CollectionDetailView() {
     addToast('已清空合集', 'info');
   };
 
-  const items = current?.items || [];
-
-  // Filtered item count based on play config
-  const filteredItems = useMemo(() => {
-    return items.filter(item => {
-      if (!playTypes.has(item.item_type)) return false;
-      if (item.item_type === 'clip' && playColors.size > 0 && playColors.size < COLOR_HEX.length) {
-        const clipColor = getCollectionClipColor(item, allClips);
-        return playColors.has(clipColor);
-      }
-      return true;
-    });
-  }, [items, playTypes, playColors, allClips]);
-  const filteredCount = filteredItems.length;
-
   if (loading && !current) {
     return (
       <div className="h-full flex flex-col bg-[var(--bg-primary)]">
@@ -219,6 +207,7 @@ export default function CollectionDetailView() {
   const isDynamic = current.is_dynamic;
 
   return (
+    <>
     <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
       {/* Header */}
       <div className="flex-shrink-0 px-8 pt-10 pb-4 border-b border-[var(--border-secondary)]">
@@ -301,7 +290,7 @@ export default function CollectionDetailView() {
               const itemColor = item.item_type === 'clip' ? getCollectionClipColor(item, allClips) : '';
               return (
                 <div key={item.id || idx}
-                  className="group flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-[var(--bg-tertiary)] cursor-pointer"
+                  className="group flex items-center gap-3 pl-3 py-2.5 rounded-xl transition-all hover:bg-[var(--bg-tertiary)] cursor-pointer border-l-2 border-transparent hover:border-l-[var(--accent)]"
                   onClick={() => handlePlayItem(item)}>
                   <span className="text-xs text-tertiary tabular-nums w-6 text-right">{idx + 1}</span>
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -315,17 +304,39 @@ export default function CollectionDetailView() {
                       {item.start_time > 0 && ` · ${Math.floor(item.start_time / 60)}:${Math.floor(item.start_time % 60).toString().padStart(2, '0')}`}
                     </p>
                   </div>
-                  <button onClick={e => { e.stopPropagation(); handleAddItemToQueue(item); }}
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-blue-400 hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100"
-                    title="加入队列">
-                    <HiPlusCircle size={12} />
-                  </button>
-                  {!isDynamic && (
-                    <button onClick={e => { e.stopPropagation(); handleRemoveItem(item); }}
-                      className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-[var(--accent)] hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100"
-                      title="移除">
-                      <HiTrash size={12} />
-                    </button>
+                  {item.item_type === 'clip' ? (() => {
+                    const clip = allClips.find(c => c.id === String(item.item_ref));
+                    if (!clip) return null;
+                    return (
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ClipActions
+                          clip={clip}
+                          size="sm"
+                          analysis={clipAnalyses.get(clip.text) ?? null}
+                          isAnalyzing={analyzingClips.has(clip.text)}
+                          onAnalyze={handleAnalyze}
+                          onViewAnalysis={setViewingAnalysis}
+                          onEdit={(id, data) => updateClip(id, data)}
+                          onDelete={id => removeClip(id)}
+                          onAddToQueue={c => { addToQueue({ kind: 'clip', clip: c }); addToast('已加入队列', 'success'); }}
+                        />
+                      </div>
+                    );
+                  })() : (
+                    <>
+                      <button onClick={e => { e.stopPropagation(); handleAddItemToQueue(item); }}
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-blue-400 hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100"
+                        title="加入队列">
+                        <HiPlusCircle size={12} />
+                      </button>
+                      {!isDynamic && (
+                        <button onClick={e => { e.stopPropagation(); handleRemoveItem(item); }}
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-tertiary hover:text-[var(--accent)] hover:bg-[var(--bg-hover)] transition-all cursor-pointer opacity-0 group-hover:opacity-100"
+                          title="移除">
+                          <HiTrash size={12} />
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
               );
@@ -334,11 +345,15 @@ export default function CollectionDetailView() {
         )}
       </div>
     </div>
+
+      {viewingAnalysis && (
+        <ClipAnalysisModal analysis={viewingAnalysis} onClose={() => setViewingAnalysis(null)} />
+      )}
+    </>
   );
 }
 
 /* ── Play Config Panel ── */
-const COLOR_HEX = ['#ef4444','#f97316','#facc15','#22c55e','#3b82f6','#a855f7'];
 
 function PlayConfigPanel({
   items,
