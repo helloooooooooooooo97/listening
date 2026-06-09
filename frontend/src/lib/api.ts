@@ -125,6 +125,7 @@ export interface Overview {
   streak_days: number;
   today_seconds: number;
   yesterday_seconds: number;
+  due_words: number;
 }
 
 export function getOverview(): Promise<Overview> {
@@ -270,7 +271,7 @@ export interface SentenceDictation {
 }
 
 export function getDictationSentences(audioId: string): Promise<{ sentences: SentenceDictation[] }> {
-  return get(`/api/stats/dictation-sentences/${encodeURIComponent(audioId)}`);
+  return get<{ sentences: SentenceDictation[] }>(`/api/stats/dictation-sentences/${encodeURIComponent(audioId)}`);
 }
 
 export function getWords(params: {
@@ -297,6 +298,27 @@ export function getWords(params: {
 /** Fetch full word detail with lesson occurrences (audio timestamps). */
 export function getWordDetail(word: string): Promise<WordDetail> {
   return get<WordDetail>(`/api/words/${encodeURIComponent(word)}`);
+}
+
+// ── Review System ──
+
+export interface DueWord {
+  word: string;
+  reviewed_count: number;
+  last_score: number | null;
+  reviewed_at: string;
+}
+
+export function getDueWords(limit = 20): Promise<{ words: DueWord[] }> {
+  return get(`/api/progress/words/due?limit=${limit}`);
+}
+
+export function getDueWordsCount(): Promise<{ count: number }> {
+  return get('/api/progress/words/due-count');
+}
+
+export function submitWordReview(word: string, score: number): Promise<{ ok: boolean }> {
+  return post('/api/progress/words/review', { word, score });
 }
 
 // ── Collections ──

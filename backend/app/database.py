@@ -126,6 +126,12 @@ def init_db():
     except sqlite3.OperationalError:
         pass  # column already exists
 
+    # Migration: add last_score to word_progress (for review system)
+    try:
+        conn.execute("ALTER TABLE word_progress ADD COLUMN last_score REAL DEFAULT NULL")
+    except sqlite3.OperationalError:
+        pass  # column already exists
+
     # ── 合集 (Collections) ──
     conn.executescript("""
         CREATE TABLE IF NOT EXISTS collections (

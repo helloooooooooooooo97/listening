@@ -35,19 +35,18 @@ def overview():
         "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at)=?", [yesterday]
     ).fetchone()[0]
 
-    # Streak — single query for all active dates
+    # Streak
     rows = conn.execute(
         "SELECT DISTINCT date(played_at) FROM play_history WHERE date(played_at) > date('now', '-365 days')"
     ).fetchall()
     active_dates = {r[0] for r in rows}
-
     streak = 0
     d = datetime.now()
     while d.strftime("%Y-%m-%d") in active_dates:
         streak += 1
         d -= timedelta(days=1)
 
-    # Total words — from occurrences table, else use cached lesson stats
+    # Total words
     total_words = 0
     try:
         wc = conn.execute("SELECT COUNT(DISTINCT word) FROM word_occurrences").fetchone()[0]
@@ -57,6 +56,11 @@ def overview():
         pass
     if total_words == 0:
         total_words = get_lesson_stats().get("uniqueWords", 0)
+
+    # Due words count (for review system)
+    due_words = conn.execute(
+        "SELECT COUNT(*) FROM word_progress WHERE known=1 AND (last_score IS NULL OR last_score < 80)"
+    ).fetchone()[0]
 
     return {
         "total_listening_seconds": total_sec,
@@ -70,6 +74,7 @@ def overview():
         "streak_days": streak,
         "today_seconds": today_sec,
         "yesterday_seconds": yesterday_sec,
+        "due_words": due_words,
     }
 
 
@@ -109,7 +114,6 @@ def dictation_records(limit: int = Query(default=100, ge=1, le=500)):
         "FROM dictation_history ORDER BY created_at DESC LIMIT ?", [limit]
     ).fetchall()
 
-    # Group by audio
     groups: dict[str, dict] = {}
     for r in rows:
         key = f"{r['audio_id']}|{r['audio_title']}"
@@ -148,37 +152,29 @@ def audio_detail(audio_id: str):
     total_sentences = len(lesson.transcript) if lesson else 0
     duration_seconds = lesson.duration if lesson else 0
 
-    # Known words — count words that appear in word_progress
     known_words = 0
     if lesson:
         known_set = {r["word"] for r in conn.execute("SELECT word FROM word_progress WHERE known=1").fetchall()}
         known_words = sum(1 for w in lesson.words if w.text.strip().lower() in known_set)
 
-    # Listening stats
     row = conn.execute(
         "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE audio_id=?", [audio_id]
     ).fetchone()
     listening_seconds = int(row[0]) if row else 0
 
-    # Dictation stats
     row = conn.execute(
         "SELECT COUNT(*), COALESCE(AVG(score),0) FROM dictation_history WHERE audio_id=?", [audio_id]
     ).fetchone()
     dictation_count = row[0] if row else 0
     dictation_avg_score = round(row[1], 1) if row else 0
 
-    # Progress
-    row = conn.execute(
-        "SELECT * FROM audio_progress WHERE audio_id=?", [audio_id]
-    ).fetchone()
+    row = conn.execute("SELECT * FROM audio_progress WHERE audio_id=?", [audio_id]).fetchone()
     completed = bool(row["completed"]) if row else False
     last_position = row["last_position"] if row else 0
 
-    # Clips count
     row = conn.execute("SELECT COUNT(*) FROM clips WHERE audio_id=?", [audio_id]).fetchone()
     clips_count = row[0] if row else 0
 
-    # Last practiced date
     row = conn.execute(
         "SELECT MAX(created_at) FROM dictation_history WHERE audio_id=?", [audio_id]
     ).fetchone()
@@ -210,13 +206,11 @@ def dictation_sentences(audio_id: str):
     lesson = get_lesson(audio_id)
     total_sentences = len(lesson.transcript) if lesson else 0
 
-    # Get all dictation records for this audio
     rows = conn.execute(
         "SELECT sentence_index, score, user_input, expected_text FROM dictation_history WHERE audio_id=? ORDER BY created_at",
         [audio_id]
     ).fetchall()
 
-    # Aggregate per sentence
     sentence_map: dict[int, dict] = {}
     for r in rows:
         idx = r["sentence_index"]
@@ -224,7 +218,6 @@ def dictation_sentences(audio_id: str):
             sentence_map[idx] = {"index": idx, "scores": [], "wrong_indices": set(), "count": 0}
         sentence_map[idx]["scores"].append(r["score"])
         sentence_map[idx]["count"] += 1
-        # Find wrong word indices
         if r["user_input"] and r["expected_text"]:
             expected = r["expected_text"].lower().split()
             actual = r["user_input"].lower().split()

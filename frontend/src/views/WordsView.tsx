@@ -3,7 +3,7 @@ import { HiMagnifyingGlass, HiPlay, HiCheck, HiBarsArrowDown, HiHeart, HiXMark, 
 import { useAudioStore } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
-import { getWords, getWordDetail, getKnownWords, setWordKnown, getLessons, getCollections, type WordSummary, type WordDetail } from '../lib/api';
+import { getWords, getWordDetail, getKnownWords, setWordKnown, getLessons, getCollections, getDueWords, submitWordReview, type WordSummary, type WordDetail, type DueWord } from '../lib/api';
 
 function fmtTime(s: number) { const m=Math.floor(s/60); return `${m}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
 
@@ -25,6 +25,9 @@ export default function WordsView() {
   const [collections, setCollections] = useState<{id: number; name: string; dynamic_type: string}[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [filterCounts, setFilterCounts] = useState<Record<string, number>>({});
+  const [reviewFilter, setReviewFilter] = useState(false);
+  const [dueWords, setDueWords] = useState<DueWord[]>([]);
+  const [dueWordsLoading, setDueWordsLoading] = useState(false);
   const favToggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
   const [selected, setSelected] = useState<WordDetail | null>(null);
@@ -56,16 +59,28 @@ export default function WordsView() {
       .catch(() => { setLoading(false); setLoadingMore(false); });
   }, []);
 
-  // Initial load + sort/ category/ collection change
+  // Load due words when review filter is active
   useEffect(() => {
+    if (!reviewFilter) return;
+    setDueWordsLoading(true);
+    getDueWords(50)
+      .then(data => setDueWords(data.words))
+      .catch(() => {})
+      .finally(() => setDueWordsLoading(false));
+  }, [reviewFilter]);
+
+  // Initial load + sort/ category/ collection change (ignored when reviewFilter is on)
+  useEffect(() => {
+    if (reviewFilter) return;
     setOffset(0);
     const cat = [...categoryFilter][0] || undefined;
     const coll = collectionFilter || undefined;
     loadWords(search, sortMode, 0, false, cat, coll);
-  }, [sortMode, categoryFilter, collectionFilter]);
+  }, [sortMode, categoryFilter, collectionFilter, reviewFilter]);
 
   // Search with debounce
   useEffect(() => {
+    if (reviewFilter) return;
     const timer = setTimeout(() => {
       setOffset(0);
       const cat = [...categoryFilter][0] || undefined;
@@ -73,10 +88,11 @@ export default function WordsView() {
       loadWords(search, sortMode, 0, false, cat, coll);
     }, 250);
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [search, reviewFilter]);
 
   // Infinite scroll
   useEffect(() => {
+    if (reviewFilter) return;
     const el = loaderRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(entries => {
@@ -90,7 +106,7 @@ export default function WordsView() {
     }, { rootMargin: '200px' });
     observer.observe(el);
     return () => observer.disconnect();
-  }, [loading, loadingMore, words.length, total, search, sortMode, offset, loadWords, categoryFilter, collectionFilter]);
+  }, [loading, loadingMore, words.length, total, search, sortMode, offset, loadWords, categoryFilter, collectionFilter, reviewFilter]);
 
   const toggleKnown = (word: string) => {
     const known = !knownWords.has(word);
@@ -117,6 +133,13 @@ export default function WordsView() {
       .then(detail => setSelected(detail))
       .catch(() => {})
       .finally(() => setLoadingDetail(false));
+  };
+
+  const handleReviewWord = (word: string) => {
+    // Mark as reviewed with a good score (simplified: user clicks = correct)
+    submitWordReview(word, 100).catch(() => {});
+    setDueWords(prev => prev.filter(d => d.word !== word));
+    setKnownWords(prev => new Set(prev).add(word));
   };
 
   // Load available smart collections + lesson categories + word counts
@@ -160,10 +183,14 @@ export default function WordsView() {
         <div className="flex-shrink-0 px-6 pt-10 pb-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-extrabold text-primary tracking-tight">单词</h1>
+              <h1 className="text-2xl font-extrabold text-primary tracking-tight">
+                {reviewFilter ? '待复习' : '单词'}
+              </h1>
               <p className="text-xs text-tertiary mt-0.5">
-                共 {displayTotal} 个单词
-                {categoryFilter.size > 0 && ` · ${[...categoryFilter].join('、')}`}
+                {reviewFilter
+                  ? `${dueWords.length} 个单词待复习`
+                  : `共 ${displayTotal} 个单词${categoryFilter.size > 0 ? ` · ${[...categoryFilter].join('、')}` : ''}`
+                }
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -188,12 +215,19 @@ export default function WordsView() {
                       style={{ background: 'var(--bg-secondary)' }}
                       onClick={e => e.stopPropagation()}>
                       <div className="p-2 space-y-0.5 max-h-72 overflow-y-auto">
-                        <button onClick={() => { setCollectionFilter(''); setCategoryFilter(new Set()); setFilterOpen(false); }}
+                        <button onClick={() => { setCollectionFilter(''); setCategoryFilter(new Set()); setReviewFilter(false); setFilterOpen(false); }}
                           className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-between ${
-                            !collectionFilter && categoryFilter.size === 0 ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+                            !collectionFilter && categoryFilter.size === 0 && !reviewFilter ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
                           }`}>
                           <span>全部单词</span>
                           <span className="text-[10px] font-mono tabular-nums opacity-60">{filterCounts['all'] ?? '…'}</span>
+                        </button>
+                        {/* Review filter */}
+                        <button onClick={() => { setCollectionFilter(''); setCategoryFilter(new Set()); setReviewFilter(true); setFilterOpen(false); }}
+                          className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-between ${
+                            reviewFilter ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+                          }`}>
+                          <span>📝 待复习</span>
                         </button>
                         {/* Smart collections */}
                         {collections.map(col => (
@@ -224,9 +258,9 @@ export default function WordsView() {
                           </button>
                         ))}
                       </div>
-                      {(collectionFilter || categoryFilter.size > 0) && (
+                      {(collectionFilter || categoryFilter.size > 0 || reviewFilter) && (
                         <div className="border-t border-[var(--border-secondary)] p-2">
-                          <button onClick={() => { setCollectionFilter(''); setCategoryFilter(new Set()); setFilterOpen(false); }}
+                          <button onClick={() => { setCollectionFilter(''); setCategoryFilter(new Set()); setReviewFilter(false); setFilterOpen(false); }}
                             className="w-full text-xs text-center py-1.5 rounded-lg text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
                             清除筛选
                           </button>
@@ -246,12 +280,37 @@ export default function WordsView() {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto px-6 pb-8">
-          {loading ? (
+          {loading || dueWordsLoading ? (
             <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
               {Array.from({length: 40}).map((_,i)=>(
                 <div key={i} className="h-8 rounded-lg bg-[var(--bg-tertiary)] animate-pulse" style={{animationDelay:`${i*20}ms`}}/>
               ))}
             </div>
+          ) : reviewFilter ? (
+            <>
+              {dueWords.length === 0 ? (
+                <p className="text-tertiary text-sm py-8">暂无待复习单词 🎉</p>
+              ) : (
+                <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
+                  {dueWords.map(d => (
+                    <div key={d.word} className="rounded-lg px-3 py-1.5 text-[14px] bg-[var(--bg-tertiary)] flex items-center justify-between gap-1 group">
+                      <span className="truncate flex-1 text-secondary">{d.word}</span>
+                      <span className="flex items-center gap-1 flex-shrink-0">
+                        {d.last_score != null && (
+                          <span className={`text-[10px] font-mono ${d.last_score < 60 ? 'text-red-400' : 'text-emerald-400'}`}>
+                            {d.last_score}%
+                          </span>
+                        )}
+                        <button onClick={() => handleReviewWord(d.word)}
+                          className="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors cursor-pointer opacity-0 group-hover:opacity-100">
+                          复习
+                        </button>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           ) : (
             <>
               <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">

@@ -353,10 +353,11 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                 {showDictation && dictationWordResults?.[lineIdx] ? (
                   <span className="inline-flex flex-wrap gap-1 align-baseline"><WordBadges results={dictationWordResults[lineIdx]!} /></span>
                 ) : lineWords.length>0
-                  ? lineWords.map((word) => {
+                  ? lineWords.map((word, wordIdx) => {
                       const sel=isWordSelected(word.id);
                       const ci = wordClipInfo(word.start, word.end);
                       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                      const isWrong = showDictation && sentData?.wrong_indices?.includes(wordIdx);
                       let clipAlpha = Math.min((isLight ? 0.12 : 0.06) * ci.count, isLight ? 0.3 : 0.2);
                       // Boost opacity for hovered/active clip
                       const boostedClip = lessonClips.find(c =>
@@ -382,11 +383,12 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                           onDoubleClick={() => handleWordDoubleClick(word)}
                           className={`transcript-word cursor-pointer ${
                             word.id===activeWordId&&!selection ? 'active' : sel ? 'selected' : 'hover:bg-[var(--bg-hover)]'
-                          }`}
+                          } ${isWrong ? 'dictation-wrong' : ''}`}
                           style={{
                             ...(showClips && ci.count > 0 ? { background: `rgba(${clipRgb},${clipAlpha})`, borderRadius: 0 } : {}),
                             ...(showFavs && isKnown ? { color: isLight ? 'rgb(16,185,129)' : 'rgba(52,211,153,0.75)' } : {}),
                             ...(showClips && ci.count > 0 ? { borderBottom: `1px solid rgba(${clipRgb},0.4)` } : {}),
+                            ...(isWrong ? { /* handled via class */ } : {}),
                           }}>
                           {/* Clip play button at the start of each clip */}
                           {showClips && anchoredClip && (
