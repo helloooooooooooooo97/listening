@@ -423,7 +423,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                 <div className={`${lyricDisplayMode === 'hover-reveal' ? 'opacity-0 group-hover:opacity-100 transition-opacity duration-200' : ''} ${lyricDisplayMode === 'english-only' ? 'hidden' : ''}`}>
                   {/* Show existing note */}
                   {(lyricDisplayMode !== 'english-only') && line.note && (
-                    <p className={`text-xs mt-1 ${lyricDisplayMode === 'chinese-only' ? 'text-primary font-medium' : 'text-tertiary italic'}`}>
+                    <p className={`mt-1 ${lyricDisplayMode === 'chinese-only' ? 'text-base text-primary' : 'text-xs text-tertiary italic'}`}>
                       {line.note}
                     </p>
                   )}
@@ -432,7 +432,7 @@ export default function TranscriptView({ lessonId, lessonTitle, lines, words, cu
                   {translationEnabled && lyricDisplayMode !== 'english-only' && !line.note && (
                     <>
                       {translations.has(lineIdx) ? (
-                        <p className={`text-xs mt-1 ${lyricDisplayMode === 'chinese-only' ? 'text-primary font-medium' : 'text-tertiary italic'}`}>
+                        <p className={`mt-1 ${lyricDisplayMode === 'chinese-only' ? 'text-base text-primary' : 'text-xs text-tertiary italic'}`}>
                           {translations.get(lineIdx)}
                         </p>
                       ) : translatingIdx === lineIdx ? (

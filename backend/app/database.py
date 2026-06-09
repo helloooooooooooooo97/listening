@@ -108,6 +108,20 @@ def init_db():
         CREATE INDEX IF NOT EXISTS idx_wo_word ON word_occurrences(word);
         CREATE INDEX IF NOT EXISTS idx_wo_audio ON word_occurrences(audio_id);
 
+        -- 实际听过的单词（前端按播放区间筛选后上报）
+        CREATE TABLE IF NOT EXISTS listened_words (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            word TEXT NOT NULL,
+            audio_id TEXT NOT NULL,
+            audio_title TEXT NOT NULL,
+            listened_date TEXT NOT NULL,
+            created_at TEXT DEFAULT (datetime('now'))
+        );
+        CREATE INDEX IF NOT EXISTS idx_lw_date ON listened_words(listened_date);
+        CREATE INDEX IF NOT EXISTS idx_lw_word ON listened_words(word);
+        CREATE INDEX IF NOT EXISTS idx_lw_audio ON listened_words(audio_id);
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_lw_unique ON listened_words(word, audio_id, listened_date);
+
         -- 收藏
         CREATE TABLE IF NOT EXISTS favorites (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -176,6 +190,7 @@ def init_db():
         ('全部音频',      'HiMusicalNote', '#fa2d48', 1, 'all_audio'),
         ('全部片段',      'HiBookmark',    '#f97316', 1, 'all_clips'),
         ('全部单词',      'HiBookOpen',    '#a855f7', 1, 'all_words'),
+        ('今日单词',      'HiSun',         '#f59e0b', 1, 'today_words'),
         ('全部听写记录',  'HiPencilSquare','#06b6d4', 1, 'all_dictation'),
     ]
     for i, (name, icon, color, is_dynamic, dynamic_type) in enumerate(DEFAULTS):

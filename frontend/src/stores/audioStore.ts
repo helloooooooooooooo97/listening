@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
 import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio, setSavedRate, applyPlaybackRate, safePlay } from '../lib/audioEngine';
-import { trackPlay, flushTrack, setLessonInfoProvider } from '../lib/playTracking';
+import { postPlayHistory, recordListenedWords } from '../lib/api';
 import { usePlaylistStore, type QueueItem } from './playlistStore';
 import { queueItemToClip } from '../lib/queueItems';
 
@@ -10,6 +10,40 @@ export { getAudio, preloadLessonAudio };
 
 /* ── Guard: prevent double playNext() when clip-end fires multiple timeupdate events ── */
 let _clipEndHandled = false;
+
+/* ── Play duration tracking ── */
+let _trackStart = 0;
+
+function trackPlay() {
+  _trackStart = Date.now();
+}
+
+function flushTrack() {
+  if (_trackStart === 0) return;
+  const elapsed = Math.round((Date.now() - _trackStart) / 1000);
+  _trackStart = 0;
+  if (elapsed < 1) return;
+
+  const m = useAudioStore.getState().mode;
+  let id: string, title: string, words: any[] | undefined;
+  if (m.kind === 'lesson') {
+    id = m.lesson.id; title = m.lesson.title; words = m.lesson.words;
+  } else if (m.kind === 'clip' && m.lesson) {
+    id = m.lesson.id; title = m.lesson.title; words = m.lesson.words;
+  } else {
+    return;
+  }
+
+  postPlayHistory({ audio_id: id, audio_title: title, duration_seconds: elapsed }).catch(() => {});
+
+  if (words && words.length > 0) {
+    const heard = words.filter((w: any) => w.start <= elapsed).map((w: any) => w.text);
+    const unique = [...new Set(heard)];
+    if (unique.length > 0) {
+      recordListenedWords({ words: unique, audio_id: id, audio_title: title }).catch(() => {});
+    }
+  }
+}
 
 /* ── State ── */
 export type PlayerMode =
@@ -48,13 +82,6 @@ interface AudioState {
 }
 
 const LOOP_ORDER: LoopMode[] = ['all', 'sentence', 'clip'];
-
-// Provide lesson info for play tracking
-setLessonInfoProvider(() => {
-  const m = useAudioStore.getState().mode;
-  if (m.kind === 'lesson') return { id: m.lesson.id, title: m.lesson.title };
-  return null;
-});
 
 export const useAudioStore = create<AudioState>((set, get) => {
   const audio = getAudio();
@@ -252,6 +279,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
     },
 
     viewClip: (clip, contextLesson?) => {
+      _clipEndHandled = false;  // reset guard so clip-end fires on next play
       const switched = switchSource(clip.lessonId, flushTrack);
       const rate = get().playbackRate;
       if (switched) set({ isLoading: true });

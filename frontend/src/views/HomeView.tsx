@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiFolderOpen, HiHeart, HiTag } from 'react-icons/hi2';
+import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiFolderOpen, HiHeart, HiTag, HiSun, HiArrowPath } from 'react-icons/hi2';
 import HeartButton from '../components/HeartButton';
 import type { AudioClip, LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useCollectionsStore } from '../stores/collectionsStore';
-import { getLessonById, getOverview, getDueWordsCount } from '../lib/api';
+import { getLessonById, getOverview, getDueWordsCount, getTodayStats } from '../lib/api';
 
 interface Props {
   search: string;
@@ -45,9 +45,11 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
   const collections = useCollectionsStore(s => s.collections);
   const [todaySeconds, setTodaySeconds] = useState(0);
   const [dueWordsCount, setDueWordsCount] = useState(0);
+  const [todayWordsStats, setTodayWordsStats] = useState<{ total_words: number; reviewed_count: number; audio_count: number } | null>(null);
 
   useEffect(() => {
     getDueWordsCount().then(d => setDueWordsCount(d.count)).catch(() => {});
+    getTodayStats().then(s => setTodayWordsStats(s)).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -113,21 +115,50 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
           </div>
         )}
 
-        {/* Review card */}
-        {!q && dueWordsCount > 0 && (
-          <div onClick={() => navigate('/words')}
-            className="group cursor-pointer rounded-xl p-5 transition-all duration-200 hover:brightness-110 flex items-center justify-between"
-            style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)' }}>
-            <div>
-              <h3 className="text-white font-bold text-base tracking-tight">📝 待复习单词</h3>
-              <p className="text-white/70 text-xs mt-1">点击开始复习</p>
+        {/* Word cards row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {!q && todayWordsStats && todayWordsStats.total_words > 0 && (
+            <div onClick={() => navigate('/words')}
+              className="group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)] flex items-center justify-between"
+              style={{ background: 'var(--bg-tertiary)' }}>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#f59e0b20' }}>
+                  <HiSun size={18} className="text-amber-500" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-primary">今日单词</h3>
+                  <p className="text-xs text-tertiary mt-0.5">
+                    来自 {todayWordsStats.audio_count} 个音频 · 已复习 {todayWordsStats.reviewed_count}/{todayWordsStats.total_words}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <span className="text-base font-bold text-primary tabular-nums">{todayWordsStats.total_words}</span>
+                <span className="text-xs text-tertiary">个</span>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="text-white text-3xl font-black tabular-nums">{dueWordsCount}</span>
-              <span className="text-white/60 text-xs">个</span>
+          )}
+
+          {!q && dueWordsCount > 0 && (
+            <div onClick={() => navigate('/words')}
+              className="group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)] flex items-center justify-between"
+              style={{ background: 'var(--bg-tertiary)' }}>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#8b5cf620' }}>
+                  <HiArrowPath size={18} className="text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-primary">待复习单词</h3>
+                  <p className="text-xs text-tertiary mt-0.5">点击开始复习</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <span className="text-base font-bold text-primary tabular-nums">{dueWordsCount}</span>
+                <span className="text-xs text-tertiary">个</span>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Collections quick entry */}
         {!q && dynamicCols.length > 0 && (

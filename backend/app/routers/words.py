@@ -1,25 +1,19 @@
 """Words API — precomputed cache, refreshed on demand."""
 from __future__ import annotations
 
-import re
 from collections import defaultdict
 
 from fastapi import APIRouter, Query
 
 from services import LESSONS_DIR, _load_lesson
+from text_utils import clean_word
 
 router = APIRouter(prefix="/api", tags=["words"])
-
-PUNCT = re.compile(r"^[.,!?;:\-\"'`]+|[.,!?;:\-\"'`]+$")
 
 # ── Cache ──
 _cache: list[dict] | None = None
 _cache_total: int = 0
 _cache_cat_map: dict[str, str] = {}  # lesson_id → category
-
-
-def _clean(word: str) -> str:
-    return PUNCT.sub('', word.strip().lower())
 
 
 def _build_cache():
@@ -35,7 +29,7 @@ def _build_cache():
             try:
                 lesson = _load_lesson(json_file)
                 for w in lesson.words:
-                    word = _clean(w.text)
+                    word = clean_word(w.text)
                     if not word:
                         continue
                     entry = word_map[word]
@@ -82,7 +76,8 @@ def get_words(
     """Return deduplicated word list (lightweight — only word + count)."""
     _ensure_cache()
 
-    # Resolve collection → lesson IDs
+    # Resolve collection → lesson IDs or word names
+    collection_word_set: set[str] | None = None
     collection_lesson_ids: set[str] | None = None
     if collection:
         # Handle category-based collections (category:IELTS → category filter)
@@ -96,23 +91,25 @@ def get_words(
         if sql:
             conn = get_conn()
             rows = conn.execute(sql).fetchall()
-            collection_lesson_ids = set()
-            for r in rows:
-                lid = r["lesson_id"] if r["lesson_id"] else None
-                if not lid:
-                    # Try extra_data for clip favorites
-                    try:
-                        extra = r["extra_data"]
-                        if extra:
-                            ed = _json.loads(extra)
-                            lid = ed.get("lessonId")
-                    except (_json.JSONDecodeError, TypeError):
-                        pass
-                if not lid and collection in ('favorites', 'all_audio', 'today_practice'):
-                    # For audio-type items, item_ref is the lesson ID
-                    lid = r["item_ref"]
-                if lid:
-                    collection_lesson_ids.add(lid)
+            # Check if collection returns words directly (e.g. all_words, today_words)
+            if rows and rows[0]["item_type"] == "word":
+                collection_word_set = {r["item_ref"] for r in rows}
+            else:
+                collection_lesson_ids = set()
+                for r in rows:
+                    lid = r["lesson_id"] if r["lesson_id"] else None
+                    if not lid:
+                        try:
+                            extra = r["extra_data"]
+                            if extra:
+                                ed = _json.loads(extra)
+                                lid = ed.get("lessonId")
+                        except (_json.JSONDecodeError, TypeError):
+                            pass
+                    if not lid and collection in ('favorites', 'all_audio', 'today_practice'):
+                        lid = r["item_ref"]
+                    if lid:
+                        collection_lesson_ids.add(lid)
 
     # Filter
     filtered = _cache
@@ -123,11 +120,17 @@ def get_words(
             w for w in filtered
             if any(_cache_cat_map.get(l["id"]) == category for l in w["lessons"])
         ]
-    if collection_lesson_ids is not None:
-        filtered = [
-            w for w in filtered
-            if any(l["id"] in collection_lesson_ids for l in w["lessons"])
-        ]
+    if collection_word_set is not None:
+        filtered = [w for w in filtered if w["word"] in collection_word_set]
+    elif collection_lesson_ids is not None:
+        if collection_lesson_ids:
+            filtered = [
+                w for w in filtered
+                if any(l["id"] in collection_lesson_ids for l in w["lessons"])
+            ]
+        else:
+            # Audio/clip collection with no resolved IDs → empty result
+            filtered = []
 
     # Sort
     desc = order != "asc"
@@ -149,9 +152,51 @@ def get_words(
 def get_word_detail(word: str):
     """Return full word detail with lesson occurrences (audio timestamps)."""
     _ensure_cache()
-    # Binary search on sorted cache (words are sorted by count desc, so linear scan)
+    cleaned = clean_word(word)
     for w in _cache:
-        if w["word"] == word:
+        if w["word"] == cleaned:
             return w
     from fastapi import HTTPException
     raise HTTPException(status_code=404, detail=f"Word '{word}' not found")
+
+
+@router.get("/words/{word}/sentences")
+def get_word_sentences(word: str):
+    """Return sentences containing the word, for review fill-in-the-blank.
+
+    Uses timestamp-based matching to find the correct sentence,
+    avoiding punctuation/cleaning mismatches with the cache.
+    """
+    _ensure_cache()
+    from services import get_lesson
+    from fastapi import HTTPException as Http404
+
+    cleaned = clean_word(word)
+    results = []
+    for w in _cache:
+        if w["word"] != cleaned:
+            continue
+        for lesson_info in w["lessons"]:
+            lesson = get_lesson(lesson_info["id"])
+            if not lesson:
+                continue
+            timestamps = lesson_info.get("occurrences", [])
+            if not timestamps:
+                continue
+            # Match by timestamp: find which sentence contains the word's first occurrence
+            t = timestamps[0]
+            for sent in lesson.transcript:
+                if sent.start <= t < sent.end:
+                    results.append({
+                        "lesson_id": lesson.id,
+                        "lesson_title": lesson.title,
+                        "sentence_text": sent.text,
+                        "start_time": sent.start,
+                        "end_time": sent.end,
+                    })
+                    break
+        break
+
+    if not results:
+        raise Http404(status_code=404, detail=f"No sentence found for word '{word}'")
+    return {"sentences": results}

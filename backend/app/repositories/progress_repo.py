@@ -136,6 +136,63 @@ class ProgressRepository:
         """, [limit]).fetchall()
         return [dict(r) for r in rows]
 
+    # ── Daily Words ──
+
+    def record_listened_words(self, words: list[str], audio_id: str, audio_title: str) -> None:
+        """Record words that were actually heard in a play session."""
+        today = self._get_today_date()
+        from text_utils import clean_word
+        for w in words:
+            cleaned = clean_word(w)
+            if not cleaned:
+                continue
+            self._conn.execute(
+                "INSERT OR IGNORE INTO listened_words (word, audio_id, audio_title, listened_date) VALUES (?,?,?,?)",
+                [cleaned, audio_id, audio_title, today],
+            )
+        self._conn.commit()
+
+    def _get_today_date(self) -> str:
+        row = self._conn.execute("SELECT date('now') AS d").fetchone()
+        return row["d"] if row else ""
+
+    def get_today_words(self) -> list[dict]:
+        """Return today's listened words with progress info, sorted by frequency."""
+        return [dict(r) for r in self._conn.execute("""
+            SELECT lw.word,
+                   COUNT(DISTINCT lw.audio_id) AS audio_count,
+                   GROUP_CONCAT(DISTINCT lw.audio_title) AS audio_titles,
+                   COALESCE(wp.known, 0) AS known,
+                   wp.last_score,
+                   wp.reviewed_at
+            FROM listened_words lw
+            LEFT JOIN word_progress wp ON wp.word = lw.word
+            WHERE lw.listened_date = date('now')
+            GROUP BY lw.word
+            ORDER BY audio_count DESC, lw.word ASC
+        """).fetchall()]
+
+    def get_today_stats(self) -> dict:
+        """Return today's word stats: total words, audio count, reviewed count."""
+        stats = self._conn.execute("""
+            SELECT COUNT(DISTINCT word) AS total_words,
+                   COUNT(DISTINCT audio_id) AS audio_count
+            FROM listened_words
+            WHERE listened_date = date('now')
+        """).fetchone()
+        reviewed = self._conn.execute("""
+            SELECT COUNT(DISTINCT lw.word) AS reviewed_count
+            FROM listened_words lw
+            JOIN word_progress wp ON wp.word = lw.word
+            WHERE lw.listened_date = date('now')
+              AND wp.reviewed_at >= datetime('now', '-1 day')
+        """).fetchone()
+        return {
+            "total_words": stats["total_words"] if stats else 0,
+            "audio_count": stats["audio_count"] if stats else 0,
+            "reviewed_count": reviewed["reviewed_count"] if reviewed else 0,
+        }
+
     def get_due_words_count(self) -> int:
         """Count of words due for review."""
         row = self._conn.execute("""

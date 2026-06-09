@@ -321,6 +321,53 @@ export function submitWordReview(word: string, score: number): Promise<{ ok: boo
   return post('/api/progress/words/review', { word, score });
 }
 
+// ── Word Sentences (for fill-in-the-blank review) ──
+
+export interface WordSentence {
+  lesson_id: string;
+  lesson_title: string;
+  sentence_text: string;
+  start_time: number;
+  end_time: number;
+}
+
+export function getWordSentences(word: string): Promise<{ sentences: WordSentence[] }> {
+  return get(`/api/words/${encodeURIComponent(word)}/sentences`);
+}
+
+// ── Daily Words ──
+
+export interface TodayWord {
+  word: string;
+  audio_count: number;
+  audio_titles: string;
+  known: number;
+  last_score: number | null;
+  reviewed_at: string | null;
+}
+
+export interface TodayStats {
+  total_words: number;
+  audio_count: number;
+  reviewed_count: number;
+}
+
+export function getTodayWords(): Promise<{ words: TodayWord[] }> {
+  return get('/api/progress/daily-words/today');
+}
+
+export function getTodayStats(): Promise<TodayStats> {
+  return get('/api/progress/daily-words/stats');
+}
+
+export function recordListenedWords(data: {
+  words: string[];
+  audio_id: string;
+  audio_title: string;
+}): Promise<{ ok: boolean }> {
+  return post('/api/progress/listened-words', data);
+}
+
 // ── Collections ──
 
 export function getCollections(): Promise<CollectionSummary[]> {

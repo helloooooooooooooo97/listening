@@ -98,3 +98,28 @@ def due_words(limit: int = Query(default=20, ge=1, le=100), repo: ProgressReposi
 @router.get("/words/due-count")
 def due_words_count(repo: ProgressRepository = Depends(get_repo)):
     return {"count": repo.get_due_words_count()}
+
+
+# ── Daily Words ──
+
+
+class ListenedWordsRecord(BaseModel):
+    words: list[str]
+    audio_id: str
+    audio_title: str
+
+
+@router.post("/listened-words", status_code=201)
+def record_listened_words(data: ListenedWordsRecord, repo: ProgressRepository = Depends(get_repo)):
+    repo.record_listened_words(data.words, data.audio_id, data.audio_title)
+    return {"ok": True}
+
+
+@router.get("/daily-words/today")
+def get_today_words(repo: ProgressRepository = Depends(get_repo)):
+    return {"words": repo.get_today_words()}
+
+
+@router.get("/daily-words/stats")
+def get_today_stats(repo: ProgressRepository = Depends(get_repo)):
+    return repo.get_today_stats()
