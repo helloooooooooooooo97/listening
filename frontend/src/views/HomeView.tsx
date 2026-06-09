@@ -7,7 +7,7 @@ import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useCollectionsStore } from '../stores/collectionsStore';
-import { getLessonById, getOverview } from '../lib/api';
+import { getLessonById, getOverview, getDueWordsCount } from '../lib/api';
 
 interface Props {
   search: string;
@@ -44,6 +44,11 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
   const dailyGoal = useSettingsStore(s => s.settings.dailyGoalMinutes);
   const collections = useCollectionsStore(s => s.collections);
   const [todaySeconds, setTodaySeconds] = useState(0);
+  const [dueWordsCount, setDueWordsCount] = useState(0);
+
+  useEffect(() => {
+    getDueWordsCount().then(d => setDueWordsCount(d.count)).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (dailyGoal > 0) {
@@ -105,6 +110,22 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
                 <div><p className="text-2xl font-bold text-primary tracking-tight">{s.value}</p><p className="text-xs text-tertiary">{s.label}</p></div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Review card */}
+        {!q && dueWordsCount > 0 && (
+          <div onClick={() => navigate('/words')}
+            className="group cursor-pointer rounded-xl p-5 transition-all duration-200 hover:brightness-110 flex items-center justify-between"
+            style={{ background: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)' }}>
+            <div>
+              <h3 className="text-white font-bold text-base tracking-tight">📝 待复习单词</h3>
+              <p className="text-white/70 text-xs mt-1">点击开始复习</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-white text-3xl font-black tabular-nums">{dueWordsCount}</span>
+              <span className="text-white/60 text-xs">个</span>
+            </div>
           </div>
         )}
 

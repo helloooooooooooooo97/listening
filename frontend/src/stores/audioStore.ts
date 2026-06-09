@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
-import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio, setSavedRate, applyPlaybackRate } from '../lib/audioEngine';
+import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio, setSavedRate, applyPlaybackRate, safePlay } from '../lib/audioEngine';
 import { trackPlay, flushTrack, setLessonInfoProvider } from '../lib/playTracking';
 import { usePlaylistStore, type QueueItem } from './playlistStore';
 import { queueItemToClip } from '../lib/queueItems';
@@ -94,13 +94,22 @@ export const useAudioStore = create<AudioState>((set, get) => {
           set({ loopCount: loopCount + 1 });
         } else {
           _clipEndHandled = true;
-          audio.pause();
-          audio.currentTime = clip.endTime;
-          set({ isPlaying: false });
-          // Try to play next in queue (after clip loop is done)
           const next = usePlaylistStore.getState().playNext();
           if (next) {
-            playQueueItemLater(next, 50);
+            // Same-lesson clips: keep audio playing, just seek (avoids Safari autoplay block)
+            if (next.kind === 'clip' && next.clip.lessonId === clip.lessonId) {
+              playQueueItem(next);
+            } else {
+              // Different lesson / type: pause and schedule (needs full src switch)
+              audio.pause();
+              audio.currentTime = clip.endTime;
+              set({ isPlaying: false });
+              playQueueItemLater(next, 50);
+            }
+          } else {
+            audio.pause();
+            audio.currentTime = clip.endTime;
+            set({ isPlaying: false });
           }
         }
         return;
@@ -213,7 +222,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
           a.currentTime = saved.position;
         }
         applyPlaybackRate(a, rate);
-        a.play();
+        safePlay(a);
       });
     },
 
@@ -238,7 +247,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
         const a = getAudio();
         a.currentTime = clip.startTime;
         applyPlaybackRate(a, rate);
-        a.play();
+        safePlay(a);
       });
     },
 
@@ -263,7 +272,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
           set({ loopCount: 0 });
         }
         applyPlaybackRate(a, playbackRate);
-        a.play();
+        safePlay(a);
       } else {
         a.pause();
       }
@@ -297,7 +306,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
       const curIdx = findSentenceIndex(mode.lesson, getAudio().currentTime);
       const targetIdx = Math.max(0, curIdx - 1);
       getAudio().currentTime = mode.lesson.transcript[targetIdx].start;
-      if (!getAudio().paused) getAudio().play();
+      if (!getAudio().paused) safePlay(getAudio());
     },
 
     jumpToNextSentence: () => {
@@ -306,7 +315,7 @@ export const useAudioStore = create<AudioState>((set, get) => {
       const curIdx = findSentenceIndex(mode.lesson, getAudio().currentTime);
       const targetIdx = Math.min(mode.lesson.transcript.length - 1, curIdx + 1);
       getAudio().currentTime = mode.lesson.transcript[targetIdx].start;
-      if (!getAudio().paused) getAudio().play();
+      if (!getAudio().paused) safePlay(getAudio());
     },
 
     setRate: (rate) => {

@@ -40,6 +40,7 @@ export interface AudioClip {
   note: string;
   color: string;
   createdAt: string;
+  ai_analysis?: string | null;
 }
 
 export interface LessonSummary {

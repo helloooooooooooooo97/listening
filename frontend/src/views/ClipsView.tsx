@@ -20,7 +20,9 @@ function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',
 export default function ClipsView({ clips, onDeleteClip }: Props) {
   const [search, setSearch] = useState('');
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
-  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
+  const q = search.toLowerCase();
+  const fC = clips.filter(c => c.text.toLowerCase().includes(q) || c.note.toLowerCase().includes(q) || c.lessonTitle.toLowerCase().includes(q));
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis(fC);
 
   const playClip = useAudioStore(s => s.playClip);
   const favToggle = useFavoritesStore(s => s.toggle);
@@ -28,9 +30,6 @@ export default function ClipsView({ clips, onDeleteClip }: Props) {
   const updateClip = useClipsStore(s => s.updateClip);
   const addToast = useToastStore(s => s.addToast);
   const addToQueue = usePlaylistStore(s => s.addToQueue);
-
-  const q = search.toLowerCase();
-  const fC = clips.filter(c => c.text.toLowerCase().includes(q) || c.note.toLowerCase().includes(q) || c.lessonTitle.toLowerCase().includes(q));
 
   const handleDelete = (id: string) => {
     setRemovingIds(prev => new Set(prev).add(id));

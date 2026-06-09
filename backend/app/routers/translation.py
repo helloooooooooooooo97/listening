@@ -18,6 +18,7 @@ def get_translation(source_type: str, source_text: str, repo: TranslationReposit
     return repo.get(source_type, source_text)
 
 
+@router.post("")
 @router.post("/")
 def save_translation(data: TranslationIn, repo: TranslationRepository = Depends(get_repo)):
     return repo.upsert(data)

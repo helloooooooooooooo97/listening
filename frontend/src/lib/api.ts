@@ -125,6 +125,7 @@ export interface Overview {
   streak_days: number;
   today_seconds: number;
   yesterday_seconds: number;
+  due_words: number;
 }
 
 export function getOverview(): Promise<Overview> {
@@ -212,7 +213,14 @@ export function getRecentActivity(limit = 15): Promise<{ activities: Activity[] 
 
 // ── Words ──
 
-export interface WordItem {
+/** Lightweight word summary returned by list endpoint (no timestamps). */
+export interface WordSummary {
+  word: string;
+  count: number;
+}
+
+/** Full word detail with audio timestamps, fetched on demand. */
+export interface WordDetail {
   word: string;
   count: number;
   lessons: { id: string; title: string; occurrences: number[] }[];
@@ -263,7 +271,7 @@ export interface SentenceDictation {
 }
 
 export function getDictationSentences(audioId: string): Promise<{ sentences: SentenceDictation[] }> {
-  return get(`/api/stats/dictation-sentences/${encodeURIComponent(audioId)}`);
+  return get<{ sentences: SentenceDictation[] }>(`/api/stats/dictation-sentences/${encodeURIComponent(audioId)}`);
 }
 
 export function getWords(params: {
@@ -274,7 +282,7 @@ export function getWords(params: {
   offset?: number;
   category?: string;
   collection?: string;
-} = {}): Promise<{ total: number; words: WordItem[] }> {
+} = {}): Promise<{ total: number; words: WordSummary[] }> {
   const sp = new URLSearchParams();
   if (params.q) sp.set('q', params.q);
   if (params.sort) sp.set('sort', params.sort);
@@ -285,6 +293,32 @@ export function getWords(params: {
   if (params.collection) sp.set('collection', params.collection);
   const qs = sp.toString();
   return get(`/api/words${qs ? `?${qs}` : ''}`);
+}
+
+/** Fetch full word detail with lesson occurrences (audio timestamps). */
+export function getWordDetail(word: string): Promise<WordDetail> {
+  return get<WordDetail>(`/api/words/${encodeURIComponent(word)}`);
+}
+
+// ── Review System ──
+
+export interface DueWord {
+  word: string;
+  reviewed_count: number;
+  last_score: number | null;
+  reviewed_at: string;
+}
+
+export function getDueWords(limit = 20): Promise<{ words: DueWord[] }> {
+  return get(`/api/progress/words/due?limit=${limit}`);
+}
+
+export function getDueWordsCount(): Promise<{ count: number }> {
+  return get('/api/progress/words/due-count');
+}
+
+export function submitWordReview(word: string, score: number): Promise<{ ok: boolean }> {
+  return post('/api/progress/words/review', { word, score });
 }
 
 // ── Collections ──

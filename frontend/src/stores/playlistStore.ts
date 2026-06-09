@@ -28,6 +28,8 @@ export function queueItemSub(item: QueueItem): string {
 
 type RepeatMode = 'sequential' | 'repeat-one' | 'repeat-all' | 'shuffle';
 
+type PersistedPlaylistState = Pick<PlaylistState, 'repeatMode'>;
+
 interface PlaylistState {
   queue: QueueItem[];
   currentIndex: number;
@@ -188,6 +190,22 @@ export const usePlaylistStore = create<PlaylistState>()(
     set({ repeatMode: order[nextIdx] });
   },
 }),
-    { name: 'playlist-queue' },
+    {
+      name: 'playlist-queue',
+      version: 2,
+      partialize: (state): PersistedPlaylistState => ({
+        repeatMode: state.repeatMode,
+      }),
+      migrate: (persisted): PersistedPlaylistState => ({
+        repeatMode: (
+          persisted
+          && typeof persisted === 'object'
+          && 'repeatMode' in persisted
+          && ['sequential', 'repeat-one', 'repeat-all', 'shuffle'].includes(String(persisted.repeatMode))
+        )
+          ? persisted.repeatMode as RepeatMode
+          : 'repeat-all',
+      }),
+    },
   )
 );

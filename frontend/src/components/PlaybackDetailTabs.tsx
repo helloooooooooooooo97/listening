@@ -43,11 +43,6 @@ export default function PlaybackDetailTabs({
   const [collapsed, setCollapsed] = useState(false);
   const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
-  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis();
-  const lyricDisplayMode = useSettingsStore(s => s.settings.lyricDisplayMode);
-  const translationEnabled = useSettingsStore(s => s.settings.translationEnabled);
-  const setTranslationEnabled = useSettingsStore(s => s.setTranslationEnabled);
-
   const clips = useClipsStore(s => s.clips);
   const removeClip = useClipsStore(s => s.removeClip);
   const updateClip = useClipsStore(s => s.updateClip);
@@ -64,6 +59,11 @@ export default function PlaybackDetailTabs({
     if (clipSort === 'date') return [...filtered].sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
     return [...filtered].sort((a, b) => a.startTime - b.startTime);
   }, [clips, lesson.id, clipSort]);
+
+  const { clipAnalyses, analyzingClips, viewingAnalysis, setViewingAnalysis, handleAnalyze } = useClipAnalysis(lessonClips);
+  const lyricDisplayMode = useSettingsStore(s => s.settings.lyricDisplayMode);
+  const translationEnabled = useSettingsStore(s => s.settings.translationEnabled);
+  const setTranslationEnabled = useSettingsStore(s => s.setTranslationEnabled);
 
   const handleExportClips = () => {
     const text = lessonClips.map(c =>
