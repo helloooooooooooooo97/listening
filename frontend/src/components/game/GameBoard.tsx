@@ -4,7 +4,7 @@ import GameTile from './GameTile';
 
 const GRID_COLS = 8;
 const GRID_ROWS = 6;
-const CELL = 64;
+const CELL = 84;
 
 interface GameBoardProps {
   tiles: TileData[];
@@ -31,10 +31,15 @@ export default function GameBoard({ tiles, inDegree, onTileClick }: GameBoardPro
     return result;
   }, [byLayer]);
 
+  const boardHeight = useMemo(() => {
+    const gridHeight = GRID_ROWS * CELL + (GRID_ROWS - 1) * 3;
+    return gridHeight + byLayer.maxLayer * 16;
+  }, [byLayer]);
+
   if (tiles.length === 0) return null;
 
   return (
-    <div className="relative w-full mx-auto flex items-start justify-center" style={{ minHeight: 380 }}>
+    <div className="relative w-full mx-auto flex items-start justify-center" style={{ height: boardHeight }}>
       {layers.map(layer => {
         const layerTiles = byLayer.gridMap.get(layer);
         if (!layerTiles || layerTiles.size === 0) return null;

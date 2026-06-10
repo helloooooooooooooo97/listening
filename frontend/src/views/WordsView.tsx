@@ -422,8 +422,8 @@ export default function WordsView() {
                         </button>
                       )}
                       <button onClick={() => navigate('/game')}
-                        className="px-3 py-2 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
-                        <HiSparkles size={11} className="text-amber-400" /> 游戏
+                        className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
+                        <HiSparkles size={14} className="text-amber-400 flex-shrink-0" /> 游戏
                       </button>
                     </div>
                   </div>
@@ -500,8 +500,8 @@ export default function WordsView() {
                   {dueWords.length > 0 && (
                     <div className="mb-3 flex justify-end gap-2">
                       <button onClick={() => navigate('/game')}
-                        className="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
-                        <HiSparkles size={11} className="text-amber-400" /> 游戏模式
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
+                        <HiSparkles size={14} className="text-amber-400 flex-shrink-0" /> 游戏模式
                       </button>
                       <button onClick={() => openReviewFromDueWords(dueWords)}
                         className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">

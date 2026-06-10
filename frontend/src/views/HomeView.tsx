@@ -218,7 +218,7 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
                 </div>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
-                <span className="text-xs font-medium text-amber-400">🎮 开始</span>
+<span className="text-xs font-medium text-amber-400 flex items-center gap-1"><HiSparkles size={11} /> 开始</span>
               </div>
             </div>
           )}

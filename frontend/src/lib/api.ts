@@ -368,8 +368,10 @@ export interface WordSentence {
   end_time: number;
 }
 
-export function getWordSentences(word: string): Promise<{ sentences: WordSentence[] }> {
-  return get(`/api/words/${encodeURIComponent(word)}/sentences`);
+export function getWordSentences(word: string, prioritize?: string): Promise<{ sentences: WordSentence[] }> {
+  let url = `/api/words/${encodeURIComponent(word)}/sentences`;
+  if (prioritize) url += `?prioritize=${encodeURIComponent(prioritize)}`;
+  return get(url);
 }
 
 // ── Daily Words ──

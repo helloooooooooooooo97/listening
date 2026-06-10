@@ -10,7 +10,7 @@ interface SlotBarProps {
   onRemove3?: () => void;
 }
 
-const SLOT = 56;
+const SLOT = 72;
 
 export default function SlotBar({ slot, capacity, tools, onShuffle, onUndo, onRemove3 }: SlotBarProps) {
   const filled = slot.filter(s => s !== null).length;
@@ -66,8 +66,8 @@ function SlotItem({ item }: { item: TileData | null }) {
       }}
     >
       <div className="flex flex-col items-center justify-center gap-0">
-        <span style={{ fontSize: 16, lineHeight: 1.3 }}>{item.emoji}</span>
-        <span className="truncate px-0.5 leading-tight text-center" style={{ fontSize: 9, fontWeight: 700 }}>{item.word}</span>
+        <span style={{ fontSize: 20, lineHeight: 1.3 }}>{item.emoji}</span>
+        <span className="truncate px-0.5 leading-tight text-center" style={{ fontSize: 11, fontWeight: 700 }}>{item.word}</span>
       </div>
     </div>
   );
@@ -77,7 +77,7 @@ function ToolItem({ icon, label, count, onClick }: { icon: React.ReactNode; labe
   const disabled = !onClick || count <= 0;
   return (
     <button onClick={onClick} disabled={disabled}
-      className="relative rounded-md border overflow-hidden flex items-center justify-center transition-colors cursor-pointer"
+      className="relative rounded-md border flex items-center justify-center transition-colors cursor-pointer"
       style={{
         width: SLOT,
         height: SLOT,
@@ -93,8 +93,8 @@ function ToolItem({ icon, label, count, onClick }: { icon: React.ReactNode; labe
         <span className="leading-tight text-center" style={{ fontSize: 8, fontWeight: 600, marginTop: 2 }}>{label}</span>
       </div>
       {count > 0 && (
-        <span className="absolute -top-1 -right-1 flex items-center justify-center font-mono rounded-full"
-          style={{ fontSize: 9, fontWeight: 700, background: 'var(--accent)', color: '#fff', minWidth: 18, minHeight: 18 }}>
+        <span className="absolute flex items-center justify-center font-mono rounded-full z-10"
+          style={{ top: -4, right: -4, fontSize: 10, fontWeight: 700, background: 'var(--accent)', color: '#fff', minWidth: 20, minHeight: 20, padding: '0 4px' }}>
           {count}
         </span>
       )}

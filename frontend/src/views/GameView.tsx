@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiArrowLeft, HiArrowPath, HiSparkles } from 'react-icons/hi2';
 import { useGameStore } from '../stores/gameStore';
 import { getTodayWords, getDueWords, getWords } from '../lib/api';
+import { useWordAudio } from '../hooks/useWordAudio';
 import GameBoard from '../components/game/GameBoard';
 import SlotBar from '../components/game/SlotBar';
 import GameModal from '../components/game/GameModal';
@@ -12,8 +13,15 @@ import type { Difficulty } from '../components/game/levelGenerator';
 export default function GameView() {
   const navigate = useNavigate();
   const store = useGameStore();
+  const { playWordAudio } = useWordAudio();
   const [allWords, setAllWords] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const handleTileClick = useCallback((tileId: string) => {
+    store.clickTile(tileId);
+    const tile = store.tiles.find(t => t.id === tileId);
+    if (tile) playWordAudio(tile.word);
+  }, [store, playWordAudio]);
 
   // On mount, gather available words
   useEffect(() => {
@@ -65,7 +73,7 @@ export default function GameView() {
       <div className="h-full bg-[var(--bg-primary)] overflow-y-auto">
         <GameHeader />
         <div className="px-4 py-8">
-          <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={store.clickTile} />
+          <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={handleTileClick} />
           <div className="mt-6">
             <SlotBar slot={store.slot} capacity={store.slotCapacity} />
           </div>
@@ -106,7 +114,7 @@ export default function GameView() {
 
       {/* Board */}
       <div className="flex-1 flex items-center justify-center px-4 py-4">
-        <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={store.clickTile} />
+        <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={handleTileClick} />
       </div>
 
       {/* Slot + Tools (same container) */}

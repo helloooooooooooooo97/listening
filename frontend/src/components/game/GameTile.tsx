@@ -6,7 +6,7 @@ interface GameTileProps {
   onClick: () => void;
 }
 
-const CELL = 64;
+const CELL = 84;
 
 export default function GameTile({ word, emoji, inDegree, isClickable, onClick }: GameTileProps) {
 
@@ -31,10 +31,10 @@ export default function GameTile({ word, emoji, inDegree, isClickable, onClick }
 
   const content = (
     <div className="flex flex-col items-center justify-center gap-0">
-      <span style={{ fontSize: 18, lineHeight: 1.3 }}>{emoji}</span>
+      <span style={{ fontSize: 24, lineHeight: 1.3 }}>{emoji}</span>
       <span
         className="truncate text-center select-none leading-tight"
-        style={{ fontSize: 10, fontWeight: 700, maxWidth: CELL - 8 }}
+        style={{ fontSize: 13, fontWeight: 700, maxWidth: CELL - 10 }}
       >
         {word}
       </span>
