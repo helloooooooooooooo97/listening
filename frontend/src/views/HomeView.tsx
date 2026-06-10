@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiFolderOpen, HiHeart, HiTag, HiSun, HiArrowPath } from 'react-icons/hi2';
+import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiFolderOpen, HiHeart, HiTag, HiSun, HiArrowPath, HiSparkles } from 'react-icons/hi2';
 import HeartButton from '../components/HeartButton';
 import ReviewModal from '../components/words/ReviewModal';
 import type { AudioClip, LessonSummary } from '../types/lesson';
@@ -166,7 +166,7 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
                 {todayWordsStats.total_words > todayWordsStats.reviewed_count && (
                   <button onClick={openTodayReview}
                     className="flex-1 py-1.5 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
-                    🧠 复习 · {todayWordsStats.total_words - todayWordsStats.reviewed_count}
+  <HiSparkles size={11} /> 复习 · {todayWordsStats.total_words - todayWordsStats.reviewed_count}
                   </button>
                 )}
               </div>
@@ -198,8 +198,27 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
                 </button>
                 <button onClick={openDueReview}
                   className="flex-1 py-1.5 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
-                  🧠 全部复习
+<HiSparkles size={11} /> 全部复习
                 </button>
+              </div>
+            </div>
+          )}
+
+          {!q && (
+            <div onClick={() => navigate('/game')}
+              className="group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)] flex items-center justify-between"
+              style={{ background: 'var(--bg-tertiary)' }}>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#f59e0b20' }}>
+<HiSparkles size={18} style={{ color: 'var(--accent)' }} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-primary">单词消除游戏</h3>
+                  <p className="text-xs text-tertiary mt-0.5">在游戏中复习单词</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <span className="text-xs font-medium text-amber-400">🎮 开始</span>
               </div>
             </div>
           )}

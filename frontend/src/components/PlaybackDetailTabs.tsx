@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlay, HiSparkles, HiBookOpen } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
 import { getDictationRecords, getKnownWords, setWordKnown, type AudioGroup, type DictRecord } from '../lib/api';
@@ -45,6 +46,7 @@ export default function PlaybackDetailTabs({
   const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
   const [wordSearch, setWordSearch] = useState('');
+  const navigate = useNavigate();
   const [knownWords, setKnownWords] = useState<Set<string>>(new Set());
   const [wordsReviewOpen, setWordsReviewOpen] = useState(false);
   const clips = useClipsStore(s => s.clips);
@@ -446,11 +448,15 @@ export default function PlaybackDetailTabs({
                       </div>
                     ))}
                   </div>
-                  {/* Review button */}
-                  <div className="p-3 border-t border-[var(--border-secondary)]">
+                  {/* Review + Game buttons */}
+                  <div className="p-3 border-t border-[var(--border-secondary)] flex gap-2">
                     <button onClick={() => setWordsReviewOpen(true)}
-                      className="w-full py-2 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer flex items-center justify-center gap-1.5">
-                      🧠 复习本课单词 ({lessonWords.length})
+                      className="flex-1 py-2 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+<HiSparkles size={11} /> 复习本课单词 ({lessonWords.length})
+                    </button>
+                    <button onClick={() => navigate('/game')}
+                      className="py-2 px-3 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
+<HiSparkles size={11} /> 游戏
                     </button>
                   </div>
                 </>

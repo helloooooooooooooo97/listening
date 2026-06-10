@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HiMagnifyingGlass, HiCheck, HiBarsArrowDown, HiHeart, HiSun, HiArrowPath, HiSparkles, HiBookOpen } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
@@ -151,6 +152,7 @@ export default function WordsView() {
   const [aiExpanded, setAiExpanded] = useState(false);
   const lookupWord = useAiStore(s => s.lookupWord);
   const hasAiProvider = useAiStore(s => s.providers.length > 0);
+  const navigate = useNavigate();
 
   // Review modal state
   const [reviewOpen, setReviewOpen] = useState(false);
@@ -412,12 +414,18 @@ export default function WordsView() {
                         来自 {todayStats.audio_count} 个音频 · 已复习 {todayStats.reviewed_count}/{todayStats.total_words}
                       </p>
                     </div>
-                    {todayUnmastered.length > 0 && (
-                      <button onClick={openReview}
-                        className="px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
-                        开始今日复习 · {todayUnmastered.length} 个
+                    <div className="flex items-center gap-2">
+                      {todayUnmastered.length > 0 && (
+                        <button onClick={openReview}
+                          className="px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+                          开始今日复习 · {todayUnmastered.length} 个
+                        </button>
+                      )}
+                      <button onClick={() => navigate('/game')}
+                        className="px-3 py-2 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
+                        <HiSparkles size={11} className="text-amber-400" /> 游戏
                       </button>
-                    )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -490,7 +498,11 @@ export default function WordsView() {
                 <>
                   {/* All-review button */}
                   {dueWords.length > 0 && (
-                    <div className="mb-3 flex justify-end">
+                    <div className="mb-3 flex justify-end gap-2">
+                      <button onClick={() => navigate('/game')}
+                        className="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
+                        <HiSparkles size={11} className="text-amber-400" /> 游戏模式
+                      </button>
                       <button onClick={() => openReviewFromDueWords(dueWords)}
                         className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
                         全部复习 ({dueWords.length})

@@ -1,4 +1,4 @@
-import { HiAdjustmentsHorizontal } from 'react-icons/hi2';
+import { HiAdjustmentsHorizontal, HiBookOpen } from 'react-icons/hi2';
 import { useEffect, useState } from 'react';
 import { getWords, getLessons, getCollections } from '../../lib/api';
 
@@ -112,7 +112,7 @@ export default function FilterDrawer({ collectionFilter, categoryFilter, examFil
                         ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
                         : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
                     }`}>
-                    <span>📚 {cat}</span>
+                    <span className="flex items-center gap-1"><HiBookOpen size={11} />{cat}</span>
                     <span className="text-[10px] font-mono tabular-nums opacity-60">{filterCounts[`cat:${cat}`] ?? '…'}</span>
                   </button>
                 ))}
