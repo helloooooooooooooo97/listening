@@ -217,6 +217,7 @@ export function getRecentActivity(limit = 15): Promise<{ activities: Activity[] 
 export interface WordSummary {
   word: string;
   count: number;
+  tags?: string[];
 }
 
 /** Full word detail with audio timestamps, fetched on demand. */
@@ -224,6 +225,16 @@ export interface WordDetail {
   word: string;
   count: number;
   lessons: { id: string; title: string; occurrences: number[] }[];
+  tags?: string[];
+}
+
+/** Dictionary entry imported from exam word lists. */
+export interface WordDictionary {
+  word: string;
+  pronunciation: string;
+  partOfSpeech: string;
+  definition: string;
+  tags: string[];
 }
 
 // ── Favorites ──
@@ -282,6 +293,7 @@ export function getWords(params: {
   offset?: number;
   category?: string;
   collection?: string;
+  exam?: string;
 } = {}): Promise<{ total: number; words: WordSummary[] }> {
   const sp = new URLSearchParams();
   if (params.q) sp.set('q', params.q);
@@ -291,6 +303,7 @@ export function getWords(params: {
   if (params.offset) sp.set('offset', String(params.offset));
   if (params.category) sp.set('category', params.category);
   if (params.collection) sp.set('collection', params.collection);
+  if (params.exam) sp.set('exam', params.exam);
   const qs = sp.toString();
   return get(`/api/words${qs ? `?${qs}` : ''}`);
 }
@@ -298,6 +311,11 @@ export function getWords(params: {
 /** Fetch full word detail with lesson occurrences (audio timestamps). */
 export function getWordDetail(word: string): Promise<WordDetail> {
   return get<WordDetail>(`/api/words/${encodeURIComponent(word)}`);
+}
+
+/** Fetch dictionary entry: pronunciation, part of speech, definition, tags. */
+export function getDictionaryEntry(word: string): Promise<WordDictionary> {
+  return get<WordDictionary>(`/api/dictionary/${encodeURIComponent(word)}`);
 }
 
 // ── Review System ──
@@ -319,6 +337,25 @@ export function getDueWordsCount(): Promise<{ count: number }> {
 
 export function submitWordReview(word: string, score: number): Promise<{ ok: boolean }> {
   return post('/api/progress/words/review', { word, score });
+}
+
+// ── Batch Review ──
+
+export interface BatchReviewResult {
+  reviewed: number;
+  correct: number;
+}
+
+export function submitBatchReview(sessionId: string, source: string, mode: string, results: { word: string; correct: boolean; score: number; session_index: number }[]): Promise<BatchReviewResult> {
+  return post('/api/progress/review/batch', { session_id: sessionId, source, mode, results });
+}
+
+export function getReviewHistory(limit = 50): Promise<{ sessions: any[] }> {
+  return get(`/api/progress/review/history?limit=${limit}`);
+}
+
+export function getReviewStats(): Promise<{ today_reviewed: number; today_correct: number; streak: number }> {
+  return get('/api/progress/review/stats');
 }
 
 // ── Word Sentences (for fill-in-the-blank review) ──

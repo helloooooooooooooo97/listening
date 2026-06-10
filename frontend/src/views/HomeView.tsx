@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiMusicalNote, HiBookmark, HiBookOpen, HiMagnifyingGlass, HiClock, HiFolderOpen, HiHeart, HiTag, HiSun, HiArrowPath } from 'react-icons/hi2';
 import HeartButton from '../components/HeartButton';
+import ReviewModal from '../components/words/ReviewModal';
 import type { AudioClip, LessonSummary } from '../types/lesson';
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useCollectionsStore } from '../stores/collectionsStore';
-import { getLessonById, getOverview, getDueWordsCount, getTodayStats } from '../lib/api';
+import { getLessonById, getOverview, getDueWordsCount, getTodayStats, getTodayWords, getDueWords } from '../lib/api';
 
 interface Props {
   search: string;
@@ -46,6 +47,26 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
   const [todaySeconds, setTodaySeconds] = useState(0);
   const [dueWordsCount, setDueWordsCount] = useState(0);
   const [todayWordsStats, setTodayWordsStats] = useState<{ total_words: number; reviewed_count: number; audio_count: number } | null>(null);
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [reviewWords, setReviewWords] = useState<{ word: string; source?: string }[]>([]);
+
+  const openTodayReview = () => {
+    getTodayWords().then(d => {
+      if (d.words.length > 0) {
+        setReviewWords(d.words.filter(w => !w.known).map(w => ({ word: w.word, source: '今日单词' })));
+        setReviewOpen(true);
+      }
+    }).catch(() => {});
+  };
+
+  const openDueReview = () => {
+    getDueWords(200).then(({ words }) => {
+      if (words.length > 0) {
+        setReviewWords(words.map(d => ({ word: d.word, source: '待复习' })));
+        setReviewOpen(true);
+      }
+    }).catch(() => {});
+  };
 
   useEffect(() => {
     getDueWordsCount().then(d => setDueWordsCount(d.count)).catch(() => {});
@@ -64,7 +85,7 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
   const dynamicCols = collections.filter(c => c.is_dynamic && c.item_count > 0).slice(0, 4);
 
   return (
-    <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
+    <><div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-hidden">
       <div className="flex-shrink-0 px-8 pt-12 pb-8" style={{ background: 'var(--hero-gradient)' }}>
         <div className="flex items-end justify-between gap-8">
           <div>
@@ -118,43 +139,67 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
         {/* Word cards row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {!q && todayWordsStats && todayWordsStats.total_words > 0 && (
-            <div onClick={() => navigate('/words')}
-              className="group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)] flex items-center justify-between"
+            <div className="group rounded-xl p-4 transition-all duration-200"
               style={{ background: 'var(--bg-tertiary)' }}>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#f59e0b20' }}>
-                  <HiSun size={18} className="text-amber-500" />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#f59e0b20' }}>
+                    <HiSun size={18} className="text-amber-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-primary">今日单词</h3>
+                    <p className="text-xs text-tertiary mt-0.5">
+                      来自 {todayWordsStats.audio_count} 个音频 · 已复习 {todayWordsStats.reviewed_count}/{todayWordsStats.total_words}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-primary">今日单词</h3>
-                  <p className="text-xs text-tertiary mt-0.5">
-                    来自 {todayWordsStats.audio_count} 个音频 · 已复习 {todayWordsStats.reviewed_count}/{todayWordsStats.total_words}
-                  </p>
+                <div className="flex items-center gap-1.5 flex-shrink-0">
+                  <span className="text-base font-bold text-primary tabular-nums">{todayWordsStats.total_words}</span>
+                  <span className="text-xs text-tertiary">个</span>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <span className="text-base font-bold text-primary tabular-nums">{todayWordsStats.total_words}</span>
-                <span className="text-xs text-tertiary">个</span>
+              <div className="flex gap-2">
+                <button onClick={() => navigate('/words')}
+                  className="flex-1 py-1.5 rounded-lg text-xs font-medium text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
+                  📖 查看
+                </button>
+                {todayWordsStats.total_words > todayWordsStats.reviewed_count && (
+                  <button onClick={openTodayReview}
+                    className="flex-1 py-1.5 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+                    🧠 复习 · {todayWordsStats.total_words - todayWordsStats.reviewed_count}
+                  </button>
+                )}
               </div>
             </div>
           )}
 
           {!q && dueWordsCount > 0 && (
-            <div onClick={() => navigate('/words')}
-              className="group cursor-pointer rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-tertiary)] flex items-center justify-between"
+            <div className="group rounded-xl p-4 transition-all duration-200"
               style={{ background: 'var(--bg-tertiary)' }}>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#8b5cf620' }}>
-                  <HiArrowPath size={18} className="text-purple-400" />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#8b5cf620' }}>
+                    <HiArrowPath size={18} className="text-purple-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-primary">待复习单词</h3>
+                    <p className="text-xs text-tertiary mt-0.5">点击开始复习</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-primary">待复习单词</h3>
-                  <p className="text-xs text-tertiary mt-0.5">点击开始复习</p>
+                <div className="flex items-center gap-1.5 flex-shrink-0">
+                  <span className="text-base font-bold text-primary tabular-nums">{dueWordsCount}</span>
+                  <span className="text-xs text-tertiary">个</span>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <span className="text-base font-bold text-primary tabular-nums">{dueWordsCount}</span>
-                <span className="text-xs text-tertiary">个</span>
+              <div className="flex gap-2">
+                <button onClick={() => navigate('/words')}
+                  className="flex-1 py-1.5 rounded-lg text-xs font-medium text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
+                  📖 查看
+                </button>
+                <button onClick={openDueReview}
+                  className="flex-1 py-1.5 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+                  🧠 全部复习
+                </button>
               </div>
             </div>
           )}
@@ -253,5 +298,13 @@ export default function HomeView({ search, onSearchChange, lessons, clips, uniqu
         )}
       </div>
     </div>
+
+    <ReviewModal
+      open={reviewOpen}
+      onClose={() => setReviewOpen(false)}
+      words={reviewWords}
+      mode="fill-in"
+    />
+    </>
   );
 }

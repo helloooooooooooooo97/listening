@@ -203,6 +203,35 @@ def init_db():
                 [name, icon, color, is_dynamic, dynamic_type, i],
             )
 
+    # ── 词典表 (CET-4, CET-6, TEM-4, TEM-8, IELTS, TOEFL 词库聚合) ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS dictionary (
+            word TEXT PRIMARY KEY,
+            pronunciation TEXT DEFAULT '',
+            part_of_speech TEXT DEFAULT '',
+            definition TEXT DEFAULT '',
+            tags TEXT DEFAULT '[]'
+        );
+    """)
+
+    # ── 复习历史 ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS review_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            word TEXT NOT NULL,
+            session_id TEXT NOT NULL,
+            source TEXT NOT NULL DEFAULT 'review',
+            mode TEXT NOT NULL DEFAULT 'fill-in',
+            correct INTEGER NOT NULL DEFAULT 0,
+            score REAL NOT NULL DEFAULT 0,
+            session_index INTEGER NOT NULL DEFAULT 0,
+            created_at TEXT DEFAULT (datetime('now'))
+        );
+        CREATE INDEX IF NOT EXISTS idx_rh_session ON review_history(session_id);
+        CREATE INDEX IF NOT EXISTS idx_rh_word ON review_history(word);
+        CREATE INDEX IF NOT EXISTS idx_rh_date ON review_history(created_at);
+    """)
+
     # ── 翻译缓存 ──
     conn.executescript("""
         CREATE TABLE IF NOT EXISTS translations (

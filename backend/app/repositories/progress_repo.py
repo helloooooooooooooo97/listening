@@ -201,3 +201,78 @@ class ProgressRepository:
               AND (last_score IS NULL OR last_score < 80)
         """).fetchone()
         return row[0] if row else 0
+
+    # ── Batch Review ──
+
+    def batch_review(self, session_id: str, source: str, mode: str, results: list[dict]) -> dict:
+        """Record a batch of review results: write to review_history + update word_progress.
+
+        Returns { reviewed: N, correct: M }.
+        """
+        correct = 0
+        for r in results:
+            word = r["word"]
+            score = float(r["score"])
+            is_correct = 1 if score >= 80 else 0
+            if is_correct:
+                correct += 1
+            # Insert review_history row
+            self._conn.execute(
+                "INSERT INTO review_history (word, session_id, source, mode, correct, score, session_index) VALUES (?,?,?,?,?,?,?)",
+                [word, session_id, source, mode, is_correct, score, r.get("session_index", 0)],
+            )
+            # Update word_progress
+            self._conn.execute(
+                "INSERT INTO word_progress (word, known, reviewed_count, last_score, reviewed_at) "
+                "VALUES (?,1,1,?,datetime('now')) "
+                "ON CONFLICT(word) DO UPDATE SET "
+                "  reviewed_count=reviewed_count+1, last_score=?, reviewed_at=datetime('now'), known=1",
+                [word, score, score],
+            )
+        self._conn.commit()
+        return {"reviewed": len(results), "correct": correct}
+
+    def get_review_history(self, limit: int = 50) -> list[dict]:
+        """Return recent review sessions, grouped by session_id."""
+        rows = self._conn.execute("""
+            SELECT session_id, source, mode, COUNT(*) AS word_count,
+                   SUM(correct) AS correct_count,
+                   ROUND(AVG(score), 1) AS avg_score,
+                   MIN(created_at) AS created_at
+            FROM review_history
+            GROUP BY session_id
+            ORDER BY created_at DESC
+            LIMIT ?
+        """, [limit]).fetchall()
+        return [dict(r) for r in rows]
+
+    def get_review_stats(self) -> dict:
+        """Return today's review stats and overall accuracy."""
+        today = self._get_today_date()
+        # Today's stats
+        today_row = self._conn.execute("""
+            SELECT COUNT(*) AS total, SUM(correct) AS correct
+            FROM review_history
+            WHERE date(created_at) = date('now')
+        """).fetchone()
+        # Streak: consecutive days with reviews
+        streak_rows = self._conn.execute("""
+            SELECT DISTINCT date(created_at) AS d
+            FROM review_history
+            ORDER BY d DESC
+            LIMIT 90
+        """).fetchall()
+        streak = 0
+        from datetime import datetime, timedelta
+        today_dt = datetime.now().date()
+        for i, row in enumerate(streak_rows):
+            expected = today_dt - timedelta(days=i)
+            if datetime.strptime(row["d"], "%Y-%m-%d").date() == expected:
+                streak += 1
+            else:
+                break
+        return {
+            "today_reviewed": today_row["total"] if today_row else 0,
+            "today_correct": today_row["correct"] if today_row and today_row["correct"] else 0,
+            "streak": streak,
+        }

@@ -1,10 +1,12 @@
 """Words API — precomputed cache, refreshed on demand."""
 from __future__ import annotations
 
+import json
 from collections import defaultdict
 
 from fastapi import APIRouter, Query
 
+from database import get_conn
 from services import LESSONS_DIR, _load_lesson
 from text_utils import clean_word
 
@@ -72,6 +74,7 @@ def get_words(
     offset: int = Query(default=0, ge=0),
     category: str = Query(default="", description="Filter by lesson category (IELTS, Aesop's Fables, etc)"),
     collection: str = Query(default="", description="Filter by smart collection type (all_clips, favorites, etc)"),
+    exam: str = Query(default="", description="Filter by exam tag (CET-4, CET-6, TEM-4, TEM-8, IELTS, TOEFL)"),
 ):
     """Return deduplicated word list (lightweight — only word + count)."""
     _ensure_cache()
@@ -84,8 +87,6 @@ def get_words(
         if collection.startswith("category:"):
             category = collection[len("category:"):]
             collection = ""
-        from database import get_conn
-        import json as _json
         from services.collection_service import DYNAMIC_QUERIES
         sql = DYNAMIC_QUERIES.get(collection)
         if sql:
@@ -102,9 +103,9 @@ def get_words(
                         try:
                             extra = r["extra_data"]
                             if extra:
-                                ed = _json.loads(extra)
+                                ed = json.loads(extra)
                                 lid = ed.get("lessonId")
-                        except (_json.JSONDecodeError, TypeError):
+                        except (json.JSONDecodeError, TypeError):
                             pass
                     if not lid and collection in ('favorites', 'all_audio', 'today_practice'):
                         lid = r["item_ref"]
@@ -132,6 +133,15 @@ def get_words(
             # Audio/clip collection with no resolved IDs → empty result
             filtered = []
 
+    # Exam tag filter (from dictionary table)
+    if exam:
+        conn = get_conn()
+        tag_rows = conn.execute(
+            "SELECT word FROM dictionary WHERE tags LIKE ?", [f'%"{exam}"%']
+        ).fetchall()
+        exam_words = {r[0] for r in tag_rows}
+        filtered = [w for w in filtered if w["word"] in exam_words]
+
     # Sort
     desc = order != "asc"
     if sort == "alpha":
@@ -141,10 +151,26 @@ def get_words(
 
     total = len(filtered)
     page = filtered[offset:offset + limit]
-    # Lightweight response — only word + count; occurrences are fetched on demand
+
+    # Batch-fetch tags from dictionary table
+    page_words = [w["word"] for w in page]
+    tag_map: dict[str, list[str]] = {}
+    if page_words:
+        conn = get_conn()
+        placeholders = ",".join("?" * len(page_words))
+        rows = conn.execute(
+            f"SELECT word, tags FROM dictionary WHERE word IN ({placeholders})",
+            page_words,
+        ).fetchall()
+        for r in rows:
+            tag_map[r["word"]] = json.loads(r["tags"])
+
     return {
         "total": total,
-        "words": [{"word": w["word"], "count": w["count"]} for w in page],
+        "words": [
+            {"word": w["word"], "count": w["count"], "tags": tag_map.get(w["word"], [])}
+            for w in page
+        ],
     }
 
 
@@ -155,9 +181,34 @@ def get_word_detail(word: str):
     cleaned = clean_word(word)
     for w in _cache:
         if w["word"] == cleaned:
-            return w
+            result = dict(w)
+            # Attach tags from dictionary table
+            conn = get_conn()
+            row = conn.execute("SELECT tags FROM dictionary WHERE word=?", [cleaned]).fetchone()
+            result["tags"] = json.loads(row["tags"]) if row else []
+            return result
     from fastapi import HTTPException
     raise HTTPException(status_code=404, detail=f"Word '{word}' not found")
+
+
+@router.get("/dictionary/{word}")
+def get_dictionary_entry(word: str):
+    """Return dictionary entry: pronunciation, part of speech, definition, tags."""
+    conn = get_conn()
+    cleaned = clean_word(word)
+    row = conn.execute(
+        "SELECT * FROM dictionary WHERE word=?", [cleaned]
+    ).fetchone()
+    if not row:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail=f"Dictionary entry for '{word}' not found")
+    return {
+        "word": row["word"],
+        "pronunciation": row["pronunciation"],
+        "partOfSpeech": row["part_of_speech"],
+        "definition": row["definition"],
+        "tags": json.loads(row["tags"]),
+    }
 
 
 @router.get("/words/{word}/sentences")
