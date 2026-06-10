@@ -1,19 +1,133 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { HiMagnifyingGlass, HiPlay, HiCheck, HiBarsArrowDown, HiHeart, HiXMark, HiAdjustmentsHorizontal } from 'react-icons/hi2';
+import { useNavigate } from 'react-router-dom';
+import { HiMagnifyingGlass, HiCheck, HiBarsArrowDown, HiHeart, HiSun, HiArrowPath, HiSparkles, HiBookOpen } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
-import { getWords, getWordDetail, getKnownWords, setWordKnown, getLessons, getCollections, getDueWords, submitWordReview, type WordSummary, type WordDetail, type DueWord } from '../lib/api';
+import { useAiStore } from '../stores/aiStore';
+import type { WordAnalysis } from '../types/lesson';
+import { getWords, getWordDetail, getKnownWords, setWordKnown, getDueWords, submitWordReview, getTodayWords, getTodayStats, getDictionaryEntry, type WordSummary, type WordDetail, type WordDictionary, type DueWord, type TodayWord, type TodayStats } from '../lib/api';
+import ReviewModal from '../components/words/ReviewModal';
+import FilterDrawer from '../components/words/FilterDrawer';
+import WordDetailPanel from '../components/words/WordDetailPanel';
 
-function fmtTime(s: number) { const m=Math.floor(s/60); return `${m}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
+// ── Tag Badge ──
+const TAG_STYLES: Record<string, string> = {
+  'CET-4': 'bg-blue-500/15 text-blue-400',
+  'CET-6': 'bg-emerald-500/15 text-emerald-400',
+  'TEM-4': 'bg-purple-500/15 text-purple-400',
+  'TEM-8': 'bg-red-500/15 text-red-400',
+  'IELTS': 'bg-orange-500/15 text-orange-400',
+  'TOEFL': 'bg-pink-500/15 text-pink-400',
+};
+
+function TagBadge({ tag }: { tag: string }) {
+  const s = TAG_STYLES[tag] || 'bg-gray-500/15 text-gray-400';
+  return (
+    <span className={`text-[9px] px-1 py-0.5 rounded ${s} font-medium whitespace-nowrap`}>
+      {tag}
+    </span>
+  );
+}
+
+// ── Shared tab content wrapper ──
+
+function TabContent({ loading, empty, emptyMessage, children }: { loading: boolean; empty: boolean; emptyMessage: string; children: React.ReactNode }) {
+  if (loading) return <div className="flex items-center justify-center py-16"><div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" /></div>;
+  if (empty) return <p className="text-tertiary text-sm py-8 text-center">{emptyMessage}</p>;
+  return <div className="space-y-0.5">{children}</div>;
+}
+
+// ── Shared word row ──
+
+interface WordRowData {
+  word: string;
+  count: number;
+  tags?: string[];
+}
+
+function WordRow({ item, selected, known, tags, isFavWord, hasAi, aiExpanded, aiWord, onSelect, onFav, onMarkKnown, onAi }: {
+  item: WordRowData; selected: boolean; known: boolean; tags?: string[]; isFavWord: boolean;
+  hasAi: boolean; aiExpanded: boolean; aiWord: string | undefined;
+  onSelect: () => void; onFav: () => void; onMarkKnown?: () => void; onAi?: () => void;
+}) {
+  return (
+    <div onClick={onSelect}
+      className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer group ${
+        selected ? 'bg-[var(--accent)]/15 ring-1 ring-[var(--accent)]/30' : 'hover:bg-[var(--bg-hover)]'
+      }`}>
+      <span className={`flex-1 text-sm font-medium ${known ? 'text-tertiary' : 'text-primary'} flex items-center gap-1.5`}>
+        {item.word}
+        {tags && tags.length > 0 && (
+          <span className="flex items-center gap-0.5">{tags.map(t => <TagBadge key={t} tag={t} />)}</span>
+        )}
+      </span>
+      <span className="text-xs text-tertiary tabular-nums">{item.count}次</span>
+      {known && !onMarkKnown && <HiCheck size={12} className="text-emerald-400" />}
+      {onMarkKnown ? (
+        known ? (
+          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400">已掌握</span>
+        ) : (
+          <button onClick={e => { e.stopPropagation(); onMarkKnown(); }}
+            className="text-[10px] px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer opacity-0 group-hover:opacity-100">
+            标记已掌握
+          </button>
+        )
+      ) : null}
+      <button onClick={e => { e.stopPropagation(); onFav(); }}
+        className={`transition-colors cursor-pointer ${isFavWord ? 'text-[var(--accent)]' : 'text-tertiary opacity-0 group-hover:opacity-100 hover:text-tertiary'}`}>
+        <HiHeart size={11} />
+      </button>
+      {hasAi && (
+        <button onClick={e => { e.stopPropagation(); onAi?.(); }}
+          className={`transition-colors cursor-pointer opacity-0 group-hover:opacity-100 ${aiExpanded && aiWord === item.word ? 'text-[var(--accent)]' : 'text-tertiary hover:text-secondary'}`}
+          title="AI 分析">
+          <HiSparkles size={12} />
+        </button>
+      )}
+    </div>
+  );
+}
 
 const PAGE_SIZE = 100;
 type SortMode = 'freq-desc' | 'freq-asc';
 const SORT_LABELS: Record<SortMode, string> = { 'freq-desc': '频率 ↓', 'freq-asc': '频率 ↑' };
 
+type WordTab = 'today' | 'all' | 'review' | 'mastered';
+
+function TabBar({ active, onChange }: { active: WordTab; onChange: (t: WordTab) => void }) {
+  const tabs: { key: WordTab; label: string; icon: React.ComponentType<{size?: number; className?: string}> }[] = [
+    { key: 'today',    label: '今日单词', icon: HiSun },
+    { key: 'all',      label: '全部单词', icon: HiBookOpen },
+    { key: 'review',   label: '待复习',   icon: HiArrowPath },
+    { key: 'mastered', label: '已掌握',   icon: HiCheck },
+  ];
+  return (
+    <div className="flex gap-1">
+      {tabs.map(t => {
+        const Icon = t.icon;
+        return (
+          <button key={t.key} onClick={() => onChange(t.key)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+              active === t.key
+                ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
+                : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+            }`}>
+            <Icon size={13} />
+            {t.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function WordsView() {
   const [search, setSearch] = useState('');
+  const [tab, setTab] = useState<WordTab>('today');
   const [words, setWords] = useState<WordSummary[]>([]);
+  const [todayWords, setTodayWords] = useState<TodayWord[]>([]);
+  const [todayStats, setTodayStats] = useState<TodayStats | null>(null);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -21,18 +135,28 @@ export default function WordsView() {
   const [sortMode, setSortMode] = useState<SortMode>('freq-desc');
   const [categoryFilter, setCategoryFilter] = useState<Set<string>>(new Set());
   const [collectionFilter, setCollectionFilter] = useState<string>('');
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [collections, setCollections] = useState<{id: number; name: string; dynamic_type: string}[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [filterCounts, setFilterCounts] = useState<Record<string, number>>({});
-  const [reviewFilter, setReviewFilter] = useState(false);
+  const [examFilter, setExamFilter] = useState<string>('');
   const [dueWords, setDueWords] = useState<DueWord[]>([]);
+  const [masteredWords, setMasteredWords] = useState<WordSummary[]>([]);
+  const [masteredLoading, setMasteredLoading] = useState(false);
   const [dueWordsLoading, setDueWordsLoading] = useState(false);
   const favToggle = useFavoritesStore(s => s.toggle);
   const isFav = useFavoritesStore(s => s.isFav);
   const [selected, setSelected] = useState<WordDetail | null>(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const [dictionary, setDictionary] = useState<WordDictionary | null>(null);
+  const [loadingDict, setLoadingDict] = useState(false);
   const [knownWords, setKnownWords] = useState<Set<string>>(new Set());
+  const [aiAnalysis, setAiAnalysis] = useState<WordAnalysis | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiExpanded, setAiExpanded] = useState(false);
+  const lookupWord = useAiStore(s => s.lookupWord);
+  const hasAiProvider = useAiStore(s => s.providers.length > 0);
+  const navigate = useNavigate();
+
+  // Review modal state
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [reviewWords, setReviewWords] = useState<{ word: string; source?: string }[]>([]);
 
   // Load known words from API
   useEffect(() => {
@@ -44,12 +168,31 @@ export default function WordsView() {
   const togglePlay = useAudioStore(s => s.togglePlay);
   const wordOffset = useSettingsStore(s => s.settings.wordPlayOffset);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const detailCache = useRef(new Map<string, WordDetail>());
 
-  const loadWords = useCallback((query: string, sm: SortMode, off: number, append: boolean, cat?: string, coll?: string) => {
+  // Load today's words + stats
+  const loadTodayData = useCallback(() => {
+    getTodayWords().then(d => {
+      setTodayWords(d.words);
+      if (d.words.length > 0 && tab === 'today') setLoading(false);
+    }).catch(() => {});
+    getTodayStats().then(setTodayStats).catch(() => {});
+  }, [tab]);
+
+  useEffect(() => {
+    if (tab === 'today') {
+      setLoading(true);
+      loadTodayData();
+      setLoading(false);
+    }
+  }, [tab, loadTodayData]);
+
+  // Load all words
+  const loadWords = useCallback((query: string, sm: SortMode, off: number, append: boolean, cat?: string, coll?: string, exam?: string) => {
     if (off === 0) setLoading(true);
     else setLoadingMore(true);
     const order = sm === 'freq-asc' ? 'asc' : 'desc';
-    getWords({ sort: 'freq', order, limit: PAGE_SIZE, offset: off, q: query || undefined, category: cat, collection: coll })
+    getWords({ sort: 'freq', order, limit: PAGE_SIZE, offset: off, q: query || undefined, category: cat, collection: coll, exam: exam || undefined })
       .then(data => {
         setWords(prev => append ? [...prev, ...data.words] : data.words);
         setTotal(data.total);
@@ -59,54 +202,65 @@ export default function WordsView() {
       .catch(() => { setLoading(false); setLoadingMore(false); });
   }, []);
 
-  // Load due words when review filter is active
+  // Load due words
   useEffect(() => {
-    if (!reviewFilter) return;
+    if (tab !== 'review') return;
     setDueWordsLoading(true);
-    getDueWords(50)
+    getDueWords(200)
       .then(data => setDueWords(data.words))
       .catch(() => {})
       .finally(() => setDueWordsLoading(false));
-  }, [reviewFilter]);
+  }, [tab]);
 
-  // Initial load + sort/ category/ collection change (ignored when reviewFilter is on)
+  // Load mastered words
   useEffect(() => {
-    if (reviewFilter) return;
-    setOffset(0);
-    const cat = [...categoryFilter][0] || undefined;
-    const coll = collectionFilter || undefined;
-    loadWords(search, sortMode, 0, false, cat, coll);
-  }, [sortMode, categoryFilter, collectionFilter, reviewFilter]);
+    if (tab !== 'mastered') return;
+    setMasteredLoading(true);
+    getWords({ collection: 'all_words', limit: 500 })
+      .then(data => setMasteredWords(data.words))
+      .catch(() => {})
+      .finally(() => setMasteredLoading(false));
+  }, [tab]);
 
-  // Search with debounce
+  // Initial load for 'all' tab
   useEffect(() => {
-    if (reviewFilter) return;
+    if (tab === 'all') {
+      setOffset(0);
+      const cat = [...categoryFilter][0] || undefined;
+      const coll = collectionFilter || undefined;
+      loadWords(search, sortMode, 0, false, cat, coll, examFilter || undefined);
+    }
+  }, [tab, sortMode, categoryFilter, collectionFilter, examFilter]);
+
+  // Search — only debounce on actual search input change (tab/filter changes handled by the load effect above)
+  useEffect(() => {
+    if (tab !== 'all') return;
     const timer = setTimeout(() => {
       setOffset(0);
       const cat = [...categoryFilter][0] || undefined;
       const coll = collectionFilter || undefined;
-      loadWords(search, sortMode, 0, false, cat, coll);
+      loadWords(search, sortMode, 0, false, cat, coll, examFilter || undefined);
     }, 250);
     return () => clearTimeout(timer);
-  }, [search, reviewFilter]);
+  }, [search]);
 
-  // Infinite scroll — callback ref fires when loader enters DOM (decouples from effect deps)
-  const obsRef = useRef({ loading: false, loadingMore: false, wordsLen: 0, total: 0, reviewFilter: false });
-  obsRef.current = { loading, loadingMore, wordsLen: words.length, total, reviewFilter };
+  // Infinite scroll (only for 'all' tab)
+  const obsRef = useRef({ loading: false, loadingMore: false, wordsLen: 0, total: 0, tab: 'all' as WordTab });
+  obsRef.current = { loading, loadingMore, wordsLen: words.length, total, tab };
   const loadMoreRef = useCallback((node: HTMLDivElement | null) => {
     const ob = observerRef.current;
     if (ob) { ob.disconnect(); observerRef.current = null; }
-    if (!node || obsRef.current.reviewFilter) return;
+    if (!node || obsRef.current.tab !== 'all') return;
     observerRef.current = new IntersectionObserver(entries => {
       const s = obsRef.current;
       if (entries[0].isIntersecting && !s.loading && !s.loadingMore && s.wordsLen < s.total) {
         const newOff = s.wordsLen;
         setOffset(newOff);
-        loadWords(search, sortMode, newOff, true, [...categoryFilter][0] || undefined, collectionFilter || undefined);
+        loadWords(search, sortMode, newOff, true, [...categoryFilter][0] || undefined, collectionFilter || undefined, examFilter || undefined);
       }
     }, { rootMargin: '200px' });
     observerRef.current.observe(node);
-  }, [loadWords, search, sortMode, categoryFilter, collectionFilter]);
+  }, [loadWords, search, sortMode, categoryFilter, collectionFilter, examFilter]);
 
   const toggleKnown = (word: string) => {
     const known = !knownWords.has(word);
@@ -126,311 +280,306 @@ export default function WordsView() {
   };
 
   const handleSelectWord = (w: WordSummary) => {
-    // Already showing this word — no-op
     if (selected?.word === w.word) return;
-    // Optimistic: immediately highlight word while detail loads
+    setAiAnalysis(null);
+    setAiExpanded(false);
+    setDictionary(null);
     if (detailCache.current.has(w.word)) {
       setSelected(detailCache.current.get(w.word)!);
-      return;
+    } else {
+      setLoadingDetail(true);
+      getWordDetail(w.word)
+        .then(detail => {
+          detailCache.current.set(w.word, detail);
+          setSelected(detail);
+        })
+        .catch(() => {})
+        .finally(() => setLoadingDetail(false));
     }
-    setLoadingDetail(true);
-    getWordDetail(w.word)
-      .then(detail => {
-        detailCache.current.set(w.word, detail);
-        setSelected(detail);
-      })
+    setLoadingDict(true);
+    getDictionaryEntry(w.word)
+      .then(setDictionary)
       .catch(() => {})
-      .finally(() => setLoadingDetail(false));
+      .finally(() => setLoadingDict(false));
   };
 
-  // Cache fetched word details to avoid re-fetching
-  const detailCache = useRef(new Map<string, WordDetail>());
+  const handleAiLookup = async (word: string) => {
+    if (aiAnalysis) { setAiExpanded(e => !e); return; }
+    setAiLoading(true);
+    try {
+      const analysis = await lookupWord(word);
+      setAiAnalysis(analysis as unknown as WordAnalysis);
+      setAiExpanded(true);
+    } catch {
+      setAiAnalysis({ word, pronunciation: '', partOfSpeech: '', definition: 'AI 分析不可用，请检查 AI 设置', examples: [] });
+      setAiExpanded(true);
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleReviewWord = (word: string) => {
-    // Mark as reviewed with a good score (simplified: user clicks = correct)
     submitWordReview(word, 100).catch(() => {});
     setDueWords(prev => prev.filter(d => d.word !== word));
     setKnownWords(prev => new Set(prev).add(word));
   };
 
-  // Load available smart collections + lesson categories + word counts
-  useEffect(() => {
-    (async () => {
-      const [lessons, cols] = await Promise.all([
-        getLessons().catch(() => []),
-        getCollections().catch(() => []),
-      ]);
-      const cats = [...new Set(lessons.map(l => l.category || 'Other'))].sort();
-      setCategories(cats);
-      const dynCols = cols.filter(c => c.is_dynamic && c.dynamic_type && !c.dynamic_type.startsWith('category:'));
-      setCollections(dynCols);
-      // Fetch counts for all filter options in parallel
-      const counts: Record<string, number> = {};
-      const results = await Promise.all([
-        getWords({ limit: 10 }).catch(() => null), // all
-        ...cats.map(cat => getWords({ limit: 10, collection: `category:${cat}` }).catch(() => null)),
-        ...dynCols.map(col => getWords({ limit: 10, collection: col.dynamic_type }).catch(() => null)),
-      ]);
-      if (results[0]) counts['all'] = results[0].total;
-      let idx = 1;
-      for (const cat of cats) { if (results[idx]) counts[`cat:${cat}`] = results[idx].total; idx++; }
-      for (const col of dynCols) { if (results[idx]) counts[`col:${col.dynamic_type}`] = results[idx].total; idx++; }
-      setFilterCounts(counts);
-    })();
-  }, []);
+  const openReview = useCallback(() => {
+    const unmastered = todayWords.filter(w => !knownWords.has(w.word));
+    if (unmastered.length === 0) return;
+    setReviewWords(unmastered.map(w => ({ word: w.word, source: '今日单词' })));
+    setReviewOpen(true);
+  }, [todayWords, knownWords]);
 
-  // When API handles filtering, words are already filtered
-  const filteredWords = words;
-  const displayTotal = total;
+  const openReviewFromDueWords = (due: DueWord[]) => {
+    setReviewWords(due.map(d => ({ word: d.word, source: '待复习' })));
+    setReviewOpen(true);
+  };
 
-  const groupedOccurrences = selected
-    ? selected.lessons.reduce((acc, l) => ({ ...acc, [l.id]: { title: l.title, times: l.occurrences } }), {} as Record<string, {title:string; times:number[]}>)
-    : {};
+  const onReviewComplete = () => {
+    // Refresh due words and today words after review
+    getDueWords(200)
+      .then(data => setDueWords(data.words))
+      .catch(() => {});
+    getTodayWords().then(d => setTodayWords(d.words)).catch(() => {});
+    getTodayStats().then(setTodayStats).catch(() => {});
+    getKnownWords()
+      .then(words => setKnownWords(new Set(words)))
+      .catch(() => {});
+  };
+
+  // Count today's unmastered words
+  const todayUnmastered = todayWords.filter(w => !knownWords.has(w.word));
+
+  const handleFilterChange = (filters: { collectionFilter: string; categoryFilter: Set<string>; examFilter: string }) => {
+    setCollectionFilter(filters.collectionFilter);
+    setCategoryFilter(filters.categoryFilter);
+    setExamFilter(filters.examFilter);
+  };
 
   return (
     <div className="h-full flex bg-[var(--bg-primary)] overflow-hidden">
-      {/* Word list — takes full width when panel is hidden */}
+      {/* Word list */}
       <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${selected ? 'md:mr-96' : ''}`}>
         <div className="flex-shrink-0 px-6 pt-10 pb-4">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-2xl font-extrabold text-primary tracking-tight">
-                {reviewFilter ? '待复习' : '单词'}
-              </h1>
-              <p className="text-xs text-tertiary mt-0.5">
-                {reviewFilter
-                  ? `${dueWords.length} 个单词待复习`
-                  : `共 ${displayTotal} 个单词${categoryFilter.size > 0 ? ` · ${[...categoryFilter].join('、')}` : ''}`
-                }
-              </p>
-            </div>
+          {/* Tabs */}
+          <div className="flex items-center justify-between mb-3">
+            <TabBar active={tab} onChange={t => { setTab(t); setSearch(''); }} />
             <div className="flex items-center gap-2">
-              {/* Sort toggle */}
-              <button onClick={() => setSortMode(s => s === 'freq-desc' ? 'freq-asc' : 'freq-desc')}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:text-secondary transition-colors cursor-pointer"
-                title="切换排序">
-                <HiBarsArrowDown size={13} style={{ transform: sortMode === 'freq-asc' ? 'rotate(180deg)' : '' }} />
-                {SORT_LABELS[sortMode]}
-              </button>
-              {/* Collection / Category filter */}
-              {(collections.length > 0 || categories.length > 0) && (
-                <div className="relative">
-                  <button onClick={() => setFilterOpen(!filterOpen)}
-                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer"
-                    title="按合集筛选">
-                    <HiAdjustmentsHorizontal size={13} />
-                    <span>{collectionFilter ? collections.find(c => c.dynamic_type === collectionFilter)?.name || categoryFilter.size > 0 ? [...categoryFilter][0] : '合集' : '合集'}</span>
+              {tab === 'today' && todayStats && (
+                <span className="text-xs text-tertiary tabular-nums">
+                  今日 {todayStats.total_words} 词 · 已复习 {todayStats.reviewed_count}
+                </span>
+              )}
+              {tab === 'all' && (
+                <>
+                  {/* Sort toggle */}
+                  <button onClick={() => setSortMode(s => s === 'freq-desc' ? 'freq-asc' : 'freq-desc')}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-secondary hover:text-secondary transition-colors cursor-pointer"
+                    title="切换排序">
+                    <HiBarsArrowDown size={13} style={{ transform: sortMode === 'freq-asc' ? 'rotate(180deg)' : '' }} />
+                    {SORT_LABELS[sortMode]}
                   </button>
-                  {filterOpen && (
-                    <div className="absolute right-0 top-full mt-1 w-52 rounded-xl shadow-2xl border border-[var(--border-primary)] overflow-hidden z-50 animate-fade-in"
-                      style={{ background: 'var(--bg-secondary)' }}
-                      onClick={e => e.stopPropagation()}>
-                      <div className="p-2 space-y-0.5 max-h-72 overflow-y-auto">
-                        <button onClick={() => { setCollectionFilter(''); setCategoryFilter(new Set()); setReviewFilter(false); setFilterOpen(false); }}
-                          className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-between ${
-                            !collectionFilter && categoryFilter.size === 0 && !reviewFilter ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
-                          }`}>
-                          <span>全部单词</span>
-                          <span className="text-[10px] font-mono tabular-nums opacity-60">{filterCounts['all'] ?? '…'}</span>
-                        </button>
-                        {/* Review filter */}
-                        <button onClick={() => { setCollectionFilter(''); setCategoryFilter(new Set()); setReviewFilter(true); setFilterOpen(false); }}
-                          className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-between ${
-                            reviewFilter ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
-                          }`}>
-                          <span>📝 待复习</span>
-                        </button>
-                        {/* Smart collections */}
-                        {collections.map(col => (
-                          <button key={col.id} onClick={() => {
-                            setCollectionFilter(col.dynamic_type);
-                            setCategoryFilter(new Set());
-                            setFilterOpen(false);
-                          }}
-                            className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-between ${
-                              collectionFilter === col.dynamic_type ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
-                            }`}>
-                            <span>{col.name}</span>
-                            <span className="text-[10px] font-mono tabular-nums opacity-60">{filterCounts[`col:${col.dynamic_type}`] ?? '…'}</span>
-                          </button>
-                        ))}
-                        {/* Lesson categories */}
-                        {categories.map(cat => (
-                          <button key={cat} onClick={() => {
-                            setCollectionFilter('');
-                            setCategoryFilter(new Set([cat]));
-                            setFilterOpen(false);
-                          }}
-                            className={`w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-between ${
-                              categoryFilter.has(cat) ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
-                            }`}>
-                            <span>📚 {cat}</span>
-                            <span className="text-[10px] font-mono tabular-nums opacity-60">{filterCounts[`cat:${cat}`] ?? '…'}</span>
-                          </button>
-                        ))}
-                      </div>
-                      {(collectionFilter || categoryFilter.size > 0 || reviewFilter) && (
-                        <div className="border-t border-[var(--border-secondary)] p-2">
-                          <button onClick={() => { setCollectionFilter(''); setCategoryFilter(new Set()); setReviewFilter(false); setFilterOpen(false); }}
-                            className="w-full text-xs text-center py-1.5 rounded-lg text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
-                            清除筛选
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                  {/* Filter drawer */}
+                  <FilterDrawer
+                    collectionFilter={collectionFilter}
+                    categoryFilter={categoryFilter}
+                    examFilter={examFilter}
+                    onChange={handleFilterChange}
+                  />
+                </>
+              )}
+              {/* Search (all + mastered tabs) */}
+              {(tab === 'all' || tab === 'mastered') && (
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary"><HiMagnifyingGlass size={13} /></span>
+                  <input type="text" placeholder={tab === 'mastered' ? '搜索已掌握单词' : '搜索'} value={search} onChange={e=>setSearch(e.target.value)}
+                    className="w-40 pl-8 pr-3 py-1.5 text-xs bg-[var(--bg-tertiary)] border-0 rounded-md focus:outline-none focus:ring-1 focus:ring-white/10 text-primary placeholder:text-tertiary"/>
                 </div>
               )}
-              {/* Search */}
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-tertiary"><HiMagnifyingGlass size={13} /></span>
-                <input type="text" placeholder="搜索" value={search} onChange={e=>setSearch(e.target.value)}
-                  className="w-40 pl-8 pr-3 py-1.5 text-xs bg-[var(--bg-tertiary)] border-0 rounded-md focus:outline-none focus:ring-1 focus:ring-white/10 text-primary placeholder:text-tertiary"/>
-              </div>
             </div>
           </div>
         </div>
+
         <div className="flex-1 overflow-y-auto px-6 pb-8">
-          {loading ? (
-            <div className="flex items-center justify-center py-16">
-              <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
-            </div>
-          ) : reviewFilter ? (
+          {/* ─── Tab: 今日单词 ─── */}
+          {tab === 'today' && (
+            <>
+              {todayStats && todayStats.total_words > 0 && (
+                <div className="mb-4 p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/15">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-primary">今日学习进度</p>
+                      <p className="text-xs text-tertiary mt-0.5">
+                        来自 {todayStats.audio_count} 个音频 · 已复习 {todayStats.reviewed_count}/{todayStats.total_words}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {todayUnmastered.length > 0 && (
+                        <button onClick={openReview}
+                          className="px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+                          开始今日复习 · {todayUnmastered.length} 个
+                        </button>
+                      )}
+                      <button onClick={() => navigate('/game')}
+                        className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
+                        <HiSparkles size={14} className="text-amber-400 flex-shrink-0" /> 游戏
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <TabContent loading={loading} empty={todayWords.length === 0} emptyMessage="">
+                {todayWords.length === 0 && !loading ? (
+                  <div className="flex flex-col items-center justify-center py-20 text-tertiary">
+                    <HiSun size={32} className="opacity-30 mb-3" />
+                    <p className="text-sm">今天还没听过单词</p>
+                    <p className="text-xs mt-1 opacity-60">播放音频后，听过的单词会自动出现在这里</p>
+                  </div>
+                ) : todayWords.map(w => (
+                  <WordRow key={w.word}
+                    item={{ word: w.word, count: w.audio_count }}
+                    selected={selected?.word === w.word}
+                    known={knownWords.has(w.word)}
+                    isFavWord={isFav(w.word, 'word')}
+                    hasAi={hasAiProvider}
+                    aiExpanded={aiExpanded}
+                    aiWord={aiAnalysis?.word}
+                    onSelect={() => handleSelectWord({ word: w.word, count: w.audio_count })}
+                    onFav={() => favToggle({ item_id: w.word, item_type: 'word', title: w.word, subtitle: `${w.audio_count}个音频` })}
+                    onMarkKnown={() => { setWordKnown(w.word, true).catch(() => {}); setKnownWords(prev => new Set(prev).add(w.word)); }}
+                    onAi={() => handleAiLookup(w.word)}
+                  />
+                ))}
+              </TabContent>
+            </>
+          )}
+
+          {/* ─── Tab: 全部单词 ─── */}
+          {tab === 'all' && (
+            <>
+              <TabContent loading={loading} empty={words.length === 0} emptyMessage="暂无单词">
+                {words.map(w => (
+                  <WordRow key={w.word}
+                    item={w}
+                    selected={selected?.word === w.word}
+                    known={knownWords.has(w.word)}
+                    isFavWord={isFav(w.word, 'word')}
+                    hasAi={hasAiProvider}
+                    aiExpanded={aiExpanded}
+                    aiWord={aiAnalysis?.word}
+                    tags={w.tags}
+                    onSelect={() => handleSelectWord(w)}
+                    onFav={() => favToggle({ item_id: w.word, item_type: 'word', title: w.word, subtitle: `${w.count}次` })}
+                    onAi={() => handleAiLookup(w.word)}
+                  />
+                ))}
+                {/* Loader trigger */}
+                <div ref={loadMoreRef} className="h-4" />
+                {loadingMore && (
+                  <div className="flex justify-center py-4">
+                    <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+                  </div>
+                )}
+              </TabContent>
+            </>
+          )}
+
+          {/* ─── Tab: 待复习 ─── */}
+          {tab === 'review' && (
             <>
               {dueWordsLoading ? (
                 <div className="flex items-center justify-center py-16">
-                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
+                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
                 </div>
               ) : dueWords.length === 0 ? (
                 <p className="text-tertiary text-sm py-8">暂无待复习单词 🎉</p>
               ) : (
-                <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
-                  {dueWords.map(d => (
-                    <div key={d.word} className="rounded-lg px-3 py-1.5 text-[14px] bg-[var(--bg-tertiary)] flex items-center justify-between gap-1 group">
-                      <span className="truncate flex-1 text-secondary">{d.word}</span>
-                      <span className="flex items-center gap-1 flex-shrink-0">
-                        {d.last_score != null && (
-                          <span className={`text-[10px] font-mono ${d.last_score < 60 ? 'text-red-400' : 'text-emerald-400'}`}>
-                            {d.last_score}%
-                          </span>
-                        )}
-                        <button onClick={() => handleReviewWord(d.word)}
-                          className="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors cursor-pointer opacity-0 group-hover:opacity-100">
+                <>
+                  {/* All-review button */}
+                  {dueWords.length > 0 && (
+                    <div className="mb-3 flex justify-end gap-2">
+                      <button onClick={() => navigate('/game')}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
+                        <HiSparkles size={14} className="text-amber-400 flex-shrink-0" /> 游戏模式
+                      </button>
+                      <button onClick={() => openReviewFromDueWords(dueWords)}
+                        className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+                        全部复习 ({dueWords.length})
+                      </button>
+                    </div>
+                  )}
+                  <div className="space-y-0.5">
+                    {dueWords.map(d => (
+                      <div key={d.word}
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[var(--bg-hover)] transition-colors group">
+                        <span className="flex-1 text-sm font-medium text-primary">{d.word}</span>
+                        <span className="text-xs text-tertiary tabular-nums">
+                          {d.last_score != null && (
+                            <span className={d.last_score < 60 ? 'text-red-400' : 'text-emerald-400'}>
+                              {d.last_score}%
+                            </span>
+                          )}
+                          {d.last_score == null && '未复习'}
+                        </span>
+                        <button onClick={() => openReviewFromDueWords([d])}
+                          className="text-[10px] px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors cursor-pointer">
                           复习
                         </button>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </>
-          ) : (
-            <>
-              <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-1.5">
-                {words.map(w => (
-                  <div key={w.word}
-                    onClick={() => handleSelectWord(w)}
-                    className={`rounded-lg px-3 py-1.5 transition-all duration-200 cursor-pointer text-[14px] flex items-center justify-between gap-1 group ${
-                      selected?.word===w.word
-                        ? 'bg-[var(--accent)]/15 ring-1 ring-[var(--accent)]/30 text-primary'
-                        : 'bg-[var(--bg-tertiary)] text-secondary hover:bg-[var(--bg-tertiary)] hover:text-primary'
-                    }`}>
-                    <span className="truncate flex-1">{w.word}</span>
-                    <span className="text-xs text-tertiary flex-shrink-0 flex items-center gap-0.5">
-                      <button onClick={e=>{e.stopPropagation();favToggle({item_id:w.word,item_type:'word',title:w.word,subtitle:`${w.count}次`});}}
-                        className={`transition-colors cursor-pointer ${isFav(w.word,'word') ? 'text-[var(--accent)]' : 'text-tertiary opacity-0 group-hover:opacity-100 hover:text-tertiary'}`}>
-                        <HiHeart size={10} />
-                      </button>
-                      {w.count}
-                      {knownWords.has(w.word) && (
-                        <HiCheck size={10} className="text-emerald-400" />
-                      )}
-                    </span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              {/* Loader trigger */}
-              <div ref={loadMoreRef} className="h-4" />
-              {loadingMore && (
-                <div className="flex justify-center py-4">
-                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full" />
-                </div>
+                </>
               )}
-              {words.length===0&&!loading&&<p className="text-tertiary text-sm py-8">{categoryFilter.size > 0 ? '该类型暂无匹配单词' : '无匹配单词'}</p>}
             </>
+          )}
+
+          {/* ─── Tab: 已掌握 ─── */}
+          {tab === 'mastered' && (
+            <TabContent loading={masteredLoading} empty={masteredWords.length === 0} emptyMessage="还没有已掌握的单词">
+              {masteredWords.map(w => (
+                <WordRow key={w.word}
+                  item={w}
+                  selected={selected?.word === w.word}
+                  known={true}
+                  isFavWord={false}
+                  hasAi={false}
+                  aiExpanded={false}
+                  aiWord={undefined}
+                  onSelect={() => handleSelectWord(w)}
+                  onFav={() => {}}
+                />
+              ))}
+            </TabContent>
           )}
         </div>
       </div>
 
-      {/* Slide-in detail panel — desktop: right side, mobile: bottom sheet */}
-      {(selected || loadingDetail) && (
-        <>
-          {/* Backdrop (mobile only) */}
-          <div className="md:hidden fixed inset-0 z-40 bg-black/20" onClick={() => { setSelected(null); setLoadingDetail(false); }} />
+      {/* Slide-in detail panel */}
+      <WordDetailPanel
+        selected={selected}
+        loadingDetail={loadingDetail}
+        dictionary={dictionary}
+        loadingDict={loadingDict}
+        knownWords={knownWords}
+        aiAnalysis={aiAnalysis}
+        aiLoading={aiLoading}
+        aiExpanded={aiExpanded}
+        hasAiProvider={hasAiProvider}
+        onClose={() => { setSelected(null); setLoadingDetail(false); setAiExpanded(false); }}
+        onToggleKnown={toggleKnown}
+        onAiLookup={handleAiLookup}
+        onPlayAt={handlePlayAt}
+      />
 
-          <div className={`fixed z-50 bg-[var(--bg-primary)] border-[var(--border-primary)] shadow-2xl flex flex-col overflow-hidden
-            md:right-0 md:top-0 md:bottom-0 md:w-96 md:border-l md:animate-fade-in
-            max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:max-h-[65vh] max-md:rounded-t-2xl max-md:border-t max-md:animate-slide-up`}
-          >
-            {/* Header */}
-            <div className="flex-shrink-0 flex items-start justify-between px-5 pt-10 pb-4 border-b border-[var(--border-secondary)]">
-              <div>
-                {selected ? (
-                  <>
-                    <h2 className="text-3xl font-bold text-primary">{selected.word}</h2>
-                    <p className="text-tertiary text-xs mt-1">出现 {selected.count} 次 · {selected.lessons.length} 节课</p>
-                  </>
-                ) : (
-                  <>
-                    <div className="h-9 w-24 rounded-lg bg-[var(--bg-tertiary)] animate-pulse mb-2" />
-                    <div className="h-4 w-32 rounded bg-[var(--bg-tertiary)] animate-pulse" />
-                  </>
-                )}
-              </div>
-              <div className="flex items-center gap-2">
-                {selected && (
-                  <button onClick={() => toggleKnown(selected.word)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
-                      knownWords.has(selected.word)
-                        ? 'bg-emerald-500/20 text-emerald-400'
-                        : 'bg-[var(--bg-tertiary)] text-tertiary hover:text-secondary'
-                    }`}>
-                    {knownWords.has(selected.word) ? '✓ 已掌握' : '标记掌握'}
-                  </button>
-                )}
-                <button onClick={() => setSelected(null)}
-                  className="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
-                  <HiXMark size={16} />
-                </button>
-              </div>
-            </div>
-
-            {/* Occurrences */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
-              {loadingDetail ? (
-                <div className="flex items-center justify-center py-16">
-                  <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
-                </div>
-              ) : selected && Object.entries(groupedOccurrences).map(([lid, g]) => (
-                <div key={lid}>
-                  <p className="text-xs font-bold text-tertiary uppercase tracking-[0.15em] mb-2">{g.title}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {g.times.map((t, i) => (
-                      <button key={i}
-                        onClick={() => handlePlayAt(lid, g.title, selected.word, t)}
-                        className="flex items-center gap-1 px-2.5 py-1 rounded-md text-xs text-secondary hover:text-white hover:bg-[var(--bg-hover)] transition-colors cursor-pointer font-mono"
-                        title={`播放 ${fmtTime(t)}`}>
-                        <HiPlay size={10} className="text-tertiary"/>
-                        {fmtTime(t)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
+      {/* Review Session Modal */}
+      <ReviewModal
+        open={reviewOpen}
+        onClose={() => { setReviewOpen(false); onReviewComplete(); }}
+        words={reviewWords}
+        mode="fill-in"
+        onComplete={() => onReviewComplete()}
+      />
     </div>
   );
 }

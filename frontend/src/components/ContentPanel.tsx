@@ -12,6 +12,7 @@ const StatsView = lazy(() => import('../views/StatsView'));
 const FavoritesView = lazy(() => import('../views/FavoritesView'));
 const CollectionsView = lazy(() => import('../views/CollectionsView'));
 const CollectionDetailView = lazy(() => import('../views/CollectionDetailView'));
+const GameView = lazy(() => import('../views/GameView'));
 
 function Fallback() {
   return (
@@ -90,6 +91,7 @@ export default function ContentPanel({ activeSection, lessons, clips, wordCount,
       {section === 'stats' && <ViewTransition id="stats"><StatsView /></ViewTransition>}
       {section === 'favorites' && <ViewTransition id="favorites"><FavoritesView /></ViewTransition>}
       {section === 'settings' && <ViewTransition id="settings"><SettingsView /></ViewTransition>}
+      {section === 'game' && <ViewTransition id="game"><GameView /></ViewTransition>}
     </Suspense>
   );
 }

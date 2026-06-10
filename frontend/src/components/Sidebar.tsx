@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiTag, HiCog6Tooth, HiChartBar, HiFolderOpen } from 'react-icons/hi2';
 
-export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'collections' | 'stats' | 'favorites' | 'settings';
+export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'collections' | 'stats' | 'favorites' | 'settings' | 'game';
 
 interface Props {
   activeSection: NavSection;

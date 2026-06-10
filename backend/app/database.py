@@ -108,6 +108,20 @@ def init_db():
         CREATE INDEX IF NOT EXISTS idx_wo_word ON word_occurrences(word);
         CREATE INDEX IF NOT EXISTS idx_wo_audio ON word_occurrences(audio_id);
 
+        -- 实际听过的单词（前端按播放区间筛选后上报）
+        CREATE TABLE IF NOT EXISTS listened_words (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            word TEXT NOT NULL,
+            audio_id TEXT NOT NULL,
+            audio_title TEXT NOT NULL,
+            listened_date TEXT NOT NULL,
+            created_at TEXT DEFAULT (datetime('now'))
+        );
+        CREATE INDEX IF NOT EXISTS idx_lw_date ON listened_words(listened_date);
+        CREATE INDEX IF NOT EXISTS idx_lw_word ON listened_words(word);
+        CREATE INDEX IF NOT EXISTS idx_lw_audio ON listened_words(audio_id);
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_lw_unique ON listened_words(word, audio_id, listened_date);
+
         -- 收藏
         CREATE TABLE IF NOT EXISTS favorites (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -176,6 +190,7 @@ def init_db():
         ('全部音频',      'HiMusicalNote', '#fa2d48', 1, 'all_audio'),
         ('全部片段',      'HiBookmark',    '#f97316', 1, 'all_clips'),
         ('全部单词',      'HiBookOpen',    '#a855f7', 1, 'all_words'),
+        ('今日单词',      'HiSun',         '#f59e0b', 1, 'today_words'),
         ('全部听写记录',  'HiPencilSquare','#06b6d4', 1, 'all_dictation'),
     ]
     for i, (name, icon, color, is_dynamic, dynamic_type) in enumerate(DEFAULTS):
@@ -187,6 +202,35 @@ def init_db():
                 "INSERT INTO collections (name, icon, color, is_dynamic, dynamic_type, sort_order) VALUES (?,?,?,?,?,?)",
                 [name, icon, color, is_dynamic, dynamic_type, i],
             )
+
+    # ── 词典表 (CET-4, CET-6, TEM-4, TEM-8, IELTS, TOEFL 词库聚合) ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS dictionary (
+            word TEXT PRIMARY KEY,
+            pronunciation TEXT DEFAULT '',
+            part_of_speech TEXT DEFAULT '',
+            definition TEXT DEFAULT '',
+            tags TEXT DEFAULT '[]'
+        );
+    """)
+
+    # ── 复习历史 ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS review_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            word TEXT NOT NULL,
+            session_id TEXT NOT NULL,
+            source TEXT NOT NULL DEFAULT 'review',
+            mode TEXT NOT NULL DEFAULT 'fill-in',
+            correct INTEGER NOT NULL DEFAULT 0,
+            score REAL NOT NULL DEFAULT 0,
+            session_index INTEGER NOT NULL DEFAULT 0,
+            created_at TEXT DEFAULT (datetime('now'))
+        );
+        CREATE INDEX IF NOT EXISTS idx_rh_session ON review_history(session_id);
+        CREATE INDEX IF NOT EXISTS idx_rh_word ON review_history(word);
+        CREATE INDEX IF NOT EXISTS idx_rh_date ON review_history(created_at);
+    """)
 
     # ── 翻译缓存 ──
     conn.executescript("""

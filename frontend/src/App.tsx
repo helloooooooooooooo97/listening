@@ -36,7 +36,7 @@ function AppContent() {
   const pathToSection = (path: string): NavSection => {
     const seg = path.split('/')[1] || 'home';
     if (seg === 'collections') return 'collections';
-    const valid: NavSection[] = ['home','courses','clips','words','collections','stats','favorites','settings'];
+    const valid: NavSection[] = ['home','courses','clips','words','collections','stats','favorites','settings','game'];
     return valid.includes(seg as NavSection) ? (seg as NavSection) : 'home';
   };
   const activeSection = pathToSection(location.pathname);

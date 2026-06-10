@@ -131,7 +131,7 @@
     border-left-color: var(--accent);
   }
   .transcript-word {
-    @apply inline rounded px-0.5;
+    @apply inline px-0.5;
     transition: transform 0.2s ease-out;
     will-change: transform;
   }

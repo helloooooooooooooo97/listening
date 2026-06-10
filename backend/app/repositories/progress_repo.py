@@ -136,6 +136,63 @@ class ProgressRepository:
         """, [limit]).fetchall()
         return [dict(r) for r in rows]
 
+    # ── Daily Words ──
+
+    def record_listened_words(self, words: list[str], audio_id: str, audio_title: str) -> None:
+        """Record words that were actually heard in a play session."""
+        today = self._get_today_date()
+        from text_utils import clean_word
+        for w in words:
+            cleaned = clean_word(w)
+            if not cleaned:
+                continue
+            self._conn.execute(
+                "INSERT OR IGNORE INTO listened_words (word, audio_id, audio_title, listened_date) VALUES (?,?,?,?)",
+                [cleaned, audio_id, audio_title, today],
+            )
+        self._conn.commit()
+
+    def _get_today_date(self) -> str:
+        row = self._conn.execute("SELECT date('now') AS d").fetchone()
+        return row["d"] if row else ""
+
+    def get_today_words(self) -> list[dict]:
+        """Return today's listened words with progress info, sorted by frequency."""
+        return [dict(r) for r in self._conn.execute("""
+            SELECT lw.word,
+                   COUNT(DISTINCT lw.audio_id) AS audio_count,
+                   GROUP_CONCAT(DISTINCT lw.audio_title) AS audio_titles,
+                   COALESCE(wp.known, 0) AS known,
+                   wp.last_score,
+                   wp.reviewed_at
+            FROM listened_words lw
+            LEFT JOIN word_progress wp ON wp.word = lw.word
+            WHERE lw.listened_date = date('now')
+            GROUP BY lw.word
+            ORDER BY audio_count DESC, lw.word ASC
+        """).fetchall()]
+
+    def get_today_stats(self) -> dict:
+        """Return today's word stats: total words, audio count, reviewed count."""
+        stats = self._conn.execute("""
+            SELECT COUNT(DISTINCT word) AS total_words,
+                   COUNT(DISTINCT audio_id) AS audio_count
+            FROM listened_words
+            WHERE listened_date = date('now')
+        """).fetchone()
+        reviewed = self._conn.execute("""
+            SELECT COUNT(DISTINCT lw.word) AS reviewed_count
+            FROM listened_words lw
+            JOIN word_progress wp ON wp.word = lw.word
+            WHERE lw.listened_date = date('now')
+              AND wp.reviewed_at >= datetime('now', '-1 day')
+        """).fetchone()
+        return {
+            "total_words": stats["total_words"] if stats else 0,
+            "audio_count": stats["audio_count"] if stats else 0,
+            "reviewed_count": reviewed["reviewed_count"] if reviewed else 0,
+        }
+
     def get_due_words_count(self) -> int:
         """Count of words due for review."""
         row = self._conn.execute("""
@@ -144,3 +201,78 @@ class ProgressRepository:
               AND (last_score IS NULL OR last_score < 80)
         """).fetchone()
         return row[0] if row else 0
+
+    # ── Batch Review ──
+
+    def batch_review(self, session_id: str, source: str, mode: str, results: list[dict]) -> dict:
+        """Record a batch of review results: write to review_history + update word_progress.
+
+        Returns { reviewed: N, correct: M }.
+        """
+        correct = 0
+        for r in results:
+            word = r["word"]
+            score = float(r["score"])
+            is_correct = 1 if score >= 80 else 0
+            if is_correct:
+                correct += 1
+            # Insert review_history row
+            self._conn.execute(
+                "INSERT INTO review_history (word, session_id, source, mode, correct, score, session_index) VALUES (?,?,?,?,?,?,?)",
+                [word, session_id, source, mode, is_correct, score, r.get("session_index", 0)],
+            )
+            # Update word_progress
+            self._conn.execute(
+                "INSERT INTO word_progress (word, known, reviewed_count, last_score, reviewed_at) "
+                "VALUES (?,1,1,?,datetime('now')) "
+                "ON CONFLICT(word) DO UPDATE SET "
+                "  reviewed_count=reviewed_count+1, last_score=?, reviewed_at=datetime('now'), known=1",
+                [word, score, score],
+            )
+        self._conn.commit()
+        return {"reviewed": len(results), "correct": correct}
+
+    def get_review_history(self, limit: int = 50) -> list[dict]:
+        """Return recent review sessions, grouped by session_id."""
+        rows = self._conn.execute("""
+            SELECT session_id, source, mode, COUNT(*) AS word_count,
+                   SUM(correct) AS correct_count,
+                   ROUND(AVG(score), 1) AS avg_score,
+                   MIN(created_at) AS created_at
+            FROM review_history
+            GROUP BY session_id
+            ORDER BY created_at DESC
+            LIMIT ?
+        """, [limit]).fetchall()
+        return [dict(r) for r in rows]
+
+    def get_review_stats(self) -> dict:
+        """Return today's review stats and overall accuracy."""
+        today = self._get_today_date()
+        # Today's stats
+        today_row = self._conn.execute("""
+            SELECT COUNT(*) AS total, SUM(correct) AS correct
+            FROM review_history
+            WHERE date(created_at) = date('now')
+        """).fetchone()
+        # Streak: consecutive days with reviews
+        streak_rows = self._conn.execute("""
+            SELECT DISTINCT date(created_at) AS d
+            FROM review_history
+            ORDER BY d DESC
+            LIMIT 90
+        """).fetchall()
+        streak = 0
+        from datetime import datetime, timedelta
+        today_dt = datetime.now().date()
+        for i, row in enumerate(streak_rows):
+            expected = today_dt - timedelta(days=i)
+            if datetime.strptime(row["d"], "%Y-%m-%d").date() == expected:
+                streak += 1
+            else:
+                break
+        return {
+            "today_reviewed": today_row["total"] if today_row else 0,
+            "today_correct": today_row["correct"] if today_row and today_row["correct"] else 0,
+            "streak": streak,
+        }

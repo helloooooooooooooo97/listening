@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
-import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlay, HiSparkles } from 'react-icons/hi2';
+import { useNavigate } from 'react-router-dom';
+import { HiBookmark, HiHeart, HiPencil, HiTag, HiChevronLeft, HiChevronRight, HiTrash, HiArrowDownTray, HiPlay, HiSparkles, HiBookOpen } from 'react-icons/hi2';
 import type { AudioClip, ListeningLesson } from '../types/lesson';
-import { getDictationRecords, type AudioGroup, type DictRecord } from '../lib/api';
+import { getDictationRecords, getKnownWords, setWordKnown, type AudioGroup, type DictRecord } from '../lib/api';
 import { alignDictation } from '../lib/dictationAligner';
 import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
+import ReviewModal from './words/ReviewModal';
 import { useSettingsStore } from '../stores/settingsStore';
 import type { WordResult } from '../stores/dictationStore';
 import { useClipAnalysis } from '../hooks/useClipAnalysis';
@@ -16,7 +18,7 @@ import TranscriptView from './TranscriptView';
 import ClipActions from './ClipActions';
 import ClipAnalysisModal from './ClipAnalysisModal';
 
-type SideTab = 'clips' | 'dictation' | 'favorites';
+type SideTab = 'clips' | 'dictation' | 'favorites' | 'words';
 
 interface Props {
   lesson: ListeningLesson;
@@ -43,10 +45,16 @@ export default function PlaybackDetailTabs({
   const [collapsed, setCollapsed] = useState(false);
   const [clipSort, setClipSort] = useState<'time' | 'date'>('time');
   const [expandedSentences, setExpandedSentences] = useState<Set<number>>(new Set());
+  const [wordSearch, setWordSearch] = useState('');
+  const navigate = useNavigate();
+  const [knownWords, setKnownWords] = useState<Set<string>>(new Set());
+  const [wordsReviewOpen, setWordsReviewOpen] = useState(false);
   const clips = useClipsStore(s => s.clips);
   const removeClip = useClipsStore(s => s.removeClip);
   const updateClip = useClipsStore(s => s.updateClip);
   const favItems = useFavoritesStore(s => s.items);
+  const favToggle = useFavoritesStore(s => s.toggle);
+  const isFav = useFavoritesStore(s => s.isFav);
   const playClip = useAudioStore(s => s.playClip);
   const audioMode = useAudioStore(s => s.mode);
   const addToast = useToastStore(s => s.addToast);
@@ -102,6 +110,25 @@ export default function PlaybackDetailTabs({
       });
     return () => { cancelled = true; };
   }, [lesson.id]);
+
+  // Load known words
+  useEffect(() => {
+    getKnownWords().then(words => setKnownWords(new Set(words))).catch(() => {});
+  }, []);
+
+  // Compute lesson words (deduplicated with timestamps)
+  const lessonWords = useMemo(() => {
+    const map = new Map<string, number[]>();
+    for (const w of lesson.words) {
+      const existing = map.get(w.text) || [];
+      existing.push(w.start);
+      map.set(w.text, existing);
+    }
+    const filtered = wordSearch
+      ? Array.from(map.entries()).filter(([word]) => word.toLowerCase().includes(wordSearch.toLowerCase()))
+      : Array.from(map.entries());
+    return filtered.map(([word, times]) => ({ word, times }));
+  }, [lesson.words, wordSearch]);
 
   const dictationRecords = useMemo(
     () => dictGroups.flatMap(group => group.records),
@@ -199,6 +226,7 @@ export default function PlaybackDetailTabs({
             <SideTabIcon active={sideTab === 'clips'} icon={<HiBookmark size={14} />} onClick={() => setSideTab('clips')} />
             <SideTabIcon active={sideTab === 'dictation'} icon={<HiPencil size={14} />} onClick={() => setSideTab('dictation')} />
             <SideTabIcon active={sideTab === 'favorites'} icon={<HiHeart size={14} />} onClick={() => setSideTab('favorites')} />
+            <SideTabIcon active={sideTab === 'words'} icon={<HiBookOpen size={14} />} onClick={() => setSideTab('words')} />
           </div>
         ) : (
           /* Expanded: full sidebar */
@@ -207,6 +235,7 @@ export default function PlaybackDetailTabs({
               <SideTabButton active={sideTab === 'clips'} icon={<HiBookmark size={13} />} label="片段" count={lessonClips.length} onClick={() => setSideTab('clips')} />
               <SideTabButton active={sideTab === 'dictation'} icon={<HiPencil size={13} />} label="听写" count={dictationRecords.length} onClick={() => setSideTab('dictation')} />
               <SideTabButton active={sideTab === 'favorites'} icon={<HiHeart size={13} />} label="收藏" count={lessonFavs.length} onClick={() => setSideTab('favorites')} />
+              <SideTabButton active={sideTab === 'words'} icon={<HiBookOpen size={13} />} label="单词" count={lessonWords.length} onClick={() => setSideTab('words')} />
               <button onClick={() => setCollapsed(true)}
                 className="px-1.5 text-tertiary hover:text-secondary transition-colors cursor-pointer flex-shrink-0">
                 <HiChevronRight size={13} />
@@ -377,6 +406,62 @@ export default function PlaybackDetailTabs({
                   <HiHeart size={13} className="text-[var(--accent)] flex-shrink-0" />
                 </div>
               )))}
+
+            {sideTab === 'words' && (
+              lessonWords.length === 0 ? (
+                <p className="text-center text-tertiary text-sm py-16">
+                  {wordSearch ? '未找到匹配单词' : '本课暂无单词'}
+                </p>
+              ) : (
+                <>
+                  {/* Search */}
+                  <div className="px-4 py-2 border-b border-[var(--border-secondary)]">
+                    <input type="text" placeholder="搜索本课单词…" value={wordSearch} onChange={e => setWordSearch(e.target.value)}
+                      className="w-full px-3 py-1.5 text-xs bg-[var(--bg-tertiary)] border-0 rounded-md focus:outline-none focus:ring-1 focus:ring-white/10 text-primary placeholder:text-tertiary" />
+                  </div>
+                  {/* Word list */}
+                  <div className="divide-y divide-[var(--border-secondary)]">
+                    {lessonWords.map(({ word, times }) => (
+                      <div key={word}
+                        className="px-5 py-2.5 flex items-center gap-3 hover:bg-[var(--bg-hover)] transition-colors">
+                        <div className="flex-1 min-w-0">
+                          <span className="text-sm text-primary font-medium">{word}</span>
+                          {knownWords.has(word) && (
+                            <span className="ml-2 text-[10px] px-1 py-0.5 rounded bg-emerald-500/15 text-emerald-400">✓</span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          {times.slice(0, 4).map((t, i) => (
+                            <button key={i} onClick={() => onSeek(t)}
+                              className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors font-mono cursor-pointer">
+                              {Math.floor(t / 60)}:{Math.floor(t % 60).toString().padStart(2, '0')}
+                            </button>
+                          ))}
+                          {times.length > 4 && (
+                            <span className="text-[10px] text-tertiary">+{times.length - 4}</span>
+                          )}
+                        </div>
+                        <button onClick={e => { e.stopPropagation(); favToggle({ item_id: word, item_type: 'word', title: word, subtitle: lesson.title }); }}
+                          className={`transition-colors cursor-pointer ${isFav(word, 'word') ? 'text-[var(--accent)]' : 'text-tertiary opacity-0 group-hover:opacity-100 hover:text-tertiary'}`}>
+                          <HiHeart size={11} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Review + Game buttons */}
+                  <div className="p-3 border-t border-[var(--border-secondary)] flex gap-2">
+                    <button onClick={() => setWordsReviewOpen(true)}
+                      className="flex-1 py-2 rounded-lg text-xs font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+<HiSparkles size={11} /> 复习本课单词 ({lessonWords.length})
+                    </button>
+                    <button onClick={() => navigate('/game')}
+                      className="py-2 px-3 rounded-lg text-xs font-medium bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 transition-colors cursor-pointer">
+<HiSparkles size={11} /> 游戏
+                    </button>
+                  </div>
+                </>
+              )
+            )}
           </div>
           </div>
         )}
@@ -386,6 +471,13 @@ export default function PlaybackDetailTabs({
     {viewingAnalysis && (
       <ClipAnalysisModal analysis={viewingAnalysis} onClose={() => setViewingAnalysis(null)} />
     )}
+
+    <ReviewModal
+      open={wordsReviewOpen}
+      onClose={() => setWordsReviewOpen(false)}
+      words={lessonWords.map(w => ({ word: w.word, source: lesson.title }))}
+      mode="fill-in"
+    />
 
 </>
   );

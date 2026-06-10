@@ -35,6 +35,22 @@ DYNAMIC_QUERIES = {
         WHERE date(played_at) = date('now')
         ORDER BY played_at DESC
     """,
+    'today_words': """
+        SELECT lw.word AS item_ref, 'word' AS item_type,
+               lw.word AS title,
+               printf('来自 %d 个音频', COUNT(DISTINCT lw.audio_id)) AS subtitle,
+               json_object('count', COUNT(DISTINCT lw.audio_id),
+                           'known', COALESCE(wp.known, 0),
+                           'last_score', wp.last_score) AS extra_data,
+               GROUP_CONCAT(DISTINCT lw.audio_id) AS lesson_id,
+               '' AS lesson_title,
+               0 AS start_time, 0 AS end_time
+        FROM listened_words lw
+        LEFT JOIN word_progress wp ON wp.word = lw.word
+        WHERE lw.listened_date = date('now')
+        GROUP BY lw.word
+        ORDER BY COUNT(DISTINCT lw.audio_id) DESC, lw.word ASC
+    """,
     'recent_dictation_errors': """
         SELECT audio_id || ':' || sentence_index AS item_ref,
                'sentence' AS item_type,

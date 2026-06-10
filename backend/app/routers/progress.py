@@ -42,6 +42,20 @@ class WordReviewIn(BaseModel):
     score: float
 
 
+class BatchReviewIn(BaseModel):
+    session_id: str
+    source: str = "review"
+    mode: str = "fill-in"
+    results: list[BatchReviewItem]
+
+
+class BatchReviewItem(BaseModel):
+    word: str
+    correct: bool = False
+    score: float = 0
+    session_index: int = 0
+
+
 # ── Dictation ──
 
 
@@ -90,6 +104,30 @@ def submit_review(data: WordReviewIn, repo: ProgressRepository = Depends(get_rep
     return {"ok": True}
 
 
+@router.post("/review/batch", status_code=201)
+def submit_batch_review(data: BatchReviewIn, repo: ProgressRepository = Depends(get_repo)):
+    """Batch-submit a review session: writes to review_history + updates word_progress."""
+    result = repo.batch_review(
+        session_id=data.session_id,
+        source=data.source,
+        mode=data.mode,
+        results=[r.model_dump() for r in data.results],
+    )
+    return result
+
+
+@router.get("/review/history")
+def get_review_history(limit: int = 50, repo: ProgressRepository = Depends(get_repo)):
+    """Return recent review sessions, grouped by session_id."""
+    return {"sessions": repo.get_review_history(limit)}
+
+
+@router.get("/review/stats")
+def get_review_stats(repo: ProgressRepository = Depends(get_repo)):
+    """Return today's review stats and streak."""
+    return repo.get_review_stats()
+
+
 @router.get("/words/due")
 def due_words(limit: int = Query(default=20, ge=1, le=100), repo: ProgressRepository = Depends(get_repo)):
     return {"words": repo.get_due_words(limit)}
@@ -98,3 +136,28 @@ def due_words(limit: int = Query(default=20, ge=1, le=100), repo: ProgressReposi
 @router.get("/words/due-count")
 def due_words_count(repo: ProgressRepository = Depends(get_repo)):
     return {"count": repo.get_due_words_count()}
+
+
+# ── Daily Words ──
+
+
+class ListenedWordsRecord(BaseModel):
+    words: list[str]
+    audio_id: str
+    audio_title: str
+
+
+@router.post("/listened-words", status_code=201)
+def record_listened_words(data: ListenedWordsRecord, repo: ProgressRepository = Depends(get_repo)):
+    repo.record_listened_words(data.words, data.audio_id, data.audio_title)
+    return {"ok": True}
+
+
+@router.get("/daily-words/today")
+def get_today_words(repo: ProgressRepository = Depends(get_repo)):
+    return {"words": repo.get_today_words()}
+
+
+@router.get("/daily-words/stats")
+def get_today_stats(repo: ProgressRepository = Depends(get_repo)):
+    return repo.get_today_stats()
