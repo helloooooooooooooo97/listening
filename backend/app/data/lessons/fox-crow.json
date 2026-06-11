@@ -1,0 +1,1267 @@
+{
+  "id": "fox-crow",
+  "title": "The Fox and The Crow",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 91.977,
+  "audioFileName": "fox-crow.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 2.045,
+      "end": 3.827,
+      "text": "This is a Libra-Vox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 4.648,
+      "end": 6.93,
+      "text": "All Libra-Vox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 7.531,
+      "end": 12.376,
+      "text": "For more information or to volunteer, please visit libravox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 13.357,
+      "end": 18.382,
+      "text": "This reading by Karish Allenberg, www.kray.org.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 20.304,
+      "end": 21.224,
+      "text": "Asip's fables.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 22.165,
+      "end": 23.667,
+      "text": "The fox and the crow.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 26.729,
+      "end": 37.178,
+      "text": "A crow was sitting on a branch of a tree with a piece of cheese in her beak when a fox observed her and set his wits to work to discover some way of getting the cheese.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 38.359,
+      "end": 44.925,
+      "text": "Coming and standing under the tree he looked up and said, What a noble bird I see above me.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 46.221,
+      "end": 50.544,
+      "text": "Her beauty is without equal, the hue of her plumage exquisite.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 51.245,
+      "end": 54.647,
+      "text": "If only her voice is as sweet as her looks are fair.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 55.548,
+      "end": 58.49,
+      "text": "She ought without doubt to be queen of the birds.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 60.232,
+      "end": 67.617,
+      "text": "The crow was hugely flattered by this, and just to show the fox that she could sing, she gave a loud caa.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 68.958,
+      "end": 73.562,
+      "text": "Down came the cheese, of course, and the fox, snatching it up, said,",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 74.678,
+      "end": 76.78,
+      "text": "You have a voice, madam, I see.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 77.601,
+      "end": 79.463,
+      "text": "What you want is wits.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 81.806,
+      "end": 83.988,
+      "text": "End of The Fox and the Crow.",
+      "note": ""
+    },
+    {
+      "id": "line-016",
+      "start": 85.95,
+      "end": 91.977,
+      "text": "Read by Cara Schalenberg on January 11th, 2006, in Oceanside, California.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 2.045,
+      "end": 2.265
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 2.405,
+      "end": 2.485
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 2.546,
+      "end": 2.586
+    },
+    {
+      "id": "w-0003",
+      "text": "Libra-Vox",
+      "start": 2.666,
+      "end": 3.266
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 3.326,
+      "end": 3.827
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 4.648,
+      "end": 4.768
+    },
+    {
+      "id": "w-0006",
+      "text": "Libra-Vox",
+      "start": 4.808,
+      "end": 5.308
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 5.368,
+      "end": 5.829
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 5.889,
+      "end": 5.969
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 5.989,
+      "end": 6.049
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 6.089,
+      "end": 6.149
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 6.189,
+      "end": 6.51
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 6.55,
+      "end": 6.93
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 7.531,
+      "end": 7.651
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 7.691,
+      "end": 7.831
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 7.851,
+      "end": 8.391
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 8.452,
+      "end": 8.532
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.572,
+      "end": 8.672
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.692,
+      "end": 9.252
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.593,
+      "end": 9.813
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.853,
+      "end": 10.173
+    },
+    {
+      "id": "w-0021",
+      "text": "libravox.org.",
+      "start": 10.534,
+      "end": 12.376
+    },
+    {
+      "id": "w-0022",
+      "text": "This",
+      "start": 13.357,
+      "end": 13.517
+    },
+    {
+      "id": "w-0023",
+      "text": "reading",
+      "start": 13.577,
+      "end": 13.817
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 13.837,
+      "end": 13.957
+    },
+    {
+      "id": "w-0025",
+      "text": "Karish",
+      "start": 13.997,
+      "end": 14.317
+    },
+    {
+      "id": "w-0026",
+      "text": "Allenberg,",
+      "start": 14.398,
+      "end": 14.818
+    },
+    {
+      "id": "w-0027",
+      "text": "www.kray.org.",
+      "start": 15.459,
+      "end": 18.382
+    },
+    {
+      "id": "w-0028",
+      "text": "Asip's",
+      "start": 20.304,
+      "end": 20.684
+    },
+    {
+      "id": "w-0029",
+      "text": "fables.",
+      "start": 20.784,
+      "end": 21.224
+    },
+    {
+      "id": "w-0030",
+      "text": "The",
+      "start": 22.165,
+      "end": 22.286
+    },
+    {
+      "id": "w-0031",
+      "text": "fox",
+      "start": 22.326,
+      "end": 22.646
+    },
+    {
+      "id": "w-0032",
+      "text": "and",
+      "start": 23.086,
+      "end": 23.227
+    },
+    {
+      "id": "w-0033",
+      "text": "the",
+      "start": 23.287,
+      "end": 23.347
+    },
+    {
+      "id": "w-0034",
+      "text": "crow.",
+      "start": 23.387,
+      "end": 23.667
+    },
+    {
+      "id": "w-0035",
+      "text": "A",
+      "start": 26.729,
+      "end": 26.769
+    },
+    {
+      "id": "w-0036",
+      "text": "crow",
+      "start": 26.869,
+      "end": 27.23
+    },
+    {
+      "id": "w-0037",
+      "text": "was",
+      "start": 27.51,
+      "end": 27.65
+    },
+    {
+      "id": "w-0038",
+      "text": "sitting",
+      "start": 27.71,
+      "end": 27.99
+    },
+    {
+      "id": "w-0039",
+      "text": "on",
+      "start": 28.07,
+      "end": 28.13
+    },
+    {
+      "id": "w-0040",
+      "text": "a",
+      "start": 28.19,
+      "end": 28.21
+    },
+    {
+      "id": "w-0041",
+      "text": "branch",
+      "start": 28.27,
+      "end": 28.591
+    },
+    {
+      "id": "w-0042",
+      "text": "of",
+      "start": 28.631,
+      "end": 28.711
+    },
+    {
+      "id": "w-0043",
+      "text": "a",
+      "start": 28.751,
+      "end": 28.791
+    },
+    {
+      "id": "w-0044",
+      "text": "tree",
+      "start": 28.871,
+      "end": 29.171
+    },
+    {
+      "id": "w-0045",
+      "text": "with",
+      "start": 29.351,
+      "end": 29.491
+    },
+    {
+      "id": "w-0046",
+      "text": "a",
+      "start": 29.552,
+      "end": 29.572
+    },
+    {
+      "id": "w-0047",
+      "text": "piece",
+      "start": 29.612,
+      "end": 29.832
+    },
+    {
+      "id": "w-0048",
+      "text": "of",
+      "start": 29.872,
+      "end": 29.932
+    },
+    {
+      "id": "w-0049",
+      "text": "cheese",
+      "start": 30.052,
+      "end": 30.532
+    },
+    {
+      "id": "w-0050",
+      "text": "in",
+      "start": 30.652,
+      "end": 30.733
+    },
+    {
+      "id": "w-0051",
+      "text": "her",
+      "start": 30.773,
+      "end": 30.893
+    },
+    {
+      "id": "w-0052",
+      "text": "beak",
+      "start": 30.933,
+      "end": 31.153
+    },
+    {
+      "id": "w-0053",
+      "text": "when",
+      "start": 31.753,
+      "end": 31.894
+    },
+    {
+      "id": "w-0054",
+      "text": "a",
+      "start": 31.954,
+      "end": 31.974
+    },
+    {
+      "id": "w-0055",
+      "text": "fox",
+      "start": 32.034,
+      "end": 32.394
+    },
+    {
+      "id": "w-0056",
+      "text": "observed",
+      "start": 32.494,
+      "end": 32.914
+    },
+    {
+      "id": "w-0057",
+      "text": "her",
+      "start": 32.954,
+      "end": 33.075
+    },
+    {
+      "id": "w-0058",
+      "text": "and",
+      "start": 33.215,
+      "end": 33.315
+    },
+    {
+      "id": "w-0059",
+      "text": "set",
+      "start": 33.435,
+      "end": 33.635
+    },
+    {
+      "id": "w-0060",
+      "text": "his",
+      "start": 33.695,
+      "end": 33.835
+    },
+    {
+      "id": "w-0061",
+      "text": "wits",
+      "start": 33.915,
+      "end": 34.196
+    },
+    {
+      "id": "w-0062",
+      "text": "to",
+      "start": 34.296,
+      "end": 34.416
+    },
+    {
+      "id": "w-0063",
+      "text": "work",
+      "start": 34.456,
+      "end": 34.676
+    },
+    {
+      "id": "w-0064",
+      "text": "to",
+      "start": 35.156,
+      "end": 35.256
+    },
+    {
+      "id": "w-0065",
+      "text": "discover",
+      "start": 35.296,
+      "end": 35.697
+    },
+    {
+      "id": "w-0066",
+      "text": "some",
+      "start": 35.737,
+      "end": 35.917
+    },
+    {
+      "id": "w-0067",
+      "text": "way",
+      "start": 35.957,
+      "end": 36.117
+    },
+    {
+      "id": "w-0068",
+      "text": "of",
+      "start": 36.177,
+      "end": 36.237
+    },
+    {
+      "id": "w-0069",
+      "text": "getting",
+      "start": 36.297,
+      "end": 36.598
+    },
+    {
+      "id": "w-0070",
+      "text": "the",
+      "start": 36.658,
+      "end": 36.738
+    },
+    {
+      "id": "w-0071",
+      "text": "cheese.",
+      "start": 36.778,
+      "end": 37.178
+    },
+    {
+      "id": "w-0072",
+      "text": "Coming",
+      "start": 38.359,
+      "end": 38.719
+    },
+    {
+      "id": "w-0073",
+      "text": "and",
+      "start": 38.86,
+      "end": 38.98
+    },
+    {
+      "id": "w-0074",
+      "text": "standing",
+      "start": 39.1,
+      "end": 39.5
+    },
+    {
+      "id": "w-0075",
+      "text": "under",
+      "start": 39.54,
+      "end": 39.74
+    },
+    {
+      "id": "w-0076",
+      "text": "the",
+      "start": 39.78,
+      "end": 39.86
+    },
+    {
+      "id": "w-0077",
+      "text": "tree",
+      "start": 39.96,
+      "end": 40.321
+    },
+    {
+      "id": "w-0078",
+      "text": "he",
+      "start": 40.421,
+      "end": 40.521
+    },
+    {
+      "id": "w-0079",
+      "text": "looked",
+      "start": 40.581,
+      "end": 40.861
+    },
+    {
+      "id": "w-0080",
+      "text": "up",
+      "start": 41.001,
+      "end": 41.101
+    },
+    {
+      "id": "w-0081",
+      "text": "and",
+      "start": 41.162,
+      "end": 41.262
+    },
+    {
+      "id": "w-0082",
+      "text": "said,",
+      "start": 41.322,
+      "end": 41.542
+    },
+    {
+      "id": "w-0083",
+      "text": "What",
+      "start": 42.563,
+      "end": 42.843
+    },
+    {
+      "id": "w-0084",
+      "text": "a",
+      "start": 42.923,
+      "end": 42.963
+    },
+    {
+      "id": "w-0085",
+      "text": "noble",
+      "start": 43.143,
+      "end": 43.544
+    },
+    {
+      "id": "w-0086",
+      "text": "bird",
+      "start": 43.604,
+      "end": 43.964
+    },
+    {
+      "id": "w-0087",
+      "text": "I",
+      "start": 44.064,
+      "end": 44.124
+    },
+    {
+      "id": "w-0088",
+      "text": "see",
+      "start": 44.184,
+      "end": 44.344
+    },
+    {
+      "id": "w-0089",
+      "text": "above",
+      "start": 44.444,
+      "end": 44.745
+    },
+    {
+      "id": "w-0090",
+      "text": "me.",
+      "start": 44.805,
+      "end": 44.925
+    },
+    {
+      "id": "w-0091",
+      "text": "Her",
+      "start": 46.221,
+      "end": 46.381
+    },
+    {
+      "id": "w-0092",
+      "text": "beauty",
+      "start": 46.481,
+      "end": 46.882
+    },
+    {
+      "id": "w-0093",
+      "text": "is",
+      "start": 46.962,
+      "end": 47.042
+    },
+    {
+      "id": "w-0094",
+      "text": "without",
+      "start": 47.082,
+      "end": 47.422
+    },
+    {
+      "id": "w-0095",
+      "text": "equal,",
+      "start": 47.622,
+      "end": 47.962
+    },
+    {
+      "id": "w-0096",
+      "text": "the",
+      "start": 48.403,
+      "end": 48.543
+    },
+    {
+      "id": "w-0097",
+      "text": "hue",
+      "start": 48.623,
+      "end": 48.923
+    },
+    {
+      "id": "w-0098",
+      "text": "of",
+      "start": 48.963,
+      "end": 49.023
+    },
+    {
+      "id": "w-0099",
+      "text": "her",
+      "start": 49.083,
+      "end": 49.203
+    },
+    {
+      "id": "w-0100",
+      "text": "plumage",
+      "start": 49.283,
+      "end": 49.744
+    },
+    {
+      "id": "w-0101",
+      "text": "exquisite.",
+      "start": 49.844,
+      "end": 50.544
+    },
+    {
+      "id": "w-0102",
+      "text": "If",
+      "start": 51.245,
+      "end": 51.325
+    },
+    {
+      "id": "w-0103",
+      "text": "only",
+      "start": 51.425,
+      "end": 51.625
+    },
+    {
+      "id": "w-0104",
+      "text": "her",
+      "start": 51.685,
+      "end": 51.825
+    },
+    {
+      "id": "w-0105",
+      "text": "voice",
+      "start": 51.905,
+      "end": 52.286
+    },
+    {
+      "id": "w-0106",
+      "text": "is",
+      "start": 52.506,
+      "end": 52.586
+    },
+    {
+      "id": "w-0107",
+      "text": "as",
+      "start": 52.686,
+      "end": 52.786
+    },
+    {
+      "id": "w-0108",
+      "text": "sweet",
+      "start": 52.906,
+      "end": 53.226
+    },
+    {
+      "id": "w-0109",
+      "text": "as",
+      "start": 53.547,
+      "end": 53.607
+    },
+    {
+      "id": "w-0110",
+      "text": "her",
+      "start": 53.647,
+      "end": 53.767
+    },
+    {
+      "id": "w-0111",
+      "text": "looks",
+      "start": 53.807,
+      "end": 54.027
+    },
+    {
+      "id": "w-0112",
+      "text": "are",
+      "start": 54.127,
+      "end": 54.227
+    },
+    {
+      "id": "w-0113",
+      "text": "fair.",
+      "start": 54.327,
+      "end": 54.647
+    },
+    {
+      "id": "w-0114",
+      "text": "She",
+      "start": 55.548,
+      "end": 55.668
+    },
+    {
+      "id": "w-0115",
+      "text": "ought",
+      "start": 55.768,
+      "end": 55.948
+    },
+    {
+      "id": "w-0116",
+      "text": "without",
+      "start": 56.048,
+      "end": 56.429
+    },
+    {
+      "id": "w-0117",
+      "text": "doubt",
+      "start": 56.489,
+      "end": 56.789
+    },
+    {
+      "id": "w-0118",
+      "text": "to",
+      "start": 56.849,
+      "end": 56.949
+    },
+    {
+      "id": "w-0119",
+      "text": "be",
+      "start": 56.989,
+      "end": 57.109
+    },
+    {
+      "id": "w-0120",
+      "text": "queen",
+      "start": 57.249,
+      "end": 57.67
+    },
+    {
+      "id": "w-0121",
+      "text": "of",
+      "start": 57.79,
+      "end": 57.87
+    },
+    {
+      "id": "w-0122",
+      "text": "the",
+      "start": 57.93,
+      "end": 58.01
+    },
+    {
+      "id": "w-0123",
+      "text": "birds.",
+      "start": 58.05,
+      "end": 58.49
+    },
+    {
+      "id": "w-0124",
+      "text": "The",
+      "start": 60.232,
+      "end": 60.332
+    },
+    {
+      "id": "w-0125",
+      "text": "crow",
+      "start": 60.412,
+      "end": 60.712
+    },
+    {
+      "id": "w-0126",
+      "text": "was",
+      "start": 60.772,
+      "end": 60.892
+    },
+    {
+      "id": "w-0127",
+      "text": "hugely",
+      "start": 61.012,
+      "end": 61.613
+    },
+    {
+      "id": "w-0128",
+      "text": "flattered",
+      "start": 61.713,
+      "end": 62.113
+    },
+    {
+      "id": "w-0129",
+      "text": "by",
+      "start": 62.153,
+      "end": 62.293
+    },
+    {
+      "id": "w-0130",
+      "text": "this,",
+      "start": 62.353,
+      "end": 62.553
+    },
+    {
+      "id": "w-0131",
+      "text": "and",
+      "start": 63.154,
+      "end": 63.314
+    },
+    {
+      "id": "w-0132",
+      "text": "just",
+      "start": 63.534,
+      "end": 63.814
+    },
+    {
+      "id": "w-0133",
+      "text": "to",
+      "start": 63.854,
+      "end": 63.934
+    },
+    {
+      "id": "w-0134",
+      "text": "show",
+      "start": 64.034,
+      "end": 64.255
+    },
+    {
+      "id": "w-0135",
+      "text": "the",
+      "start": 64.295,
+      "end": 64.375
+    },
+    {
+      "id": "w-0136",
+      "text": "fox",
+      "start": 64.415,
+      "end": 64.735
+    },
+    {
+      "id": "w-0137",
+      "text": "that",
+      "start": 64.795,
+      "end": 64.935
+    },
+    {
+      "id": "w-0138",
+      "text": "she",
+      "start": 64.975,
+      "end": 65.075
+    },
+    {
+      "id": "w-0139",
+      "text": "could",
+      "start": 65.115,
+      "end": 65.275
+    },
+    {
+      "id": "w-0140",
+      "text": "sing,",
+      "start": 65.315,
+      "end": 65.636
+    },
+    {
+      "id": "w-0141",
+      "text": "she",
+      "start": 65.856,
+      "end": 65.956
+    },
+    {
+      "id": "w-0142",
+      "text": "gave",
+      "start": 65.996,
+      "end": 66.176
+    },
+    {
+      "id": "w-0143",
+      "text": "a",
+      "start": 66.216,
+      "end": 66.236
+    },
+    {
+      "id": "w-0144",
+      "text": "loud",
+      "start": 66.296,
+      "end": 66.596
+    },
+    {
+      "id": "w-0145",
+      "text": "caa.",
+      "start": 66.756,
+      "end": 67.617
+    },
+    {
+      "id": "w-0146",
+      "text": "Down",
+      "start": 68.958,
+      "end": 69.298
+    },
+    {
+      "id": "w-0147",
+      "text": "came",
+      "start": 69.358,
+      "end": 69.619
+    },
+    {
+      "id": "w-0148",
+      "text": "the",
+      "start": 69.699,
+      "end": 69.779
+    },
+    {
+      "id": "w-0149",
+      "text": "cheese,",
+      "start": 69.819,
+      "end": 70.199
+    },
+    {
+      "id": "w-0150",
+      "text": "of",
+      "start": 70.239,
+      "end": 70.299
+    },
+    {
+      "id": "w-0151",
+      "text": "course,",
+      "start": 70.359,
+      "end": 70.619
+    },
+    {
+      "id": "w-0152",
+      "text": "and",
+      "start": 71.2,
+      "end": 71.32
+    },
+    {
+      "id": "w-0153",
+      "text": "the",
+      "start": 71.36,
+      "end": 71.46
+    },
+    {
+      "id": "w-0154",
+      "text": "fox,",
+      "start": 71.5,
+      "end": 71.88
+    },
+    {
+      "id": "w-0155",
+      "text": "snatching",
+      "start": 72.401,
+      "end": 72.801
+    },
+    {
+      "id": "w-0156",
+      "text": "it",
+      "start": 72.841,
+      "end": 72.901
+    },
+    {
+      "id": "w-0157",
+      "text": "up,",
+      "start": 73.001,
+      "end": 73.101
+    },
+    {
+      "id": "w-0158",
+      "text": "said,",
+      "start": 73.321,
+      "end": 73.562
+    },
+    {
+      "id": "w-0159",
+      "text": "You",
+      "start": 74.678,
+      "end": 74.838
+    },
+    {
+      "id": "w-0160",
+      "text": "have",
+      "start": 74.878,
+      "end": 75.099
+    },
+    {
+      "id": "w-0161",
+      "text": "a",
+      "start": 75.139,
+      "end": 75.179
+    },
+    {
+      "id": "w-0162",
+      "text": "voice,",
+      "start": 75.239,
+      "end": 75.599
+    },
+    {
+      "id": "w-0163",
+      "text": "madam,",
+      "start": 75.779,
+      "end": 76.1
+    },
+    {
+      "id": "w-0164",
+      "text": "I",
+      "start": 76.38,
+      "end": 76.44
+    },
+    {
+      "id": "w-0165",
+      "text": "see.",
+      "start": 76.52,
+      "end": 76.78
+    },
+    {
+      "id": "w-0166",
+      "text": "What",
+      "start": 77.601,
+      "end": 77.761
+    },
+    {
+      "id": "w-0167",
+      "text": "you",
+      "start": 77.801,
+      "end": 77.942
+    },
+    {
+      "id": "w-0168",
+      "text": "want",
+      "start": 77.982,
+      "end": 78.302
+    },
+    {
+      "id": "w-0169",
+      "text": "is",
+      "start": 78.943,
+      "end": 79.043
+    },
+    {
+      "id": "w-0170",
+      "text": "wits.",
+      "start": 79.123,
+      "end": 79.463
+    },
+    {
+      "id": "w-0171",
+      "text": "End",
+      "start": 81.806,
+      "end": 81.946
+    },
+    {
+      "id": "w-0172",
+      "text": "of",
+      "start": 82.066,
+      "end": 82.146
+    },
+    {
+      "id": "w-0173",
+      "text": "The",
+      "start": 82.707,
+      "end": 82.787
+    },
+    {
+      "id": "w-0174",
+      "text": "Fox",
+      "start": 82.827,
+      "end": 83.127
+    },
+    {
+      "id": "w-0175",
+      "text": "and",
+      "start": 83.488,
+      "end": 83.588
+    },
+    {
+      "id": "w-0176",
+      "text": "the",
+      "start": 83.628,
+      "end": 83.708
+    },
+    {
+      "id": "w-0177",
+      "text": "Crow.",
+      "start": 83.748,
+      "end": 83.988
+    },
+    {
+      "id": "w-0178",
+      "text": "Read",
+      "start": 85.95,
+      "end": 86.091
+    },
+    {
+      "id": "w-0179",
+      "text": "by",
+      "start": 86.131,
+      "end": 86.231
+    },
+    {
+      "id": "w-0180",
+      "text": "Cara",
+      "start": 86.271,
+      "end": 86.511
+    },
+    {
+      "id": "w-0181",
+      "text": "Schalenberg",
+      "start": 86.531,
+      "end": 87.092
+    },
+    {
+      "id": "w-0182",
+      "text": "on",
+      "start": 87.312,
+      "end": 87.392
+    },
+    {
+      "id": "w-0183",
+      "text": "January",
+      "start": 87.432,
+      "end": 87.913
+    },
+    {
+      "id": "w-0184",
+      "text": "11th,",
+      "start": 88.153,
+      "end": 88.834
+    },
+    {
+      "id": "w-0185",
+      "text": "2006,",
+      "start": 88.934,
+      "end": 89.174
+    },
+    {
+      "id": "w-0186",
+      "text": "in",
+      "start": 89.294,
+      "end": 90.315
+    },
+    {
+      "id": "w-0187",
+      "text": "Oceanside,",
+      "start": 90.395,
+      "end": 90.876
+    },
+    {
+      "id": "w-0188",
+      "text": "California.",
+      "start": 91.396,
+      "end": 91.977
+    }
+  ]
+}

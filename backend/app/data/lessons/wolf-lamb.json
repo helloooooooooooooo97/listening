@@ -1,0 +1,1128 @@
+{
+  "id": "wolf-lamb",
+  "title": "The Wolf and the Lamb",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 85.623,
+  "audioFileName": "wolf-lamb.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 2.547,
+      "end": 4.428,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 5.168,
+      "end": 7.909,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 8.61,
+      "end": 13.912,
+      "text": "For more information or to volunteer, please visit libravox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 15.732,
+      "end": 18.053,
+      "text": "Recording by Kristin Luoma.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 18.534,
+      "end": 21.075,
+      "text": "GreenKRI.com.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 22.935,
+      "end": 23.876,
+      "text": "Asap's Fables.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 25.416,
+      "end": 26.877,
+      "text": "The Wolf and the Lamb.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 30.52,
+      "end": 39.062,
+      "text": "A wolf came upon a lamb, straying from the flock, and felt some compunction about taking the life of so helpless a creature, without some plausible excuse.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 40.082,
+      "end": 45.863,
+      "text": "So he cast about four grievance and said at last, Last year, Sarah, you grossly insulted me.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 47.463,
+      "end": 50.904,
+      "text": "That is impossible, sir, pleaded the lamb, for I wasn't bored then.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 52.164,
+      "end": 55.345,
+      "text": "Well, retorted the wolf, you feed in my pastures.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 56.714,
+      "end": 61.395,
+      "text": "That cannot be,\" replied the lamb, for I have never yet tasted grass.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 62.976,
+      "end": 65.937,
+      "text": "You drink from my spring then, continued the wolf.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 66.897,
+      "end": 72.059,
+      "text": "Indeed, sir, said the poor lamb, I have never yet drunk anything but my mother's milk.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 73.239,
+      "end": 80.661,
+      "text": "Well, anyhow, said the wolf, I'm not going without my dinner, and he sprang upon the lamb and devoured it without more ado.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 83.742,
+      "end": 85.623,
+      "text": "End of the wolf and the lamb.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 2.547,
+      "end": 2.767
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 2.887,
+      "end": 2.967
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 3.047,
+      "end": 3.087
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 3.147,
+      "end": 3.748
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 3.848,
+      "end": 4.428
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 5.168,
+      "end": 5.288
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 5.328,
+      "end": 5.868
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 5.948,
+      "end": 6.509
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 6.629,
+      "end": 6.709
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 6.749,
+      "end": 6.829
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 6.849,
+      "end": 6.909
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 6.969,
+      "end": 7.349
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 7.409,
+      "end": 7.909
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 8.61,
+      "end": 8.77
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 8.81,
+      "end": 9.01
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 9.07,
+      "end": 9.75
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 9.93,
+      "end": 10.03
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 10.07,
+      "end": 10.15
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 10.21,
+      "end": 10.89
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 11.271,
+      "end": 11.571
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 11.651,
+      "end": 12.031
+    },
+    {
+      "id": "w-0021",
+      "text": "libravox.org.",
+      "start": 12.351,
+      "end": 13.912
+    },
+    {
+      "id": "w-0022",
+      "text": "Recording",
+      "start": 15.732,
+      "end": 16.313
+    },
+    {
+      "id": "w-0023",
+      "text": "by",
+      "start": 16.453,
+      "end": 16.593
+    },
+    {
+      "id": "w-0024",
+      "text": "Kristin",
+      "start": 16.693,
+      "end": 17.233
+    },
+    {
+      "id": "w-0025",
+      "text": "Luoma.",
+      "start": 17.513,
+      "end": 18.053
+    },
+    {
+      "id": "w-0026",
+      "text": "GreenKRI.com.",
+      "start": 18.534,
+      "end": 21.075
+    },
+    {
+      "id": "w-0027",
+      "text": "Asap's",
+      "start": 22.935,
+      "end": 23.316
+    },
+    {
+      "id": "w-0028",
+      "text": "Fables.",
+      "start": 23.396,
+      "end": 23.876
+    },
+    {
+      "id": "w-0029",
+      "text": "The",
+      "start": 25.416,
+      "end": 25.516
+    },
+    {
+      "id": "w-0030",
+      "text": "Wolf",
+      "start": 25.576,
+      "end": 25.897
+    },
+    {
+      "id": "w-0031",
+      "text": "and",
+      "start": 26.197,
+      "end": 26.317
+    },
+    {
+      "id": "w-0032",
+      "text": "the",
+      "start": 26.357,
+      "end": 26.437
+    },
+    {
+      "id": "w-0033",
+      "text": "Lamb.",
+      "start": 26.497,
+      "end": 26.877
+    },
+    {
+      "id": "w-0034",
+      "text": "A",
+      "start": 30.52,
+      "end": 30.56
+    },
+    {
+      "id": "w-0035",
+      "text": "wolf",
+      "start": 30.62,
+      "end": 30.86
+    },
+    {
+      "id": "w-0036",
+      "text": "came",
+      "start": 30.92,
+      "end": 31.16
+    },
+    {
+      "id": "w-0037",
+      "text": "upon",
+      "start": 31.26,
+      "end": 31.5
+    },
+    {
+      "id": "w-0038",
+      "text": "a",
+      "start": 31.58,
+      "end": 31.62
+    },
+    {
+      "id": "w-0039",
+      "text": "lamb,",
+      "start": 31.64,
+      "end": 31.96
+    },
+    {
+      "id": "w-0040",
+      "text": "straying",
+      "start": 32.06,
+      "end": 32.46
+    },
+    {
+      "id": "w-0041",
+      "text": "from",
+      "start": 32.54,
+      "end": 32.7
+    },
+    {
+      "id": "w-0042",
+      "text": "the",
+      "start": 32.74,
+      "end": 32.84
+    },
+    {
+      "id": "w-0043",
+      "text": "flock,",
+      "start": 32.88,
+      "end": 33.221
+    },
+    {
+      "id": "w-0044",
+      "text": "and",
+      "start": 33.561,
+      "end": 33.661
+    },
+    {
+      "id": "w-0045",
+      "text": "felt",
+      "start": 33.761,
+      "end": 33.961
+    },
+    {
+      "id": "w-0046",
+      "text": "some",
+      "start": 34.001,
+      "end": 34.161
+    },
+    {
+      "id": "w-0047",
+      "text": "compunction",
+      "start": 34.221,
+      "end": 34.741
+    },
+    {
+      "id": "w-0048",
+      "text": "about",
+      "start": 34.781,
+      "end": 34.981
+    },
+    {
+      "id": "w-0049",
+      "text": "taking",
+      "start": 35.021,
+      "end": 35.341
+    },
+    {
+      "id": "w-0050",
+      "text": "the",
+      "start": 35.361,
+      "end": 35.441
+    },
+    {
+      "id": "w-0051",
+      "text": "life",
+      "start": 35.481,
+      "end": 35.721
+    },
+    {
+      "id": "w-0052",
+      "text": "of",
+      "start": 35.941,
+      "end": 36.001
+    },
+    {
+      "id": "w-0053",
+      "text": "so",
+      "start": 36.061,
+      "end": 36.201
+    },
+    {
+      "id": "w-0054",
+      "text": "helpless",
+      "start": 36.241,
+      "end": 36.601
+    },
+    {
+      "id": "w-0055",
+      "text": "a",
+      "start": 36.641,
+      "end": 36.661
+    },
+    {
+      "id": "w-0056",
+      "text": "creature,",
+      "start": 36.721,
+      "end": 37.121
+    },
+    {
+      "id": "w-0057",
+      "text": "without",
+      "start": 37.541,
+      "end": 37.821
+    },
+    {
+      "id": "w-0058",
+      "text": "some",
+      "start": 37.861,
+      "end": 38.001
+    },
+    {
+      "id": "w-0059",
+      "text": "plausible",
+      "start": 38.042,
+      "end": 38.502
+    },
+    {
+      "id": "w-0060",
+      "text": "excuse.",
+      "start": 38.562,
+      "end": 39.062
+    },
+    {
+      "id": "w-0061",
+      "text": "So",
+      "start": 40.082,
+      "end": 40.202
+    },
+    {
+      "id": "w-0062",
+      "text": "he",
+      "start": 40.242,
+      "end": 40.322
+    },
+    {
+      "id": "w-0063",
+      "text": "cast",
+      "start": 40.362,
+      "end": 40.622
+    },
+    {
+      "id": "w-0064",
+      "text": "about",
+      "start": 40.682,
+      "end": 40.942
+    },
+    {
+      "id": "w-0065",
+      "text": "four",
+      "start": 41.002,
+      "end": 41.162
+    },
+    {
+      "id": "w-0066",
+      "text": "grievance",
+      "start": 41.262,
+      "end": 41.682
+    },
+    {
+      "id": "w-0067",
+      "text": "and",
+      "start": 41.742,
+      "end": 41.822
+    },
+    {
+      "id": "w-0068",
+      "text": "said",
+      "start": 41.862,
+      "end": 42.062
+    },
+    {
+      "id": "w-0069",
+      "text": "at",
+      "start": 42.122,
+      "end": 42.182
+    },
+    {
+      "id": "w-0070",
+      "text": "last,",
+      "start": 42.222,
+      "end": 42.582
+    },
+    {
+      "id": "w-0071",
+      "text": "Last",
+      "start": 43.223,
+      "end": 43.463
+    },
+    {
+      "id": "w-0072",
+      "text": "year,",
+      "start": 43.523,
+      "end": 43.783
+    },
+    {
+      "id": "w-0073",
+      "text": "Sarah,",
+      "start": 43.983,
+      "end": 44.343
+    },
+    {
+      "id": "w-0074",
+      "text": "you",
+      "start": 44.523,
+      "end": 44.663
+    },
+    {
+      "id": "w-0075",
+      "text": "grossly",
+      "start": 44.683,
+      "end": 45.123
+    },
+    {
+      "id": "w-0076",
+      "text": "insulted",
+      "start": 45.203,
+      "end": 45.663
+    },
+    {
+      "id": "w-0077",
+      "text": "me.",
+      "start": 45.723,
+      "end": 45.863
+    },
+    {
+      "id": "w-0078",
+      "text": "That",
+      "start": 47.463,
+      "end": 47.583
+    },
+    {
+      "id": "w-0079",
+      "text": "is",
+      "start": 47.643,
+      "end": 47.703
+    },
+    {
+      "id": "w-0080",
+      "text": "impossible,",
+      "start": 47.743,
+      "end": 48.304
+    },
+    {
+      "id": "w-0081",
+      "text": "sir,",
+      "start": 48.344,
+      "end": 48.564
+    },
+    {
+      "id": "w-0082",
+      "text": "pleaded",
+      "start": 48.784,
+      "end": 49.084
+    },
+    {
+      "id": "w-0083",
+      "text": "the",
+      "start": 49.124,
+      "end": 49.204
+    },
+    {
+      "id": "w-0084",
+      "text": "lamb,",
+      "start": 49.244,
+      "end": 49.504
+    },
+    {
+      "id": "w-0085",
+      "text": "for",
+      "start": 49.824,
+      "end": 49.964
+    },
+    {
+      "id": "w-0086",
+      "text": "I",
+      "start": 50.024,
+      "end": 50.064
+    },
+    {
+      "id": "w-0087",
+      "text": "wasn't",
+      "start": 50.104,
+      "end": 50.344
+    },
+    {
+      "id": "w-0088",
+      "text": "bored",
+      "start": 50.424,
+      "end": 50.684
+    },
+    {
+      "id": "w-0089",
+      "text": "then.",
+      "start": 50.724,
+      "end": 50.904
+    },
+    {
+      "id": "w-0090",
+      "text": "Well,",
+      "start": 52.164,
+      "end": 52.464
+    },
+    {
+      "id": "w-0091",
+      "text": "retorted",
+      "start": 52.604,
+      "end": 53.004
+    },
+    {
+      "id": "w-0092",
+      "text": "the",
+      "start": 53.024,
+      "end": 53.104
+    },
+    {
+      "id": "w-0093",
+      "text": "wolf,",
+      "start": 53.144,
+      "end": 53.385
+    },
+    {
+      "id": "w-0094",
+      "text": "you",
+      "start": 53.825,
+      "end": 53.985
+    },
+    {
+      "id": "w-0095",
+      "text": "feed",
+      "start": 54.065,
+      "end": 54.345
+    },
+    {
+      "id": "w-0096",
+      "text": "in",
+      "start": 54.425,
+      "end": 54.505
+    },
+    {
+      "id": "w-0097",
+      "text": "my",
+      "start": 54.545,
+      "end": 54.705
+    },
+    {
+      "id": "w-0098",
+      "text": "pastures.",
+      "start": 54.765,
+      "end": 55.345
+    },
+    {
+      "id": "w-0099",
+      "text": "That",
+      "start": 56.714,
+      "end": 56.854
+    },
+    {
+      "id": "w-0100",
+      "text": "cannot",
+      "start": 56.914,
+      "end": 57.214
+    },
+    {
+      "id": "w-0101",
+      "text": "be,\"",
+      "start": 57.274,
+      "end": 57.554
+    },
+    {
+      "id": "w-0102",
+      "text": "replied",
+      "start": 58.114,
+      "end": 58.515
+    },
+    {
+      "id": "w-0103",
+      "text": "the",
+      "start": 58.575,
+      "end": 58.655
+    },
+    {
+      "id": "w-0104",
+      "text": "lamb,",
+      "start": 58.695,
+      "end": 58.995
+    },
+    {
+      "id": "w-0105",
+      "text": "for",
+      "start": 59.615,
+      "end": 59.755
+    },
+    {
+      "id": "w-0106",
+      "text": "I",
+      "start": 59.815,
+      "end": 59.855
+    },
+    {
+      "id": "w-0107",
+      "text": "have",
+      "start": 59.895,
+      "end": 60.035
+    },
+    {
+      "id": "w-0108",
+      "text": "never",
+      "start": 60.095,
+      "end": 60.315
+    },
+    {
+      "id": "w-0109",
+      "text": "yet",
+      "start": 60.355,
+      "end": 60.495
+    },
+    {
+      "id": "w-0110",
+      "text": "tasted",
+      "start": 60.535,
+      "end": 60.895
+    },
+    {
+      "id": "w-0111",
+      "text": "grass.",
+      "start": 60.935,
+      "end": 61.395
+    },
+    {
+      "id": "w-0112",
+      "text": "You",
+      "start": 62.976,
+      "end": 63.156
+    },
+    {
+      "id": "w-0113",
+      "text": "drink",
+      "start": 63.216,
+      "end": 63.436
+    },
+    {
+      "id": "w-0114",
+      "text": "from",
+      "start": 63.476,
+      "end": 63.616
+    },
+    {
+      "id": "w-0115",
+      "text": "my",
+      "start": 63.676,
+      "end": 63.816
+    },
+    {
+      "id": "w-0116",
+      "text": "spring",
+      "start": 63.896,
+      "end": 64.216
+    },
+    {
+      "id": "w-0117",
+      "text": "then,",
+      "start": 64.256,
+      "end": 64.516
+    },
+    {
+      "id": "w-0118",
+      "text": "continued",
+      "start": 65.057,
+      "end": 65.497
+    },
+    {
+      "id": "w-0119",
+      "text": "the",
+      "start": 65.537,
+      "end": 65.617
+    },
+    {
+      "id": "w-0120",
+      "text": "wolf.",
+      "start": 65.657,
+      "end": 65.937
+    },
+    {
+      "id": "w-0121",
+      "text": "Indeed,",
+      "start": 66.897,
+      "end": 67.277
+    },
+    {
+      "id": "w-0122",
+      "text": "sir,",
+      "start": 67.357,
+      "end": 67.597
+    },
+    {
+      "id": "w-0123",
+      "text": "said",
+      "start": 68.017,
+      "end": 68.178
+    },
+    {
+      "id": "w-0124",
+      "text": "the",
+      "start": 68.198,
+      "end": 68.278
+    },
+    {
+      "id": "w-0125",
+      "text": "poor",
+      "start": 68.318,
+      "end": 68.498
+    },
+    {
+      "id": "w-0126",
+      "text": "lamb,",
+      "start": 68.538,
+      "end": 68.818
+    },
+    {
+      "id": "w-0127",
+      "text": "I",
+      "start": 69.718,
+      "end": 69.758
+    },
+    {
+      "id": "w-0128",
+      "text": "have",
+      "start": 69.818,
+      "end": 69.938
+    },
+    {
+      "id": "w-0129",
+      "text": "never",
+      "start": 69.998,
+      "end": 70.178
+    },
+    {
+      "id": "w-0130",
+      "text": "yet",
+      "start": 70.218,
+      "end": 70.378
+    },
+    {
+      "id": "w-0131",
+      "text": "drunk",
+      "start": 70.418,
+      "end": 70.658
+    },
+    {
+      "id": "w-0132",
+      "text": "anything",
+      "start": 70.718,
+      "end": 71.058
+    },
+    {
+      "id": "w-0133",
+      "text": "but",
+      "start": 71.118,
+      "end": 71.258
+    },
+    {
+      "id": "w-0134",
+      "text": "my",
+      "start": 71.299,
+      "end": 71.419
+    },
+    {
+      "id": "w-0135",
+      "text": "mother's",
+      "start": 71.439,
+      "end": 71.739
+    },
+    {
+      "id": "w-0136",
+      "text": "milk.",
+      "start": 71.779,
+      "end": 72.059
+    },
+    {
+      "id": "w-0137",
+      "text": "Well,",
+      "start": 73.239,
+      "end": 73.499
+    },
+    {
+      "id": "w-0138",
+      "text": "anyhow,",
+      "start": 73.679,
+      "end": 74.179
+    },
+    {
+      "id": "w-0139",
+      "text": "said",
+      "start": 74.76,
+      "end": 74.9
+    },
+    {
+      "id": "w-0140",
+      "text": "the",
+      "start": 74.94,
+      "end": 75.02
+    },
+    {
+      "id": "w-0141",
+      "text": "wolf,",
+      "start": 75.04,
+      "end": 75.3
+    },
+    {
+      "id": "w-0142",
+      "text": "I'm",
+      "start": 75.82,
+      "end": 75.96
+    },
+    {
+      "id": "w-0143",
+      "text": "not",
+      "start": 75.98,
+      "end": 76.12
+    },
+    {
+      "id": "w-0144",
+      "text": "going",
+      "start": 76.16,
+      "end": 76.4
+    },
+    {
+      "id": "w-0145",
+      "text": "without",
+      "start": 76.42,
+      "end": 76.7
+    },
+    {
+      "id": "w-0146",
+      "text": "my",
+      "start": 76.74,
+      "end": 76.92
+    },
+    {
+      "id": "w-0147",
+      "text": "dinner,",
+      "start": 77.0,
+      "end": 77.28
+    },
+    {
+      "id": "w-0148",
+      "text": "and",
+      "start": 77.801,
+      "end": 77.901
+    },
+    {
+      "id": "w-0149",
+      "text": "he",
+      "start": 77.941,
+      "end": 78.001
+    },
+    {
+      "id": "w-0150",
+      "text": "sprang",
+      "start": 78.061,
+      "end": 78.381
+    },
+    {
+      "id": "w-0151",
+      "text": "upon",
+      "start": 78.441,
+      "end": 78.661
+    },
+    {
+      "id": "w-0152",
+      "text": "the",
+      "start": 78.701,
+      "end": 78.761
+    },
+    {
+      "id": "w-0153",
+      "text": "lamb",
+      "start": 78.801,
+      "end": 79.001
+    },
+    {
+      "id": "w-0154",
+      "text": "and",
+      "start": 79.061,
+      "end": 79.141
+    },
+    {
+      "id": "w-0155",
+      "text": "devoured",
+      "start": 79.161,
+      "end": 79.541
+    },
+    {
+      "id": "w-0156",
+      "text": "it",
+      "start": 79.581,
+      "end": 79.661
+    },
+    {
+      "id": "w-0157",
+      "text": "without",
+      "start": 79.761,
+      "end": 80.061
+    },
+    {
+      "id": "w-0158",
+      "text": "more",
+      "start": 80.161,
+      "end": 80.361
+    },
+    {
+      "id": "w-0159",
+      "text": "ado.",
+      "start": 80.401,
+      "end": 80.661
+    },
+    {
+      "id": "w-0160",
+      "text": "End",
+      "start": 83.742,
+      "end": 83.942
+    },
+    {
+      "id": "w-0161",
+      "text": "of",
+      "start": 84.363,
+      "end": 84.443
+    },
+    {
+      "id": "w-0162",
+      "text": "the",
+      "start": 84.483,
+      "end": 84.563
+    },
+    {
+      "id": "w-0163",
+      "text": "wolf",
+      "start": 84.603,
+      "end": 84.843
+    },
+    {
+      "id": "w-0164",
+      "text": "and",
+      "start": 85.003,
+      "end": 85.143
+    },
+    {
+      "id": "w-0165",
+      "text": "the",
+      "start": 85.223,
+      "end": 85.323
+    },
+    {
+      "id": "w-0166",
+      "text": "lamb.",
+      "start": 85.363,
+      "end": 85.623
+    }
+  ]
+}

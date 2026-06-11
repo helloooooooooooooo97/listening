@@ -1,0 +1,727 @@
+{
+  "id": "the-boy-and-the-nettles",
+  "title": "The Boy and The Nettles",
+  "subtitle": "Aesop's Fables, Volume 03",
+  "level": "A2-B1",
+  "duration": 38.9,
+  "audioFileName": "the-boy-and-the-nettles.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-3-fables-51-75/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.58,
+      "end": 2.36,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 3.22,
+      "end": 5.34,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 6.22,
+      "end": 12.28,
+      "text": "For more information or to volunteer, please visit LibraVox.org, recorded by Andrew Sorsini.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 13.18,
+      "end": 14.0,
+      "text": "Asop's Fables.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 15.46,
+      "end": 19.34,
+      "text": "The Boy and the Nettles A boy was gathering berries from a hedge",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 19.34,
+      "end": 21.26,
+      "text": "when his hand was stung by a nettle.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 21.82,
+      "end": 25.78,
+      "text": "Smarting with the pain, he ran to tell his mother and said to her between his sobs,",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 25.78,
+      "end": 28.38,
+      "text": "I only touched it ever so lightly, mother.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 28.96,
+      "end": 31.82,
+      "text": "That's just why you got stung, my son, she said.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 32.32,
+      "end": 35.86,
+      "text": "If you had grasped it firmly, it wouldn't have hurt you in the least.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 36.86,
+      "end": 38.94,
+      "text": "End of The Boy and the Nettles.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.58,
+      "end": 1.08
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.08,
+      "end": 1.44
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.44,
+      "end": 1.58
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.58,
+      "end": 2.1
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.1,
+      "end": 2.36
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.22,
+      "end": 3.34
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.34,
+      "end": 3.94
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 3.94,
+      "end": 4.18
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.18,
+      "end": 4.64
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.64,
+      "end": 4.76
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 4.76,
+      "end": 4.84
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 4.84,
+      "end": 5.04
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.04,
+      "end": 5.34
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.22,
+      "end": 6.26
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.26,
+      "end": 6.46
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 6.46,
+      "end": 6.62
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 6.62,
+      "end": 7.28
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 7.28,
+      "end": 7.36
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 7.36,
+      "end": 7.78
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 8.14,
+      "end": 8.3
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 8.3,
+      "end": 8.72
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox",
+      "start": 8.72,
+      "end": 9.42
+    },
+    {
+      "id": "w-0022",
+      "text": ".org,",
+      "start": 9.42,
+      "end": 10.12
+    },
+    {
+      "id": "w-0023",
+      "text": "recorded",
+      "start": 10.5,
+      "end": 11.04
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 11.04,
+      "end": 11.36
+    },
+    {
+      "id": "w-0025",
+      "text": "Andrew",
+      "start": 11.36,
+      "end": 11.74
+    },
+    {
+      "id": "w-0026",
+      "text": "Sorsini.",
+      "start": 11.74,
+      "end": 12.28
+    },
+    {
+      "id": "w-0027",
+      "text": "Asop's",
+      "start": 13.18,
+      "end": 13.64
+    },
+    {
+      "id": "w-0028",
+      "text": "Fables.",
+      "start": 13.64,
+      "end": 14.0
+    },
+    {
+      "id": "w-0029",
+      "text": "The",
+      "start": 15.46,
+      "end": 15.5
+    },
+    {
+      "id": "w-0030",
+      "text": "Boy",
+      "start": 15.5,
+      "end": 15.74
+    },
+    {
+      "id": "w-0031",
+      "text": "and",
+      "start": 15.74,
+      "end": 16.1
+    },
+    {
+      "id": "w-0032",
+      "text": "the",
+      "start": 16.1,
+      "end": 16.24
+    },
+    {
+      "id": "w-0033",
+      "text": "Nettles",
+      "start": 16.24,
+      "end": 16.56
+    },
+    {
+      "id": "w-0034",
+      "text": "A",
+      "start": 16.56,
+      "end": 17.6
+    },
+    {
+      "id": "w-0035",
+      "text": "boy",
+      "start": 17.6,
+      "end": 17.82
+    },
+    {
+      "id": "w-0036",
+      "text": "was",
+      "start": 17.82,
+      "end": 18.0
+    },
+    {
+      "id": "w-0037",
+      "text": "gathering",
+      "start": 18.0,
+      "end": 18.32
+    },
+    {
+      "id": "w-0038",
+      "text": "berries",
+      "start": 18.32,
+      "end": 18.6
+    },
+    {
+      "id": "w-0039",
+      "text": "from",
+      "start": 18.6,
+      "end": 19.0
+    },
+    {
+      "id": "w-0040",
+      "text": "a",
+      "start": 19.0,
+      "end": 19.12
+    },
+    {
+      "id": "w-0041",
+      "text": "hedge",
+      "start": 19.12,
+      "end": 19.34
+    },
+    {
+      "id": "w-0042",
+      "text": "when",
+      "start": 19.34,
+      "end": 19.68
+    },
+    {
+      "id": "w-0043",
+      "text": "his",
+      "start": 19.68,
+      "end": 19.82
+    },
+    {
+      "id": "w-0044",
+      "text": "hand",
+      "start": 19.82,
+      "end": 20.06
+    },
+    {
+      "id": "w-0045",
+      "text": "was",
+      "start": 20.06,
+      "end": 20.26
+    },
+    {
+      "id": "w-0046",
+      "text": "stung",
+      "start": 20.26,
+      "end": 20.54
+    },
+    {
+      "id": "w-0047",
+      "text": "by",
+      "start": 20.54,
+      "end": 20.76
+    },
+    {
+      "id": "w-0048",
+      "text": "a",
+      "start": 20.76,
+      "end": 20.86
+    },
+    {
+      "id": "w-0049",
+      "text": "nettle.",
+      "start": 20.86,
+      "end": 21.26
+    },
+    {
+      "id": "w-0050",
+      "text": "Smarting",
+      "start": 21.82,
+      "end": 22.18
+    },
+    {
+      "id": "w-0051",
+      "text": "with",
+      "start": 22.18,
+      "end": 22.3
+    },
+    {
+      "id": "w-0052",
+      "text": "the",
+      "start": 22.3,
+      "end": 22.46
+    },
+    {
+      "id": "w-0053",
+      "text": "pain,",
+      "start": 22.46,
+      "end": 22.7
+    },
+    {
+      "id": "w-0054",
+      "text": "he",
+      "start": 22.94,
+      "end": 22.96
+    },
+    {
+      "id": "w-0055",
+      "text": "ran",
+      "start": 22.96,
+      "end": 23.12
+    },
+    {
+      "id": "w-0056",
+      "text": "to",
+      "start": 23.12,
+      "end": 23.28
+    },
+    {
+      "id": "w-0057",
+      "text": "tell",
+      "start": 23.28,
+      "end": 23.46
+    },
+    {
+      "id": "w-0058",
+      "text": "his",
+      "start": 23.46,
+      "end": 23.62
+    },
+    {
+      "id": "w-0059",
+      "text": "mother",
+      "start": 23.62,
+      "end": 23.88
+    },
+    {
+      "id": "w-0060",
+      "text": "and",
+      "start": 23.88,
+      "end": 24.08
+    },
+    {
+      "id": "w-0061",
+      "text": "said",
+      "start": 24.08,
+      "end": 24.32
+    },
+    {
+      "id": "w-0062",
+      "text": "to",
+      "start": 24.32,
+      "end": 24.52
+    },
+    {
+      "id": "w-0063",
+      "text": "her",
+      "start": 24.52,
+      "end": 24.68
+    },
+    {
+      "id": "w-0064",
+      "text": "between",
+      "start": 24.68,
+      "end": 24.92
+    },
+    {
+      "id": "w-0065",
+      "text": "his",
+      "start": 24.92,
+      "end": 25.24
+    },
+    {
+      "id": "w-0066",
+      "text": "sobs,",
+      "start": 25.24,
+      "end": 25.78
+    },
+    {
+      "id": "w-0067",
+      "text": "I",
+      "start": 25.78,
+      "end": 26.34
+    },
+    {
+      "id": "w-0068",
+      "text": "only",
+      "start": 26.34,
+      "end": 26.58
+    },
+    {
+      "id": "w-0069",
+      "text": "touched",
+      "start": 26.58,
+      "end": 26.94
+    },
+    {
+      "id": "w-0070",
+      "text": "it",
+      "start": 26.94,
+      "end": 27.22
+    },
+    {
+      "id": "w-0071",
+      "text": "ever",
+      "start": 27.22,
+      "end": 27.42
+    },
+    {
+      "id": "w-0072",
+      "text": "so",
+      "start": 27.42,
+      "end": 27.7
+    },
+    {
+      "id": "w-0073",
+      "text": "lightly,",
+      "start": 27.7,
+      "end": 27.96
+    },
+    {
+      "id": "w-0074",
+      "text": "mother.",
+      "start": 27.96,
+      "end": 28.38
+    },
+    {
+      "id": "w-0075",
+      "text": "That's",
+      "start": 28.96,
+      "end": 29.48
+    },
+    {
+      "id": "w-0076",
+      "text": "just",
+      "start": 29.48,
+      "end": 29.66
+    },
+    {
+      "id": "w-0077",
+      "text": "why",
+      "start": 29.66,
+      "end": 29.92
+    },
+    {
+      "id": "w-0078",
+      "text": "you",
+      "start": 29.92,
+      "end": 30.06
+    },
+    {
+      "id": "w-0079",
+      "text": "got",
+      "start": 30.06,
+      "end": 30.18
+    },
+    {
+      "id": "w-0080",
+      "text": "stung,",
+      "start": 30.18,
+      "end": 30.62
+    },
+    {
+      "id": "w-0081",
+      "text": "my",
+      "start": 30.64,
+      "end": 30.82
+    },
+    {
+      "id": "w-0082",
+      "text": "son,",
+      "start": 30.82,
+      "end": 31.14
+    },
+    {
+      "id": "w-0083",
+      "text": "she",
+      "start": 31.34,
+      "end": 31.54
+    },
+    {
+      "id": "w-0084",
+      "text": "said.",
+      "start": 31.54,
+      "end": 31.82
+    },
+    {
+      "id": "w-0085",
+      "text": "If",
+      "start": 32.32,
+      "end": 32.7
+    },
+    {
+      "id": "w-0086",
+      "text": "you",
+      "start": 32.7,
+      "end": 32.86
+    },
+    {
+      "id": "w-0087",
+      "text": "had",
+      "start": 32.86,
+      "end": 32.98
+    },
+    {
+      "id": "w-0088",
+      "text": "grasped",
+      "start": 32.98,
+      "end": 33.18
+    },
+    {
+      "id": "w-0089",
+      "text": "it",
+      "start": 33.18,
+      "end": 33.6
+    },
+    {
+      "id": "w-0090",
+      "text": "firmly,",
+      "start": 33.6,
+      "end": 33.88
+    },
+    {
+      "id": "w-0091",
+      "text": "it",
+      "start": 34.54,
+      "end": 34.78
+    },
+    {
+      "id": "w-0092",
+      "text": "wouldn't",
+      "start": 34.78,
+      "end": 35.08
+    },
+    {
+      "id": "w-0093",
+      "text": "have",
+      "start": 35.08,
+      "end": 35.18
+    },
+    {
+      "id": "w-0094",
+      "text": "hurt",
+      "start": 35.18,
+      "end": 35.32
+    },
+    {
+      "id": "w-0095",
+      "text": "you",
+      "start": 35.32,
+      "end": 35.48
+    },
+    {
+      "id": "w-0096",
+      "text": "in",
+      "start": 35.48,
+      "end": 35.58
+    },
+    {
+      "id": "w-0097",
+      "text": "the",
+      "start": 35.58,
+      "end": 35.68
+    },
+    {
+      "id": "w-0098",
+      "text": "least.",
+      "start": 35.68,
+      "end": 35.86
+    },
+    {
+      "id": "w-0099",
+      "text": "End",
+      "start": 36.86,
+      "end": 37.22
+    },
+    {
+      "id": "w-0100",
+      "text": "of",
+      "start": 37.22,
+      "end": 37.48
+    },
+    {
+      "id": "w-0101",
+      "text": "The",
+      "start": 37.48,
+      "end": 37.98
+    },
+    {
+      "id": "w-0102",
+      "text": "Boy",
+      "start": 37.98,
+      "end": 38.24
+    },
+    {
+      "id": "w-0103",
+      "text": "and",
+      "start": 38.24,
+      "end": 38.5
+    },
+    {
+      "id": "w-0104",
+      "text": "the",
+      "start": 38.5,
+      "end": 38.62
+    },
+    {
+      "id": "w-0105",
+      "text": "Nettles.",
+      "start": 38.62,
+      "end": 38.94
+    }
+  ]
+}

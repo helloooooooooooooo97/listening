@@ -15,11 +15,27 @@ import urllib.parse
 from collections import defaultdict
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parent.parent / "data" / "audio.db"
+# Resolve DB path from config (with fallback)
+try:
+    from config import resolve_path, load_config
+    load_config()
+    DB_PATH = resolve_path("data/audio.db")
+except Exception:
+    DB_PATH = Path(__file__).resolve().parent.parent / "data" / "audio.db"
 
 # Root-level data dir for static resources (lessons, wordlists, etc.)
-ROOT = Path(__file__).resolve().parent.parent.parent
-WORDLISTS_DIR = ROOT / "data" / "wordlists"
+ROOT = DB_PATH.parent.parent
+WORDLISTS_DIR = (Path(__file__).resolve().parent.parent.parent / "data" / "wordlists")
+# Try to resolve from config at function time
+def _resolve_wordlists_dir():
+    try:
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from config import resolve_path, get_config, load_config
+        return resolve_path(get_config()["app"]["data"]["wordlists_dir"])
+    except Exception:
+        return WORDLISTS_DIR
+WORDLISTS_DIR = _resolve_wordlists_dir()
 
 # ── Source word lists ──
 # Each entry: (url, local_filename, tag_name)

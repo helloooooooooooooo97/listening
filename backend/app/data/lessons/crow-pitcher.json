@@ -1,0 +1,968 @@
+{
+  "id": "crow-pitcher",
+  "title": "The Crow and The Pitcher",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 82.523,
+  "audioFileName": "crow-pitcher.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 2.099,
+      "end": 4.121,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 4.861,
+      "end": 7.464,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 8.284,
+      "end": 14.47,
+      "text": "For more information or to volunteer, please visit libravox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 17.452,
+      "end": 22.757,
+      "text": "This reading by Cara Schalenberg, www.krae.org.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 25.359,
+      "end": 26.36,
+      "text": "Asip's fables.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 28.481,
+      "end": 30.343,
+      "text": "The crow and the pitcher.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 33.445,
+      "end": 46.788,
+      "text": "A thirsty crow found a pitcher with some water in it, but so little was there that, try as she might, she could not reach it with her beak, and it seemed as though she would die of thirst within sight of the remedy.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 48.762,
+      "end": 50.883,
+      "text": "At last, she hid upon a clever plan.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 51.663,
+      "end": 63.289,
+      "text": "She began dropping pebbles into the pitcher, and with each pebble the water rose a little higher, until at last it reached the brim, and the knowing bird was enabled to quench her thirst.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 65.19,
+      "end": 67.931,
+      "text": "Necessity is the mother of invention.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 71.173,
+      "end": 73.394,
+      "text": "End of the crow and the pitcher.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 75.708,
+      "end": 82.523,
+      "text": "read by Cara Schalenberg on January 13th, 2006, in Oceanside, California.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 2.099,
+      "end": 2.359
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 2.64,
+      "end": 2.72
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 2.78,
+      "end": 2.8
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 2.86,
+      "end": 3.52
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 3.6,
+      "end": 4.121
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 4.861,
+      "end": 4.981
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 5.022,
+      "end": 5.602
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 5.642,
+      "end": 6.203
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 6.343,
+      "end": 6.443
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 6.463,
+      "end": 6.543
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 6.563,
+      "end": 6.623
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 6.683,
+      "end": 7.003
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 7.043,
+      "end": 7.464
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 8.284,
+      "end": 8.404
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 8.444,
+      "end": 8.625
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 8.665,
+      "end": 9.345
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 9.505,
+      "end": 9.585
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 9.625,
+      "end": 9.746
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 9.786,
+      "end": 10.406
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 11.047,
+      "end": 11.307
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 11.347,
+      "end": 11.687
+    },
+    {
+      "id": "w-0021",
+      "text": "libravox.org.",
+      "start": 12.348,
+      "end": 14.47
+    },
+    {
+      "id": "w-0022",
+      "text": "This",
+      "start": 17.452,
+      "end": 17.612
+    },
+    {
+      "id": "w-0023",
+      "text": "reading",
+      "start": 17.692,
+      "end": 17.932
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 17.972,
+      "end": 18.113
+    },
+    {
+      "id": "w-0025",
+      "text": "Cara",
+      "start": 18.153,
+      "end": 18.433
+    },
+    {
+      "id": "w-0026",
+      "text": "Schalenberg,",
+      "start": 18.453,
+      "end": 19.033
+    },
+    {
+      "id": "w-0027",
+      "text": "www.krae.org.",
+      "start": 19.534,
+      "end": 22.757
+    },
+    {
+      "id": "w-0028",
+      "text": "Asip's",
+      "start": 25.359,
+      "end": 25.739
+    },
+    {
+      "id": "w-0029",
+      "text": "fables.",
+      "start": 25.879,
+      "end": 26.36
+    },
+    {
+      "id": "w-0030",
+      "text": "The",
+      "start": 28.481,
+      "end": 28.601
+    },
+    {
+      "id": "w-0031",
+      "text": "crow",
+      "start": 28.662,
+      "end": 29.002
+    },
+    {
+      "id": "w-0032",
+      "text": "and",
+      "start": 29.442,
+      "end": 29.622
+    },
+    {
+      "id": "w-0033",
+      "text": "the",
+      "start": 29.903,
+      "end": 30.023
+    },
+    {
+      "id": "w-0034",
+      "text": "pitcher.",
+      "start": 30.043,
+      "end": 30.343
+    },
+    {
+      "id": "w-0035",
+      "text": "A",
+      "start": 33.445,
+      "end": 33.465
+    },
+    {
+      "id": "w-0036",
+      "text": "thirsty",
+      "start": 33.565,
+      "end": 34.026
+    },
+    {
+      "id": "w-0037",
+      "text": "crow",
+      "start": 34.146,
+      "end": 34.587
+    },
+    {
+      "id": "w-0038",
+      "text": "found",
+      "start": 34.727,
+      "end": 35.048
+    },
+    {
+      "id": "w-0039",
+      "text": "a",
+      "start": 35.088,
+      "end": 35.128
+    },
+    {
+      "id": "w-0040",
+      "text": "pitcher",
+      "start": 35.168,
+      "end": 35.489
+    },
+    {
+      "id": "w-0041",
+      "text": "with",
+      "start": 35.529,
+      "end": 35.669
+    },
+    {
+      "id": "w-0042",
+      "text": "some",
+      "start": 35.749,
+      "end": 35.909
+    },
+    {
+      "id": "w-0043",
+      "text": "water",
+      "start": 35.969,
+      "end": 36.29
+    },
+    {
+      "id": "w-0044",
+      "text": "in",
+      "start": 36.35,
+      "end": 36.41
+    },
+    {
+      "id": "w-0045",
+      "text": "it,",
+      "start": 36.47,
+      "end": 36.55
+    },
+    {
+      "id": "w-0046",
+      "text": "but",
+      "start": 37.031,
+      "end": 37.191
+    },
+    {
+      "id": "w-0047",
+      "text": "so",
+      "start": 37.372,
+      "end": 37.572
+    },
+    {
+      "id": "w-0048",
+      "text": "little",
+      "start": 37.672,
+      "end": 37.953
+    },
+    {
+      "id": "w-0049",
+      "text": "was",
+      "start": 38.033,
+      "end": 38.273
+    },
+    {
+      "id": "w-0050",
+      "text": "there",
+      "start": 38.373,
+      "end": 38.634
+    },
+    {
+      "id": "w-0051",
+      "text": "that,",
+      "start": 38.714,
+      "end": 38.934
+    },
+    {
+      "id": "w-0052",
+      "text": "try",
+      "start": 39.475,
+      "end": 39.696
+    },
+    {
+      "id": "w-0053",
+      "text": "as",
+      "start": 39.736,
+      "end": 39.796
+    },
+    {
+      "id": "w-0054",
+      "text": "she",
+      "start": 39.856,
+      "end": 39.956
+    },
+    {
+      "id": "w-0055",
+      "text": "might,",
+      "start": 39.996,
+      "end": 40.237
+    },
+    {
+      "id": "w-0056",
+      "text": "she",
+      "start": 40.437,
+      "end": 40.537
+    },
+    {
+      "id": "w-0057",
+      "text": "could",
+      "start": 40.577,
+      "end": 40.737
+    },
+    {
+      "id": "w-0058",
+      "text": "not",
+      "start": 40.778,
+      "end": 40.938
+    },
+    {
+      "id": "w-0059",
+      "text": "reach",
+      "start": 41.038,
+      "end": 41.298
+    },
+    {
+      "id": "w-0060",
+      "text": "it",
+      "start": 41.358,
+      "end": 41.419
+    },
+    {
+      "id": "w-0061",
+      "text": "with",
+      "start": 41.499,
+      "end": 41.639
+    },
+    {
+      "id": "w-0062",
+      "text": "her",
+      "start": 41.699,
+      "end": 41.799
+    },
+    {
+      "id": "w-0063",
+      "text": "beak,",
+      "start": 41.839,
+      "end": 42.1
+    },
+    {
+      "id": "w-0064",
+      "text": "and",
+      "start": 42.881,
+      "end": 43.001
+    },
+    {
+      "id": "w-0065",
+      "text": "it",
+      "start": 43.041,
+      "end": 43.101
+    },
+    {
+      "id": "w-0066",
+      "text": "seemed",
+      "start": 43.182,
+      "end": 43.562
+    },
+    {
+      "id": "w-0067",
+      "text": "as",
+      "start": 43.642,
+      "end": 43.702
+    },
+    {
+      "id": "w-0068",
+      "text": "though",
+      "start": 43.763,
+      "end": 43.943
+    },
+    {
+      "id": "w-0069",
+      "text": "she",
+      "start": 43.983,
+      "end": 44.083
+    },
+    {
+      "id": "w-0070",
+      "text": "would",
+      "start": 44.123,
+      "end": 44.303
+    },
+    {
+      "id": "w-0071",
+      "text": "die",
+      "start": 44.404,
+      "end": 44.704
+    },
+    {
+      "id": "w-0072",
+      "text": "of",
+      "start": 44.744,
+      "end": 44.804
+    },
+    {
+      "id": "w-0073",
+      "text": "thirst",
+      "start": 44.904,
+      "end": 45.285
+    },
+    {
+      "id": "w-0074",
+      "text": "within",
+      "start": 45.365,
+      "end": 45.666
+    },
+    {
+      "id": "w-0075",
+      "text": "sight",
+      "start": 45.786,
+      "end": 46.046
+    },
+    {
+      "id": "w-0076",
+      "text": "of",
+      "start": 46.147,
+      "end": 46.207
+    },
+    {
+      "id": "w-0077",
+      "text": "the",
+      "start": 46.267,
+      "end": 46.367
+    },
+    {
+      "id": "w-0078",
+      "text": "remedy.",
+      "start": 46.427,
+      "end": 46.788
+    },
+    {
+      "id": "w-0079",
+      "text": "At",
+      "start": 48.762,
+      "end": 48.842
+    },
+    {
+      "id": "w-0080",
+      "text": "last,",
+      "start": 48.882,
+      "end": 49.282
+    },
+    {
+      "id": "w-0081",
+      "text": "she",
+      "start": 49.462,
+      "end": 49.582
+    },
+    {
+      "id": "w-0082",
+      "text": "hid",
+      "start": 49.622,
+      "end": 49.803
+    },
+    {
+      "id": "w-0083",
+      "text": "upon",
+      "start": 49.843,
+      "end": 50.063
+    },
+    {
+      "id": "w-0084",
+      "text": "a",
+      "start": 50.083,
+      "end": 50.123
+    },
+    {
+      "id": "w-0085",
+      "text": "clever",
+      "start": 50.163,
+      "end": 50.443
+    },
+    {
+      "id": "w-0086",
+      "text": "plan.",
+      "start": 50.503,
+      "end": 50.883
+    },
+    {
+      "id": "w-0087",
+      "text": "She",
+      "start": 51.663,
+      "end": 51.784
+    },
+    {
+      "id": "w-0088",
+      "text": "began",
+      "start": 51.824,
+      "end": 52.164
+    },
+    {
+      "id": "w-0089",
+      "text": "dropping",
+      "start": 52.244,
+      "end": 52.624
+    },
+    {
+      "id": "w-0090",
+      "text": "pebbles",
+      "start": 52.684,
+      "end": 53.084
+    },
+    {
+      "id": "w-0091",
+      "text": "into",
+      "start": 53.144,
+      "end": 53.344
+    },
+    {
+      "id": "w-0092",
+      "text": "the",
+      "start": 53.384,
+      "end": 53.464
+    },
+    {
+      "id": "w-0093",
+      "text": "pitcher,",
+      "start": 53.504,
+      "end": 53.824
+    },
+    {
+      "id": "w-0094",
+      "text": "and",
+      "start": 54.405,
+      "end": 54.525
+    },
+    {
+      "id": "w-0095",
+      "text": "with",
+      "start": 54.565,
+      "end": 54.725
+    },
+    {
+      "id": "w-0096",
+      "text": "each",
+      "start": 54.865,
+      "end": 55.045
+    },
+    {
+      "id": "w-0097",
+      "text": "pebble",
+      "start": 55.125,
+      "end": 55.425
+    },
+    {
+      "id": "w-0098",
+      "text": "the",
+      "start": 55.685,
+      "end": 55.785
+    },
+    {
+      "id": "w-0099",
+      "text": "water",
+      "start": 55.825,
+      "end": 56.186
+    },
+    {
+      "id": "w-0100",
+      "text": "rose",
+      "start": 56.286,
+      "end": 56.706
+    },
+    {
+      "id": "w-0101",
+      "text": "a",
+      "start": 56.766,
+      "end": 56.786
+    },
+    {
+      "id": "w-0102",
+      "text": "little",
+      "start": 56.826,
+      "end": 57.046
+    },
+    {
+      "id": "w-0103",
+      "text": "higher,",
+      "start": 57.086,
+      "end": 57.426
+    },
+    {
+      "id": "w-0104",
+      "text": "until",
+      "start": 58.027,
+      "end": 58.367
+    },
+    {
+      "id": "w-0105",
+      "text": "at",
+      "start": 58.507,
+      "end": 58.587
+    },
+    {
+      "id": "w-0106",
+      "text": "last",
+      "start": 58.627,
+      "end": 58.947
+    },
+    {
+      "id": "w-0107",
+      "text": "it",
+      "start": 59.027,
+      "end": 59.087
+    },
+    {
+      "id": "w-0108",
+      "text": "reached",
+      "start": 59.147,
+      "end": 59.407
+    },
+    {
+      "id": "w-0109",
+      "text": "the",
+      "start": 59.467,
+      "end": 59.547
+    },
+    {
+      "id": "w-0110",
+      "text": "brim,",
+      "start": 59.587,
+      "end": 59.887
+    },
+    {
+      "id": "w-0111",
+      "text": "and",
+      "start": 60.548,
+      "end": 60.688
+    },
+    {
+      "id": "w-0112",
+      "text": "the",
+      "start": 60.748,
+      "end": 60.828
+    },
+    {
+      "id": "w-0113",
+      "text": "knowing",
+      "start": 60.888,
+      "end": 61.228
+    },
+    {
+      "id": "w-0114",
+      "text": "bird",
+      "start": 61.288,
+      "end": 61.608
+    },
+    {
+      "id": "w-0115",
+      "text": "was",
+      "start": 61.668,
+      "end": 61.808
+    },
+    {
+      "id": "w-0116",
+      "text": "enabled",
+      "start": 61.868,
+      "end": 62.269
+    },
+    {
+      "id": "w-0117",
+      "text": "to",
+      "start": 62.309,
+      "end": 62.409
+    },
+    {
+      "id": "w-0118",
+      "text": "quench",
+      "start": 62.449,
+      "end": 62.729
+    },
+    {
+      "id": "w-0119",
+      "text": "her",
+      "start": 62.769,
+      "end": 62.889
+    },
+    {
+      "id": "w-0120",
+      "text": "thirst.",
+      "start": 62.929,
+      "end": 63.289
+    },
+    {
+      "id": "w-0121",
+      "text": "Necessity",
+      "start": 65.19,
+      "end": 65.81
+    },
+    {
+      "id": "w-0122",
+      "text": "is",
+      "start": 66.291,
+      "end": 66.391
+    },
+    {
+      "id": "w-0123",
+      "text": "the",
+      "start": 66.451,
+      "end": 66.531
+    },
+    {
+      "id": "w-0124",
+      "text": "mother",
+      "start": 66.591,
+      "end": 66.891
+    },
+    {
+      "id": "w-0125",
+      "text": "of",
+      "start": 67.271,
+      "end": 67.351
+    },
+    {
+      "id": "w-0126",
+      "text": "invention.",
+      "start": 67.411,
+      "end": 67.931
+    },
+    {
+      "id": "w-0127",
+      "text": "End",
+      "start": 71.173,
+      "end": 71.313
+    },
+    {
+      "id": "w-0128",
+      "text": "of",
+      "start": 71.433,
+      "end": 71.513
+    },
+    {
+      "id": "w-0129",
+      "text": "the",
+      "start": 71.933,
+      "end": 72.033
+    },
+    {
+      "id": "w-0130",
+      "text": "crow",
+      "start": 72.093,
+      "end": 72.413
+    },
+    {
+      "id": "w-0131",
+      "text": "and",
+      "start": 72.674,
+      "end": 72.834
+    },
+    {
+      "id": "w-0132",
+      "text": "the",
+      "start": 73.014,
+      "end": 73.094
+    },
+    {
+      "id": "w-0133",
+      "text": "pitcher.",
+      "start": 73.134,
+      "end": 73.394
+    },
+    {
+      "id": "w-0134",
+      "text": "read",
+      "start": 75.708,
+      "end": 75.848
+    },
+    {
+      "id": "w-0135",
+      "text": "by",
+      "start": 75.889,
+      "end": 76.009
+    },
+    {
+      "id": "w-0136",
+      "text": "Cara",
+      "start": 76.049,
+      "end": 76.329
+    },
+    {
+      "id": "w-0137",
+      "text": "Schalenberg",
+      "start": 76.35,
+      "end": 76.911
+    },
+    {
+      "id": "w-0138",
+      "text": "on",
+      "start": 77.352,
+      "end": 77.412
+    },
+    {
+      "id": "w-0139",
+      "text": "January",
+      "start": 77.472,
+      "end": 77.973
+    },
+    {
+      "id": "w-0140",
+      "text": "13th,",
+      "start": 78.013,
+      "end": 79.316
+    },
+    {
+      "id": "w-0141",
+      "text": "2006,",
+      "start": 79.396,
+      "end": 79.877
+    },
+    {
+      "id": "w-0142",
+      "text": "in",
+      "start": 80.719,
+      "end": 80.799
+    },
+    {
+      "id": "w-0143",
+      "text": "Oceanside,",
+      "start": 80.899,
+      "end": 81.461
+    },
+    {
+      "id": "w-0144",
+      "text": "California.",
+      "start": 81.942,
+      "end": 82.523
+    }
+  ]
+}

@@ -13,6 +13,8 @@ const FavoritesView = lazy(() => import('../views/FavoritesView'));
 const CollectionsView = lazy(() => import('../views/CollectionsView'));
 const CollectionDetailView = lazy(() => import('../views/CollectionDetailView'));
 const GameView = lazy(() => import('../views/GameView'));
+const CardsView = lazy(() => import('../views/CardsView'));
+const DeckDetailView = lazy(() => import('../views/DeckDetailView'));
 
 function Fallback() {
   return (
@@ -45,6 +47,7 @@ export default function ContentPanel({ activeSection, lessons, clips, wordCount,
   const [search, setSearch] = useState('');
   const location = useLocation();
   const isCollectionDetail = location.pathname.startsWith('/collections/') && location.pathname.split('/')[2];
+  const isDeckDetail = location.pathname.startsWith('/cards/') && location.pathname.split('/')[2];
 
   useEffect(() => { setSearch(''); }, [activeSection]);
 
@@ -81,6 +84,14 @@ export default function ContentPanel({ activeSection, lessons, clips, wordCount,
     );
   }
 
+  if (isDeckDetail) {
+    return (
+      <Suspense fallback={<Fallback />}>
+        <ViewTransition id="deck-detail"><DeckDetailView /></ViewTransition>
+      </Suspense>
+    );
+  }
+
   return (
     <Suspense fallback={<Fallback />}>
       {section === 'home' && <ViewTransition id="home"><HomeView search={search} onSearchChange={setSearch} lessons={lessons} clips={clips} uniqueWords={wordCount} /></ViewTransition>}
@@ -92,6 +103,7 @@ export default function ContentPanel({ activeSection, lessons, clips, wordCount,
       {section === 'favorites' && <ViewTransition id="favorites"><FavoritesView /></ViewTransition>}
       {section === 'settings' && <ViewTransition id="settings"><SettingsView /></ViewTransition>}
       {section === 'game' && <ViewTransition id="game"><GameView /></ViewTransition>}
+      {section === 'cards' && <ViewTransition id="cards"><CardsView /></ViewTransition>}
     </Suspense>
   );
 }

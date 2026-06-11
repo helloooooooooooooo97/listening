@@ -1,0 +1,2309 @@
+{
+  "id": "mercury-woodman",
+  "title": "Mercury and the Woodman",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 152.185,
+  "audioFileName": "mercury-woodman.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 1.01,
+      "end": 3.031,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 3.791,
+      "end": 6.593,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 7.373,
+      "end": 12.896,
+      "text": "For more information or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 13.997,
+      "end": 20.58,
+      "text": "Recorded by Annie Coleman in St. Louis, Missouri on January 12, 2006.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 22.121,
+      "end": 23.321,
+      "text": "ASOP's Fables.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 25.082,
+      "end": 26.743,
+      "text": "Mercury and the Woodman.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 28.36,
+      "end": 37.337,
+      "text": "A woodman was felling a tree on the bank of a river, when his axe, glancing off the trunk, flew out of his hands and fell into the water.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 38.417,
+      "end": 45.199,
+      "text": "As he stood by the water's edge lamenting his loss, Mercury appeared and asked him the reason for his grief.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 45.96,
+      "end": 56.823,
+      "text": "And on learning what had happened, out of pity for his distress he dived into the river and, bringing up a golden axe, asked him if that was the one he had lost.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 57.704,
+      "end": 62.125,
+      "text": "The Woodman replied that it was not, and Mercury then dived a second time.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 62.865,
+      "end": 66.667,
+      "text": "And, bringing up a silver axe, asked if that was his.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 67.8,
+      "end": 70.501,
+      "text": "No, that is not mine either,\" said the woodman.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 71.502,
+      "end": 76.244,
+      "text": "Once more Mercury dived into the river and brought up the missing axe.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 77.084,
+      "end": 89.49,
+      "text": "The woodman was overjoyed at recovering his property and thanked his benefactor warmly, and the latter was so pleased with his honesty that he made him a present of the other two axes.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 90.788,
+      "end": 99.635,
+      "text": "When the woodman told the story to his companions, one of these was filled with envy of his good fortune, and determined to try his luck for himself.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 100.496,
+      "end": 108.402,
+      "text": "So he went and began to fell a tree at the edge of the river, and presently contrived to let his axe drop into the water.",
+      "note": ""
+    },
+    {
+      "id": "line-016",
+      "start": 109.543,
+      "end": 119.812,
+      "text": "Mercury appeared as before, and, on learning that his axe had fallen in, he dived and brought up a golden axe, as he had done on the previous occasion,",
+      "note": ""
+    },
+    {
+      "id": "line-017",
+      "start": 121.115,
+      "end": 130.62,
+      "text": "Without waiting to be asked whether it was his or not, the fellow cried, that's mine, that's mine, and stretched out his hand eagerly for the prize.",
+      "note": ""
+    },
+    {
+      "id": "line-018",
+      "start": 131.42,
+      "end": 143.946,
+      "text": "But Mercury was so disgusted at his dishonesty that he not only declined to give him the Golden Axe, but also refused to recover for him the one he had let fall into the stream.",
+      "note": ""
+    },
+    {
+      "id": "line-019",
+      "start": 145.287,
+      "end": 147.668,
+      "text": "Honesty is the best policy.",
+      "note": ""
+    },
+    {
+      "id": "line-020",
+      "start": 149.92,
+      "end": 152.185,
+      "text": "end of Mercury and the Woodman.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 1.01,
+      "end": 1.29
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.59,
+      "end": 1.67
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.73,
+      "end": 1.75
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.81,
+      "end": 2.391
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.451,
+      "end": 3.031
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.791,
+      "end": 3.931
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.991,
+      "end": 4.532
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 4.572,
+      "end": 5.212
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 5.452,
+      "end": 5.552
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 5.592,
+      "end": 5.652
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.692,
+      "end": 5.752
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.792,
+      "end": 6.113
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 6.153,
+      "end": 6.593
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 7.373,
+      "end": 7.493
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 7.533,
+      "end": 7.713
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 7.793,
+      "end": 8.474
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 8.754,
+      "end": 8.834
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.854,
+      "end": 8.934
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.974,
+      "end": 9.654
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 10.235,
+      "end": 10.535
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 10.555,
+      "end": 10.955
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox.org.",
+      "start": 11.255,
+      "end": 12.896
+    },
+    {
+      "id": "w-0022",
+      "text": "Recorded",
+      "start": 13.997,
+      "end": 14.537
+    },
+    {
+      "id": "w-0023",
+      "text": "by",
+      "start": 14.777,
+      "end": 14.937
+    },
+    {
+      "id": "w-0024",
+      "text": "Annie",
+      "start": 15.077,
+      "end": 15.317
+    },
+    {
+      "id": "w-0025",
+      "text": "Coleman",
+      "start": 15.377,
+      "end": 15.817
+    },
+    {
+      "id": "w-0026",
+      "text": "in",
+      "start": 16.338,
+      "end": 16.418
+    },
+    {
+      "id": "w-0027",
+      "text": "St.",
+      "start": 16.478,
+      "end": 16.678
+    },
+    {
+      "id": "w-0028",
+      "text": "Louis,",
+      "start": 16.698,
+      "end": 16.978
+    },
+    {
+      "id": "w-0029",
+      "text": "Missouri",
+      "start": 17.018,
+      "end": 17.518
+    },
+    {
+      "id": "w-0030",
+      "text": "on",
+      "start": 18.119,
+      "end": 18.199
+    },
+    {
+      "id": "w-0031",
+      "text": "January",
+      "start": 18.259,
+      "end": 18.799
+    },
+    {
+      "id": "w-0032",
+      "text": "12,",
+      "start": 18.879,
+      "end": 19.299
+    },
+    {
+      "id": "w-0033",
+      "text": "2006.",
+      "start": 19.619,
+      "end": 20.58
+    },
+    {
+      "id": "w-0034",
+      "text": "ASOP's",
+      "start": 22.121,
+      "end": 22.641
+    },
+    {
+      "id": "w-0035",
+      "text": "Fables.",
+      "start": 22.781,
+      "end": 23.321
+    },
+    {
+      "id": "w-0036",
+      "text": "Mercury",
+      "start": 25.082,
+      "end": 25.642
+    },
+    {
+      "id": "w-0037",
+      "text": "and",
+      "start": 26.003,
+      "end": 26.143
+    },
+    {
+      "id": "w-0038",
+      "text": "the",
+      "start": 26.183,
+      "end": 26.263
+    },
+    {
+      "id": "w-0039",
+      "text": "Woodman.",
+      "start": 26.303,
+      "end": 26.743
+    },
+    {
+      "id": "w-0040",
+      "text": "A",
+      "start": 28.36,
+      "end": 28.4
+    },
+    {
+      "id": "w-0041",
+      "text": "woodman",
+      "start": 28.46,
+      "end": 28.941
+    },
+    {
+      "id": "w-0042",
+      "text": "was",
+      "start": 29.102,
+      "end": 29.262
+    },
+    {
+      "id": "w-0043",
+      "text": "felling",
+      "start": 29.322,
+      "end": 29.663
+    },
+    {
+      "id": "w-0044",
+      "text": "a",
+      "start": 29.743,
+      "end": 29.763
+    },
+    {
+      "id": "w-0045",
+      "text": "tree",
+      "start": 29.843,
+      "end": 30.143
+    },
+    {
+      "id": "w-0046",
+      "text": "on",
+      "start": 30.284,
+      "end": 30.344
+    },
+    {
+      "id": "w-0047",
+      "text": "the",
+      "start": 30.384,
+      "end": 30.444
+    },
+    {
+      "id": "w-0048",
+      "text": "bank",
+      "start": 30.484,
+      "end": 30.705
+    },
+    {
+      "id": "w-0049",
+      "text": "of",
+      "start": 30.745,
+      "end": 30.825
+    },
+    {
+      "id": "w-0050",
+      "text": "a",
+      "start": 30.885,
+      "end": 30.925
+    },
+    {
+      "id": "w-0051",
+      "text": "river,",
+      "start": 30.965,
+      "end": 31.286
+    },
+    {
+      "id": "w-0052",
+      "text": "when",
+      "start": 31.626,
+      "end": 31.787
+    },
+    {
+      "id": "w-0053",
+      "text": "his",
+      "start": 31.827,
+      "end": 31.967
+    },
+    {
+      "id": "w-0054",
+      "text": "axe,",
+      "start": 32.247,
+      "end": 32.468
+    },
+    {
+      "id": "w-0055",
+      "text": "glancing",
+      "start": 33.009,
+      "end": 33.53
+    },
+    {
+      "id": "w-0056",
+      "text": "off",
+      "start": 33.63,
+      "end": 33.79
+    },
+    {
+      "id": "w-0057",
+      "text": "the",
+      "start": 33.83,
+      "end": 33.911
+    },
+    {
+      "id": "w-0058",
+      "text": "trunk,",
+      "start": 33.951,
+      "end": 34.291
+    },
+    {
+      "id": "w-0059",
+      "text": "flew",
+      "start": 34.832,
+      "end": 35.153
+    },
+    {
+      "id": "w-0060",
+      "text": "out",
+      "start": 35.273,
+      "end": 35.373
+    },
+    {
+      "id": "w-0061",
+      "text": "of",
+      "start": 35.393,
+      "end": 35.453
+    },
+    {
+      "id": "w-0062",
+      "text": "his",
+      "start": 35.494,
+      "end": 35.634
+    },
+    {
+      "id": "w-0063",
+      "text": "hands",
+      "start": 35.674,
+      "end": 36.075
+    },
+    {
+      "id": "w-0064",
+      "text": "and",
+      "start": 36.155,
+      "end": 36.235
+    },
+    {
+      "id": "w-0065",
+      "text": "fell",
+      "start": 36.295,
+      "end": 36.535
+    },
+    {
+      "id": "w-0066",
+      "text": "into",
+      "start": 36.596,
+      "end": 36.856
+    },
+    {
+      "id": "w-0067",
+      "text": "the",
+      "start": 36.896,
+      "end": 36.976
+    },
+    {
+      "id": "w-0068",
+      "text": "water.",
+      "start": 37.016,
+      "end": 37.337
+    },
+    {
+      "id": "w-0069",
+      "text": "As",
+      "start": 38.417,
+      "end": 38.497
+    },
+    {
+      "id": "w-0070",
+      "text": "he",
+      "start": 38.537,
+      "end": 38.637
+    },
+    {
+      "id": "w-0071",
+      "text": "stood",
+      "start": 38.697,
+      "end": 38.977
+    },
+    {
+      "id": "w-0072",
+      "text": "by",
+      "start": 39.077,
+      "end": 39.197
+    },
+    {
+      "id": "w-0073",
+      "text": "the",
+      "start": 39.217,
+      "end": 39.297
+    },
+    {
+      "id": "w-0074",
+      "text": "water's",
+      "start": 39.337,
+      "end": 39.677
+    },
+    {
+      "id": "w-0075",
+      "text": "edge",
+      "start": 39.858,
+      "end": 40.058
+    },
+    {
+      "id": "w-0076",
+      "text": "lamenting",
+      "start": 40.258,
+      "end": 40.738
+    },
+    {
+      "id": "w-0077",
+      "text": "his",
+      "start": 40.818,
+      "end": 40.938
+    },
+    {
+      "id": "w-0078",
+      "text": "loss,",
+      "start": 41.018,
+      "end": 41.418
+    },
+    {
+      "id": "w-0079",
+      "text": "Mercury",
+      "start": 42.138,
+      "end": 42.719
+    },
+    {
+      "id": "w-0080",
+      "text": "appeared",
+      "start": 42.839,
+      "end": 43.299
+    },
+    {
+      "id": "w-0081",
+      "text": "and",
+      "start": 43.459,
+      "end": 43.539
+    },
+    {
+      "id": "w-0082",
+      "text": "asked",
+      "start": 43.679,
+      "end": 43.839
+    },
+    {
+      "id": "w-0083",
+      "text": "him",
+      "start": 43.879,
+      "end": 43.979
+    },
+    {
+      "id": "w-0084",
+      "text": "the",
+      "start": 44.019,
+      "end": 44.119
+    },
+    {
+      "id": "w-0085",
+      "text": "reason",
+      "start": 44.159,
+      "end": 44.439
+    },
+    {
+      "id": "w-0086",
+      "text": "for",
+      "start": 44.479,
+      "end": 44.639
+    },
+    {
+      "id": "w-0087",
+      "text": "his",
+      "start": 44.679,
+      "end": 44.799
+    },
+    {
+      "id": "w-0088",
+      "text": "grief.",
+      "start": 44.859,
+      "end": 45.199
+    },
+    {
+      "id": "w-0089",
+      "text": "And",
+      "start": 45.96,
+      "end": 46.06
+    },
+    {
+      "id": "w-0090",
+      "text": "on",
+      "start": 46.16,
+      "end": 46.24
+    },
+    {
+      "id": "w-0091",
+      "text": "learning",
+      "start": 46.28,
+      "end": 46.62
+    },
+    {
+      "id": "w-0092",
+      "text": "what",
+      "start": 46.64,
+      "end": 46.78
+    },
+    {
+      "id": "w-0093",
+      "text": "had",
+      "start": 46.82,
+      "end": 46.94
+    },
+    {
+      "id": "w-0094",
+      "text": "happened,",
+      "start": 47.0,
+      "end": 47.42
+    },
+    {
+      "id": "w-0095",
+      "text": "out",
+      "start": 47.94,
+      "end": 48.06
+    },
+    {
+      "id": "w-0096",
+      "text": "of",
+      "start": 48.1,
+      "end": 48.16
+    },
+    {
+      "id": "w-0097",
+      "text": "pity",
+      "start": 48.22,
+      "end": 48.44
+    },
+    {
+      "id": "w-0098",
+      "text": "for",
+      "start": 48.501,
+      "end": 48.641
+    },
+    {
+      "id": "w-0099",
+      "text": "his",
+      "start": 48.701,
+      "end": 48.841
+    },
+    {
+      "id": "w-0100",
+      "text": "distress",
+      "start": 48.901,
+      "end": 49.561
+    },
+    {
+      "id": "w-0101",
+      "text": "he",
+      "start": 49.741,
+      "end": 49.841
+    },
+    {
+      "id": "w-0102",
+      "text": "dived",
+      "start": 49.901,
+      "end": 50.301
+    },
+    {
+      "id": "w-0103",
+      "text": "into",
+      "start": 50.361,
+      "end": 50.581
+    },
+    {
+      "id": "w-0104",
+      "text": "the",
+      "start": 50.621,
+      "end": 50.701
+    },
+    {
+      "id": "w-0105",
+      "text": "river",
+      "start": 50.741,
+      "end": 51.021
+    },
+    {
+      "id": "w-0106",
+      "text": "and,",
+      "start": 51.281,
+      "end": 51.482
+    },
+    {
+      "id": "w-0107",
+      "text": "bringing",
+      "start": 51.982,
+      "end": 52.342
+    },
+    {
+      "id": "w-0108",
+      "text": "up",
+      "start": 52.462,
+      "end": 52.562
+    },
+    {
+      "id": "w-0109",
+      "text": "a",
+      "start": 52.682,
+      "end": 52.722
+    },
+    {
+      "id": "w-0110",
+      "text": "golden",
+      "start": 52.762,
+      "end": 53.122
+    },
+    {
+      "id": "w-0111",
+      "text": "axe,",
+      "start": 53.362,
+      "end": 53.582
+    },
+    {
+      "id": "w-0112",
+      "text": "asked",
+      "start": 54.303,
+      "end": 54.563
+    },
+    {
+      "id": "w-0113",
+      "text": "him",
+      "start": 54.623,
+      "end": 54.783
+    },
+    {
+      "id": "w-0114",
+      "text": "if",
+      "start": 55.103,
+      "end": 55.183
+    },
+    {
+      "id": "w-0115",
+      "text": "that",
+      "start": 55.243,
+      "end": 55.443
+    },
+    {
+      "id": "w-0116",
+      "text": "was",
+      "start": 55.483,
+      "end": 55.623
+    },
+    {
+      "id": "w-0117",
+      "text": "the",
+      "start": 55.683,
+      "end": 55.763
+    },
+    {
+      "id": "w-0118",
+      "text": "one",
+      "start": 55.863,
+      "end": 55.983
+    },
+    {
+      "id": "w-0119",
+      "text": "he",
+      "start": 56.043,
+      "end": 56.143
+    },
+    {
+      "id": "w-0120",
+      "text": "had",
+      "start": 56.183,
+      "end": 56.323
+    },
+    {
+      "id": "w-0121",
+      "text": "lost.",
+      "start": 56.383,
+      "end": 56.823
+    },
+    {
+      "id": "w-0122",
+      "text": "The",
+      "start": 57.704,
+      "end": 57.804
+    },
+    {
+      "id": "w-0123",
+      "text": "Woodman",
+      "start": 57.824,
+      "end": 58.164
+    },
+    {
+      "id": "w-0124",
+      "text": "replied",
+      "start": 58.224,
+      "end": 58.544
+    },
+    {
+      "id": "w-0125",
+      "text": "that",
+      "start": 58.584,
+      "end": 58.684
+    },
+    {
+      "id": "w-0126",
+      "text": "it",
+      "start": 58.744,
+      "end": 58.784
+    },
+    {
+      "id": "w-0127",
+      "text": "was",
+      "start": 58.844,
+      "end": 58.964
+    },
+    {
+      "id": "w-0128",
+      "text": "not,",
+      "start": 59.044,
+      "end": 59.344
+    },
+    {
+      "id": "w-0129",
+      "text": "and",
+      "start": 60.065,
+      "end": 60.165
+    },
+    {
+      "id": "w-0130",
+      "text": "Mercury",
+      "start": 60.205,
+      "end": 60.605
+    },
+    {
+      "id": "w-0131",
+      "text": "then",
+      "start": 60.665,
+      "end": 60.865
+    },
+    {
+      "id": "w-0132",
+      "text": "dived",
+      "start": 60.945,
+      "end": 61.325
+    },
+    {
+      "id": "w-0133",
+      "text": "a",
+      "start": 61.385,
+      "end": 61.425
+    },
+    {
+      "id": "w-0134",
+      "text": "second",
+      "start": 61.465,
+      "end": 61.785
+    },
+    {
+      "id": "w-0135",
+      "text": "time.",
+      "start": 61.825,
+      "end": 62.125
+    },
+    {
+      "id": "w-0136",
+      "text": "And,",
+      "start": 62.865,
+      "end": 63.086
+    },
+    {
+      "id": "w-0137",
+      "text": "bringing",
+      "start": 63.366,
+      "end": 63.666
+    },
+    {
+      "id": "w-0138",
+      "text": "up",
+      "start": 63.726,
+      "end": 63.826
+    },
+    {
+      "id": "w-0139",
+      "text": "a",
+      "start": 63.866,
+      "end": 63.886
+    },
+    {
+      "id": "w-0140",
+      "text": "silver",
+      "start": 63.966,
+      "end": 64.286
+    },
+    {
+      "id": "w-0141",
+      "text": "axe,",
+      "start": 64.506,
+      "end": 64.766
+    },
+    {
+      "id": "w-0142",
+      "text": "asked",
+      "start": 65.406,
+      "end": 65.726
+    },
+    {
+      "id": "w-0143",
+      "text": "if",
+      "start": 65.927,
+      "end": 66.007
+    },
+    {
+      "id": "w-0144",
+      "text": "that",
+      "start": 66.047,
+      "end": 66.207
+    },
+    {
+      "id": "w-0145",
+      "text": "was",
+      "start": 66.267,
+      "end": 66.387
+    },
+    {
+      "id": "w-0146",
+      "text": "his.",
+      "start": 66.447,
+      "end": 66.667
+    },
+    {
+      "id": "w-0147",
+      "text": "No,",
+      "start": 67.8,
+      "end": 68.02
+    },
+    {
+      "id": "w-0148",
+      "text": "that",
+      "start": 68.32,
+      "end": 68.52
+    },
+    {
+      "id": "w-0149",
+      "text": "is",
+      "start": 68.58,
+      "end": 68.66
+    },
+    {
+      "id": "w-0150",
+      "text": "not",
+      "start": 68.72,
+      "end": 68.861
+    },
+    {
+      "id": "w-0151",
+      "text": "mine",
+      "start": 68.901,
+      "end": 69.121
+    },
+    {
+      "id": "w-0152",
+      "text": "either,\"",
+      "start": 69.221,
+      "end": 69.521
+    },
+    {
+      "id": "w-0153",
+      "text": "said",
+      "start": 69.861,
+      "end": 70.021
+    },
+    {
+      "id": "w-0154",
+      "text": "the",
+      "start": 70.041,
+      "end": 70.121
+    },
+    {
+      "id": "w-0155",
+      "text": "woodman.",
+      "start": 70.141,
+      "end": 70.501
+    },
+    {
+      "id": "w-0156",
+      "text": "Once",
+      "start": 71.502,
+      "end": 71.702
+    },
+    {
+      "id": "w-0157",
+      "text": "more",
+      "start": 71.822,
+      "end": 72.122
+    },
+    {
+      "id": "w-0158",
+      "text": "Mercury",
+      "start": 72.342,
+      "end": 72.782
+    },
+    {
+      "id": "w-0159",
+      "text": "dived",
+      "start": 72.842,
+      "end": 73.222
+    },
+    {
+      "id": "w-0160",
+      "text": "into",
+      "start": 73.283,
+      "end": 73.503
+    },
+    {
+      "id": "w-0161",
+      "text": "the",
+      "start": 73.543,
+      "end": 73.623
+    },
+    {
+      "id": "w-0162",
+      "text": "river",
+      "start": 73.663,
+      "end": 73.943
+    },
+    {
+      "id": "w-0163",
+      "text": "and",
+      "start": 74.403,
+      "end": 74.503
+    },
+    {
+      "id": "w-0164",
+      "text": "brought",
+      "start": 74.563,
+      "end": 74.823
+    },
+    {
+      "id": "w-0165",
+      "text": "up",
+      "start": 74.963,
+      "end": 75.083
+    },
+    {
+      "id": "w-0166",
+      "text": "the",
+      "start": 75.243,
+      "end": 75.343
+    },
+    {
+      "id": "w-0167",
+      "text": "missing",
+      "start": 75.383,
+      "end": 75.704
+    },
+    {
+      "id": "w-0168",
+      "text": "axe.",
+      "start": 75.964,
+      "end": 76.244
+    },
+    {
+      "id": "w-0169",
+      "text": "The",
+      "start": 77.084,
+      "end": 77.184
+    },
+    {
+      "id": "w-0170",
+      "text": "woodman",
+      "start": 77.204,
+      "end": 77.664
+    },
+    {
+      "id": "w-0171",
+      "text": "was",
+      "start": 77.745,
+      "end": 77.885
+    },
+    {
+      "id": "w-0172",
+      "text": "overjoyed",
+      "start": 78.085,
+      "end": 78.765
+    },
+    {
+      "id": "w-0173",
+      "text": "at",
+      "start": 78.945,
+      "end": 79.005
+    },
+    {
+      "id": "w-0174",
+      "text": "recovering",
+      "start": 79.065,
+      "end": 79.605
+    },
+    {
+      "id": "w-0175",
+      "text": "his",
+      "start": 79.645,
+      "end": 79.785
+    },
+    {
+      "id": "w-0176",
+      "text": "property",
+      "start": 79.865,
+      "end": 80.366
+    },
+    {
+      "id": "w-0177",
+      "text": "and",
+      "start": 81.026,
+      "end": 81.126
+    },
+    {
+      "id": "w-0178",
+      "text": "thanked",
+      "start": 81.206,
+      "end": 81.526
+    },
+    {
+      "id": "w-0179",
+      "text": "his",
+      "start": 81.586,
+      "end": 81.726
+    },
+    {
+      "id": "w-0180",
+      "text": "benefactor",
+      "start": 81.786,
+      "end": 82.467
+    },
+    {
+      "id": "w-0181",
+      "text": "warmly,",
+      "start": 82.527,
+      "end": 83.047
+    },
+    {
+      "id": "w-0182",
+      "text": "and",
+      "start": 83.687,
+      "end": 83.767
+    },
+    {
+      "id": "w-0183",
+      "text": "the",
+      "start": 83.807,
+      "end": 83.907
+    },
+    {
+      "id": "w-0184",
+      "text": "latter",
+      "start": 83.947,
+      "end": 84.368
+    },
+    {
+      "id": "w-0185",
+      "text": "was",
+      "start": 84.508,
+      "end": 84.648
+    },
+    {
+      "id": "w-0186",
+      "text": "so",
+      "start": 84.708,
+      "end": 84.888
+    },
+    {
+      "id": "w-0187",
+      "text": "pleased",
+      "start": 84.988,
+      "end": 85.428
+    },
+    {
+      "id": "w-0188",
+      "text": "with",
+      "start": 85.468,
+      "end": 85.608
+    },
+    {
+      "id": "w-0189",
+      "text": "his",
+      "start": 85.648,
+      "end": 85.768
+    },
+    {
+      "id": "w-0190",
+      "text": "honesty",
+      "start": 85.828,
+      "end": 86.408
+    },
+    {
+      "id": "w-0191",
+      "text": "that",
+      "start": 86.929,
+      "end": 87.069
+    },
+    {
+      "id": "w-0192",
+      "text": "he",
+      "start": 87.109,
+      "end": 87.189
+    },
+    {
+      "id": "w-0193",
+      "text": "made",
+      "start": 87.229,
+      "end": 87.389
+    },
+    {
+      "id": "w-0194",
+      "text": "him",
+      "start": 87.429,
+      "end": 87.549
+    },
+    {
+      "id": "w-0195",
+      "text": "a",
+      "start": 87.589,
+      "end": 87.609
+    },
+    {
+      "id": "w-0196",
+      "text": "present",
+      "start": 87.689,
+      "end": 88.109
+    },
+    {
+      "id": "w-0197",
+      "text": "of",
+      "start": 88.269,
+      "end": 88.329
+    },
+    {
+      "id": "w-0198",
+      "text": "the",
+      "start": 88.369,
+      "end": 88.469
+    },
+    {
+      "id": "w-0199",
+      "text": "other",
+      "start": 88.569,
+      "end": 88.769
+    },
+    {
+      "id": "w-0200",
+      "text": "two",
+      "start": 88.81,
+      "end": 88.97
+    },
+    {
+      "id": "w-0201",
+      "text": "axes.",
+      "start": 89.11,
+      "end": 89.49
+    },
+    {
+      "id": "w-0202",
+      "text": "When",
+      "start": 90.788,
+      "end": 90.908
+    },
+    {
+      "id": "w-0203",
+      "text": "the",
+      "start": 90.948,
+      "end": 91.008
+    },
+    {
+      "id": "w-0204",
+      "text": "woodman",
+      "start": 91.048,
+      "end": 91.429
+    },
+    {
+      "id": "w-0205",
+      "text": "told",
+      "start": 91.489,
+      "end": 91.729
+    },
+    {
+      "id": "w-0206",
+      "text": "the",
+      "start": 91.769,
+      "end": 91.889
+    },
+    {
+      "id": "w-0207",
+      "text": "story",
+      "start": 91.929,
+      "end": 92.289
+    },
+    {
+      "id": "w-0208",
+      "text": "to",
+      "start": 92.329,
+      "end": 92.449
+    },
+    {
+      "id": "w-0209",
+      "text": "his",
+      "start": 92.489,
+      "end": 92.61
+    },
+    {
+      "id": "w-0210",
+      "text": "companions,",
+      "start": 92.67,
+      "end": 93.39
+    },
+    {
+      "id": "w-0211",
+      "text": "one",
+      "start": 93.991,
+      "end": 94.091
+    },
+    {
+      "id": "w-0212",
+      "text": "of",
+      "start": 94.131,
+      "end": 94.191
+    },
+    {
+      "id": "w-0213",
+      "text": "these",
+      "start": 94.231,
+      "end": 94.411
+    },
+    {
+      "id": "w-0214",
+      "text": "was",
+      "start": 94.471,
+      "end": 94.611
+    },
+    {
+      "id": "w-0215",
+      "text": "filled",
+      "start": 94.691,
+      "end": 94.951
+    },
+    {
+      "id": "w-0216",
+      "text": "with",
+      "start": 94.991,
+      "end": 95.132
+    },
+    {
+      "id": "w-0217",
+      "text": "envy",
+      "start": 95.272,
+      "end": 95.612
+    },
+    {
+      "id": "w-0218",
+      "text": "of",
+      "start": 95.812,
+      "end": 95.872
+    },
+    {
+      "id": "w-0219",
+      "text": "his",
+      "start": 95.932,
+      "end": 96.032
+    },
+    {
+      "id": "w-0220",
+      "text": "good",
+      "start": 96.092,
+      "end": 96.253
+    },
+    {
+      "id": "w-0221",
+      "text": "fortune,",
+      "start": 96.313,
+      "end": 96.753
+    },
+    {
+      "id": "w-0222",
+      "text": "and",
+      "start": 97.373,
+      "end": 97.453
+    },
+    {
+      "id": "w-0223",
+      "text": "determined",
+      "start": 97.494,
+      "end": 97.994
+    },
+    {
+      "id": "w-0224",
+      "text": "to",
+      "start": 98.034,
+      "end": 98.094
+    },
+    {
+      "id": "w-0225",
+      "text": "try",
+      "start": 98.134,
+      "end": 98.374
+    },
+    {
+      "id": "w-0226",
+      "text": "his",
+      "start": 98.454,
+      "end": 98.614
+    },
+    {
+      "id": "w-0227",
+      "text": "luck",
+      "start": 98.654,
+      "end": 98.855
+    },
+    {
+      "id": "w-0228",
+      "text": "for",
+      "start": 98.875,
+      "end": 99.015
+    },
+    {
+      "id": "w-0229",
+      "text": "himself.",
+      "start": 99.075,
+      "end": 99.635
+    },
+    {
+      "id": "w-0230",
+      "text": "So",
+      "start": 100.496,
+      "end": 100.636
+    },
+    {
+      "id": "w-0231",
+      "text": "he",
+      "start": 100.696,
+      "end": 100.836
+    },
+    {
+      "id": "w-0232",
+      "text": "went",
+      "start": 100.916,
+      "end": 101.177
+    },
+    {
+      "id": "w-0233",
+      "text": "and",
+      "start": 101.397,
+      "end": 101.477
+    },
+    {
+      "id": "w-0234",
+      "text": "began",
+      "start": 101.517,
+      "end": 101.957
+    },
+    {
+      "id": "w-0235",
+      "text": "to",
+      "start": 102.057,
+      "end": 102.157
+    },
+    {
+      "id": "w-0236",
+      "text": "fell",
+      "start": 102.217,
+      "end": 102.478
+    },
+    {
+      "id": "w-0237",
+      "text": "a",
+      "start": 102.538,
+      "end": 102.558
+    },
+    {
+      "id": "w-0238",
+      "text": "tree",
+      "start": 102.618,
+      "end": 102.898
+    },
+    {
+      "id": "w-0239",
+      "text": "at",
+      "start": 102.978,
+      "end": 103.038
+    },
+    {
+      "id": "w-0240",
+      "text": "the",
+      "start": 103.078,
+      "end": 103.178
+    },
+    {
+      "id": "w-0241",
+      "text": "edge",
+      "start": 103.258,
+      "end": 103.398
+    },
+    {
+      "id": "w-0242",
+      "text": "of",
+      "start": 103.438,
+      "end": 103.498
+    },
+    {
+      "id": "w-0243",
+      "text": "the",
+      "start": 103.538,
+      "end": 103.639
+    },
+    {
+      "id": "w-0244",
+      "text": "river,",
+      "start": 103.679,
+      "end": 103.959
+    },
+    {
+      "id": "w-0245",
+      "text": "and",
+      "start": 104.619,
+      "end": 104.719
+    },
+    {
+      "id": "w-0246",
+      "text": "presently",
+      "start": 104.8,
+      "end": 105.28
+    },
+    {
+      "id": "w-0247",
+      "text": "contrived",
+      "start": 105.36,
+      "end": 106.101
+    },
+    {
+      "id": "w-0248",
+      "text": "to",
+      "start": 106.321,
+      "end": 106.401
+    },
+    {
+      "id": "w-0249",
+      "text": "let",
+      "start": 106.441,
+      "end": 106.601
+    },
+    {
+      "id": "w-0250",
+      "text": "his",
+      "start": 106.641,
+      "end": 106.781
+    },
+    {
+      "id": "w-0251",
+      "text": "axe",
+      "start": 106.961,
+      "end": 107.161
+    },
+    {
+      "id": "w-0252",
+      "text": "drop",
+      "start": 107.262,
+      "end": 107.542
+    },
+    {
+      "id": "w-0253",
+      "text": "into",
+      "start": 107.642,
+      "end": 107.922
+    },
+    {
+      "id": "w-0254",
+      "text": "the",
+      "start": 107.962,
+      "end": 108.042
+    },
+    {
+      "id": "w-0255",
+      "text": "water.",
+      "start": 108.062,
+      "end": 108.402
+    },
+    {
+      "id": "w-0256",
+      "text": "Mercury",
+      "start": 109.543,
+      "end": 110.024
+    },
+    {
+      "id": "w-0257",
+      "text": "appeared",
+      "start": 110.104,
+      "end": 110.504
+    },
+    {
+      "id": "w-0258",
+      "text": "as",
+      "start": 110.604,
+      "end": 110.684
+    },
+    {
+      "id": "w-0259",
+      "text": "before,",
+      "start": 110.764,
+      "end": 111.225
+    },
+    {
+      "id": "w-0260",
+      "text": "and,",
+      "start": 111.825,
+      "end": 112.045
+    },
+    {
+      "id": "w-0261",
+      "text": "on",
+      "start": 112.626,
+      "end": 112.706
+    },
+    {
+      "id": "w-0262",
+      "text": "learning",
+      "start": 112.746,
+      "end": 113.086
+    },
+    {
+      "id": "w-0263",
+      "text": "that",
+      "start": 113.126,
+      "end": 113.246
+    },
+    {
+      "id": "w-0264",
+      "text": "his",
+      "start": 113.306,
+      "end": 113.427
+    },
+    {
+      "id": "w-0265",
+      "text": "axe",
+      "start": 113.647,
+      "end": 113.827
+    },
+    {
+      "id": "w-0266",
+      "text": "had",
+      "start": 113.867,
+      "end": 113.987
+    },
+    {
+      "id": "w-0267",
+      "text": "fallen",
+      "start": 114.047,
+      "end": 114.347
+    },
+    {
+      "id": "w-0268",
+      "text": "in,",
+      "start": 114.507,
+      "end": 114.668
+    },
+    {
+      "id": "w-0269",
+      "text": "he",
+      "start": 115.288,
+      "end": 115.388
+    },
+    {
+      "id": "w-0270",
+      "text": "dived",
+      "start": 115.448,
+      "end": 115.969
+    },
+    {
+      "id": "w-0271",
+      "text": "and",
+      "start": 116.169,
+      "end": 116.249
+    },
+    {
+      "id": "w-0272",
+      "text": "brought",
+      "start": 116.289,
+      "end": 116.509
+    },
+    {
+      "id": "w-0273",
+      "text": "up",
+      "start": 116.569,
+      "end": 116.649
+    },
+    {
+      "id": "w-0274",
+      "text": "a",
+      "start": 116.689,
+      "end": 116.729
+    },
+    {
+      "id": "w-0275",
+      "text": "golden",
+      "start": 116.769,
+      "end": 117.09
+    },
+    {
+      "id": "w-0276",
+      "text": "axe,",
+      "start": 117.29,
+      "end": 117.53
+    },
+    {
+      "id": "w-0277",
+      "text": "as",
+      "start": 118.05,
+      "end": 118.15
+    },
+    {
+      "id": "w-0278",
+      "text": "he",
+      "start": 118.191,
+      "end": 118.291
+    },
+    {
+      "id": "w-0279",
+      "text": "had",
+      "start": 118.331,
+      "end": 118.451
+    },
+    {
+      "id": "w-0280",
+      "text": "done",
+      "start": 118.491,
+      "end": 118.651
+    },
+    {
+      "id": "w-0281",
+      "text": "on",
+      "start": 118.691,
+      "end": 118.751
+    },
+    {
+      "id": "w-0282",
+      "text": "the",
+      "start": 118.771,
+      "end": 118.851
+    },
+    {
+      "id": "w-0283",
+      "text": "previous",
+      "start": 118.891,
+      "end": 119.331
+    },
+    {
+      "id": "w-0284",
+      "text": "occasion,",
+      "start": 119.391,
+      "end": 119.812
+    },
+    {
+      "id": "w-0285",
+      "text": "Without",
+      "start": 121.115,
+      "end": 121.435
+    },
+    {
+      "id": "w-0286",
+      "text": "waiting",
+      "start": 121.495,
+      "end": 121.835
+    },
+    {
+      "id": "w-0287",
+      "text": "to",
+      "start": 121.915,
+      "end": 121.995
+    },
+    {
+      "id": "w-0288",
+      "text": "be",
+      "start": 122.035,
+      "end": 122.136
+    },
+    {
+      "id": "w-0289",
+      "text": "asked",
+      "start": 122.416,
+      "end": 122.756
+    },
+    {
+      "id": "w-0290",
+      "text": "whether",
+      "start": 122.956,
+      "end": 123.216
+    },
+    {
+      "id": "w-0291",
+      "text": "it",
+      "start": 123.276,
+      "end": 123.336
+    },
+    {
+      "id": "w-0292",
+      "text": "was",
+      "start": 123.376,
+      "end": 123.476
+    },
+    {
+      "id": "w-0293",
+      "text": "his",
+      "start": 123.536,
+      "end": 123.676
+    },
+    {
+      "id": "w-0294",
+      "text": "or",
+      "start": 123.776,
+      "end": 123.856
+    },
+    {
+      "id": "w-0295",
+      "text": "not,",
+      "start": 123.916,
+      "end": 124.237
+    },
+    {
+      "id": "w-0296",
+      "text": "the",
+      "start": 124.697,
+      "end": 124.797
+    },
+    {
+      "id": "w-0297",
+      "text": "fellow",
+      "start": 124.837,
+      "end": 125.077
+    },
+    {
+      "id": "w-0298",
+      "text": "cried,",
+      "start": 125.117,
+      "end": 125.417
+    },
+    {
+      "id": "w-0299",
+      "text": "that's",
+      "start": 125.797,
+      "end": 126.037
+    },
+    {
+      "id": "w-0300",
+      "text": "mine,",
+      "start": 126.097,
+      "end": 126.358
+    },
+    {
+      "id": "w-0301",
+      "text": "that's",
+      "start": 126.398,
+      "end": 126.618
+    },
+    {
+      "id": "w-0302",
+      "text": "mine,",
+      "start": 126.678,
+      "end": 127.098
+    },
+    {
+      "id": "w-0303",
+      "text": "and",
+      "start": 127.918,
+      "end": 127.998
+    },
+    {
+      "id": "w-0304",
+      "text": "stretched",
+      "start": 128.078,
+      "end": 128.439
+    },
+    {
+      "id": "w-0305",
+      "text": "out",
+      "start": 128.519,
+      "end": 128.619
+    },
+    {
+      "id": "w-0306",
+      "text": "his",
+      "start": 128.679,
+      "end": 128.819
+    },
+    {
+      "id": "w-0307",
+      "text": "hand",
+      "start": 128.859,
+      "end": 129.239
+    },
+    {
+      "id": "w-0308",
+      "text": "eagerly",
+      "start": 129.439,
+      "end": 129.819
+    },
+    {
+      "id": "w-0309",
+      "text": "for",
+      "start": 129.879,
+      "end": 129.979
+    },
+    {
+      "id": "w-0310",
+      "text": "the",
+      "start": 129.999,
+      "end": 130.079
+    },
+    {
+      "id": "w-0311",
+      "text": "prize.",
+      "start": 130.119,
+      "end": 130.62
+    },
+    {
+      "id": "w-0312",
+      "text": "But",
+      "start": 131.42,
+      "end": 131.56
+    },
+    {
+      "id": "w-0313",
+      "text": "Mercury",
+      "start": 131.62,
+      "end": 132.14
+    },
+    {
+      "id": "w-0314",
+      "text": "was",
+      "start": 132.3,
+      "end": 132.421
+    },
+    {
+      "id": "w-0315",
+      "text": "so",
+      "start": 132.501,
+      "end": 132.701
+    },
+    {
+      "id": "w-0316",
+      "text": "disgusted",
+      "start": 132.781,
+      "end": 133.541
+    },
+    {
+      "id": "w-0317",
+      "text": "at",
+      "start": 133.761,
+      "end": 133.841
+    },
+    {
+      "id": "w-0318",
+      "text": "his",
+      "start": 133.901,
+      "end": 134.021
+    },
+    {
+      "id": "w-0319",
+      "text": "dishonesty",
+      "start": 134.081,
+      "end": 134.842
+    },
+    {
+      "id": "w-0320",
+      "text": "that",
+      "start": 135.422,
+      "end": 135.542
+    },
+    {
+      "id": "w-0321",
+      "text": "he",
+      "start": 135.582,
+      "end": 135.682
+    },
+    {
+      "id": "w-0322",
+      "text": "not",
+      "start": 135.742,
+      "end": 135.942
+    },
+    {
+      "id": "w-0323",
+      "text": "only",
+      "start": 136.062,
+      "end": 136.262
+    },
+    {
+      "id": "w-0324",
+      "text": "declined",
+      "start": 136.302,
+      "end": 136.883
+    },
+    {
+      "id": "w-0325",
+      "text": "to",
+      "start": 137.083,
+      "end": 137.163
+    },
+    {
+      "id": "w-0326",
+      "text": "give",
+      "start": 137.203,
+      "end": 137.383
+    },
+    {
+      "id": "w-0327",
+      "text": "him",
+      "start": 137.423,
+      "end": 137.543
+    },
+    {
+      "id": "w-0328",
+      "text": "the",
+      "start": 137.623,
+      "end": 137.703
+    },
+    {
+      "id": "w-0329",
+      "text": "Golden",
+      "start": 137.723,
+      "end": 138.063
+    },
+    {
+      "id": "w-0330",
+      "text": "Axe,",
+      "start": 138.283,
+      "end": 138.503
+    },
+    {
+      "id": "w-0331",
+      "text": "but",
+      "start": 139.084,
+      "end": 139.224
+    },
+    {
+      "id": "w-0332",
+      "text": "also",
+      "start": 139.324,
+      "end": 139.624
+    },
+    {
+      "id": "w-0333",
+      "text": "refused",
+      "start": 139.704,
+      "end": 140.124
+    },
+    {
+      "id": "w-0334",
+      "text": "to",
+      "start": 140.164,
+      "end": 140.244
+    },
+    {
+      "id": "w-0335",
+      "text": "recover",
+      "start": 140.304,
+      "end": 140.705
+    },
+    {
+      "id": "w-0336",
+      "text": "for",
+      "start": 140.785,
+      "end": 140.965
+    },
+    {
+      "id": "w-0337",
+      "text": "him",
+      "start": 141.025,
+      "end": 141.205
+    },
+    {
+      "id": "w-0338",
+      "text": "the",
+      "start": 141.645,
+      "end": 141.725
+    },
+    {
+      "id": "w-0339",
+      "text": "one",
+      "start": 141.845,
+      "end": 141.965
+    },
+    {
+      "id": "w-0340",
+      "text": "he",
+      "start": 142.045,
+      "end": 142.165
+    },
+    {
+      "id": "w-0341",
+      "text": "had",
+      "start": 142.205,
+      "end": 142.385
+    },
+    {
+      "id": "w-0342",
+      "text": "let",
+      "start": 142.445,
+      "end": 142.605
+    },
+    {
+      "id": "w-0343",
+      "text": "fall",
+      "start": 142.686,
+      "end": 142.986
+    },
+    {
+      "id": "w-0344",
+      "text": "into",
+      "start": 143.086,
+      "end": 143.346
+    },
+    {
+      "id": "w-0345",
+      "text": "the",
+      "start": 143.406,
+      "end": 143.506
+    },
+    {
+      "id": "w-0346",
+      "text": "stream.",
+      "start": 143.546,
+      "end": 143.946
+    },
+    {
+      "id": "w-0347",
+      "text": "Honesty",
+      "start": 145.287,
+      "end": 145.907
+    },
+    {
+      "id": "w-0348",
+      "text": "is",
+      "start": 146.307,
+      "end": 146.407
+    },
+    {
+      "id": "w-0349",
+      "text": "the",
+      "start": 146.487,
+      "end": 146.567
+    },
+    {
+      "id": "w-0350",
+      "text": "best",
+      "start": 146.607,
+      "end": 146.948
+    },
+    {
+      "id": "w-0351",
+      "text": "policy.",
+      "start": 147.088,
+      "end": 147.668
+    },
+    {
+      "id": "w-0352",
+      "text": "end",
+      "start": 149.92,
+      "end": 150.161
+    },
+    {
+      "id": "w-0353",
+      "text": "of",
+      "start": 150.341,
+      "end": 150.421
+    },
+    {
+      "id": "w-0354",
+      "text": "Mercury",
+      "start": 150.521,
+      "end": 151.042
+    },
+    {
+      "id": "w-0355",
+      "text": "and",
+      "start": 151.243,
+      "end": 151.463
+    },
+    {
+      "id": "w-0356",
+      "text": "the",
+      "start": 151.483,
+      "end": 151.744
+    },
+    {
+      "id": "w-0357",
+      "text": "Woodman.",
+      "start": 151.764,
+      "end": 152.185
+    }
+  ]
+}

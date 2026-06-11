@@ -6,7 +6,16 @@ import sqlite3
 import threading
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parent.parent / "data" / "audio.db"
+def _resolve_db_path() -> Path:
+    # Try to load from config; fall back to default
+    try:
+        from config import resolve_path, get_config
+        cfg = get_config()
+        return resolve_path(cfg["app"]["data"]["db_path"])
+    except Exception:
+        return Path(__file__).resolve().parent.parent.parent / "data" / "audio.db"
+
+DB_PATH = _resolve_db_path()
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 _conn: sqlite3.Connection | None = None
@@ -31,6 +40,52 @@ def locked(fn):
         with _lock:
             return fn(*args, **kwargs)
     return wrapper
+
+
+def _seed_card_data_if_needed(conn):
+    """自动将 cards JSON 中的卡牌导入 card_collection 和 card_vocab_signatures。
+
+    幂等安全：INSERT OR IGNORE 保证已存在的卡不会被重复插入；
+    INSERT OR REPLACE 保证签名词始终与最新 JSON 一致。
+    """
+    try:
+        # 延迟导入避免 startup 时的循环依赖
+        import json
+        from config import get_config
+        from services.card_service import build_vocab_signature, load_card_data
+
+        cards = load_card_data()
+        if not cards:
+            return
+
+        # 取 season 信息
+        from config import resolve_path
+        data_path = resolve_path(get_config()["cards"]["data_path"])
+        with open(data_path) as f:
+            raw = json.load(f)
+        season = raw.get("season", 1) if isinstance(raw, dict) else 1
+
+        for card in cards:
+            cid = card["id"]
+            conn.execute(
+                "INSERT OR IGNORE INTO card_collection (card_id, season) VALUES (?, ?)",
+                [cid, season],
+            )
+            sig = build_vocab_signature(card)
+            source_fields = []
+            if card.get("title"):
+                source_fields.append("title")
+            if card.get("motto"):
+                source_fields.append("motto")
+            if card.get("lore"):
+                source_fields.append("lore")
+            conn.execute(
+                "INSERT OR REPLACE INTO card_vocab_signatures (card_id, vocab_list, source) VALUES (?, ?, ?)",
+                [cid, json.dumps(sig), ",".join(source_fields)],
+            )
+        conn.commit()
+    except Exception as e:
+        print(f"  ⚠️  Card data seed skipped: {e}")
 
 
 def init_db():
@@ -248,3 +303,33 @@ def init_db():
     """)
 
     conn.commit()
+    # ── 卡牌系统 ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS card_collection (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            card_id TEXT NOT NULL UNIQUE,
+            season INTEGER NOT NULL DEFAULT 1,
+            obtained INTEGER NOT NULL DEFAULT 0,
+            obtained_at TEXT DEFAULT NULL,
+            obtained_by TEXT DEFAULT ''
+        );
+
+        CREATE TABLE IF NOT EXISTS card_vocab_signatures (
+            card_id TEXT PRIMARY KEY,
+            vocab_list TEXT NOT NULL DEFAULT '[]',
+            source TEXT NOT NULL DEFAULT ''
+        );
+
+        CREATE TABLE IF NOT EXISTS card_draw_log (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            drawn_at TEXT DEFAULT (datetime('now')),
+            card_id TEXT NOT NULL,
+            match_score REAL NOT NULL DEFAULT 0,
+            reviewed_words_snapshot INTEGER NOT NULL DEFAULT 0
+        );
+    """)
+    conn.commit()
+
+    # ── 自动导入卡牌数据 (幂等: 已存在的跳过, 新加的自动补入) ──
+    _seed_card_data_if_needed(conn)
+

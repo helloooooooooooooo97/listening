@@ -1,0 +1,945 @@
+{
+  "id": "the-boy-and-the-snails",
+  "title": "The Boy and The Snails",
+  "subtitle": "Aesop's Fables, Volume 02",
+  "level": "A2-B1",
+  "duration": 54.0,
+  "audioFileName": "the-boy-and-the-snails.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-2-fables-26-50/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 2.52,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 3.34,
+      "end": 5.72,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 6.64,
+      "end": 11.4,
+      "text": "For more information or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 11.96,
+      "end": 17.14,
+      "text": "Recorded by Kim Stone of Pirling on the Dark Side in Denver, Colorado, USA.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 18.34,
+      "end": 20.88,
+      "text": "ESOP's Fables, The Boy and the Snails.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 21.64,
+      "end": 26.62,
+      "text": "A farmer's boy went looking for snails, and when he had picked up both his hands full,",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 26.62,
+      "end": 31.76,
+      "text": "he said about making a fire at which to roast them, for he meant to eat them.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 32.48,
+      "end": 37.0,
+      "text": "When it got well alight and the snails began to fill the heat, they gradually",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 37.0,
+      "end": 42.12,
+      "text": "withdrew more and more into their shells with the hissing noise they always make",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 42.12,
+      "end": 42.92,
+      "text": "when they do so.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 43.64,
+      "end": 46.78,
+      "text": "When the boy heard it, he said, you abandon creatures.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 47.78,
+      "end": 50.88,
+      "text": "How can you find heart to whistle when your houses are burning?",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 51.84,
+      "end": 54.02,
+      "text": "End of The Boy and the Snails.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 1.28
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.28,
+      "end": 1.58
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.58,
+      "end": 1.72
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 1.72,
+      "end": 2.18
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.18,
+      "end": 2.52
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.34,
+      "end": 3.4
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 3.4,
+      "end": 3.96
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 3.96,
+      "end": 4.26
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.26,
+      "end": 4.86
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.86,
+      "end": 5.08
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.08,
+      "end": 5.2
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.2,
+      "end": 5.44
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.44,
+      "end": 5.72
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.64,
+      "end": 6.64
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.64,
+      "end": 6.82
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 6.82,
+      "end": 7.26
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.26,
+      "end": 8.0
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 8.0,
+      "end": 8.14
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.14,
+      "end": 8.5
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.12,
+      "end": 9.4
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.4,
+      "end": 9.76
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox",
+      "start": 9.76,
+      "end": 10.76
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 10.76,
+      "end": 11.4
+    },
+    {
+      "id": "w-0023",
+      "text": "Recorded",
+      "start": 11.96,
+      "end": 12.44
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 12.44,
+      "end": 12.82
+    },
+    {
+      "id": "w-0025",
+      "text": "Kim",
+      "start": 12.82,
+      "end": 13.04
+    },
+    {
+      "id": "w-0026",
+      "text": "Stone",
+      "start": 13.04,
+      "end": 13.34
+    },
+    {
+      "id": "w-0027",
+      "text": "of",
+      "start": 13.34,
+      "end": 13.8
+    },
+    {
+      "id": "w-0028",
+      "text": "Pirling",
+      "start": 13.8,
+      "end": 14.18
+    },
+    {
+      "id": "w-0029",
+      "text": "on",
+      "start": 14.18,
+      "end": 14.44
+    },
+    {
+      "id": "w-0030",
+      "text": "the",
+      "start": 14.44,
+      "end": 14.54
+    },
+    {
+      "id": "w-0031",
+      "text": "Dark",
+      "start": 14.54,
+      "end": 14.7
+    },
+    {
+      "id": "w-0032",
+      "text": "Side",
+      "start": 14.7,
+      "end": 15.02
+    },
+    {
+      "id": "w-0033",
+      "text": "in",
+      "start": 15.02,
+      "end": 15.56
+    },
+    {
+      "id": "w-0034",
+      "text": "Denver,",
+      "start": 15.56,
+      "end": 15.74
+    },
+    {
+      "id": "w-0035",
+      "text": "Colorado,",
+      "start": 16.1,
+      "end": 16.4
+    },
+    {
+      "id": "w-0036",
+      "text": "USA.",
+      "start": 16.94,
+      "end": 17.14
+    },
+    {
+      "id": "w-0037",
+      "text": "ESOP's",
+      "start": 18.34,
+      "end": 18.82
+    },
+    {
+      "id": "w-0038",
+      "text": "Fables,",
+      "start": 18.82,
+      "end": 19.12
+    },
+    {
+      "id": "w-0039",
+      "text": "The",
+      "start": 19.76,
+      "end": 19.78
+    },
+    {
+      "id": "w-0040",
+      "text": "Boy",
+      "start": 19.78,
+      "end": 19.98
+    },
+    {
+      "id": "w-0041",
+      "text": "and",
+      "start": 19.98,
+      "end": 20.44
+    },
+    {
+      "id": "w-0042",
+      "text": "the",
+      "start": 20.44,
+      "end": 20.56
+    },
+    {
+      "id": "w-0043",
+      "text": "Snails.",
+      "start": 20.56,
+      "end": 20.88
+    },
+    {
+      "id": "w-0044",
+      "text": "A",
+      "start": 21.64,
+      "end": 22.04
+    },
+    {
+      "id": "w-0045",
+      "text": "farmer's",
+      "start": 22.04,
+      "end": 22.48
+    },
+    {
+      "id": "w-0046",
+      "text": "boy",
+      "start": 22.48,
+      "end": 22.68
+    },
+    {
+      "id": "w-0047",
+      "text": "went",
+      "start": 22.68,
+      "end": 23.0
+    },
+    {
+      "id": "w-0048",
+      "text": "looking",
+      "start": 23.0,
+      "end": 23.34
+    },
+    {
+      "id": "w-0049",
+      "text": "for",
+      "start": 23.34,
+      "end": 23.56
+    },
+    {
+      "id": "w-0050",
+      "text": "snails,",
+      "start": 23.56,
+      "end": 23.94
+    },
+    {
+      "id": "w-0051",
+      "text": "and",
+      "start": 24.42,
+      "end": 24.66
+    },
+    {
+      "id": "w-0052",
+      "text": "when",
+      "start": 24.66,
+      "end": 24.8
+    },
+    {
+      "id": "w-0053",
+      "text": "he",
+      "start": 24.8,
+      "end": 24.98
+    },
+    {
+      "id": "w-0054",
+      "text": "had",
+      "start": 24.98,
+      "end": 25.08
+    },
+    {
+      "id": "w-0055",
+      "text": "picked",
+      "start": 25.08,
+      "end": 25.24
+    },
+    {
+      "id": "w-0056",
+      "text": "up",
+      "start": 25.24,
+      "end": 25.52
+    },
+    {
+      "id": "w-0057",
+      "text": "both",
+      "start": 25.52,
+      "end": 25.82
+    },
+    {
+      "id": "w-0058",
+      "text": "his",
+      "start": 25.82,
+      "end": 26.04
+    },
+    {
+      "id": "w-0059",
+      "text": "hands",
+      "start": 26.04,
+      "end": 26.28
+    },
+    {
+      "id": "w-0060",
+      "text": "full,",
+      "start": 26.28,
+      "end": 26.62
+    },
+    {
+      "id": "w-0061",
+      "text": "he",
+      "start": 26.62,
+      "end": 27.1
+    },
+    {
+      "id": "w-0062",
+      "text": "said",
+      "start": 27.1,
+      "end": 27.32
+    },
+    {
+      "id": "w-0063",
+      "text": "about",
+      "start": 27.32,
+      "end": 27.52
+    },
+    {
+      "id": "w-0064",
+      "text": "making",
+      "start": 27.52,
+      "end": 27.94
+    },
+    {
+      "id": "w-0065",
+      "text": "a",
+      "start": 27.94,
+      "end": 28.12
+    },
+    {
+      "id": "w-0066",
+      "text": "fire",
+      "start": 28.12,
+      "end": 28.4
+    },
+    {
+      "id": "w-0067",
+      "text": "at",
+      "start": 28.4,
+      "end": 28.98
+    },
+    {
+      "id": "w-0068",
+      "text": "which",
+      "start": 28.98,
+      "end": 29.14
+    },
+    {
+      "id": "w-0069",
+      "text": "to",
+      "start": 29.14,
+      "end": 29.38
+    },
+    {
+      "id": "w-0070",
+      "text": "roast",
+      "start": 29.38,
+      "end": 29.58
+    },
+    {
+      "id": "w-0071",
+      "text": "them,",
+      "start": 29.58,
+      "end": 29.9
+    },
+    {
+      "id": "w-0072",
+      "text": "for",
+      "start": 30.46,
+      "end": 30.62
+    },
+    {
+      "id": "w-0073",
+      "text": "he",
+      "start": 30.62,
+      "end": 30.8
+    },
+    {
+      "id": "w-0074",
+      "text": "meant",
+      "start": 30.8,
+      "end": 31.04
+    },
+    {
+      "id": "w-0075",
+      "text": "to",
+      "start": 31.04,
+      "end": 31.3
+    },
+    {
+      "id": "w-0076",
+      "text": "eat",
+      "start": 31.3,
+      "end": 31.5
+    },
+    {
+      "id": "w-0077",
+      "text": "them.",
+      "start": 31.5,
+      "end": 31.76
+    },
+    {
+      "id": "w-0078",
+      "text": "When",
+      "start": 32.48,
+      "end": 32.8
+    },
+    {
+      "id": "w-0079",
+      "text": "it",
+      "start": 32.8,
+      "end": 32.94
+    },
+    {
+      "id": "w-0080",
+      "text": "got",
+      "start": 32.94,
+      "end": 33.08
+    },
+    {
+      "id": "w-0081",
+      "text": "well",
+      "start": 33.08,
+      "end": 33.4
+    },
+    {
+      "id": "w-0082",
+      "text": "alight",
+      "start": 33.4,
+      "end": 33.88
+    },
+    {
+      "id": "w-0083",
+      "text": "and",
+      "start": 33.88,
+      "end": 34.3
+    },
+    {
+      "id": "w-0084",
+      "text": "the",
+      "start": 34.3,
+      "end": 34.4
+    },
+    {
+      "id": "w-0085",
+      "text": "snails",
+      "start": 34.4,
+      "end": 34.72
+    },
+    {
+      "id": "w-0086",
+      "text": "began",
+      "start": 34.72,
+      "end": 35.08
+    },
+    {
+      "id": "w-0087",
+      "text": "to",
+      "start": 35.08,
+      "end": 35.3
+    },
+    {
+      "id": "w-0088",
+      "text": "fill",
+      "start": 35.3,
+      "end": 35.5
+    },
+    {
+      "id": "w-0089",
+      "text": "the",
+      "start": 35.5,
+      "end": 35.74
+    },
+    {
+      "id": "w-0090",
+      "text": "heat,",
+      "start": 35.74,
+      "end": 36.0
+    },
+    {
+      "id": "w-0091",
+      "text": "they",
+      "start": 36.38,
+      "end": 36.54
+    },
+    {
+      "id": "w-0092",
+      "text": "gradually",
+      "start": 36.54,
+      "end": 37.0
+    },
+    {
+      "id": "w-0093",
+      "text": "withdrew",
+      "start": 37.0,
+      "end": 37.36
+    },
+    {
+      "id": "w-0094",
+      "text": "more",
+      "start": 37.36,
+      "end": 38.04
+    },
+    {
+      "id": "w-0095",
+      "text": "and",
+      "start": 38.04,
+      "end": 38.32
+    },
+    {
+      "id": "w-0096",
+      "text": "more",
+      "start": 38.32,
+      "end": 38.58
+    },
+    {
+      "id": "w-0097",
+      "text": "into",
+      "start": 38.58,
+      "end": 38.92
+    },
+    {
+      "id": "w-0098",
+      "text": "their",
+      "start": 38.92,
+      "end": 39.22
+    },
+    {
+      "id": "w-0099",
+      "text": "shells",
+      "start": 39.22,
+      "end": 39.48
+    },
+    {
+      "id": "w-0100",
+      "text": "with",
+      "start": 39.48,
+      "end": 40.14
+    },
+    {
+      "id": "w-0101",
+      "text": "the",
+      "start": 40.14,
+      "end": 40.3
+    },
+    {
+      "id": "w-0102",
+      "text": "hissing",
+      "start": 40.3,
+      "end": 40.68
+    },
+    {
+      "id": "w-0103",
+      "text": "noise",
+      "start": 40.68,
+      "end": 40.9
+    },
+    {
+      "id": "w-0104",
+      "text": "they",
+      "start": 40.9,
+      "end": 41.52
+    },
+    {
+      "id": "w-0105",
+      "text": "always",
+      "start": 41.52,
+      "end": 41.76
+    },
+    {
+      "id": "w-0106",
+      "text": "make",
+      "start": 41.76,
+      "end": 42.12
+    },
+    {
+      "id": "w-0107",
+      "text": "when",
+      "start": 42.12,
+      "end": 42.36
+    },
+    {
+      "id": "w-0108",
+      "text": "they",
+      "start": 42.36,
+      "end": 42.5
+    },
+    {
+      "id": "w-0109",
+      "text": "do",
+      "start": 42.5,
+      "end": 42.66
+    },
+    {
+      "id": "w-0110",
+      "text": "so.",
+      "start": 42.66,
+      "end": 42.92
+    },
+    {
+      "id": "w-0111",
+      "text": "When",
+      "start": 43.64,
+      "end": 43.96
+    },
+    {
+      "id": "w-0112",
+      "text": "the",
+      "start": 43.96,
+      "end": 44.06
+    },
+    {
+      "id": "w-0113",
+      "text": "boy",
+      "start": 44.06,
+      "end": 44.2
+    },
+    {
+      "id": "w-0114",
+      "text": "heard",
+      "start": 44.2,
+      "end": 44.56
+    },
+    {
+      "id": "w-0115",
+      "text": "it,",
+      "start": 44.56,
+      "end": 44.74
+    },
+    {
+      "id": "w-0116",
+      "text": "he",
+      "start": 44.9,
+      "end": 45.06
+    },
+    {
+      "id": "w-0117",
+      "text": "said,",
+      "start": 45.06,
+      "end": 45.36
+    },
+    {
+      "id": "w-0118",
+      "text": "you",
+      "start": 45.8,
+      "end": 46.0
+    },
+    {
+      "id": "w-0119",
+      "text": "abandon",
+      "start": 46.0,
+      "end": 46.4
+    },
+    {
+      "id": "w-0120",
+      "text": "creatures.",
+      "start": 46.4,
+      "end": 46.78
+    },
+    {
+      "id": "w-0121",
+      "text": "How",
+      "start": 47.78,
+      "end": 47.98
+    },
+    {
+      "id": "w-0122",
+      "text": "can",
+      "start": 47.98,
+      "end": 48.16
+    },
+    {
+      "id": "w-0123",
+      "text": "you",
+      "start": 48.16,
+      "end": 48.32
+    },
+    {
+      "id": "w-0124",
+      "text": "find",
+      "start": 48.32,
+      "end": 48.6
+    },
+    {
+      "id": "w-0125",
+      "text": "heart",
+      "start": 48.6,
+      "end": 48.8
+    },
+    {
+      "id": "w-0126",
+      "text": "to",
+      "start": 48.8,
+      "end": 49.08
+    },
+    {
+      "id": "w-0127",
+      "text": "whistle",
+      "start": 49.08,
+      "end": 49.3
+    },
+    {
+      "id": "w-0128",
+      "text": "when",
+      "start": 49.3,
+      "end": 49.8
+    },
+    {
+      "id": "w-0129",
+      "text": "your",
+      "start": 49.8,
+      "end": 49.9
+    },
+    {
+      "id": "w-0130",
+      "text": "houses",
+      "start": 49.9,
+      "end": 50.24
+    },
+    {
+      "id": "w-0131",
+      "text": "are",
+      "start": 50.24,
+      "end": 50.58
+    },
+    {
+      "id": "w-0132",
+      "text": "burning?",
+      "start": 50.58,
+      "end": 50.88
+    },
+    {
+      "id": "w-0133",
+      "text": "End",
+      "start": 51.84,
+      "end": 52.34
+    },
+    {
+      "id": "w-0134",
+      "text": "of",
+      "start": 52.34,
+      "end": 52.6
+    },
+    {
+      "id": "w-0135",
+      "text": "The",
+      "start": 52.6,
+      "end": 52.74
+    },
+    {
+      "id": "w-0136",
+      "text": "Boy",
+      "start": 52.74,
+      "end": 53.0
+    },
+    {
+      "id": "w-0137",
+      "text": "and",
+      "start": 53.0,
+      "end": 53.58
+    },
+    {
+      "id": "w-0138",
+      "text": "the",
+      "start": 53.58,
+      "end": 53.72
+    },
+    {
+      "id": "w-0139",
+      "text": "Snails.",
+      "start": 53.72,
+      "end": 54.02
+    }
+  ]
+}

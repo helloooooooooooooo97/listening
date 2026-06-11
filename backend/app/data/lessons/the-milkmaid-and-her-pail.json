@@ -1,0 +1,1532 @@
+{
+  "id": "the-milkmaid-and-her-pail",
+  "title": "The Milkmaid and Her Pail",
+  "subtitle": "Aesop's Fables, Volume 02",
+  "level": "A2-B1",
+  "duration": 99.8,
+  "audioFileName": "the-milkmaid-and-her-pail.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-2-fables-26-50/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 2.7,
+      "text": "This is the Libervax recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.64,
+      "end": 12.22,
+      "text": "For more information or to volunteer, please visit Libervax.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 13.26,
+      "end": 19.22,
+      "text": "Recorded by Annie Coleman in St. Louis, Missouri in January 2006.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 20.88,
+      "end": 24.72,
+      "text": "Asaps Fables, the milkmaid and her pale.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 26.54,
+      "end": 31.2,
+      "text": "A farmer's daughter had been out to milk the cows and was returning to the dairy,",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 31.54,
+      "end": 33.62,
+      "text": "carrying her pale of milk upon her head.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 34.36,
+      "end": 38.38,
+      "text": "As she walked along, she fell, amusing after this fashion.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 39.16,
+      "end": 45.28,
+      "text": "The milk in this pale will provide me with cream, which I will make into butter and take to market to sell.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 46.0,
+      "end": 51.8,
+      "text": "With the money, I will buy a number of eggs, and these, when hatched, will produce chickens,",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 52.42,
+      "end": 56.66,
+      "text": "and bind by, I shall have quite a large poultry-yard.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 57.5,
+      "end": 62.52,
+      "text": "Then I shall sell some of my fowls, and with the money which they will bring in,",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 63.04,
+      "end": 67.4,
+      "text": "I will buy myself a new gown, which I shall wear when I go to the fair,",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 68.1,
+      "end": 72.9,
+      "text": "and all the young fellows will admire it, and come and make love to me.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 73.46,
+      "end": 76.74,
+      "text": "But I shall toss my head and have nothing to say to them.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 77.6,
+      "end": 83.04,
+      "text": "Forgetting all about the pale and suiting the action to the word, she tossed her head.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 83.92,
+      "end": 91.54,
+      "text": "Down went the pale, all the milk was spilled, and all her fine castles in the air vanished in a moment.",
+      "note": ""
+    },
+    {
+      "id": "line-016",
+      "start": 92.56,
+      "end": 96.0,
+      "text": "Do not count your chickens before they are hatched.",
+      "note": ""
+    },
+    {
+      "id": "line-017",
+      "start": 97.68,
+      "end": 99.82,
+      "text": "End of the milkmaid and her pale.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 1.06
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.06,
+      "end": 1.54
+    },
+    {
+      "id": "w-0002",
+      "text": "the",
+      "start": 1.54,
+      "end": 1.76
+    },
+    {
+      "id": "w-0003",
+      "text": "Libervax",
+      "start": 1.76,
+      "end": 2.2
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.2,
+      "end": 2.7
+    },
+    {
+      "id": "w-0005",
+      "text": "For",
+      "start": 6.64,
+      "end": 6.64
+    },
+    {
+      "id": "w-0006",
+      "text": "more",
+      "start": 6.64,
+      "end": 7.6
+    },
+    {
+      "id": "w-0007",
+      "text": "information",
+      "start": 7.6,
+      "end": 7.96
+    },
+    {
+      "id": "w-0008",
+      "text": "or",
+      "start": 7.96,
+      "end": 8.72
+    },
+    {
+      "id": "w-0009",
+      "text": "to",
+      "start": 8.72,
+      "end": 8.88
+    },
+    {
+      "id": "w-0010",
+      "text": "volunteer,",
+      "start": 8.88,
+      "end": 9.32
+    },
+    {
+      "id": "w-0011",
+      "text": "please",
+      "start": 10.12,
+      "end": 10.28
+    },
+    {
+      "id": "w-0012",
+      "text": "visit",
+      "start": 10.28,
+      "end": 10.68
+    },
+    {
+      "id": "w-0013",
+      "text": "Libervax",
+      "start": 10.68,
+      "end": 11.38
+    },
+    {
+      "id": "w-0014",
+      "text": ".org.",
+      "start": 11.38,
+      "end": 12.22
+    },
+    {
+      "id": "w-0015",
+      "text": "Recorded",
+      "start": 13.26,
+      "end": 13.98
+    },
+    {
+      "id": "w-0016",
+      "text": "by",
+      "start": 13.98,
+      "end": 14.58
+    },
+    {
+      "id": "w-0017",
+      "text": "Annie",
+      "start": 14.58,
+      "end": 14.86
+    },
+    {
+      "id": "w-0018",
+      "text": "Coleman",
+      "start": 14.86,
+      "end": 15.2
+    },
+    {
+      "id": "w-0019",
+      "text": "in",
+      "start": 15.2,
+      "end": 16.12
+    },
+    {
+      "id": "w-0020",
+      "text": "St.",
+      "start": 16.12,
+      "end": 16.28
+    },
+    {
+      "id": "w-0021",
+      "text": "Louis,",
+      "start": 16.46,
+      "end": 16.58
+    },
+    {
+      "id": "w-0022",
+      "text": "Missouri",
+      "start": 17.14,
+      "end": 17.14
+    },
+    {
+      "id": "w-0023",
+      "text": "in",
+      "start": 17.14,
+      "end": 17.68
+    },
+    {
+      "id": "w-0024",
+      "text": "January",
+      "start": 17.68,
+      "end": 18.08
+    },
+    {
+      "id": "w-0025",
+      "text": "2006.",
+      "start": 18.08,
+      "end": 19.22
+    },
+    {
+      "id": "w-0026",
+      "text": "Asaps",
+      "start": 20.88,
+      "end": 21.22
+    },
+    {
+      "id": "w-0027",
+      "text": "Fables,",
+      "start": 21.22,
+      "end": 21.84
+    },
+    {
+      "id": "w-0028",
+      "text": "the",
+      "start": 23.3,
+      "end": 23.3
+    },
+    {
+      "id": "w-0029",
+      "text": "milkmaid",
+      "start": 23.3,
+      "end": 23.8
+    },
+    {
+      "id": "w-0030",
+      "text": "and",
+      "start": 23.8,
+      "end": 24.26
+    },
+    {
+      "id": "w-0031",
+      "text": "her",
+      "start": 24.26,
+      "end": 24.46
+    },
+    {
+      "id": "w-0032",
+      "text": "pale.",
+      "start": 24.46,
+      "end": 24.72
+    },
+    {
+      "id": "w-0033",
+      "text": "A",
+      "start": 26.54,
+      "end": 27.06
+    },
+    {
+      "id": "w-0034",
+      "text": "farmer's",
+      "start": 27.06,
+      "end": 27.58
+    },
+    {
+      "id": "w-0035",
+      "text": "daughter",
+      "start": 27.58,
+      "end": 27.84
+    },
+    {
+      "id": "w-0036",
+      "text": "had",
+      "start": 27.84,
+      "end": 28.18
+    },
+    {
+      "id": "w-0037",
+      "text": "been",
+      "start": 28.18,
+      "end": 28.38
+    },
+    {
+      "id": "w-0038",
+      "text": "out",
+      "start": 28.38,
+      "end": 28.58
+    },
+    {
+      "id": "w-0039",
+      "text": "to",
+      "start": 28.58,
+      "end": 28.76
+    },
+    {
+      "id": "w-0040",
+      "text": "milk",
+      "start": 28.76,
+      "end": 28.9
+    },
+    {
+      "id": "w-0041",
+      "text": "the",
+      "start": 28.9,
+      "end": 29.12
+    },
+    {
+      "id": "w-0042",
+      "text": "cows",
+      "start": 29.12,
+      "end": 29.34
+    },
+    {
+      "id": "w-0043",
+      "text": "and",
+      "start": 29.34,
+      "end": 30.08
+    },
+    {
+      "id": "w-0044",
+      "text": "was",
+      "start": 30.08,
+      "end": 30.2
+    },
+    {
+      "id": "w-0045",
+      "text": "returning",
+      "start": 30.2,
+      "end": 30.56
+    },
+    {
+      "id": "w-0046",
+      "text": "to",
+      "start": 30.56,
+      "end": 30.86
+    },
+    {
+      "id": "w-0047",
+      "text": "the",
+      "start": 30.86,
+      "end": 30.98
+    },
+    {
+      "id": "w-0048",
+      "text": "dairy,",
+      "start": 30.98,
+      "end": 31.2
+    },
+    {
+      "id": "w-0049",
+      "text": "carrying",
+      "start": 31.54,
+      "end": 31.68
+    },
+    {
+      "id": "w-0050",
+      "text": "her",
+      "start": 31.68,
+      "end": 32.12
+    },
+    {
+      "id": "w-0051",
+      "text": "pale",
+      "start": 32.12,
+      "end": 32.32
+    },
+    {
+      "id": "w-0052",
+      "text": "of",
+      "start": 32.32,
+      "end": 32.58
+    },
+    {
+      "id": "w-0053",
+      "text": "milk",
+      "start": 32.58,
+      "end": 32.78
+    },
+    {
+      "id": "w-0054",
+      "text": "upon",
+      "start": 32.78,
+      "end": 33.12
+    },
+    {
+      "id": "w-0055",
+      "text": "her",
+      "start": 33.12,
+      "end": 33.3
+    },
+    {
+      "id": "w-0056",
+      "text": "head.",
+      "start": 33.3,
+      "end": 33.62
+    },
+    {
+      "id": "w-0057",
+      "text": "As",
+      "start": 34.36,
+      "end": 34.74
+    },
+    {
+      "id": "w-0058",
+      "text": "she",
+      "start": 34.74,
+      "end": 34.94
+    },
+    {
+      "id": "w-0059",
+      "text": "walked",
+      "start": 34.94,
+      "end": 35.14
+    },
+    {
+      "id": "w-0060",
+      "text": "along,",
+      "start": 35.14,
+      "end": 35.54
+    },
+    {
+      "id": "w-0061",
+      "text": "she",
+      "start": 36.08,
+      "end": 36.28
+    },
+    {
+      "id": "w-0062",
+      "text": "fell,",
+      "start": 36.28,
+      "end": 36.58
+    },
+    {
+      "id": "w-0063",
+      "text": "amusing",
+      "start": 36.98,
+      "end": 37.16
+    },
+    {
+      "id": "w-0064",
+      "text": "after",
+      "start": 37.16,
+      "end": 37.68
+    },
+    {
+      "id": "w-0065",
+      "text": "this",
+      "start": 37.68,
+      "end": 38.06
+    },
+    {
+      "id": "w-0066",
+      "text": "fashion.",
+      "start": 38.06,
+      "end": 38.38
+    },
+    {
+      "id": "w-0067",
+      "text": "The",
+      "start": 39.16,
+      "end": 39.68
+    },
+    {
+      "id": "w-0068",
+      "text": "milk",
+      "start": 39.68,
+      "end": 39.88
+    },
+    {
+      "id": "w-0069",
+      "text": "in",
+      "start": 39.88,
+      "end": 40.06
+    },
+    {
+      "id": "w-0070",
+      "text": "this",
+      "start": 40.06,
+      "end": 40.22
+    },
+    {
+      "id": "w-0071",
+      "text": "pale",
+      "start": 40.22,
+      "end": 40.5
+    },
+    {
+      "id": "w-0072",
+      "text": "will",
+      "start": 40.5,
+      "end": 40.76
+    },
+    {
+      "id": "w-0073",
+      "text": "provide",
+      "start": 40.76,
+      "end": 41.0
+    },
+    {
+      "id": "w-0074",
+      "text": "me",
+      "start": 41.0,
+      "end": 41.34
+    },
+    {
+      "id": "w-0075",
+      "text": "with",
+      "start": 41.34,
+      "end": 41.54
+    },
+    {
+      "id": "w-0076",
+      "text": "cream,",
+      "start": 41.54,
+      "end": 41.82
+    },
+    {
+      "id": "w-0077",
+      "text": "which",
+      "start": 42.54,
+      "end": 42.7
+    },
+    {
+      "id": "w-0078",
+      "text": "I",
+      "start": 42.7,
+      "end": 42.88
+    },
+    {
+      "id": "w-0079",
+      "text": "will",
+      "start": 42.88,
+      "end": 43.06
+    },
+    {
+      "id": "w-0080",
+      "text": "make",
+      "start": 43.06,
+      "end": 43.22
+    },
+    {
+      "id": "w-0081",
+      "text": "into",
+      "start": 43.22,
+      "end": 43.38
+    },
+    {
+      "id": "w-0082",
+      "text": "butter",
+      "start": 43.38,
+      "end": 43.76
+    },
+    {
+      "id": "w-0083",
+      "text": "and",
+      "start": 43.76,
+      "end": 44.06
+    },
+    {
+      "id": "w-0084",
+      "text": "take",
+      "start": 44.06,
+      "end": 44.28
+    },
+    {
+      "id": "w-0085",
+      "text": "to",
+      "start": 44.28,
+      "end": 44.5
+    },
+    {
+      "id": "w-0086",
+      "text": "market",
+      "start": 44.5,
+      "end": 44.72
+    },
+    {
+      "id": "w-0087",
+      "text": "to",
+      "start": 44.72,
+      "end": 45.02
+    },
+    {
+      "id": "w-0088",
+      "text": "sell.",
+      "start": 45.02,
+      "end": 45.28
+    },
+    {
+      "id": "w-0089",
+      "text": "With",
+      "start": 46.0,
+      "end": 46.5
+    },
+    {
+      "id": "w-0090",
+      "text": "the",
+      "start": 46.5,
+      "end": 46.62
+    },
+    {
+      "id": "w-0091",
+      "text": "money,",
+      "start": 46.62,
+      "end": 46.9
+    },
+    {
+      "id": "w-0092",
+      "text": "I",
+      "start": 47.16,
+      "end": 47.3
+    },
+    {
+      "id": "w-0093",
+      "text": "will",
+      "start": 47.3,
+      "end": 47.46
+    },
+    {
+      "id": "w-0094",
+      "text": "buy",
+      "start": 47.46,
+      "end": 47.64
+    },
+    {
+      "id": "w-0095",
+      "text": "a",
+      "start": 47.64,
+      "end": 47.78
+    },
+    {
+      "id": "w-0096",
+      "text": "number",
+      "start": 47.78,
+      "end": 48.04
+    },
+    {
+      "id": "w-0097",
+      "text": "of",
+      "start": 48.04,
+      "end": 48.3
+    },
+    {
+      "id": "w-0098",
+      "text": "eggs,",
+      "start": 48.3,
+      "end": 48.58
+    },
+    {
+      "id": "w-0099",
+      "text": "and",
+      "start": 49.28,
+      "end": 49.48
+    },
+    {
+      "id": "w-0100",
+      "text": "these,",
+      "start": 49.48,
+      "end": 49.74
+    },
+    {
+      "id": "w-0101",
+      "text": "when",
+      "start": 49.94,
+      "end": 50.1
+    },
+    {
+      "id": "w-0102",
+      "text": "hatched,",
+      "start": 50.1,
+      "end": 50.44
+    },
+    {
+      "id": "w-0103",
+      "text": "will",
+      "start": 51.08,
+      "end": 51.16
+    },
+    {
+      "id": "w-0104",
+      "text": "produce",
+      "start": 51.16,
+      "end": 51.42
+    },
+    {
+      "id": "w-0105",
+      "text": "chickens,",
+      "start": 51.42,
+      "end": 51.8
+    },
+    {
+      "id": "w-0106",
+      "text": "and",
+      "start": 52.42,
+      "end": 52.92
+    },
+    {
+      "id": "w-0107",
+      "text": "bind",
+      "start": 52.92,
+      "end": 53.1
+    },
+    {
+      "id": "w-0108",
+      "text": "by,",
+      "start": 53.1,
+      "end": 53.58
+    },
+    {
+      "id": "w-0109",
+      "text": "I",
+      "start": 54.04,
+      "end": 54.44
+    },
+    {
+      "id": "w-0110",
+      "text": "shall",
+      "start": 54.44,
+      "end": 54.66
+    },
+    {
+      "id": "w-0111",
+      "text": "have",
+      "start": 54.66,
+      "end": 54.84
+    },
+    {
+      "id": "w-0112",
+      "text": "quite",
+      "start": 54.84,
+      "end": 55.16
+    },
+    {
+      "id": "w-0113",
+      "text": "a",
+      "start": 55.16,
+      "end": 55.38
+    },
+    {
+      "id": "w-0114",
+      "text": "large",
+      "start": 55.38,
+      "end": 55.74
+    },
+    {
+      "id": "w-0115",
+      "text": "poultry",
+      "start": 55.74,
+      "end": 56.06
+    },
+    {
+      "id": "w-0116",
+      "text": "-yard.",
+      "start": 56.06,
+      "end": 56.66
+    },
+    {
+      "id": "w-0117",
+      "text": "Then",
+      "start": 57.5,
+      "end": 58.0
+    },
+    {
+      "id": "w-0118",
+      "text": "I",
+      "start": 58.0,
+      "end": 58.5
+    },
+    {
+      "id": "w-0119",
+      "text": "shall",
+      "start": 58.5,
+      "end": 58.72
+    },
+    {
+      "id": "w-0120",
+      "text": "sell",
+      "start": 58.72,
+      "end": 58.92
+    },
+    {
+      "id": "w-0121",
+      "text": "some",
+      "start": 58.92,
+      "end": 59.28
+    },
+    {
+      "id": "w-0122",
+      "text": "of",
+      "start": 59.28,
+      "end": 59.4
+    },
+    {
+      "id": "w-0123",
+      "text": "my",
+      "start": 59.4,
+      "end": 59.58
+    },
+    {
+      "id": "w-0124",
+      "text": "fowls,",
+      "start": 59.58,
+      "end": 60.32
+    },
+    {
+      "id": "w-0125",
+      "text": "and",
+      "start": 60.6,
+      "end": 60.82
+    },
+    {
+      "id": "w-0126",
+      "text": "with",
+      "start": 60.82,
+      "end": 60.96
+    },
+    {
+      "id": "w-0127",
+      "text": "the",
+      "start": 60.96,
+      "end": 61.08
+    },
+    {
+      "id": "w-0128",
+      "text": "money",
+      "start": 61.08,
+      "end": 61.3
+    },
+    {
+      "id": "w-0129",
+      "text": "which",
+      "start": 61.3,
+      "end": 61.5
+    },
+    {
+      "id": "w-0130",
+      "text": "they",
+      "start": 61.5,
+      "end": 61.8
+    },
+    {
+      "id": "w-0131",
+      "text": "will",
+      "start": 61.8,
+      "end": 62.06
+    },
+    {
+      "id": "w-0132",
+      "text": "bring",
+      "start": 62.06,
+      "end": 62.28
+    },
+    {
+      "id": "w-0133",
+      "text": "in,",
+      "start": 62.28,
+      "end": 62.52
+    },
+    {
+      "id": "w-0134",
+      "text": "I",
+      "start": 63.04,
+      "end": 63.4
+    },
+    {
+      "id": "w-0135",
+      "text": "will",
+      "start": 63.4,
+      "end": 63.56
+    },
+    {
+      "id": "w-0136",
+      "text": "buy",
+      "start": 63.56,
+      "end": 63.76
+    },
+    {
+      "id": "w-0137",
+      "text": "myself",
+      "start": 63.76,
+      "end": 64.08
+    },
+    {
+      "id": "w-0138",
+      "text": "a",
+      "start": 64.08,
+      "end": 64.34
+    },
+    {
+      "id": "w-0139",
+      "text": "new",
+      "start": 64.34,
+      "end": 64.5
+    },
+    {
+      "id": "w-0140",
+      "text": "gown,",
+      "start": 64.5,
+      "end": 64.84
+    },
+    {
+      "id": "w-0141",
+      "text": "which",
+      "start": 65.5,
+      "end": 65.66
+    },
+    {
+      "id": "w-0142",
+      "text": "I",
+      "start": 65.66,
+      "end": 65.9
+    },
+    {
+      "id": "w-0143",
+      "text": "shall",
+      "start": 65.9,
+      "end": 66.22
+    },
+    {
+      "id": "w-0144",
+      "text": "wear",
+      "start": 66.22,
+      "end": 66.38
+    },
+    {
+      "id": "w-0145",
+      "text": "when",
+      "start": 66.38,
+      "end": 66.62
+    },
+    {
+      "id": "w-0146",
+      "text": "I",
+      "start": 66.62,
+      "end": 66.74
+    },
+    {
+      "id": "w-0147",
+      "text": "go",
+      "start": 66.74,
+      "end": 66.88
+    },
+    {
+      "id": "w-0148",
+      "text": "to",
+      "start": 66.88,
+      "end": 67.02
+    },
+    {
+      "id": "w-0149",
+      "text": "the",
+      "start": 67.02,
+      "end": 67.16
+    },
+    {
+      "id": "w-0150",
+      "text": "fair,",
+      "start": 67.16,
+      "end": 67.4
+    },
+    {
+      "id": "w-0151",
+      "text": "and",
+      "start": 68.1,
+      "end": 68.36
+    },
+    {
+      "id": "w-0152",
+      "text": "all",
+      "start": 68.36,
+      "end": 68.68
+    },
+    {
+      "id": "w-0153",
+      "text": "the",
+      "start": 68.68,
+      "end": 69.0
+    },
+    {
+      "id": "w-0154",
+      "text": "young",
+      "start": 69.0,
+      "end": 69.2
+    },
+    {
+      "id": "w-0155",
+      "text": "fellows",
+      "start": 69.2,
+      "end": 69.54
+    },
+    {
+      "id": "w-0156",
+      "text": "will",
+      "start": 69.54,
+      "end": 69.92
+    },
+    {
+      "id": "w-0157",
+      "text": "admire",
+      "start": 69.92,
+      "end": 70.34
+    },
+    {
+      "id": "w-0158",
+      "text": "it,",
+      "start": 70.34,
+      "end": 70.86
+    },
+    {
+      "id": "w-0159",
+      "text": "and",
+      "start": 71.28,
+      "end": 71.38
+    },
+    {
+      "id": "w-0160",
+      "text": "come",
+      "start": 71.38,
+      "end": 71.6
+    },
+    {
+      "id": "w-0161",
+      "text": "and",
+      "start": 71.6,
+      "end": 71.98
+    },
+    {
+      "id": "w-0162",
+      "text": "make",
+      "start": 71.98,
+      "end": 72.2
+    },
+    {
+      "id": "w-0163",
+      "text": "love",
+      "start": 72.2,
+      "end": 72.44
+    },
+    {
+      "id": "w-0164",
+      "text": "to",
+      "start": 72.44,
+      "end": 72.68
+    },
+    {
+      "id": "w-0165",
+      "text": "me.",
+      "start": 72.68,
+      "end": 72.9
+    },
+    {
+      "id": "w-0166",
+      "text": "But",
+      "start": 73.46,
+      "end": 73.84
+    },
+    {
+      "id": "w-0167",
+      "text": "I",
+      "start": 73.84,
+      "end": 74.26
+    },
+    {
+      "id": "w-0168",
+      "text": "shall",
+      "start": 74.26,
+      "end": 74.48
+    },
+    {
+      "id": "w-0169",
+      "text": "toss",
+      "start": 74.48,
+      "end": 74.64
+    },
+    {
+      "id": "w-0170",
+      "text": "my",
+      "start": 74.64,
+      "end": 75.0
+    },
+    {
+      "id": "w-0171",
+      "text": "head",
+      "start": 75.0,
+      "end": 75.26
+    },
+    {
+      "id": "w-0172",
+      "text": "and",
+      "start": 75.26,
+      "end": 75.42
+    },
+    {
+      "id": "w-0173",
+      "text": "have",
+      "start": 75.42,
+      "end": 75.56
+    },
+    {
+      "id": "w-0174",
+      "text": "nothing",
+      "start": 75.56,
+      "end": 75.78
+    },
+    {
+      "id": "w-0175",
+      "text": "to",
+      "start": 75.78,
+      "end": 76.08
+    },
+    {
+      "id": "w-0176",
+      "text": "say",
+      "start": 76.08,
+      "end": 76.28
+    },
+    {
+      "id": "w-0177",
+      "text": "to",
+      "start": 76.28,
+      "end": 76.46
+    },
+    {
+      "id": "w-0178",
+      "text": "them.",
+      "start": 76.46,
+      "end": 76.74
+    },
+    {
+      "id": "w-0179",
+      "text": "Forgetting",
+      "start": 77.6,
+      "end": 78.16
+    },
+    {
+      "id": "w-0180",
+      "text": "all",
+      "start": 78.16,
+      "end": 78.42
+    },
+    {
+      "id": "w-0181",
+      "text": "about",
+      "start": 78.42,
+      "end": 78.68
+    },
+    {
+      "id": "w-0182",
+      "text": "the",
+      "start": 78.68,
+      "end": 78.92
+    },
+    {
+      "id": "w-0183",
+      "text": "pale",
+      "start": 78.92,
+      "end": 79.18
+    },
+    {
+      "id": "w-0184",
+      "text": "and",
+      "start": 79.18,
+      "end": 79.98
+    },
+    {
+      "id": "w-0185",
+      "text": "suiting",
+      "start": 79.98,
+      "end": 80.34
+    },
+    {
+      "id": "w-0186",
+      "text": "the",
+      "start": 80.34,
+      "end": 80.5
+    },
+    {
+      "id": "w-0187",
+      "text": "action",
+      "start": 80.5,
+      "end": 80.84
+    },
+    {
+      "id": "w-0188",
+      "text": "to",
+      "start": 80.84,
+      "end": 81.1
+    },
+    {
+      "id": "w-0189",
+      "text": "the",
+      "start": 81.1,
+      "end": 81.22
+    },
+    {
+      "id": "w-0190",
+      "text": "word,",
+      "start": 81.22,
+      "end": 81.5
+    },
+    {
+      "id": "w-0191",
+      "text": "she",
+      "start": 82.06,
+      "end": 82.22
+    },
+    {
+      "id": "w-0192",
+      "text": "tossed",
+      "start": 82.22,
+      "end": 82.34
+    },
+    {
+      "id": "w-0193",
+      "text": "her",
+      "start": 82.34,
+      "end": 82.74
+    },
+    {
+      "id": "w-0194",
+      "text": "head.",
+      "start": 82.74,
+      "end": 83.04
+    },
+    {
+      "id": "w-0195",
+      "text": "Down",
+      "start": 83.92,
+      "end": 84.28
+    },
+    {
+      "id": "w-0196",
+      "text": "went",
+      "start": 84.28,
+      "end": 84.52
+    },
+    {
+      "id": "w-0197",
+      "text": "the",
+      "start": 84.52,
+      "end": 84.74
+    },
+    {
+      "id": "w-0198",
+      "text": "pale,",
+      "start": 84.74,
+      "end": 84.98
+    },
+    {
+      "id": "w-0199",
+      "text": "all",
+      "start": 85.86,
+      "end": 86.04
+    },
+    {
+      "id": "w-0200",
+      "text": "the",
+      "start": 86.04,
+      "end": 86.34
+    },
+    {
+      "id": "w-0201",
+      "text": "milk",
+      "start": 86.34,
+      "end": 86.52
+    },
+    {
+      "id": "w-0202",
+      "text": "was",
+      "start": 86.52,
+      "end": 86.8
+    },
+    {
+      "id": "w-0203",
+      "text": "spilled,",
+      "start": 86.8,
+      "end": 87.12
+    },
+    {
+      "id": "w-0204",
+      "text": "and",
+      "start": 88.06,
+      "end": 88.1
+    },
+    {
+      "id": "w-0205",
+      "text": "all",
+      "start": 88.1,
+      "end": 88.38
+    },
+    {
+      "id": "w-0206",
+      "text": "her",
+      "start": 88.38,
+      "end": 88.6
+    },
+    {
+      "id": "w-0207",
+      "text": "fine",
+      "start": 88.6,
+      "end": 88.88
+    },
+    {
+      "id": "w-0208",
+      "text": "castles",
+      "start": 88.88,
+      "end": 89.24
+    },
+    {
+      "id": "w-0209",
+      "text": "in",
+      "start": 89.24,
+      "end": 89.78
+    },
+    {
+      "id": "w-0210",
+      "text": "the",
+      "start": 89.78,
+      "end": 89.94
+    },
+    {
+      "id": "w-0211",
+      "text": "air",
+      "start": 89.94,
+      "end": 90.2
+    },
+    {
+      "id": "w-0212",
+      "text": "vanished",
+      "start": 90.2,
+      "end": 90.66
+    },
+    {
+      "id": "w-0213",
+      "text": "in",
+      "start": 90.66,
+      "end": 91.12
+    },
+    {
+      "id": "w-0214",
+      "text": "a",
+      "start": 91.12,
+      "end": 91.22
+    },
+    {
+      "id": "w-0215",
+      "text": "moment.",
+      "start": 91.22,
+      "end": 91.54
+    },
+    {
+      "id": "w-0216",
+      "text": "Do",
+      "start": 92.56,
+      "end": 93.12
+    },
+    {
+      "id": "w-0217",
+      "text": "not",
+      "start": 93.12,
+      "end": 93.34
+    },
+    {
+      "id": "w-0218",
+      "text": "count",
+      "start": 93.34,
+      "end": 93.74
+    },
+    {
+      "id": "w-0219",
+      "text": "your",
+      "start": 93.74,
+      "end": 93.96
+    },
+    {
+      "id": "w-0220",
+      "text": "chickens",
+      "start": 93.96,
+      "end": 94.3
+    },
+    {
+      "id": "w-0221",
+      "text": "before",
+      "start": 94.3,
+      "end": 94.82
+    },
+    {
+      "id": "w-0222",
+      "text": "they",
+      "start": 94.82,
+      "end": 95.46
+    },
+    {
+      "id": "w-0223",
+      "text": "are",
+      "start": 95.46,
+      "end": 95.6
+    },
+    {
+      "id": "w-0224",
+      "text": "hatched.",
+      "start": 95.6,
+      "end": 96.0
+    },
+    {
+      "id": "w-0225",
+      "text": "End",
+      "start": 97.68,
+      "end": 98.24
+    },
+    {
+      "id": "w-0226",
+      "text": "of",
+      "start": 98.24,
+      "end": 98.52
+    },
+    {
+      "id": "w-0227",
+      "text": "the",
+      "start": 98.52,
+      "end": 98.68
+    },
+    {
+      "id": "w-0228",
+      "text": "milkmaid",
+      "start": 98.68,
+      "end": 99.12
+    },
+    {
+      "id": "w-0229",
+      "text": "and",
+      "start": 99.12,
+      "end": 99.34
+    },
+    {
+      "id": "w-0230",
+      "text": "her",
+      "start": 99.34,
+      "end": 99.58
+    },
+    {
+      "id": "w-0231",
+      "text": "pale.",
+      "start": 99.58,
+      "end": 99.82
+    }
+  ]
+}

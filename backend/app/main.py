@@ -2,20 +2,24 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from database import init_db
+from config import load_config, get_config
 
+# Load config first (so db path comes from config)
+cfg = load_config()
 init_db()
 
-app = FastAPI(title="英语听力 API", version="0.3.0")
+app = FastAPI(title="英语听力 API", version="0.3.2")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=cfg["app"]["cors"]["allow_origins"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -39,8 +43,20 @@ def health():
     return {"status": "ok"}
 
 
+# ── Mount card images ──
+from config import get_config
+_cfg = get_config()
+_img_rel = _cfg["cards"]["image_path"]
+from config import resolve_path
+_img_path = resolve_path(_img_rel)
+if _img_path.is_dir():
+    app.mount(_cfg["cards"]["image_url_prefix"], StaticFiles(directory=str(_img_path)), name="card_images")
+    print(f"  📁 Card images mounted: {_img_path}")
+else:
+    print(f"  ⚠️  Card image dir not found: {_img_path}")
+
 # Serve frontend static files (must be last — mount at `/` catches everything)
-FRONTEND_DIR = os.path.join(os.path.dirname(__file__), '../../frontend/dist')
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), '../..', cfg["app"]["frontend"]["dist_dir"])
 if os.path.isdir(FRONTEND_DIR) and os.path.exists(os.path.join(FRONTEND_DIR, 'index.html')):
     app.mount('/', StaticFiles(directory=FRONTEND_DIR, html=True), name='frontend')
 

@@ -1,0 +1,987 @@
+{
+  "id": "the-wolf-and-the-crane",
+  "title": "The Wolf and The Crane",
+  "subtitle": "Aesop's Fables, Volume 06",
+  "level": "A2-B1",
+  "duration": 57.1,
+  "audioFileName": "the-wolf-and-the-crane.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-6-fables-126-150/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.8,
+      "end": 5.66,
+      "text": "This is a LibriVox recording. All LibriVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.92,
+      "end": 11.52,
+      "text": "For more information or to volunteer, please visit LibriVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 12.92,
+      "end": 16.08,
+      "text": "Asaps, Fables, the Wolf and the Crane.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 17.92,
+      "end": 19.88,
+      "text": "A Wolf once got a bone stuck in his throat.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 21.04,
+      "end": 24.96,
+      "text": "So he went to a crane and begged her to put her long bell down his throat and pull it out.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 26.3,
+      "end": 28.02,
+      "text": "I'll make it work your while he added.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 29.22,
+      "end": 32.38,
+      "text": "The Crane did as she was asked and got the bone out quite easily.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 33.78,
+      "end": 37.28,
+      "text": "The Wolf thanked her warmly and was just turning away when she cried.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 38.12,
+      "end": 39.44,
+      "text": "What about that feel-mine?",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 40.2,
+      "end": 44.28,
+      "text": "Well, what about it snapped the Wolf, bearing his feet as he spoke.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 45.3,
+      "end": 50.26,
+      "text": "You can go about boasting that you once put your head into a wolf's mouth and didn't get it bitten off.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 51.04,
+      "end": 52.08,
+      "text": "What more do you want?",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 55.68,
+      "end": 57.12,
+      "text": "End of the wolf and the crane.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.8,
+      "end": 1.24
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 1.24,
+      "end": 1.58
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.58,
+      "end": 1.76
+    },
+    {
+      "id": "w-0003",
+      "text": "LibriVox",
+      "start": 1.76,
+      "end": 2.24
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 2.24,
+      "end": 2.42
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.56,
+      "end": 3.64
+    },
+    {
+      "id": "w-0006",
+      "text": "LibriVox",
+      "start": 3.64,
+      "end": 4.26
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 4.26,
+      "end": 4.58
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.58,
+      "end": 4.94
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.94,
+      "end": 5.04
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 5.04,
+      "end": 5.12
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 5.12,
+      "end": 5.34
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.34,
+      "end": 5.66
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.92,
+      "end": 6.94
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.94,
+      "end": 7.16
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 7.16,
+      "end": 7.4
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 7.4,
+      "end": 7.98
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 7.98,
+      "end": 8.12
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 8.12,
+      "end": 8.4
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 9.4,
+      "end": 9.6
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 9.6,
+      "end": 10.02
+    },
+    {
+      "id": "w-0021",
+      "text": "LibriVox",
+      "start": 10.02,
+      "end": 11.06
+    },
+    {
+      "id": "w-0022",
+      "text": ".org.",
+      "start": 11.06,
+      "end": 11.52
+    },
+    {
+      "id": "w-0023",
+      "text": "Asaps,",
+      "start": 12.92,
+      "end": 13.36
+    },
+    {
+      "id": "w-0024",
+      "text": "Fables,",
+      "start": 13.76,
+      "end": 13.98
+    },
+    {
+      "id": "w-0025",
+      "text": "the",
+      "start": 15.34,
+      "end": 15.34
+    },
+    {
+      "id": "w-0026",
+      "text": "Wolf",
+      "start": 15.34,
+      "end": 15.46
+    },
+    {
+      "id": "w-0027",
+      "text": "and",
+      "start": 15.46,
+      "end": 15.82
+    },
+    {
+      "id": "w-0028",
+      "text": "the",
+      "start": 15.82,
+      "end": 15.9
+    },
+    {
+      "id": "w-0029",
+      "text": "Crane.",
+      "start": 15.9,
+      "end": 16.08
+    },
+    {
+      "id": "w-0030",
+      "text": "A",
+      "start": 17.92,
+      "end": 17.96
+    },
+    {
+      "id": "w-0031",
+      "text": "Wolf",
+      "start": 17.96,
+      "end": 18.12
+    },
+    {
+      "id": "w-0032",
+      "text": "once",
+      "start": 18.12,
+      "end": 18.36
+    },
+    {
+      "id": "w-0033",
+      "text": "got",
+      "start": 18.36,
+      "end": 18.62
+    },
+    {
+      "id": "w-0034",
+      "text": "a",
+      "start": 18.62,
+      "end": 18.76
+    },
+    {
+      "id": "w-0035",
+      "text": "bone",
+      "start": 18.76,
+      "end": 18.96
+    },
+    {
+      "id": "w-0036",
+      "text": "stuck",
+      "start": 18.96,
+      "end": 19.22
+    },
+    {
+      "id": "w-0037",
+      "text": "in",
+      "start": 19.22,
+      "end": 19.48
+    },
+    {
+      "id": "w-0038",
+      "text": "his",
+      "start": 19.48,
+      "end": 19.6
+    },
+    {
+      "id": "w-0039",
+      "text": "throat.",
+      "start": 19.6,
+      "end": 19.88
+    },
+    {
+      "id": "w-0040",
+      "text": "So",
+      "start": 21.04,
+      "end": 21.22
+    },
+    {
+      "id": "w-0041",
+      "text": "he",
+      "start": 21.22,
+      "end": 21.34
+    },
+    {
+      "id": "w-0042",
+      "text": "went",
+      "start": 21.34,
+      "end": 21.5
+    },
+    {
+      "id": "w-0043",
+      "text": "to",
+      "start": 21.5,
+      "end": 21.72
+    },
+    {
+      "id": "w-0044",
+      "text": "a",
+      "start": 21.72,
+      "end": 21.78
+    },
+    {
+      "id": "w-0045",
+      "text": "crane",
+      "start": 21.78,
+      "end": 21.94
+    },
+    {
+      "id": "w-0046",
+      "text": "and",
+      "start": 21.94,
+      "end": 22.22
+    },
+    {
+      "id": "w-0047",
+      "text": "begged",
+      "start": 22.22,
+      "end": 22.4
+    },
+    {
+      "id": "w-0048",
+      "text": "her",
+      "start": 22.4,
+      "end": 22.6
+    },
+    {
+      "id": "w-0049",
+      "text": "to",
+      "start": 22.6,
+      "end": 22.78
+    },
+    {
+      "id": "w-0050",
+      "text": "put",
+      "start": 22.78,
+      "end": 22.94
+    },
+    {
+      "id": "w-0051",
+      "text": "her",
+      "start": 22.94,
+      "end": 23.12
+    },
+    {
+      "id": "w-0052",
+      "text": "long",
+      "start": 23.12,
+      "end": 23.32
+    },
+    {
+      "id": "w-0053",
+      "text": "bell",
+      "start": 23.32,
+      "end": 23.54
+    },
+    {
+      "id": "w-0054",
+      "text": "down",
+      "start": 23.54,
+      "end": 23.8
+    },
+    {
+      "id": "w-0055",
+      "text": "his",
+      "start": 23.8,
+      "end": 24.0
+    },
+    {
+      "id": "w-0056",
+      "text": "throat",
+      "start": 24.0,
+      "end": 24.22
+    },
+    {
+      "id": "w-0057",
+      "text": "and",
+      "start": 24.22,
+      "end": 24.44
+    },
+    {
+      "id": "w-0058",
+      "text": "pull",
+      "start": 24.44,
+      "end": 24.62
+    },
+    {
+      "id": "w-0059",
+      "text": "it",
+      "start": 24.62,
+      "end": 24.8
+    },
+    {
+      "id": "w-0060",
+      "text": "out.",
+      "start": 24.8,
+      "end": 24.96
+    },
+    {
+      "id": "w-0061",
+      "text": "I'll",
+      "start": 26.3,
+      "end": 26.74
+    },
+    {
+      "id": "w-0062",
+      "text": "make",
+      "start": 26.74,
+      "end": 26.88
+    },
+    {
+      "id": "w-0063",
+      "text": "it",
+      "start": 26.88,
+      "end": 27.02
+    },
+    {
+      "id": "w-0064",
+      "text": "work",
+      "start": 27.02,
+      "end": 27.16
+    },
+    {
+      "id": "w-0065",
+      "text": "your",
+      "start": 27.16,
+      "end": 27.36
+    },
+    {
+      "id": "w-0066",
+      "text": "while",
+      "start": 27.36,
+      "end": 27.66
+    },
+    {
+      "id": "w-0067",
+      "text": "he",
+      "start": 27.66,
+      "end": 27.86
+    },
+    {
+      "id": "w-0068",
+      "text": "added.",
+      "start": 27.86,
+      "end": 28.02
+    },
+    {
+      "id": "w-0069",
+      "text": "The",
+      "start": 29.22,
+      "end": 29.66
+    },
+    {
+      "id": "w-0070",
+      "text": "Crane",
+      "start": 29.66,
+      "end": 29.86
+    },
+    {
+      "id": "w-0071",
+      "text": "did",
+      "start": 29.86,
+      "end": 30.06
+    },
+    {
+      "id": "w-0072",
+      "text": "as",
+      "start": 30.06,
+      "end": 30.24
+    },
+    {
+      "id": "w-0073",
+      "text": "she",
+      "start": 30.24,
+      "end": 30.4
+    },
+    {
+      "id": "w-0074",
+      "text": "was",
+      "start": 30.4,
+      "end": 30.54
+    },
+    {
+      "id": "w-0075",
+      "text": "asked",
+      "start": 30.54,
+      "end": 30.78
+    },
+    {
+      "id": "w-0076",
+      "text": "and",
+      "start": 30.78,
+      "end": 31.14
+    },
+    {
+      "id": "w-0077",
+      "text": "got",
+      "start": 31.14,
+      "end": 31.28
+    },
+    {
+      "id": "w-0078",
+      "text": "the",
+      "start": 31.28,
+      "end": 31.44
+    },
+    {
+      "id": "w-0079",
+      "text": "bone",
+      "start": 31.44,
+      "end": 31.66
+    },
+    {
+      "id": "w-0080",
+      "text": "out",
+      "start": 31.66,
+      "end": 31.78
+    },
+    {
+      "id": "w-0081",
+      "text": "quite",
+      "start": 31.78,
+      "end": 32.0
+    },
+    {
+      "id": "w-0082",
+      "text": "easily.",
+      "start": 32.0,
+      "end": 32.38
+    },
+    {
+      "id": "w-0083",
+      "text": "The",
+      "start": 33.78,
+      "end": 34.22
+    },
+    {
+      "id": "w-0084",
+      "text": "Wolf",
+      "start": 34.22,
+      "end": 34.4
+    },
+    {
+      "id": "w-0085",
+      "text": "thanked",
+      "start": 34.4,
+      "end": 34.7
+    },
+    {
+      "id": "w-0086",
+      "text": "her",
+      "start": 34.7,
+      "end": 34.88
+    },
+    {
+      "id": "w-0087",
+      "text": "warmly",
+      "start": 34.88,
+      "end": 35.38
+    },
+    {
+      "id": "w-0088",
+      "text": "and",
+      "start": 35.38,
+      "end": 35.8
+    },
+    {
+      "id": "w-0089",
+      "text": "was",
+      "start": 35.8,
+      "end": 35.92
+    },
+    {
+      "id": "w-0090",
+      "text": "just",
+      "start": 35.92,
+      "end": 36.18
+    },
+    {
+      "id": "w-0091",
+      "text": "turning",
+      "start": 36.18,
+      "end": 36.4
+    },
+    {
+      "id": "w-0092",
+      "text": "away",
+      "start": 36.4,
+      "end": 36.7
+    },
+    {
+      "id": "w-0093",
+      "text": "when",
+      "start": 36.7,
+      "end": 36.94
+    },
+    {
+      "id": "w-0094",
+      "text": "she",
+      "start": 36.94,
+      "end": 37.06
+    },
+    {
+      "id": "w-0095",
+      "text": "cried.",
+      "start": 37.06,
+      "end": 37.28
+    },
+    {
+      "id": "w-0096",
+      "text": "What",
+      "start": 38.12,
+      "end": 38.48
+    },
+    {
+      "id": "w-0097",
+      "text": "about",
+      "start": 38.48,
+      "end": 38.66
+    },
+    {
+      "id": "w-0098",
+      "text": "that",
+      "start": 38.66,
+      "end": 38.9
+    },
+    {
+      "id": "w-0099",
+      "text": "feel",
+      "start": 38.9,
+      "end": 39.1
+    },
+    {
+      "id": "w-0100",
+      "text": "-mine?",
+      "start": 39.1,
+      "end": 39.44
+    },
+    {
+      "id": "w-0101",
+      "text": "Well,",
+      "start": 40.2,
+      "end": 40.64
+    },
+    {
+      "id": "w-0102",
+      "text": "what",
+      "start": 41.14,
+      "end": 41.3
+    },
+    {
+      "id": "w-0103",
+      "text": "about",
+      "start": 41.3,
+      "end": 41.56
+    },
+    {
+      "id": "w-0104",
+      "text": "it",
+      "start": 41.56,
+      "end": 41.72
+    },
+    {
+      "id": "w-0105",
+      "text": "snapped",
+      "start": 41.72,
+      "end": 41.9
+    },
+    {
+      "id": "w-0106",
+      "text": "the",
+      "start": 41.9,
+      "end": 42.16
+    },
+    {
+      "id": "w-0107",
+      "text": "Wolf,",
+      "start": 42.16,
+      "end": 42.3
+    },
+    {
+      "id": "w-0108",
+      "text": "bearing",
+      "start": 43.14,
+      "end": 43.18
+    },
+    {
+      "id": "w-0109",
+      "text": "his",
+      "start": 43.18,
+      "end": 43.48
+    },
+    {
+      "id": "w-0110",
+      "text": "feet",
+      "start": 43.48,
+      "end": 43.68
+    },
+    {
+      "id": "w-0111",
+      "text": "as",
+      "start": 43.68,
+      "end": 43.94
+    },
+    {
+      "id": "w-0112",
+      "text": "he",
+      "start": 43.94,
+      "end": 44.04
+    },
+    {
+      "id": "w-0113",
+      "text": "spoke.",
+      "start": 44.04,
+      "end": 44.28
+    },
+    {
+      "id": "w-0114",
+      "text": "You",
+      "start": 45.3,
+      "end": 45.5
+    },
+    {
+      "id": "w-0115",
+      "text": "can",
+      "start": 45.5,
+      "end": 45.62
+    },
+    {
+      "id": "w-0116",
+      "text": "go",
+      "start": 45.62,
+      "end": 45.8
+    },
+    {
+      "id": "w-0117",
+      "text": "about",
+      "start": 45.8,
+      "end": 46.04
+    },
+    {
+      "id": "w-0118",
+      "text": "boasting",
+      "start": 46.04,
+      "end": 46.4
+    },
+    {
+      "id": "w-0119",
+      "text": "that",
+      "start": 46.4,
+      "end": 46.7
+    },
+    {
+      "id": "w-0120",
+      "text": "you",
+      "start": 46.7,
+      "end": 46.84
+    },
+    {
+      "id": "w-0121",
+      "text": "once",
+      "start": 46.84,
+      "end": 47.0
+    },
+    {
+      "id": "w-0122",
+      "text": "put",
+      "start": 47.0,
+      "end": 47.24
+    },
+    {
+      "id": "w-0123",
+      "text": "your",
+      "start": 47.24,
+      "end": 47.42
+    },
+    {
+      "id": "w-0124",
+      "text": "head",
+      "start": 47.42,
+      "end": 47.62
+    },
+    {
+      "id": "w-0125",
+      "text": "into",
+      "start": 47.62,
+      "end": 47.9
+    },
+    {
+      "id": "w-0126",
+      "text": "a",
+      "start": 47.9,
+      "end": 48.04
+    },
+    {
+      "id": "w-0127",
+      "text": "wolf's",
+      "start": 48.04,
+      "end": 48.36
+    },
+    {
+      "id": "w-0128",
+      "text": "mouth",
+      "start": 48.36,
+      "end": 48.54
+    },
+    {
+      "id": "w-0129",
+      "text": "and",
+      "start": 48.54,
+      "end": 49.14
+    },
+    {
+      "id": "w-0130",
+      "text": "didn't",
+      "start": 49.14,
+      "end": 49.42
+    },
+    {
+      "id": "w-0131",
+      "text": "get",
+      "start": 49.42,
+      "end": 49.58
+    },
+    {
+      "id": "w-0132",
+      "text": "it",
+      "start": 49.58,
+      "end": 49.72
+    },
+    {
+      "id": "w-0133",
+      "text": "bitten",
+      "start": 49.72,
+      "end": 49.9
+    },
+    {
+      "id": "w-0134",
+      "text": "off.",
+      "start": 49.9,
+      "end": 50.26
+    },
+    {
+      "id": "w-0135",
+      "text": "What",
+      "start": 51.04,
+      "end": 51.48
+    },
+    {
+      "id": "w-0136",
+      "text": "more",
+      "start": 51.48,
+      "end": 51.66
+    },
+    {
+      "id": "w-0137",
+      "text": "do",
+      "start": 51.66,
+      "end": 51.78
+    },
+    {
+      "id": "w-0138",
+      "text": "you",
+      "start": 51.78,
+      "end": 51.88
+    },
+    {
+      "id": "w-0139",
+      "text": "want?",
+      "start": 51.88,
+      "end": 52.08
+    },
+    {
+      "id": "w-0140",
+      "text": "End",
+      "start": 55.68,
+      "end": 56.1
+    },
+    {
+      "id": "w-0141",
+      "text": "of",
+      "start": 56.1,
+      "end": 56.24
+    },
+    {
+      "id": "w-0142",
+      "text": "the",
+      "start": 56.24,
+      "end": 56.36
+    },
+    {
+      "id": "w-0143",
+      "text": "wolf",
+      "start": 56.36,
+      "end": 56.56
+    },
+    {
+      "id": "w-0144",
+      "text": "and",
+      "start": 56.56,
+      "end": 56.78
+    },
+    {
+      "id": "w-0145",
+      "text": "the",
+      "start": 56.78,
+      "end": 56.86
+    },
+    {
+      "id": "w-0146",
+      "text": "crane.",
+      "start": 56.86,
+      "end": 57.12
+    }
+  ]
+}

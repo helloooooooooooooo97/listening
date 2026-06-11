@@ -1,0 +1,909 @@
+{
+  "id": "the-fawn-and-his-mother",
+  "title": "The Fawn and His Mother",
+  "subtitle": "Aesop's Fables, Volume 04",
+  "level": "A2-B1",
+  "duration": 58.2,
+  "audioFileName": "the-fawn-and-his-mother.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-4-fables-76-100/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 1.84,
+      "end": 4.04,
+      "text": "This is a labor box recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 4.72,
+      "end": 7.48,
+      "text": "All labor box recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 8.36,
+      "end": 12.94,
+      "text": "For more information or to volunteer, please visit laborbox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 13.8,
+      "end": 17.32,
+      "text": "Recorded by Patty McCoy in Hudson, Colorado.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 18.46,
+      "end": 21.38,
+      "text": "Aesop's Fables, the Faun and his mother.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 22.4,
+      "end": 29.74,
+      "text": "A hind said to her faun, who was now well grown and strong, my son nature has given",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 29.74,
+      "end": 32.84,
+      "text": "you a powerful body and a stout pair of horns.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 33.6,
+      "end": 38.5,
+      "text": "And I can't think why you are such a coward as to run away from the hounds.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 39.04,
+      "end": 45.66,
+      "text": "Just then they both heard the sound of a pack in full cry, but at a considerable distance.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 46.72,
+      "end": 49.56,
+      "text": "You stay where you are, said the hind.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 49.92,
+      "end": 50.82,
+      "text": "Never mind me.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 51.56,
+      "end": 55.44,
+      "text": "And with that, you ran off as fast as your legs could carry her.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 56.26,
+      "end": 58.2,
+      "text": "End of the faun and his mother.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 1.84,
+      "end": 2.58
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 2.58,
+      "end": 2.98
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 2.98,
+      "end": 3.16
+    },
+    {
+      "id": "w-0003",
+      "text": "labor",
+      "start": 3.16,
+      "end": 3.32
+    },
+    {
+      "id": "w-0004",
+      "text": "box",
+      "start": 3.32,
+      "end": 3.66
+    },
+    {
+      "id": "w-0005",
+      "text": "recording.",
+      "start": 3.66,
+      "end": 4.04
+    },
+    {
+      "id": "w-0006",
+      "text": "All",
+      "start": 4.72,
+      "end": 4.86
+    },
+    {
+      "id": "w-0007",
+      "text": "labor",
+      "start": 4.86,
+      "end": 5.22
+    },
+    {
+      "id": "w-0008",
+      "text": "box",
+      "start": 5.22,
+      "end": 5.64
+    },
+    {
+      "id": "w-0009",
+      "text": "recordings",
+      "start": 5.64,
+      "end": 6.24
+    },
+    {
+      "id": "w-0010",
+      "text": "are",
+      "start": 6.24,
+      "end": 6.6
+    },
+    {
+      "id": "w-0011",
+      "text": "in",
+      "start": 6.6,
+      "end": 6.74
+    },
+    {
+      "id": "w-0012",
+      "text": "the",
+      "start": 6.74,
+      "end": 6.86
+    },
+    {
+      "id": "w-0013",
+      "text": "public",
+      "start": 6.86,
+      "end": 7.12
+    },
+    {
+      "id": "w-0014",
+      "text": "domain.",
+      "start": 7.12,
+      "end": 7.48
+    },
+    {
+      "id": "w-0015",
+      "text": "For",
+      "start": 8.36,
+      "end": 8.38
+    },
+    {
+      "id": "w-0016",
+      "text": "more",
+      "start": 8.38,
+      "end": 8.66
+    },
+    {
+      "id": "w-0017",
+      "text": "information",
+      "start": 8.66,
+      "end": 9.18
+    },
+    {
+      "id": "w-0018",
+      "text": "or",
+      "start": 9.18,
+      "end": 9.76
+    },
+    {
+      "id": "w-0019",
+      "text": "to",
+      "start": 9.76,
+      "end": 9.94
+    },
+    {
+      "id": "w-0020",
+      "text": "volunteer,",
+      "start": 9.94,
+      "end": 10.5
+    },
+    {
+      "id": "w-0021",
+      "text": "please",
+      "start": 10.82,
+      "end": 11.02
+    },
+    {
+      "id": "w-0022",
+      "text": "visit",
+      "start": 11.02,
+      "end": 11.36
+    },
+    {
+      "id": "w-0023",
+      "text": "laborbox",
+      "start": 11.36,
+      "end": 12.12
+    },
+    {
+      "id": "w-0024",
+      "text": ".org.",
+      "start": 12.12,
+      "end": 12.94
+    },
+    {
+      "id": "w-0025",
+      "text": "Recorded",
+      "start": 13.8,
+      "end": 14.54
+    },
+    {
+      "id": "w-0026",
+      "text": "by",
+      "start": 14.54,
+      "end": 15.02
+    },
+    {
+      "id": "w-0027",
+      "text": "Patty",
+      "start": 15.02,
+      "end": 15.44
+    },
+    {
+      "id": "w-0028",
+      "text": "McCoy",
+      "start": 15.44,
+      "end": 15.76
+    },
+    {
+      "id": "w-0029",
+      "text": "in",
+      "start": 15.76,
+      "end": 16.38
+    },
+    {
+      "id": "w-0030",
+      "text": "Hudson,",
+      "start": 16.38,
+      "end": 16.58
+    },
+    {
+      "id": "w-0031",
+      "text": "Colorado.",
+      "start": 16.98,
+      "end": 17.32
+    },
+    {
+      "id": "w-0032",
+      "text": "Aesop's",
+      "start": 18.46,
+      "end": 19.12
+    },
+    {
+      "id": "w-0033",
+      "text": "Fables,",
+      "start": 19.12,
+      "end": 19.56
+    },
+    {
+      "id": "w-0034",
+      "text": "the",
+      "start": 20.24,
+      "end": 20.24
+    },
+    {
+      "id": "w-0035",
+      "text": "Faun",
+      "start": 20.24,
+      "end": 20.56
+    },
+    {
+      "id": "w-0036",
+      "text": "and",
+      "start": 20.56,
+      "end": 20.92
+    },
+    {
+      "id": "w-0037",
+      "text": "his",
+      "start": 20.92,
+      "end": 21.16
+    },
+    {
+      "id": "w-0038",
+      "text": "mother.",
+      "start": 21.16,
+      "end": 21.38
+    },
+    {
+      "id": "w-0039",
+      "text": "A",
+      "start": 22.4,
+      "end": 23.02
+    },
+    {
+      "id": "w-0040",
+      "text": "hind",
+      "start": 23.02,
+      "end": 23.4
+    },
+    {
+      "id": "w-0041",
+      "text": "said",
+      "start": 23.4,
+      "end": 23.92
+    },
+    {
+      "id": "w-0042",
+      "text": "to",
+      "start": 23.92,
+      "end": 24.18
+    },
+    {
+      "id": "w-0043",
+      "text": "her",
+      "start": 24.18,
+      "end": 24.3
+    },
+    {
+      "id": "w-0044",
+      "text": "faun,",
+      "start": 24.3,
+      "end": 24.68
+    },
+    {
+      "id": "w-0045",
+      "text": "who",
+      "start": 25.26,
+      "end": 25.58
+    },
+    {
+      "id": "w-0046",
+      "text": "was",
+      "start": 25.58,
+      "end": 25.76
+    },
+    {
+      "id": "w-0047",
+      "text": "now",
+      "start": 25.76,
+      "end": 26.02
+    },
+    {
+      "id": "w-0048",
+      "text": "well",
+      "start": 26.02,
+      "end": 26.28
+    },
+    {
+      "id": "w-0049",
+      "text": "grown",
+      "start": 26.28,
+      "end": 26.52
+    },
+    {
+      "id": "w-0050",
+      "text": "and",
+      "start": 26.52,
+      "end": 26.92
+    },
+    {
+      "id": "w-0051",
+      "text": "strong,",
+      "start": 26.92,
+      "end": 27.2
+    },
+    {
+      "id": "w-0052",
+      "text": "my",
+      "start": 27.82,
+      "end": 28.26
+    },
+    {
+      "id": "w-0053",
+      "text": "son",
+      "start": 28.26,
+      "end": 28.62
+    },
+    {
+      "id": "w-0054",
+      "text": "nature",
+      "start": 28.62,
+      "end": 29.06
+    },
+    {
+      "id": "w-0055",
+      "text": "has",
+      "start": 29.06,
+      "end": 29.48
+    },
+    {
+      "id": "w-0056",
+      "text": "given",
+      "start": 29.48,
+      "end": 29.74
+    },
+    {
+      "id": "w-0057",
+      "text": "you",
+      "start": 29.74,
+      "end": 30.02
+    },
+    {
+      "id": "w-0058",
+      "text": "a",
+      "start": 30.02,
+      "end": 30.16
+    },
+    {
+      "id": "w-0059",
+      "text": "powerful",
+      "start": 30.16,
+      "end": 30.44
+    },
+    {
+      "id": "w-0060",
+      "text": "body",
+      "start": 30.44,
+      "end": 30.98
+    },
+    {
+      "id": "w-0061",
+      "text": "and",
+      "start": 30.98,
+      "end": 31.34
+    },
+    {
+      "id": "w-0062",
+      "text": "a",
+      "start": 31.34,
+      "end": 31.48
+    },
+    {
+      "id": "w-0063",
+      "text": "stout",
+      "start": 31.48,
+      "end": 31.72
+    },
+    {
+      "id": "w-0064",
+      "text": "pair",
+      "start": 31.72,
+      "end": 32.18
+    },
+    {
+      "id": "w-0065",
+      "text": "of",
+      "start": 32.18,
+      "end": 32.48
+    },
+    {
+      "id": "w-0066",
+      "text": "horns.",
+      "start": 32.48,
+      "end": 32.84
+    },
+    {
+      "id": "w-0067",
+      "text": "And",
+      "start": 33.6,
+      "end": 33.86
+    },
+    {
+      "id": "w-0068",
+      "text": "I",
+      "start": 33.86,
+      "end": 34.0
+    },
+    {
+      "id": "w-0069",
+      "text": "can't",
+      "start": 34.0,
+      "end": 34.4
+    },
+    {
+      "id": "w-0070",
+      "text": "think",
+      "start": 34.4,
+      "end": 34.62
+    },
+    {
+      "id": "w-0071",
+      "text": "why",
+      "start": 34.62,
+      "end": 35.1
+    },
+    {
+      "id": "w-0072",
+      "text": "you",
+      "start": 35.1,
+      "end": 35.3
+    },
+    {
+      "id": "w-0073",
+      "text": "are",
+      "start": 35.3,
+      "end": 35.44
+    },
+    {
+      "id": "w-0074",
+      "text": "such",
+      "start": 35.44,
+      "end": 35.7
+    },
+    {
+      "id": "w-0075",
+      "text": "a",
+      "start": 35.7,
+      "end": 35.9
+    },
+    {
+      "id": "w-0076",
+      "text": "coward",
+      "start": 35.9,
+      "end": 36.32
+    },
+    {
+      "id": "w-0077",
+      "text": "as",
+      "start": 36.32,
+      "end": 36.98
+    },
+    {
+      "id": "w-0078",
+      "text": "to",
+      "start": 36.98,
+      "end": 37.2
+    },
+    {
+      "id": "w-0079",
+      "text": "run",
+      "start": 37.2,
+      "end": 37.42
+    },
+    {
+      "id": "w-0080",
+      "text": "away",
+      "start": 37.42,
+      "end": 37.68
+    },
+    {
+      "id": "w-0081",
+      "text": "from",
+      "start": 37.68,
+      "end": 37.94
+    },
+    {
+      "id": "w-0082",
+      "text": "the",
+      "start": 37.94,
+      "end": 38.1
+    },
+    {
+      "id": "w-0083",
+      "text": "hounds.",
+      "start": 38.1,
+      "end": 38.5
+    },
+    {
+      "id": "w-0084",
+      "text": "Just",
+      "start": 39.04,
+      "end": 39.48
+    },
+    {
+      "id": "w-0085",
+      "text": "then",
+      "start": 39.48,
+      "end": 39.8
+    },
+    {
+      "id": "w-0086",
+      "text": "they",
+      "start": 39.8,
+      "end": 40.34
+    },
+    {
+      "id": "w-0087",
+      "text": "both",
+      "start": 40.34,
+      "end": 40.6
+    },
+    {
+      "id": "w-0088",
+      "text": "heard",
+      "start": 40.6,
+      "end": 40.92
+    },
+    {
+      "id": "w-0089",
+      "text": "the",
+      "start": 40.92,
+      "end": 41.48
+    },
+    {
+      "id": "w-0090",
+      "text": "sound",
+      "start": 41.48,
+      "end": 41.82
+    },
+    {
+      "id": "w-0091",
+      "text": "of",
+      "start": 41.82,
+      "end": 42.08
+    },
+    {
+      "id": "w-0092",
+      "text": "a",
+      "start": 42.08,
+      "end": 42.16
+    },
+    {
+      "id": "w-0093",
+      "text": "pack",
+      "start": 42.16,
+      "end": 42.4
+    },
+    {
+      "id": "w-0094",
+      "text": "in",
+      "start": 42.4,
+      "end": 42.68
+    },
+    {
+      "id": "w-0095",
+      "text": "full",
+      "start": 42.68,
+      "end": 42.94
+    },
+    {
+      "id": "w-0096",
+      "text": "cry,",
+      "start": 42.94,
+      "end": 43.32
+    },
+    {
+      "id": "w-0097",
+      "text": "but",
+      "start": 44.04,
+      "end": 44.12
+    },
+    {
+      "id": "w-0098",
+      "text": "at",
+      "start": 44.12,
+      "end": 44.32
+    },
+    {
+      "id": "w-0099",
+      "text": "a",
+      "start": 44.32,
+      "end": 44.52
+    },
+    {
+      "id": "w-0100",
+      "text": "considerable",
+      "start": 44.52,
+      "end": 44.82
+    },
+    {
+      "id": "w-0101",
+      "text": "distance.",
+      "start": 44.82,
+      "end": 45.66
+    },
+    {
+      "id": "w-0102",
+      "text": "You",
+      "start": 46.72,
+      "end": 47.32
+    },
+    {
+      "id": "w-0103",
+      "text": "stay",
+      "start": 47.32,
+      "end": 47.54
+    },
+    {
+      "id": "w-0104",
+      "text": "where",
+      "start": 47.54,
+      "end": 47.82
+    },
+    {
+      "id": "w-0105",
+      "text": "you",
+      "start": 47.82,
+      "end": 48.02
+    },
+    {
+      "id": "w-0106",
+      "text": "are,",
+      "start": 48.02,
+      "end": 48.36
+    },
+    {
+      "id": "w-0107",
+      "text": "said",
+      "start": 48.82,
+      "end": 49.16
+    },
+    {
+      "id": "w-0108",
+      "text": "the",
+      "start": 49.16,
+      "end": 49.32
+    },
+    {
+      "id": "w-0109",
+      "text": "hind.",
+      "start": 49.32,
+      "end": 49.56
+    },
+    {
+      "id": "w-0110",
+      "text": "Never",
+      "start": 49.92,
+      "end": 50.1
+    },
+    {
+      "id": "w-0111",
+      "text": "mind",
+      "start": 50.1,
+      "end": 50.46
+    },
+    {
+      "id": "w-0112",
+      "text": "me.",
+      "start": 50.46,
+      "end": 50.82
+    },
+    {
+      "id": "w-0113",
+      "text": "And",
+      "start": 51.56,
+      "end": 51.62
+    },
+    {
+      "id": "w-0114",
+      "text": "with",
+      "start": 51.62,
+      "end": 51.78
+    },
+    {
+      "id": "w-0115",
+      "text": "that,",
+      "start": 51.78,
+      "end": 52.1
+    },
+    {
+      "id": "w-0116",
+      "text": "you",
+      "start": 52.44,
+      "end": 52.5
+    },
+    {
+      "id": "w-0117",
+      "text": "ran",
+      "start": 52.5,
+      "end": 52.74
+    },
+    {
+      "id": "w-0118",
+      "text": "off",
+      "start": 52.74,
+      "end": 53.06
+    },
+    {
+      "id": "w-0119",
+      "text": "as",
+      "start": 53.06,
+      "end": 53.3
+    },
+    {
+      "id": "w-0120",
+      "text": "fast",
+      "start": 53.3,
+      "end": 53.54
+    },
+    {
+      "id": "w-0121",
+      "text": "as",
+      "start": 53.54,
+      "end": 53.88
+    },
+    {
+      "id": "w-0122",
+      "text": "your",
+      "start": 53.88,
+      "end": 54.04
+    },
+    {
+      "id": "w-0123",
+      "text": "legs",
+      "start": 54.04,
+      "end": 54.24
+    },
+    {
+      "id": "w-0124",
+      "text": "could",
+      "start": 54.24,
+      "end": 54.68
+    },
+    {
+      "id": "w-0125",
+      "text": "carry",
+      "start": 54.68,
+      "end": 55.12
+    },
+    {
+      "id": "w-0126",
+      "text": "her.",
+      "start": 55.12,
+      "end": 55.44
+    },
+    {
+      "id": "w-0127",
+      "text": "End",
+      "start": 56.26,
+      "end": 56.4
+    },
+    {
+      "id": "w-0128",
+      "text": "of",
+      "start": 56.4,
+      "end": 56.7
+    },
+    {
+      "id": "w-0129",
+      "text": "the",
+      "start": 56.7,
+      "end": 57.1
+    },
+    {
+      "id": "w-0130",
+      "text": "faun",
+      "start": 57.1,
+      "end": 57.4
+    },
+    {
+      "id": "w-0131",
+      "text": "and",
+      "start": 57.4,
+      "end": 57.72
+    },
+    {
+      "id": "w-0132",
+      "text": "his",
+      "start": 57.72,
+      "end": 57.94
+    },
+    {
+      "id": "w-0133",
+      "text": "mother.",
+      "start": 57.94,
+      "end": 58.2
+    }
+  ]
+}

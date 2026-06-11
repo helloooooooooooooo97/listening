@@ -1,0 +1,693 @@
+{
+  "id": "the-old-woman-and-the-wine-jar",
+  "title": "The Old Woman and The Wine-Jar",
+  "subtitle": "Aesop's Fables, Volume 05",
+  "level": "A2-B1",
+  "duration": 45.3,
+  "audioFileName": "the-old-woman-and-the-wine-jar.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-5-fables-101-125/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 0.0,
+      "end": 6.34,
+      "text": "This is a LibriVox recording. All LibriVox recordings are in the public domain. For more",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 6.34,
+      "end": 12.8,
+      "text": "information or to volunteer, please visit LibriVox.org, recorded by Vicki Barber.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 13.92,
+      "end": 21.24,
+      "text": "Asop's Fables, the old woman and the wine jar. An old woman picked up an empty wine",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 21.24,
+      "end": 27.22,
+      "text": "jar which had once contained a rare and costly wine and which still retained some traces",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 27.22,
+      "end": 33.08,
+      "text": "of its exquisite bouquet. She raised it to her nose and sniffed at it again and again.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 33.84,
+      "end": 41.06,
+      "text": "Ah, she cried. How delicious must have been the liquid which has left behind so ravishing a smell.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 42.4,
+      "end": 45.34,
+      "text": "The end of the old woman and the wine jar.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 0.0,
+      "end": 0.94
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 0.94,
+      "end": 1.2
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 1.2,
+      "end": 1.36
+    },
+    {
+      "id": "w-0003",
+      "text": "LibriVox",
+      "start": 1.36,
+      "end": 1.96
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 1.96,
+      "end": 2.16
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 3.1,
+      "end": 3.2
+    },
+    {
+      "id": "w-0006",
+      "text": "LibriVox",
+      "start": 3.2,
+      "end": 3.92
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 3.92,
+      "end": 4.1
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 4.1,
+      "end": 4.64
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 4.64,
+      "end": 4.74
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 4.74,
+      "end": 4.82
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 4.82,
+      "end": 5.08
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 5.08,
+      "end": 5.38
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 6.14,
+      "end": 6.14
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 6.14,
+      "end": 6.34
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 6.34,
+      "end": 6.72
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 6.72,
+      "end": 7.4
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 7.4,
+      "end": 7.62
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 7.62,
+      "end": 7.9
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 8.78,
+      "end": 8.94
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 8.94,
+      "end": 9.28
+    },
+    {
+      "id": "w-0021",
+      "text": "LibriVox",
+      "start": 9.28,
+      "end": 10.0
+    },
+    {
+      "id": "w-0022",
+      "text": ".org,",
+      "start": 10.0,
+      "end": 10.7
+    },
+    {
+      "id": "w-0023",
+      "text": "recorded",
+      "start": 11.28,
+      "end": 11.78
+    },
+    {
+      "id": "w-0024",
+      "text": "by",
+      "start": 11.78,
+      "end": 12.2
+    },
+    {
+      "id": "w-0025",
+      "text": "Vicki",
+      "start": 12.2,
+      "end": 12.58
+    },
+    {
+      "id": "w-0026",
+      "text": "Barber.",
+      "start": 12.58,
+      "end": 12.8
+    },
+    {
+      "id": "w-0027",
+      "text": "Asop's",
+      "start": 13.92,
+      "end": 14.56
+    },
+    {
+      "id": "w-0028",
+      "text": "Fables,",
+      "start": 14.56,
+      "end": 14.9
+    },
+    {
+      "id": "w-0029",
+      "text": "the",
+      "start": 15.72,
+      "end": 15.74
+    },
+    {
+      "id": "w-0030",
+      "text": "old",
+      "start": 15.74,
+      "end": 15.92
+    },
+    {
+      "id": "w-0031",
+      "text": "woman",
+      "start": 15.92,
+      "end": 16.26
+    },
+    {
+      "id": "w-0032",
+      "text": "and",
+      "start": 16.26,
+      "end": 16.9
+    },
+    {
+      "id": "w-0033",
+      "text": "the",
+      "start": 16.9,
+      "end": 17.04
+    },
+    {
+      "id": "w-0034",
+      "text": "wine",
+      "start": 17.04,
+      "end": 17.28
+    },
+    {
+      "id": "w-0035",
+      "text": "jar.",
+      "start": 17.28,
+      "end": 17.58
+    },
+    {
+      "id": "w-0036",
+      "text": "An",
+      "start": 18.52,
+      "end": 19.2
+    },
+    {
+      "id": "w-0037",
+      "text": "old",
+      "start": 19.2,
+      "end": 19.36
+    },
+    {
+      "id": "w-0038",
+      "text": "woman",
+      "start": 19.36,
+      "end": 19.82
+    },
+    {
+      "id": "w-0039",
+      "text": "picked",
+      "start": 19.82,
+      "end": 20.16
+    },
+    {
+      "id": "w-0040",
+      "text": "up",
+      "start": 20.16,
+      "end": 20.46
+    },
+    {
+      "id": "w-0041",
+      "text": "an",
+      "start": 20.46,
+      "end": 20.64
+    },
+    {
+      "id": "w-0042",
+      "text": "empty",
+      "start": 20.64,
+      "end": 20.86
+    },
+    {
+      "id": "w-0043",
+      "text": "wine",
+      "start": 20.86,
+      "end": 21.24
+    },
+    {
+      "id": "w-0044",
+      "text": "jar",
+      "start": 21.24,
+      "end": 21.56
+    },
+    {
+      "id": "w-0045",
+      "text": "which",
+      "start": 21.56,
+      "end": 21.96
+    },
+    {
+      "id": "w-0046",
+      "text": "had",
+      "start": 21.96,
+      "end": 22.1
+    },
+    {
+      "id": "w-0047",
+      "text": "once",
+      "start": 22.1,
+      "end": 22.34
+    },
+    {
+      "id": "w-0048",
+      "text": "contained",
+      "start": 22.34,
+      "end": 22.84
+    },
+    {
+      "id": "w-0049",
+      "text": "a",
+      "start": 22.84,
+      "end": 23.24
+    },
+    {
+      "id": "w-0050",
+      "text": "rare",
+      "start": 23.24,
+      "end": 23.56
+    },
+    {
+      "id": "w-0051",
+      "text": "and",
+      "start": 23.56,
+      "end": 23.86
+    },
+    {
+      "id": "w-0052",
+      "text": "costly",
+      "start": 23.86,
+      "end": 24.22
+    },
+    {
+      "id": "w-0053",
+      "text": "wine",
+      "start": 24.22,
+      "end": 24.74
+    },
+    {
+      "id": "w-0054",
+      "text": "and",
+      "start": 24.74,
+      "end": 25.5
+    },
+    {
+      "id": "w-0055",
+      "text": "which",
+      "start": 25.5,
+      "end": 25.72
+    },
+    {
+      "id": "w-0056",
+      "text": "still",
+      "start": 25.72,
+      "end": 26.08
+    },
+    {
+      "id": "w-0057",
+      "text": "retained",
+      "start": 26.08,
+      "end": 26.36
+    },
+    {
+      "id": "w-0058",
+      "text": "some",
+      "start": 26.36,
+      "end": 26.94
+    },
+    {
+      "id": "w-0059",
+      "text": "traces",
+      "start": 26.94,
+      "end": 27.22
+    },
+    {
+      "id": "w-0060",
+      "text": "of",
+      "start": 27.22,
+      "end": 27.62
+    },
+    {
+      "id": "w-0061",
+      "text": "its",
+      "start": 27.62,
+      "end": 27.76
+    },
+    {
+      "id": "w-0062",
+      "text": "exquisite",
+      "start": 27.76,
+      "end": 28.14
+    },
+    {
+      "id": "w-0063",
+      "text": "bouquet.",
+      "start": 28.14,
+      "end": 28.72
+    },
+    {
+      "id": "w-0064",
+      "text": "She",
+      "start": 29.46,
+      "end": 29.9
+    },
+    {
+      "id": "w-0065",
+      "text": "raised",
+      "start": 29.9,
+      "end": 30.08
+    },
+    {
+      "id": "w-0066",
+      "text": "it",
+      "start": 30.08,
+      "end": 30.38
+    },
+    {
+      "id": "w-0067",
+      "text": "to",
+      "start": 30.38,
+      "end": 30.54
+    },
+    {
+      "id": "w-0068",
+      "text": "her",
+      "start": 30.54,
+      "end": 30.68
+    },
+    {
+      "id": "w-0069",
+      "text": "nose",
+      "start": 30.68,
+      "end": 30.98
+    },
+    {
+      "id": "w-0070",
+      "text": "and",
+      "start": 30.98,
+      "end": 31.46
+    },
+    {
+      "id": "w-0071",
+      "text": "sniffed",
+      "start": 31.46,
+      "end": 31.94
+    },
+    {
+      "id": "w-0072",
+      "text": "at",
+      "start": 31.94,
+      "end": 32.04
+    },
+    {
+      "id": "w-0073",
+      "text": "it",
+      "start": 32.04,
+      "end": 32.18
+    },
+    {
+      "id": "w-0074",
+      "text": "again",
+      "start": 32.18,
+      "end": 32.52
+    },
+    {
+      "id": "w-0075",
+      "text": "and",
+      "start": 32.52,
+      "end": 32.76
+    },
+    {
+      "id": "w-0076",
+      "text": "again.",
+      "start": 32.76,
+      "end": 33.08
+    },
+    {
+      "id": "w-0077",
+      "text": "Ah,",
+      "start": 33.84,
+      "end": 34.22
+    },
+    {
+      "id": "w-0078",
+      "text": "she",
+      "start": 34.68,
+      "end": 34.78
+    },
+    {
+      "id": "w-0079",
+      "text": "cried.",
+      "start": 34.78,
+      "end": 35.06
+    },
+    {
+      "id": "w-0080",
+      "text": "How",
+      "start": 35.8,
+      "end": 35.94
+    },
+    {
+      "id": "w-0081",
+      "text": "delicious",
+      "start": 35.94,
+      "end": 36.38
+    },
+    {
+      "id": "w-0082",
+      "text": "must",
+      "start": 36.38,
+      "end": 36.96
+    },
+    {
+      "id": "w-0083",
+      "text": "have",
+      "start": 36.96,
+      "end": 37.26
+    },
+    {
+      "id": "w-0084",
+      "text": "been",
+      "start": 37.26,
+      "end": 37.5
+    },
+    {
+      "id": "w-0085",
+      "text": "the",
+      "start": 37.5,
+      "end": 37.72
+    },
+    {
+      "id": "w-0086",
+      "text": "liquid",
+      "start": 37.72,
+      "end": 38.0
+    },
+    {
+      "id": "w-0087",
+      "text": "which",
+      "start": 38.0,
+      "end": 38.68
+    },
+    {
+      "id": "w-0088",
+      "text": "has",
+      "start": 38.68,
+      "end": 38.88
+    },
+    {
+      "id": "w-0089",
+      "text": "left",
+      "start": 38.88,
+      "end": 39.1
+    },
+    {
+      "id": "w-0090",
+      "text": "behind",
+      "start": 39.1,
+      "end": 39.52
+    },
+    {
+      "id": "w-0091",
+      "text": "so",
+      "start": 39.52,
+      "end": 40.06
+    },
+    {
+      "id": "w-0092",
+      "text": "ravishing",
+      "start": 40.06,
+      "end": 40.6
+    },
+    {
+      "id": "w-0093",
+      "text": "a",
+      "start": 40.6,
+      "end": 40.8
+    },
+    {
+      "id": "w-0094",
+      "text": "smell.",
+      "start": 40.8,
+      "end": 41.06
+    },
+    {
+      "id": "w-0095",
+      "text": "The",
+      "start": 42.4,
+      "end": 43.0
+    },
+    {
+      "id": "w-0096",
+      "text": "end",
+      "start": 43.0,
+      "end": 43.28
+    },
+    {
+      "id": "w-0097",
+      "text": "of",
+      "start": 43.28,
+      "end": 43.48
+    },
+    {
+      "id": "w-0098",
+      "text": "the",
+      "start": 43.48,
+      "end": 43.64
+    },
+    {
+      "id": "w-0099",
+      "text": "old",
+      "start": 43.64,
+      "end": 43.84
+    },
+    {
+      "id": "w-0100",
+      "text": "woman",
+      "start": 43.84,
+      "end": 44.18
+    },
+    {
+      "id": "w-0101",
+      "text": "and",
+      "start": 44.18,
+      "end": 44.66
+    },
+    {
+      "id": "w-0102",
+      "text": "the",
+      "start": 44.66,
+      "end": 44.8
+    },
+    {
+      "id": "w-0103",
+      "text": "wine",
+      "start": 44.8,
+      "end": 45.06
+    },
+    {
+      "id": "w-0104",
+      "text": "jar.",
+      "start": 45.06,
+      "end": 45.34
+    }
+  ]
+}

@@ -53,6 +53,7 @@ from .progress import router as progress_router
 from .stats import router as stats_router
 from .import_route import router as import_router
 from .collections import router as collections_router
+from .cards import router as cards_router
 
 routers = [
     router,             # lessons
@@ -64,4 +65,5 @@ routers = [
     stats_router,
     import_router,
     collections_router,
+    cards_router,
 ]

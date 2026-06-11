@@ -1,0 +1,1498 @@
+{
+  "id": "lion-mouse",
+  "title": "The Lion and The Mouse",
+  "subtitle": "Aesop's Fables, Volume 01",
+  "level": "A2-B1",
+  "duration": 105.0,
+  "audioFileName": "lion-mouse.mp3",
+  "sourceURL": "https://librivox.org/aesops-fables-volume-1-fables-1-25/",
+  "textSourceURL": "https://www.gutenberg.org/ebooks/11339",
+  "transcript": [
+    {
+      "id": "line-000",
+      "start": 2.862,
+      "end": 4.882,
+      "text": "This is a LibraVox recording.",
+      "note": ""
+    },
+    {
+      "id": "line-001",
+      "start": 5.863,
+      "end": 8.443,
+      "text": "All LibraVox recordings are in the public domain.",
+      "note": ""
+    },
+    {
+      "id": "line-002",
+      "start": 9.503,
+      "end": 14.984,
+      "text": "For more information or to volunteer, please visit LibraVox.org.",
+      "note": ""
+    },
+    {
+      "id": "line-003",
+      "start": 16.644,
+      "end": 18.245,
+      "text": "Recorded by Robert Garrison.",
+      "note": ""
+    },
+    {
+      "id": "line-004",
+      "start": 19.125,
+      "end": 24.746,
+      "text": "For more information on this reader, please visit climber53.com.",
+      "note": ""
+    },
+    {
+      "id": "line-005",
+      "start": 27.066,
+      "end": 28.046,
+      "text": "ASIP's Fables.",
+      "note": ""
+    },
+    {
+      "id": "line-006",
+      "start": 29.507,
+      "end": 31.287,
+      "text": "The Lion and the Mouse.",
+      "note": ""
+    },
+    {
+      "id": "line-007",
+      "start": 33.723,
+      "end": 38.145,
+      "text": "A lion asleep in his lair was waked up by a mouse running over his face.",
+      "note": ""
+    },
+    {
+      "id": "line-008",
+      "start": 39.566,
+      "end": 43.688,
+      "text": "Losing his temper, he seized it with his paw and was about to kill it.",
+      "note": ""
+    },
+    {
+      "id": "line-009",
+      "start": 45.129,
+      "end": 49.771,
+      "text": "The mouse terrified, pitiously entreated him to spare its life.",
+      "note": ""
+    },
+    {
+      "id": "line-010",
+      "start": 49.791,
+      "end": 53.473,
+      "text": "\"'Please let me go,' it cried.",
+      "note": ""
+    },
+    {
+      "id": "line-011",
+      "start": 53.493,
+      "end": 56.655,
+      "text": "\"'And one day I will repay you for your kindness.",
+      "note": ""
+    },
+    {
+      "id": "line-012",
+      "start": 57.935,
+      "end": 68.844,
+      "text": "The idea of so insignificant a creature ever being able to do anything for him amused the lion so much that he laughed aloud and good-humorantly let it go.",
+      "note": ""
+    },
+    {
+      "id": "line-013",
+      "start": 69.985,
+      "end": 71.987,
+      "text": "But the mouse's chance came after all.",
+      "note": ""
+    },
+    {
+      "id": "line-014",
+      "start": 73.148,
+      "end": 82.636,
+      "text": "One day the lion got entangled in a net which had been spread for game by some hunters, and the mouse heard and recognized his roars of anger and ran to the spot.",
+      "note": ""
+    },
+    {
+      "id": "line-015",
+      "start": 83.616,
+      "end": 91.144,
+      "text": "Without more ado, it's set to work to gnaw the ropes with its teeth, and succeeded before long in setting the lion free.",
+      "note": ""
+    },
+    {
+      "id": "line-016",
+      "start": 91.985,
+      "end": 92.466,
+      "text": "There!",
+      "note": ""
+    },
+    {
+      "id": "line-017",
+      "start": 93.307,
+      "end": 93.967,
+      "text": "said the mouse.",
+      "note": ""
+    },
+    {
+      "id": "line-018",
+      "start": 94.969,
+      "end": 100.915,
+      "text": "You laughed at me when I promised I would repay you, but now you see, even a mouse can help a lion.",
+      "note": ""
+    },
+    {
+      "id": "line-019",
+      "start": 102.757,
+      "end": 105.0,
+      "text": "End of The Lion and the Mouse.",
+      "note": ""
+    }
+  ],
+  "words": [
+    {
+      "id": "w-0000",
+      "text": "This",
+      "start": 2.862,
+      "end": 3.182
+    },
+    {
+      "id": "w-0001",
+      "text": "is",
+      "start": 3.442,
+      "end": 3.522
+    },
+    {
+      "id": "w-0002",
+      "text": "a",
+      "start": 3.582,
+      "end": 3.602
+    },
+    {
+      "id": "w-0003",
+      "text": "LibraVox",
+      "start": 3.682,
+      "end": 4.262
+    },
+    {
+      "id": "w-0004",
+      "text": "recording.",
+      "start": 4.342,
+      "end": 4.882
+    },
+    {
+      "id": "w-0005",
+      "text": "All",
+      "start": 5.863,
+      "end": 5.983
+    },
+    {
+      "id": "w-0006",
+      "text": "LibraVox",
+      "start": 6.043,
+      "end": 6.583
+    },
+    {
+      "id": "w-0007",
+      "text": "recordings",
+      "start": 6.643,
+      "end": 7.223
+    },
+    {
+      "id": "w-0008",
+      "text": "are",
+      "start": 7.283,
+      "end": 7.383
+    },
+    {
+      "id": "w-0009",
+      "text": "in",
+      "start": 7.423,
+      "end": 7.483
+    },
+    {
+      "id": "w-0010",
+      "text": "the",
+      "start": 7.523,
+      "end": 7.583
+    },
+    {
+      "id": "w-0011",
+      "text": "public",
+      "start": 7.643,
+      "end": 7.963
+    },
+    {
+      "id": "w-0012",
+      "text": "domain.",
+      "start": 8.003,
+      "end": 8.443
+    },
+    {
+      "id": "w-0013",
+      "text": "For",
+      "start": 9.503,
+      "end": 9.623
+    },
+    {
+      "id": "w-0014",
+      "text": "more",
+      "start": 9.643,
+      "end": 9.843
+    },
+    {
+      "id": "w-0015",
+      "text": "information",
+      "start": 9.883,
+      "end": 10.443
+    },
+    {
+      "id": "w-0016",
+      "text": "or",
+      "start": 10.983,
+      "end": 11.083
+    },
+    {
+      "id": "w-0017",
+      "text": "to",
+      "start": 11.143,
+      "end": 11.223
+    },
+    {
+      "id": "w-0018",
+      "text": "volunteer,",
+      "start": 11.263,
+      "end": 11.924
+    },
+    {
+      "id": "w-0019",
+      "text": "please",
+      "start": 12.584,
+      "end": 12.864
+    },
+    {
+      "id": "w-0020",
+      "text": "visit",
+      "start": 12.904,
+      "end": 13.264
+    },
+    {
+      "id": "w-0021",
+      "text": "LibraVox.org.",
+      "start": 13.724,
+      "end": 14.984
+    },
+    {
+      "id": "w-0022",
+      "text": "Recorded",
+      "start": 16.644,
+      "end": 17.124
+    },
+    {
+      "id": "w-0023",
+      "text": "by",
+      "start": 17.184,
+      "end": 17.345
+    },
+    {
+      "id": "w-0024",
+      "text": "Robert",
+      "start": 17.405,
+      "end": 17.705
+    },
+    {
+      "id": "w-0025",
+      "text": "Garrison.",
+      "start": 17.745,
+      "end": 18.245
+    },
+    {
+      "id": "w-0026",
+      "text": "For",
+      "start": 19.125,
+      "end": 19.265
+    },
+    {
+      "id": "w-0027",
+      "text": "more",
+      "start": 19.285,
+      "end": 19.485
+    },
+    {
+      "id": "w-0028",
+      "text": "information",
+      "start": 19.525,
+      "end": 20.085
+    },
+    {
+      "id": "w-0029",
+      "text": "on",
+      "start": 20.165,
+      "end": 20.245
+    },
+    {
+      "id": "w-0030",
+      "text": "this",
+      "start": 20.265,
+      "end": 20.425
+    },
+    {
+      "id": "w-0031",
+      "text": "reader,",
+      "start": 20.505,
+      "end": 20.785
+    },
+    {
+      "id": "w-0032",
+      "text": "please",
+      "start": 21.565,
+      "end": 21.845
+    },
+    {
+      "id": "w-0033",
+      "text": "visit",
+      "start": 21.885,
+      "end": 22.225
+    },
+    {
+      "id": "w-0034",
+      "text": "climber53.com.",
+      "start": 22.485,
+      "end": 24.746
+    },
+    {
+      "id": "w-0035",
+      "text": "ASIP's",
+      "start": 27.066,
+      "end": 27.486
+    },
+    {
+      "id": "w-0036",
+      "text": "Fables.",
+      "start": 27.586,
+      "end": 28.046
+    },
+    {
+      "id": "w-0037",
+      "text": "The",
+      "start": 29.507,
+      "end": 29.627
+    },
+    {
+      "id": "w-0038",
+      "text": "Lion",
+      "start": 29.687,
+      "end": 30.147
+    },
+    {
+      "id": "w-0039",
+      "text": "and",
+      "start": 30.627,
+      "end": 30.747
+    },
+    {
+      "id": "w-0040",
+      "text": "the",
+      "start": 30.827,
+      "end": 30.907
+    },
+    {
+      "id": "w-0041",
+      "text": "Mouse.",
+      "start": 30.967,
+      "end": 31.287
+    },
+    {
+      "id": "w-0042",
+      "text": "A",
+      "start": 33.723,
+      "end": 33.743
+    },
+    {
+      "id": "w-0043",
+      "text": "lion",
+      "start": 33.823,
+      "end": 34.263
+    },
+    {
+      "id": "w-0044",
+      "text": "asleep",
+      "start": 34.403,
+      "end": 34.804
+    },
+    {
+      "id": "w-0045",
+      "text": "in",
+      "start": 34.864,
+      "end": 34.944
+    },
+    {
+      "id": "w-0046",
+      "text": "his",
+      "start": 35.004,
+      "end": 35.124
+    },
+    {
+      "id": "w-0047",
+      "text": "lair",
+      "start": 35.204,
+      "end": 35.544
+    },
+    {
+      "id": "w-0048",
+      "text": "was",
+      "start": 35.724,
+      "end": 35.864
+    },
+    {
+      "id": "w-0049",
+      "text": "waked",
+      "start": 35.924,
+      "end": 36.204
+    },
+    {
+      "id": "w-0050",
+      "text": "up",
+      "start": 36.284,
+      "end": 36.364
+    },
+    {
+      "id": "w-0051",
+      "text": "by",
+      "start": 36.424,
+      "end": 36.584
+    },
+    {
+      "id": "w-0052",
+      "text": "a",
+      "start": 36.625,
+      "end": 36.665
+    },
+    {
+      "id": "w-0053",
+      "text": "mouse",
+      "start": 36.705,
+      "end": 37.025
+    },
+    {
+      "id": "w-0054",
+      "text": "running",
+      "start": 37.105,
+      "end": 37.345
+    },
+    {
+      "id": "w-0055",
+      "text": "over",
+      "start": 37.425,
+      "end": 37.585
+    },
+    {
+      "id": "w-0056",
+      "text": "his",
+      "start": 37.645,
+      "end": 37.765
+    },
+    {
+      "id": "w-0057",
+      "text": "face.",
+      "start": 37.825,
+      "end": 38.145
+    },
+    {
+      "id": "w-0058",
+      "text": "Losing",
+      "start": 39.566,
+      "end": 39.886
+    },
+    {
+      "id": "w-0059",
+      "text": "his",
+      "start": 39.946,
+      "end": 40.066
+    },
+    {
+      "id": "w-0060",
+      "text": "temper,",
+      "start": 40.166,
+      "end": 40.527
+    },
+    {
+      "id": "w-0061",
+      "text": "he",
+      "start": 40.667,
+      "end": 40.787
+    },
+    {
+      "id": "w-0062",
+      "text": "seized",
+      "start": 40.927,
+      "end": 41.307
+    },
+    {
+      "id": "w-0063",
+      "text": "it",
+      "start": 41.367,
+      "end": 41.427
+    },
+    {
+      "id": "w-0064",
+      "text": "with",
+      "start": 41.467,
+      "end": 41.607
+    },
+    {
+      "id": "w-0065",
+      "text": "his",
+      "start": 41.647,
+      "end": 41.747
+    },
+    {
+      "id": "w-0066",
+      "text": "paw",
+      "start": 41.827,
+      "end": 42.167
+    },
+    {
+      "id": "w-0067",
+      "text": "and",
+      "start": 42.528,
+      "end": 42.628
+    },
+    {
+      "id": "w-0068",
+      "text": "was",
+      "start": 42.668,
+      "end": 42.808
+    },
+    {
+      "id": "w-0069",
+      "text": "about",
+      "start": 42.888,
+      "end": 43.188
+    },
+    {
+      "id": "w-0070",
+      "text": "to",
+      "start": 43.228,
+      "end": 43.288
+    },
+    {
+      "id": "w-0071",
+      "text": "kill",
+      "start": 43.348,
+      "end": 43.568
+    },
+    {
+      "id": "w-0072",
+      "text": "it.",
+      "start": 43.628,
+      "end": 43.688
+    },
+    {
+      "id": "w-0073",
+      "text": "The",
+      "start": 45.129,
+      "end": 45.229
+    },
+    {
+      "id": "w-0074",
+      "text": "mouse",
+      "start": 45.269,
+      "end": 45.649
+    },
+    {
+      "id": "w-0075",
+      "text": "terrified,",
+      "start": 45.749,
+      "end": 46.41
+    },
+    {
+      "id": "w-0076",
+      "text": "pitiously",
+      "start": 47.21,
+      "end": 47.87
+    },
+    {
+      "id": "w-0077",
+      "text": "entreated",
+      "start": 47.95,
+      "end": 48.411
+    },
+    {
+      "id": "w-0078",
+      "text": "him",
+      "start": 48.451,
+      "end": 48.651
+    },
+    {
+      "id": "w-0079",
+      "text": "to",
+      "start": 48.791,
+      "end": 48.891
+    },
+    {
+      "id": "w-0080",
+      "text": "spare",
+      "start": 48.971,
+      "end": 49.291
+    },
+    {
+      "id": "w-0081",
+      "text": "its",
+      "start": 49.331,
+      "end": 49.451
+    },
+    {
+      "id": "w-0082",
+      "text": "life.",
+      "start": 49.531,
+      "end": 49.771
+    },
+    {
+      "id": "w-0083",
+      "text": "\"'Please",
+      "start": 49.791,
+      "end": 51.592
+    },
+    {
+      "id": "w-0084",
+      "text": "let",
+      "start": 51.672,
+      "end": 51.872
+    },
+    {
+      "id": "w-0085",
+      "text": "me",
+      "start": 51.912,
+      "end": 52.032
+    },
+    {
+      "id": "w-0086",
+      "text": "go,'",
+      "start": 52.112,
+      "end": 52.393
+    },
+    {
+      "id": "w-0087",
+      "text": "it",
+      "start": 52.413,
+      "end": 52.453
+    },
+    {
+      "id": "w-0088",
+      "text": "cried.",
+      "start": 53.113,
+      "end": 53.473
+    },
+    {
+      "id": "w-0089",
+      "text": "\"'And",
+      "start": 53.493,
+      "end": 54.514
+    },
+    {
+      "id": "w-0090",
+      "text": "one",
+      "start": 54.634,
+      "end": 54.714
+    },
+    {
+      "id": "w-0091",
+      "text": "day",
+      "start": 54.754,
+      "end": 54.914
+    },
+    {
+      "id": "w-0092",
+      "text": "I",
+      "start": 54.934,
+      "end": 54.954
+    },
+    {
+      "id": "w-0093",
+      "text": "will",
+      "start": 55.094,
+      "end": 55.234
+    },
+    {
+      "id": "w-0094",
+      "text": "repay",
+      "start": 55.274,
+      "end": 55.634
+    },
+    {
+      "id": "w-0095",
+      "text": "you",
+      "start": 55.674,
+      "end": 55.814
+    },
+    {
+      "id": "w-0096",
+      "text": "for",
+      "start": 55.854,
+      "end": 55.974
+    },
+    {
+      "id": "w-0097",
+      "text": "your",
+      "start": 56.014,
+      "end": 56.155
+    },
+    {
+      "id": "w-0098",
+      "text": "kindness.",
+      "start": 56.195,
+      "end": 56.655
+    },
+    {
+      "id": "w-0099",
+      "text": "The",
+      "start": 57.935,
+      "end": 58.055
+    },
+    {
+      "id": "w-0100",
+      "text": "idea",
+      "start": 58.155,
+      "end": 58.556
+    },
+    {
+      "id": "w-0101",
+      "text": "of",
+      "start": 58.596,
+      "end": 58.656
+    },
+    {
+      "id": "w-0102",
+      "text": "so",
+      "start": 58.776,
+      "end": 58.976
+    },
+    {
+      "id": "w-0103",
+      "text": "insignificant",
+      "start": 59.076,
+      "end": 60.077
+    },
+    {
+      "id": "w-0104",
+      "text": "a",
+      "start": 60.117,
+      "end": 60.157
+    },
+    {
+      "id": "w-0105",
+      "text": "creature",
+      "start": 60.257,
+      "end": 60.657
+    },
+    {
+      "id": "w-0106",
+      "text": "ever",
+      "start": 60.898,
+      "end": 61.098
+    },
+    {
+      "id": "w-0107",
+      "text": "being",
+      "start": 61.178,
+      "end": 61.418
+    },
+    {
+      "id": "w-0108",
+      "text": "able",
+      "start": 61.498,
+      "end": 61.698
+    },
+    {
+      "id": "w-0109",
+      "text": "to",
+      "start": 61.738,
+      "end": 61.798
+    },
+    {
+      "id": "w-0110",
+      "text": "do",
+      "start": 61.858,
+      "end": 61.958
+    },
+    {
+      "id": "w-0111",
+      "text": "anything",
+      "start": 62.099,
+      "end": 62.499
+    },
+    {
+      "id": "w-0112",
+      "text": "for",
+      "start": 62.599,
+      "end": 62.819
+    },
+    {
+      "id": "w-0113",
+      "text": "him",
+      "start": 62.879,
+      "end": 63.059
+    },
+    {
+      "id": "w-0114",
+      "text": "amused",
+      "start": 63.219,
+      "end": 63.64
+    },
+    {
+      "id": "w-0115",
+      "text": "the",
+      "start": 63.68,
+      "end": 63.76
+    },
+    {
+      "id": "w-0116",
+      "text": "lion",
+      "start": 63.8,
+      "end": 64.12
+    },
+    {
+      "id": "w-0117",
+      "text": "so",
+      "start": 64.22,
+      "end": 64.4
+    },
+    {
+      "id": "w-0118",
+      "text": "much",
+      "start": 64.46,
+      "end": 64.721
+    },
+    {
+      "id": "w-0119",
+      "text": "that",
+      "start": 65.261,
+      "end": 65.381
+    },
+    {
+      "id": "w-0120",
+      "text": "he",
+      "start": 65.401,
+      "end": 65.501
+    },
+    {
+      "id": "w-0121",
+      "text": "laughed",
+      "start": 65.621,
+      "end": 65.962
+    },
+    {
+      "id": "w-0122",
+      "text": "aloud",
+      "start": 66.022,
+      "end": 66.462
+    },
+    {
+      "id": "w-0123",
+      "text": "and",
+      "start": 66.943,
+      "end": 67.063
+    },
+    {
+      "id": "w-0124",
+      "text": "good-humorantly",
+      "start": 67.123,
+      "end": 68.023
+    },
+    {
+      "id": "w-0125",
+      "text": "let",
+      "start": 68.304,
+      "end": 68.464
+    },
+    {
+      "id": "w-0126",
+      "text": "it",
+      "start": 68.504,
+      "end": 68.564
+    },
+    {
+      "id": "w-0127",
+      "text": "go.",
+      "start": 68.604,
+      "end": 68.844
+    },
+    {
+      "id": "w-0128",
+      "text": "But",
+      "start": 69.985,
+      "end": 70.105
+    },
+    {
+      "id": "w-0129",
+      "text": "the",
+      "start": 70.145,
+      "end": 70.225
+    },
+    {
+      "id": "w-0130",
+      "text": "mouse's",
+      "start": 70.265,
+      "end": 70.586
+    },
+    {
+      "id": "w-0131",
+      "text": "chance",
+      "start": 70.666,
+      "end": 70.966
+    },
+    {
+      "id": "w-0132",
+      "text": "came",
+      "start": 71.046,
+      "end": 71.346
+    },
+    {
+      "id": "w-0133",
+      "text": "after",
+      "start": 71.486,
+      "end": 71.727
+    },
+    {
+      "id": "w-0134",
+      "text": "all.",
+      "start": 71.847,
+      "end": 71.987
+    },
+    {
+      "id": "w-0135",
+      "text": "One",
+      "start": 73.148,
+      "end": 73.248
+    },
+    {
+      "id": "w-0136",
+      "text": "day",
+      "start": 73.288,
+      "end": 73.508
+    },
+    {
+      "id": "w-0137",
+      "text": "the",
+      "start": 73.588,
+      "end": 73.668
+    },
+    {
+      "id": "w-0138",
+      "text": "lion",
+      "start": 73.708,
+      "end": 73.968
+    },
+    {
+      "id": "w-0139",
+      "text": "got",
+      "start": 74.008,
+      "end": 74.209
+    },
+    {
+      "id": "w-0140",
+      "text": "entangled",
+      "start": 74.269,
+      "end": 74.789
+    },
+    {
+      "id": "w-0141",
+      "text": "in",
+      "start": 74.849,
+      "end": 74.909
+    },
+    {
+      "id": "w-0142",
+      "text": "a",
+      "start": 74.949,
+      "end": 74.969
+    },
+    {
+      "id": "w-0143",
+      "text": "net",
+      "start": 75.029,
+      "end": 75.249
+    },
+    {
+      "id": "w-0144",
+      "text": "which",
+      "start": 75.35,
+      "end": 75.49
+    },
+    {
+      "id": "w-0145",
+      "text": "had",
+      "start": 75.53,
+      "end": 75.61
+    },
+    {
+      "id": "w-0146",
+      "text": "been",
+      "start": 75.65,
+      "end": 75.81
+    },
+    {
+      "id": "w-0147",
+      "text": "spread",
+      "start": 75.85,
+      "end": 76.15
+    },
+    {
+      "id": "w-0148",
+      "text": "for",
+      "start": 76.21,
+      "end": 76.35
+    },
+    {
+      "id": "w-0149",
+      "text": "game",
+      "start": 76.39,
+      "end": 76.691
+    },
+    {
+      "id": "w-0150",
+      "text": "by",
+      "start": 76.751,
+      "end": 76.891
+    },
+    {
+      "id": "w-0151",
+      "text": "some",
+      "start": 76.931,
+      "end": 77.091
+    },
+    {
+      "id": "w-0152",
+      "text": "hunters,",
+      "start": 77.131,
+      "end": 77.491
+    },
+    {
+      "id": "w-0153",
+      "text": "and",
+      "start": 78.392,
+      "end": 78.472
+    },
+    {
+      "id": "w-0154",
+      "text": "the",
+      "start": 78.492,
+      "end": 78.572
+    },
+    {
+      "id": "w-0155",
+      "text": "mouse",
+      "start": 78.612,
+      "end": 78.852
+    },
+    {
+      "id": "w-0156",
+      "text": "heard",
+      "start": 78.913,
+      "end": 79.273
+    },
+    {
+      "id": "w-0157",
+      "text": "and",
+      "start": 79.433,
+      "end": 79.513
+    },
+    {
+      "id": "w-0158",
+      "text": "recognized",
+      "start": 79.593,
+      "end": 80.254
+    },
+    {
+      "id": "w-0159",
+      "text": "his",
+      "start": 80.294,
+      "end": 80.434
+    },
+    {
+      "id": "w-0160",
+      "text": "roars",
+      "start": 80.494,
+      "end": 80.914
+    },
+    {
+      "id": "w-0161",
+      "text": "of",
+      "start": 80.974,
+      "end": 81.034
+    },
+    {
+      "id": "w-0162",
+      "text": "anger",
+      "start": 81.174,
+      "end": 81.455
+    },
+    {
+      "id": "w-0163",
+      "text": "and",
+      "start": 81.535,
+      "end": 81.615
+    },
+    {
+      "id": "w-0164",
+      "text": "ran",
+      "start": 81.675,
+      "end": 81.935
+    },
+    {
+      "id": "w-0165",
+      "text": "to",
+      "start": 82.015,
+      "end": 82.115
+    },
+    {
+      "id": "w-0166",
+      "text": "the",
+      "start": 82.155,
+      "end": 82.235
+    },
+    {
+      "id": "w-0167",
+      "text": "spot.",
+      "start": 82.275,
+      "end": 82.636
+    },
+    {
+      "id": "w-0168",
+      "text": "Without",
+      "start": 83.616,
+      "end": 83.936
+    },
+    {
+      "id": "w-0169",
+      "text": "more",
+      "start": 83.976,
+      "end": 84.177
+    },
+    {
+      "id": "w-0170",
+      "text": "ado,",
+      "start": 84.217,
+      "end": 84.537
+    },
+    {
+      "id": "w-0171",
+      "text": "it's",
+      "start": 84.837,
+      "end": 84.917
+    },
+    {
+      "id": "w-0172",
+      "text": "set",
+      "start": 84.998,
+      "end": 85.198
+    },
+    {
+      "id": "w-0173",
+      "text": "to",
+      "start": 85.238,
+      "end": 85.338
+    },
+    {
+      "id": "w-0174",
+      "text": "work",
+      "start": 85.378,
+      "end": 85.618
+    },
+    {
+      "id": "w-0175",
+      "text": "to",
+      "start": 85.698,
+      "end": 85.798
+    },
+    {
+      "id": "w-0176",
+      "text": "gnaw",
+      "start": 85.838,
+      "end": 86.139
+    },
+    {
+      "id": "w-0177",
+      "text": "the",
+      "start": 86.179,
+      "end": 86.259
+    },
+    {
+      "id": "w-0178",
+      "text": "ropes",
+      "start": 86.319,
+      "end": 86.559
+    },
+    {
+      "id": "w-0179",
+      "text": "with",
+      "start": 86.599,
+      "end": 86.739
+    },
+    {
+      "id": "w-0180",
+      "text": "its",
+      "start": 86.8,
+      "end": 86.92
+    },
+    {
+      "id": "w-0181",
+      "text": "teeth,",
+      "start": 86.98,
+      "end": 87.26
+    },
+    {
+      "id": "w-0182",
+      "text": "and",
+      "start": 87.901,
+      "end": 87.981
+    },
+    {
+      "id": "w-0183",
+      "text": "succeeded",
+      "start": 88.021,
+      "end": 88.501
+    },
+    {
+      "id": "w-0184",
+      "text": "before",
+      "start": 88.541,
+      "end": 88.882
+    },
+    {
+      "id": "w-0185",
+      "text": "long",
+      "start": 88.922,
+      "end": 89.262
+    },
+    {
+      "id": "w-0186",
+      "text": "in",
+      "start": 89.683,
+      "end": 89.783
+    },
+    {
+      "id": "w-0187",
+      "text": "setting",
+      "start": 89.923,
+      "end": 90.243
+    },
+    {
+      "id": "w-0188",
+      "text": "the",
+      "start": 90.283,
+      "end": 90.384
+    },
+    {
+      "id": "w-0189",
+      "text": "lion",
+      "start": 90.424,
+      "end": 90.784
+    },
+    {
+      "id": "w-0190",
+      "text": "free.",
+      "start": 90.884,
+      "end": 91.144
+    },
+    {
+      "id": "w-0191",
+      "text": "There!",
+      "start": 91.985,
+      "end": 92.466
+    },
+    {
+      "id": "w-0192",
+      "text": "said",
+      "start": 93.307,
+      "end": 93.487
+    },
+    {
+      "id": "w-0193",
+      "text": "the",
+      "start": 93.527,
+      "end": 93.607
+    },
+    {
+      "id": "w-0194",
+      "text": "mouse.",
+      "start": 93.647,
+      "end": 93.967
+    },
+    {
+      "id": "w-0195",
+      "text": "You",
+      "start": 94.969,
+      "end": 95.109
+    },
+    {
+      "id": "w-0196",
+      "text": "laughed",
+      "start": 95.149,
+      "end": 95.429
+    },
+    {
+      "id": "w-0197",
+      "text": "at",
+      "start": 95.469,
+      "end": 95.529
+    },
+    {
+      "id": "w-0198",
+      "text": "me",
+      "start": 95.569,
+      "end": 95.709
+    },
+    {
+      "id": "w-0199",
+      "text": "when",
+      "start": 95.749,
+      "end": 95.89
+    },
+    {
+      "id": "w-0200",
+      "text": "I",
+      "start": 95.95,
+      "end": 96.01
+    },
+    {
+      "id": "w-0201",
+      "text": "promised",
+      "start": 96.09,
+      "end": 96.51
+    },
+    {
+      "id": "w-0202",
+      "text": "I",
+      "start": 96.57,
+      "end": 96.61
+    },
+    {
+      "id": "w-0203",
+      "text": "would",
+      "start": 96.65,
+      "end": 96.811
+    },
+    {
+      "id": "w-0204",
+      "text": "repay",
+      "start": 96.851,
+      "end": 97.191
+    },
+    {
+      "id": "w-0205",
+      "text": "you,",
+      "start": 97.251,
+      "end": 97.431
+    },
+    {
+      "id": "w-0206",
+      "text": "but",
+      "start": 97.932,
+      "end": 98.052
+    },
+    {
+      "id": "w-0207",
+      "text": "now",
+      "start": 98.112,
+      "end": 98.292
+    },
+    {
+      "id": "w-0208",
+      "text": "you",
+      "start": 98.352,
+      "end": 98.472
+    },
+    {
+      "id": "w-0209",
+      "text": "see,",
+      "start": 98.533,
+      "end": 98.833
+    },
+    {
+      "id": "w-0210",
+      "text": "even",
+      "start": 99.353,
+      "end": 99.534
+    },
+    {
+      "id": "w-0211",
+      "text": "a",
+      "start": 99.574,
+      "end": 99.594
+    },
+    {
+      "id": "w-0212",
+      "text": "mouse",
+      "start": 99.634,
+      "end": 99.914
+    },
+    {
+      "id": "w-0213",
+      "text": "can",
+      "start": 99.974,
+      "end": 100.134
+    },
+    {
+      "id": "w-0214",
+      "text": "help",
+      "start": 100.174,
+      "end": 100.355
+    },
+    {
+      "id": "w-0215",
+      "text": "a",
+      "start": 100.415,
+      "end": 100.455
+    },
+    {
+      "id": "w-0216",
+      "text": "lion.",
+      "start": 100.495,
+      "end": 100.915
+    },
+    {
+      "id": "w-0217",
+      "text": "End",
+      "start": 102.757,
+      "end": 102.917
+    },
+    {
+      "id": "w-0218",
+      "text": "of",
+      "start": 103.058,
+      "end": 103.198
+    },
+    {
+      "id": "w-0219",
+      "text": "The",
+      "start": 103.658,
+      "end": 103.778
+    },
+    {
+      "id": "w-0220",
+      "text": "Lion",
+      "start": 103.838,
+      "end": 104.239
+    },
+    {
+      "id": "w-0221",
+      "text": "and",
+      "start": 104.399,
+      "end": 104.539
+    },
+    {
+      "id": "w-0222",
+      "text": "the",
+      "start": 104.599,
+      "end": 104.679
+    },
+    {
+      "id": "w-0223",
+      "text": "Mouse.",
+      "start": 104.719,
+      "end": 105.0
+    }
+  ]
+}

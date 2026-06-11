@@ -489,3 +489,112 @@ export function saveTranslation(data: {
 }): Promise<TranslationCacheEntry> {
   return post<TranslationCacheEntry>('/api/translations', data);
 }
+
+// ── Card system types ──
+
+export interface CardMeta {
+  id: string;
+  name: string;
+  title: string;
+  motto: string;
+  rarity: string;
+  png: string;
+  keywords: string[];
+  vocab_signature: string[];
+  obtained: boolean;
+  season: number;
+}
+
+export interface DeckMeta {
+  season: number;
+  title: string;
+  subtitle?: string;
+  theme?: string;
+}
+
+export interface CardListResponse {
+  deck: DeckMeta;
+  cards: CardMeta[];
+  total: number;
+  obtained: number;
+}
+
+export interface DrawStatusResponse {
+  can_draw: boolean;
+  new_words_since_last_draw: number;
+  min_new_words: number;
+  qualified_candidates: number;
+  min_qualified_cards: number;
+  candidates: DrawCandidate[];
+}
+
+export interface DrawCandidate {
+  card_id: string;
+  name: string;
+  match_score: number;
+  hits: number;
+  total: number;
+  title?: string;
+  motto?: string;
+  rarity?: string;
+  png?: string;
+}
+
+export interface DrawWord {
+  word: string;
+  deck: string;
+}
+
+export interface DrawResponse {
+  draw_id: string;
+  words: DrawWord[];
+  new_words_since_last_draw: number;
+}
+
+export interface DrawPickResponse {
+  success: boolean;
+  card: {
+    id: string;
+    name: string;
+    title: string;
+    motto: string;
+    rarity: string;
+    png: string;
+    keywords: string[];
+    match_score: number;
+  };
+}
+
+export interface UnlockResponse {
+  success: boolean;
+  card_id: string;
+  match_score: number;
+}
+
+// ── Card system API ──
+
+const CARD_IMG = API_BASE + '/api/cards/image';
+
+export function cardImageUrl(filename: string): string {
+  return `${CARD_IMG}/${filename}.png`;
+}
+
+export function getCardList(): Promise<CardListResponse> {
+  return get<CardListResponse>('/api/cards/list');
+}
+
+export function getDrawStatus(): Promise<DrawStatusResponse> {
+  return get<DrawStatusResponse>('/api/cards/draw/status');
+}
+
+export function performDraw(): Promise<DrawResponse> {
+  return post<DrawResponse>('/api/cards/draw', {});
+}
+
+export function pickDrawWord(drawId: string, word: string): Promise<DrawPickResponse> {
+  return post<DrawPickResponse>('/api/cards/draw/pick', { draw_id: drawId, word });
+}
+
+export function unlockCard(cardId: string, obtainedBy = 'draw'): Promise<UnlockResponse> {
+  return post<UnlockResponse>(`/api/cards/collection/${cardId}`, { obtained_by: obtainedBy });
+}
