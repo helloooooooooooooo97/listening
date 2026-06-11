@@ -1,19 +1,24 @@
-import { HiSparkles, HiArrowPath, HiXMark } from 'react-icons/hi2';
+import { useState } from 'react';
+import { HiSparkles, HiArrowPath, HiXMark, HiPlay } from 'react-icons/hi2';
+import { useWordAudio } from '../../hooks/useWordAudio';
 
 interface GameModalProps {
   isWin: boolean;
   matchedCount: number;
   totalWords: number;
   elapsed: number;
+  matchedWords: string[];
   onReplay: () => void;
   onQuit: () => void;
 }
 
-export default function GameModal({ isWin, matchedCount, totalWords, elapsed, onReplay, onQuit }: GameModalProps) {
+export default function GameModal({ isWin, matchedCount, totalWords, elapsed, matchedWords, onReplay, onQuit }: GameModalProps) {
   const minutes = Math.floor(elapsed / 60);
   const seconds = elapsed % 60;
   const pct = totalWords > 0 ? Math.round((matchedCount / totalWords) * 100) : 0;
   const remaining = totalWords - matchedCount;
+  const [showWords, setShowWords] = useState(false);
+  const { playWordAudio } = useWordAudio();
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -59,10 +64,35 @@ export default function GameModal({ isWin, matchedCount, totalWords, elapsed, on
             </div>
             {isWin && (
               <p className="text-xs text-tertiary mt-3">
-<HiSparkles size={11} className="inline mr-1" style={{ color: 'var(--accent)' }} /> 已复习 {matchedCount} 个单词
+<HiSparkles size={11} className="inline mr-1" style={{ color: 'var(--accent)' }} /> 本轮复习成功 {matchedCount} 个单词
               </p>
             )}
           </div>
+
+          {/* Toggle eliminated words list */}
+          {matchedWords.length > 0 && (
+            <div className="mb-4">
+              <button onClick={() => setShowWords(!showWords)}
+                className="text-[10px] px-3 py-1.5 rounded-lg text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
+                {showWords ? '收起已消除单词' : `查看已消除单词 (${matchedWords.length})`}
+              </button>
+              {showWords && (
+                <div className="mt-3 max-h-32 overflow-y-auto space-y-0.5 px-2">
+                  {matchedWords.map((w, i) => (
+                    <div key={i}
+                      className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-[var(--bg-hover)] transition-colors group">
+                      <span className="flex-1 text-xs text-left text-secondary">{i + 1}. {w}</span>
+                      <button onClick={() => playWordAudio(w)}
+                        className="opacity-0 group-hover:opacity-100 text-tertiary hover:text-secondary transition-all cursor-pointer"
+                        title="播放音频">
+                        <HiPlay size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="flex gap-3">
             <button onClick={onQuit}

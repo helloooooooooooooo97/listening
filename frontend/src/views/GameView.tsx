@@ -17,6 +17,14 @@ export default function GameView() {
   const [allWords, setAllWords] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // ── Difficulty adjustment toast ──
+  useEffect(() => {
+    if (store.difficultyMessage) {
+      const timer = setTimeout(() => store.clearDifficultyMessage(), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [store.difficultyMessage, store]);
+
   const handleTileClick = useCallback((tileId: string) => {
     store.clickTile(tileId);
     const tile = store.tiles.find(t => t.id === tileId);
@@ -40,14 +48,14 @@ export default function GameView() {
   const handleStart = (difficulty: Difficulty, source: string) => {
     let words: string[] = [];
     if (source === 'today') {
-      getTodayWords().then(d => { store.initGame(d.words.map(w => w.word), difficulty); }).catch(() => {});
+      getTodayWords().then(d => { store.initGame(d.words.map(w => w.word), difficulty, 'today'); }).catch(() => {});
       return;
     }
     if (source === 'review') {
-      getDueWords(200).then(d => { store.initGame(d.words.map(w => w.word), difficulty); }).catch(() => {});
+      getDueWords(200).then(d => { store.initGame(d.words.map(w => w.word), difficulty, 'review'); }).catch(() => {});
       return;
     }
-    store.initGame(allWords, difficulty);
+    store.initGame(allWords, difficulty, 'all');
   };
 
   if (loading) {
@@ -62,7 +70,7 @@ export default function GameView() {
   if (store.status === 'idle') {
     return (
       <div className="h-full bg-[var(--bg-primary)] overflow-y-auto">
-        <GameLevelSelect onStart={handleStart} onBack={() => navigate(-1)} />
+        <GameLevelSelect onStart={handleStart} onBack={() => navigate(-1)} onPlaySample={w => playWordAudio(w)} />
       </div>
     );
   }
@@ -83,6 +91,7 @@ export default function GameView() {
           matchedCount={store.matchedWords.length}
           totalWords={store.totalWords}
           elapsed={store.elapsed}
+          matchedWords={store.matchedWords}
           onReplay={() => store.initGame(store.words, store.difficulty)}
           onQuit={() => { store.reset(); }}
         />
@@ -92,7 +101,14 @@ export default function GameView() {
 
   // Playing
   return (
-    <div className="h-full bg-[var(--bg-primary)] flex flex-col overflow-y-auto">
+    <div className="h-full bg-[var(--bg-primary)] flex flex-col overflow-y-auto relative">
+      {/* Difficulty toast */}
+      {store.difficultyMessage && (
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-lg shadow-lg text-xs font-medium animate-fade-in"
+          style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', border: '1px solid var(--border-primary)' }}>
+          {store.difficultyMessage}
+        </div>
+      )}
       <GameHeader />
 
       {/* Progress */}
@@ -100,7 +116,10 @@ export default function GameView() {
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
             <HiSparkles size={11} className="inline mr-1" style={{ color: 'var(--accent)' }} />
-            {store.matchedWords.length}/{store.totalWords} 消除
+            <span key={store.matchedWords.length} className="inline-block animate-speed-pop tabular-nums">
+              {store.matchedWords.length}
+            </span>
+            /{store.totalWords} 消除
           </span>
           <span className="text-xs font-mono" style={{ color: 'var(--text-tertiary)' }}>
             {Math.floor(store.elapsed / 60)}:{String(store.elapsed % 60).padStart(2, '0')}
@@ -113,7 +132,11 @@ export default function GameView() {
       </div>
 
       {/* Board */}
-      <div className="flex-1 flex items-center justify-center px-4 py-4">
+      <div className="flex-1 flex items-center justify-center px-4 py-4 relative">
+        {store.slot.filter(s => s !== null).length >= store.slotCapacity && (
+          <div className="absolute inset-0 z-10 rounded-lg pointer-events-none"
+            style={{ background: 'rgba(0,0,0,0.15)' }} />
+        )}
         <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={handleTileClick} />
       </div>
 
@@ -123,6 +146,7 @@ export default function GameView() {
           slot={store.slot}
           capacity={store.slotCapacity}
           tools={store.tools}
+          lastMatchSuccess={store.lastMatchSuccess}
           onShuffle={store.useShuffle}
           onUndo={store.useUndo}
           onRemove3={store.useRemove3}

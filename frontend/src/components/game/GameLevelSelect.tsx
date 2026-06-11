@@ -1,11 +1,18 @@
 import { useState } from 'react';
-import { HiSun, HiArrowPath, HiBookOpen, HiSparkles } from 'react-icons/hi2';
+import { HiSun, HiArrowPath, HiBookOpen, HiSparkles, HiPlay } from 'react-icons/hi2';
 import type { Difficulty } from './levelGenerator';
 
 interface GameLevelSelectProps {
   onStart: (difficulty: Difficulty, source: string) => void;
   onBack: () => void;
+  onPlaySample?: (word: string) => void;
 }
+
+const SAMPLE_WORDS: Record<string, string> = {
+  today: 'apple',
+  review: 'book',
+  all: 'hello',
+};
 
 const DIFF_ICONS = {
   easy: <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block" />,
@@ -19,7 +26,7 @@ const SOURCE_ICONS: Record<string, React.ReactNode> = {
   all: <HiBookOpen size={13} />,
 };
 
-export default function GameLevelSelect({ onStart, onBack }: GameLevelSelectProps) {
+export default function GameLevelSelect({ onStart, onBack, onPlaySample }: GameLevelSelectProps) {
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [source, setSource] = useState('today');
 
@@ -51,13 +58,20 @@ export default function GameLevelSelect({ onStart, onBack }: GameLevelSelectProp
           <div className="flex gap-3">
             {sources.map(s => (
               <button key={s.key} onClick={() => setSource(s.key)}
-                className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                className={`group flex items-center justify-center gap-1.5 flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                   source === s.key
                     ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
                     : 'bg-[var(--bg-tertiary)] text-tertiary hover:text-secondary'
                 }`}>
                 {SOURCE_ICONS[s.key]}
                 {s.label}
+                {onPlaySample && (
+                  <span onClick={e => { e.stopPropagation(); onPlaySample(SAMPLE_WORDS[s.key]); }}
+                    className="ml-1 opacity-0 group-hover:opacity-100 hover:text-secondary transition-opacity cursor-pointer"
+                    title="试听">
+                    <HiPlay size={10} />
+                  </span>
+                )}
               </button>
             ))}
           </div>

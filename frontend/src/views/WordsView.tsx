@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HiMagnifyingGlass, HiCheck, HiBarsArrowDown, HiHeart, HiSun, HiArrowPath, HiSparkles, HiBookOpen } from 'react-icons/hi2';
+import { HiMagnifyingGlass, HiCheck, HiBarsArrowDown, HiHeart, HiSun, HiArrowPath, HiSparkles, HiBookOpen, HiPlay } from 'react-icons/hi2';
 import { useAudioStore } from '../stores/audioStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useAiStore } from '../stores/aiStore';
 import type { WordAnalysis } from '../types/lesson';
 import { getWords, getWordDetail, getKnownWords, setWordKnown, getDueWords, submitWordReview, getTodayWords, getTodayStats, getDictionaryEntry, type WordSummary, type WordDetail, type WordDictionary, type DueWord, type TodayWord, type TodayStats } from '../lib/api';
+import { useWordAudio } from '../hooks/useWordAudio';
 import ReviewModal from '../components/words/ReviewModal';
 import FilterDrawer from '../components/words/FilterDrawer';
 import WordDetailPanel from '../components/words/WordDetailPanel';
@@ -46,13 +47,14 @@ interface WordRowData {
   tags?: string[];
 }
 
-function WordRow({ item, selected, known, tags, isFavWord, hasAi, aiExpanded, aiWord, onSelect, onFav, onMarkKnown, onAi }: {
+function WordRow({ item, selected, known, tags, isFavWord, hasAi, aiExpanded, aiWord, onSelect, onFav, onMarkKnown, onAi, onPlayWord }: {
   item: WordRowData; selected: boolean; known: boolean; tags?: string[]; isFavWord: boolean;
   hasAi: boolean; aiExpanded: boolean; aiWord: string | undefined;
   onSelect: () => void; onFav: () => void; onMarkKnown?: () => void; onAi?: () => void;
+  onPlayWord?: () => void;
 }) {
   return (
-    <div onClick={onSelect}
+    <div data-word={item.word} onClick={onSelect}
       className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer group ${
         selected ? 'bg-[var(--accent)]/15 ring-1 ring-[var(--accent)]/30' : 'hover:bg-[var(--bg-hover)]'
       }`}>
@@ -63,6 +65,13 @@ function WordRow({ item, selected, known, tags, isFavWord, hasAi, aiExpanded, ai
         )}
       </span>
       <span className="text-xs text-tertiary tabular-nums">{item.count}次</span>
+      {onPlayWord && (
+        <button onClick={e => { e.stopPropagation(); onPlayWord(); }}
+          className="transition-colors cursor-pointer text-tertiary opacity-0 group-hover:opacity-100 hover:text-secondary"
+          title="播放音频">
+          <HiPlay size={11} />
+        </button>
+      )}
       {known && !onMarkKnown && <HiCheck size={12} className="text-emerald-400" />}
       {onMarkKnown ? (
         known ? (
@@ -167,8 +176,22 @@ export default function WordsView() {
   const viewClip = useAudioStore(s => s.viewClip);
   const togglePlay = useAudioStore(s => s.togglePlay);
   const wordOffset = useSettingsStore(s => s.settings.wordPlayOffset);
+  const { playWordAudio } = useWordAudio();
   const observerRef = useRef<IntersectionObserver | null>(null);
   const detailCache = useRef(new Map<string, WordDetail>());
+  const listRef = useRef<HTMLDivElement | null>(null);
+
+  // Scroll the selected word row into view when detail panel opens
+  useEffect(() => {
+    if (selected && listRef.current) {
+      // Wait for the layout shift (detail panel slide-in transition, 300ms)
+      const timer = setTimeout(() => {
+        listRef.current?.querySelector(`[data-word="${selected.word}"]`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [selected]);
 
   // Load today's words + stats
   const loadTodayData = useCallback(() => {
@@ -401,7 +424,7 @@ export default function WordsView() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-6 pb-8">
+        <div ref={listRef} className="flex-1 overflow-y-auto px-6 pb-8">
           {/* ─── Tab: 今日单词 ─── */}
           {tab === 'today' && (
             <>
@@ -512,6 +535,7 @@ export default function WordsView() {
                   <div className="space-y-0.5">
                     {dueWords.map(d => (
                       <div key={d.word}
+                        data-word={d.word}
                         className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[var(--bg-hover)] transition-colors group">
                         <span className="flex-1 text-sm font-medium text-primary">{d.word}</span>
                         <span className="text-xs text-tertiary tabular-nums">
@@ -548,6 +572,7 @@ export default function WordsView() {
                   aiWord={undefined}
                   onSelect={() => handleSelectWord(w)}
                   onFav={() => {}}
+                  onPlayWord={() => playWordAudio(w.word)}
                 />
               ))}
             </TabContent>

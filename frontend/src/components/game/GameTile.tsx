@@ -1,3 +1,6 @@
+import { useState, useRef, useCallback, useEffect } from 'react';
+import TilePopup from './TilePopup';
+
 interface GameTileProps {
   word: string;
   emoji: string;
@@ -7,8 +10,36 @@ interface GameTileProps {
 }
 
 const CELL = 84;
+const LONG_PRESS_MS = 500;
 
 export default function GameTile({ word, emoji, inDegree, isClickable, onClick }: GameTileProps) {
+  const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout>>();
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  // Cleanup long-press timer on unmount
+  useEffect(() => {
+    return () => clearTimeout(longPressTimer.current);
+  }, []);
+
+  const showPopup = useCallback((el: HTMLElement) => {
+    setPopupAnchor(el);
+  }, []);
+
+  const handleMouseDown = useCallback(() => {
+    longPressTimer.current = setTimeout(() => {
+      if (btnRef.current) showPopup(btnRef.current);
+    }, LONG_PRESS_MS);
+  }, [showPopup]);
+
+  const handleMouseUp = useCallback(() => {
+    clearTimeout(longPressTimer.current);
+  }, []);
+
+  const handleContextMenu = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    if (btnRef.current) showPopup(btnRef.current);
+  }, [showPopup]);
 
   const badge = (
     <span
@@ -44,7 +75,7 @@ export default function GameTile({ word, emoji, inDegree, isClickable, onClick }
   if (!isClickable) {
     return (
       <div
-        className="relative rounded-md border overflow-hidden flex items-center justify-center pointer-events-none select-none"
+        className="relative rounded-md border overflow-hidden flex items-center justify-center pointer-events-none select-none opacity-40 grayscale"
         style={{
           width: CELL,
           height: CELL,
@@ -60,19 +91,27 @@ export default function GameTile({ word, emoji, inDegree, isClickable, onClick }
   }
 
   return (
-    <button
-      onClick={onClick}
-      className="relative rounded-md border overflow-hidden flex items-center justify-center hover:brightness-110 active:scale-90 transition-all duration-150 cursor-pointer select-none"
-      style={{
-        width: CELL,
-        height: CELL,
-        background: 'var(--bg-secondary)',
-        borderColor: 'var(--border-primary)',
-        color: 'var(--text-primary)',
-      }}
-    >
-      {content}
-      {badge}
-    </button>
+    <>
+      <button
+        ref={btnRef}
+        onClick={onClick}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onContextMenu={handleContextMenu}
+        className="relative rounded-md border overflow-hidden flex items-center justify-center hover:brightness-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-100 cursor-pointer select-none"
+        style={{
+          width: CELL,
+          height: CELL,
+          background: 'var(--bg-secondary)',
+          borderColor: 'var(--border-primary)',
+          color: 'var(--text-primary)',
+        }}
+      >
+        {content}
+        {badge}
+      </button>
+      <TilePopup word={word} anchorEl={popupAnchor} onClose={() => setPopupAnchor(null)} />
+    </>
   );
 }
