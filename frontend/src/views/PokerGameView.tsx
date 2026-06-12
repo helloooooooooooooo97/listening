@@ -595,47 +595,6 @@ function PokerTableView({
         </div>
       )}
 
-      {/* Showdown result */}
-      {isCompleted && game.showdown && (
-        <ShowdownResult
-          showdown={game.showdown}
-          pot={game.pot}
-          communityWords={game.community_words}
-          onPlayAgain={() => { onBack(); }}
-        />
-      )}
-
-      {/* All AI folded — quick win */}
-      {isCompleted && !game.showdown && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-3">
-          <div className="max-w-sm mx-auto text-center animate-scale-in">
-            <div className="mb-3">
-              <span className="text-5xl">🎉</span>
-            </div>
-            <h2 className="text-2xl font-extrabold text-white mb-1">全胜！</h2>
-            <p className="text-sm text-white/50 mb-4">AI 全部弃牌，赢得底池</p>
-            <p className="text-3xl font-extrabold text-[var(--accent)] mb-5 tabular-nums">+{game.pot} IP</p>
-            <button onClick={() => { onBack(); }}
-              className="w-full py-3.5 rounded-xl text-sm font-bold bg-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
-              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
-              再来一局
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Showdown phase (waiting) */}
-      {game.phase === 'showdown' && !isCompleted && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-3">
-          <div className="flex items-center justify-center gap-3 py-4">
-            <div className="relative w-5 h-5">
-              <div className="absolute inset-0 border-2 border-white/5 rounded-full" />
-              <div className="absolute inset-0 border-2 border-transparent border-t-[var(--accent)] rounded-full animate-spin" />
-            </div>
-            <span className="text-sm text-white/40">摊牌中...</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
