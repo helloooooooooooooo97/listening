@@ -686,14 +686,17 @@ function PlayerSeat({
           </p>
         </div>
       ) : (
-        <div className="text-center mt-1">
+        <div className="text-center mt-1 flex flex-col items-center">
           {!player.folded && (
-            <p className="text-[9px] text-[var(--accent)]/70 font-semibold tabular-nums">
-              ${player.total_bet}
-            </p>
+            <>
+              <p className="text-[9px] text-white/50 font-medium tabular-nums">
+                ${player.total_bet}
+              </p>
+              <p className="text-[7px] text-white/25">已下注</p>
+            </>
           )}
           {player.folded && (
-            <p className="text-[9px] text-white/40">弃牌</p>
+            <p className="text-[9px] text-white/30">✗ 弃牌</p>
           )}
         </div>
       )}
