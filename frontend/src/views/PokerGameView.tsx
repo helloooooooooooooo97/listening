@@ -9,6 +9,7 @@ import { usePokerStore } from '../stores/pokerStore';
 import { cardImageUrl } from '../lib/api';
 import type { PokerGameState, PokerPlayerState } from '../lib/api';
 import { useCurrencyStore } from '../stores/currencyStore';
+import { useWordAudio } from '../hooks/useWordAudio';
 
 // ─── Rarity config (consistent with CardDetailModal) ───
 
@@ -328,7 +329,8 @@ function PokerTableView({
     if (!prevRoundRef.current) prevRoundRef.current = game.round;
   }, [game.round]);
 
-  // Auto-play revealed community words on loop while round is active
+  // Auto-play revealed community words on loop using real audio
+  const { playWordAudio } = useWordAudio();
   useEffect(() => {
     if (isCompleted || game.phase === 'showdown') return;
 
@@ -337,20 +339,21 @@ function PokerTableView({
       .map(cw => cw.word!);
     if (revealed.length === 0) return;
 
-    const speakWords = () => {
-      revealed.forEach(word => {
-        const u = new SpeechSynthesisUtterance(word);
-        u.rate = 0.75;
-        speechSynthesis.speak(u);
-      });
+    let currentIdx = 0;
+    let timer: number;
+
+    const playNext = () => {
+      playWordAudio(revealed[currentIdx]);
+      currentIdx = (currentIdx + 1) % revealed.length;
+      // After full cycle, wait longer before restarting
+      const delay = currentIdx === 0 ? 6000 : 2500;
+      timer = window.setTimeout(playNext, delay);
     };
 
-    speakWords();
-    const interval = setInterval(speakWords, 8000);
+    timer = window.setTimeout(playNext, 1000);
 
     return () => {
-      clearInterval(interval);
-      speechSynthesis.cancel();
+      clearTimeout(timer);
     };
   }, [game.round, isCompleted, game.phase]);
 
@@ -421,7 +424,7 @@ function PokerTableView({
                 {cw.revealed ? (
                   <div className="flex flex-col items-center gap-1">
                     <span className="text-sm font-bold text-white/90 leading-tight text-center px-1">{cw.word}</span>
-                    <button onClick={(e) => { e.stopPropagation(); speechSynthesis.speak(new SpeechSynthesisUtterance(cw.word!)); }}
+                    <button onClick={(e) => { e.stopPropagation(); playWordAudio(cw.word!); }}
                       className="text-white/30 hover:text-white/60 transition-colors cursor-pointer">
                       <HiSpeakerWave size={11} />
                     </button>
