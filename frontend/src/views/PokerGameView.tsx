@@ -310,11 +310,10 @@ function PokerTableView({
   onBack: () => void;
 }) {
   const isCompleted = game.status === 'completed';
-  const human = game.players.find(p => p.player_type === 'human');
-  const humanKeywords = human?.keywords || [];
   const [dealAnimate, setDealAnimate] = useState(false);
-  const [showKeywords, setShowKeywords] = useState(false);
-  const [previewCard, setPreviewCard] = useState<{ name: string; rarity: string; png: string } | null>(null);
+  const [previewCard, setPreviewCard] = useState<{
+    name: string; rarity: string; png: string; keywords: string[];
+  } | null>(null);
   const prevRoundRef = useRef(game.round);
 
   // Trigger deal animation on round change
@@ -443,7 +442,7 @@ function PokerTableView({
                 communityWords={game.community_words}
                 position={s.pos}
                 game={game}
-                onCardClick={(name, rarity, png) => setPreviewCard({ name, rarity, png })}
+                onCardClick={(name, rarity, png, keywords) => setPreviewCard({ name, rarity, png, keywords })}
               />
             ));
           })()}
@@ -495,38 +494,13 @@ function PokerTableView({
               name={previewCard.name}
               rarity={previewCard.rarity}
               png={previewCard.png}
+              keywords={previewCard.keywords}
+              communityWords={game.community_words}
               onClose={() => setPreviewCard(null)}
             />
           )}
         </div>
 
-        {/* ── Keywords hint (human player's keywords) ── */}
-        {!isCompleted && humanKeywords.length > 0 && (
-          <div className="mt-2">
-            <button onClick={() => setShowKeywords(!showKeywords)}
-              className="text-[9px] text-white/30 hover:text-white/50 transition-colors cursor-pointer flex items-center gap-1">
-              <HiInformationCircle size={10} />
-              查看关键词 {showKeywords ? '▲' : '▼'}
-            </button>
-            {showKeywords && (
-              <div className="flex flex-wrap justify-center gap-1 mt-1.5 animate-fade-in">
-                {humanKeywords.slice(0, 8).map(kw => {
-                  const matched = game.community_words.some(cw => cw.revealed && cw.word === kw);
-                  return (
-                    <span key={kw}
-                      className={`text-[8px] px-1.5 py-0.5 rounded-full transition-all ${
-                        matched
-                          ? 'bg-emerald-500/15 text-emerald-400 font-semibold'
-                          : 'text-white/25 bg-white/5'
-                      }`}>
-                      {matched ? '✓ ' : ''}{kw}
-                    </span>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
       {/* ── Bottom controls ── */}
@@ -608,7 +582,7 @@ function PlayerSeat({
   communityWords: PokerGameState['community_words'];
   position: 'top' | 'left' | 'right' | 'bottom';
   game: PokerGameState;
-  onCardClick?: (name: string, rarity: string, png: string) => void;
+  onCardClick?: (name: string, rarity: string, png: string, keywords: string[]) => void;
 }) {
   const cfg = rc(player.card_rarity || 'R');
   const isWinner = player.is_winner;
@@ -648,7 +622,7 @@ function PlayerSeat({
         onClick={() => {
           const imgName = player.card_name?.toLowerCase().replace(/\s+/g, '_') || '';
           const rarity = player.card_rarity || 'R';
-          if (imgName) onCardClick?.(player.card_name || '', rarity, imgName);
+          if (imgName) onCardClick?.(player.card_name || '', rarity, imgName, player.keywords || []);
         }}
         style={{
           background: 'rgba(255,255,255,0.04)',
@@ -700,14 +674,17 @@ function PlayerSeat({
 
 // ─── Card Preview Modal ───
 
-function CardPreviewModal({ name, rarity, png, onClose }: {
-  name: string; rarity: string; png: string; onClose: () => void;
+function CardPreviewModal({ name, rarity, png, keywords, communityWords, onClose }: {
+  name: string; rarity: string; png: string; keywords: string[];
+  communityWords: PokerGameState['community_words'];
+  onClose: () => void;
 }) {
   const cfg = rc(rarity);
   return (
     <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-2xl"
       onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-48 animate-scale-in" onClick={e => e.stopPropagation()}>
+      <div className="w-56 animate-scale-in" onClick={e => e.stopPropagation()}>
+        {/* Card image */}
         <div className="rounded-2xl overflow-hidden border-2"
           style={{
             borderColor: cfg.border,
@@ -716,6 +693,8 @@ function CardPreviewModal({ name, rarity, png, onClose }: {
           <img src={cardImageUrl(png)} alt={name}
             className="w-full object-cover" />
         </div>
+
+        {/* Name + rarity */}
         <div className="text-center mt-3">
           <p className="text-base font-bold text-white">{name}</p>
           <span className="inline-block text-xs px-2 py-0.5 rounded-md font-extrabold mt-1"
@@ -723,8 +702,32 @@ function CardPreviewModal({ name, rarity, png, onClose }: {
             {cfg.label}
           </span>
         </div>
+
+        {/* Keywords with match highlighting */}
+        {keywords.length > 0 && (
+          <div className="mt-3 px-1">
+            <p className="text-[10px] text-white/40 font-medium uppercase tracking-wider mb-1.5 text-center">关键词</p>
+            <div className="flex flex-wrap justify-center gap-1.5">
+              {keywords.map(kw => {
+                const matched = communityWords.some(cw => cw.revealed && cw.word === kw);
+                return (
+                  <span key={kw}
+                    className={`text-[11px] px-2 py-0.5 rounded-full font-medium transition-all ${
+                      matched
+                        ? 'bg-emerald-500/20 text-emerald-400 font-bold'
+                        : 'bg-white/8 text-white/50'
+                    }`}>
+                    {matched ? '✓ ' : ''}{kw}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Close */}
         <button onClick={onClose}
-          className="w-full mt-3 py-2 rounded-xl text-xs font-bold bg-white/10 text-white/70 hover:bg-white/15 hover:text-white transition-colors cursor-pointer">
+          className="w-full mt-3 py-2.5 rounded-xl text-xs font-bold bg-white/10 text-white/70 hover:bg-white/15 hover:text-white transition-colors cursor-pointer active:scale-[0.98]">
           关闭
         </button>
       </div>
