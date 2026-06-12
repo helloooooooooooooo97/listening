@@ -398,12 +398,12 @@ function PokerTableView({
         />
 
         {/* Player positions + Community words */}
-        <div className="relative w-full max-w-3xl" style={{ minHeight: '560px' }}>
+        <div className="relative w-full max-w-4xl" style={{ minHeight: '640px' }}>
           {/* ── Community words (center) ── */}
           <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center gap-2 sm:gap-3 z-10">
             {game.community_words.map((cw, i) => (
               <div key={i}
-                className={`relative w-16 h-[90px] sm:w-20 sm:h-[112px] rounded-2xl border-2 transition-all duration-500 flex items-center justify-center
+                className={`relative w-20 h-[110px] sm:w-24 sm:h-[132px] rounded-2xl border-2 transition-all duration-500 flex items-center justify-center
                   ${cw.revealed
                     ? 'border-white/15 scale-100 opacity-100'
                     : 'border-white/5 scale-95 opacity-50'
@@ -418,7 +418,7 @@ function PokerTableView({
                 }}>
                 {cw.revealed ? (
                   <div className="flex flex-col items-center gap-1">
-                    <span className="text-sm font-bold text-white/90 leading-tight text-center px-1">{cw.word}</span>
+                    <span className="text-base font-bold text-white/90 leading-tight text-center px-1">{cw.word}</span>
                     <button onClick={(e) => { e.stopPropagation(); playWordAudio(cw.word!); }}
                       className="text-white/30 hover:text-white/60 transition-colors cursor-pointer">
                       <HiSpeakerWave size={11} />
@@ -618,21 +618,21 @@ function PlayerSeat({
   // Position styles — traditional poker table: top / left / right / bottom
   const posStyles: Record<string, string> = {
     top: 'top-0 left-1/2 -translate-x-1/2',
-    left: 'top-1/2 -translate-y-1/2 -left-2 sm:left-2 md:left-8',
-    right: 'top-1/2 -translate-y-1/2 -right-2 sm:right-2 md:right-8',
+    left: 'top-1/2 -translate-y-1/2 left-0 md:left-8',
+    right: 'top-1/2 -translate-y-1/2 right-0 md:right-8',
     bottom: 'bottom-0 left-1/2 -translate-x-1/2',
   };
 
-  const cardW = isBottom ? 'w-24' : 'w-[72px]';
-  const cardH = isBottom ? 'h-[130px]' : 'h-[98px]';
+  const cardW = isBottom ? 'w-28' : 'w-24';
+  const cardH = isBottom ? 'h-[156px]' : 'h-[132px]';
 
   return (
     <div className={`absolute ${posStyles[position]} z-20 transition-all duration-500 flex flex-col items-center`}
       style={{
         opacity: player.folded && !isCompleted ? 0.3 : 1,
       }}>
-      {/* Label above card for top-position player */}
-      {position === 'top' && (
+      {/* Label above card for top / left / right (keeps visual center aligned with community words) */}
+      {position !== 'bottom' && (
         <p className={`text-xs font-bold mb-1.5 text-center ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/70'}`}>
           AI-{player.id}{isWinner && isCompleted && ' 👑'}
         </p>
@@ -669,7 +669,7 @@ function PlayerSeat({
           <div className="w-full h-full flex items-center justify-center">
             <div className="w-12 h-16 rounded-lg border border-white/10 flex items-center justify-center"
               style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08))' }}>
-              <span className="text-white/20 text-2xl">🂠</span>
+              <span className="text-white/20 text-3xl">🂠</span>
             </div>
           </div>
         )}
@@ -687,15 +687,13 @@ function PlayerSeat({
         </div>
       ) : (
         <div className="text-center mt-1">
-          <p className="text-[10px] font-bold text-white/60 max-w-[80px] truncate">
-            AI-{player.id}
-            {player.folded ? ' 弃牌' : ''}
-            {isWinner && isCompleted && !isBottom ? ' 👑' : ''}
-          </p>
           {!player.folded && (
             <p className="text-[9px] text-[var(--accent)]/70 font-semibold tabular-nums">
               ${player.total_bet}
             </p>
+          )}
+          {player.folded && (
+            <p className="text-[9px] text-white/40">弃牌</p>
           )}
         </div>
       )}
