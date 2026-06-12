@@ -28,8 +28,12 @@ function flushTrack() {
   let id: string, title: string, words: any[] | undefined;
   if (m.kind === 'lesson') {
     id = m.lesson.id; title = m.lesson.title; words = m.lesson.words;
-  } else if (m.kind === 'clip' && m.lesson) {
-    id = m.lesson.id; title = m.lesson.title; words = m.lesson.words;
+  } else if (m.kind === 'clip') {
+    if (m.lesson) {
+      id = m.lesson.id; title = m.lesson.title; words = m.lesson.words;
+    } else {
+      id = m.clip.lessonId; title = m.clip.lessonTitle; words = undefined;
+    }
   } else {
     return;
   }

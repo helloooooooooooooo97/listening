@@ -358,6 +358,50 @@ def init_db():
     conn.execute("INSERT OR IGNORE INTO currency (id, balance, earned, spent) VALUES (1, 0, 0, 0)")
     conn.commit()
 
+    # ── 词牌对决 (Vocabulary Hold'em) ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS poker_games (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            status          TEXT NOT NULL DEFAULT 'waiting',
+            pot             INTEGER NOT NULL DEFAULT 0,
+            round           INTEGER NOT NULL DEFAULT 0,
+            community_words TEXT NOT NULL DEFAULT '[]',
+            revealed_mask   INTEGER NOT NULL DEFAULT 0,
+            winner_player_id INTEGER DEFAULT NULL,
+            winner_match_count INTEGER DEFAULT 0,
+            created_at      INTEGER DEFAULT (unixepoch()),
+            completed_at    INTEGER DEFAULT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS poker_players (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            game_id         INTEGER NOT NULL REFERENCES poker_games(id) ON DELETE CASCADE,
+            player_type     TEXT NOT NULL DEFAULT 'human',
+            card_id         TEXT NOT NULL,
+            card_name       TEXT NOT NULL DEFAULT '',
+            card_rarity     TEXT NOT NULL DEFAULT '',
+            balance_before  INTEGER NOT NULL DEFAULT 0,
+            total_bet       INTEGER NOT NULL DEFAULT 0,
+            folded          INTEGER NOT NULL DEFAULT 0,
+            is_winner       INTEGER NOT NULL DEFAULT 0,
+            match_count     INTEGER DEFAULT NULL,
+            created_at      INTEGER DEFAULT (unixepoch())
+        );
+        CREATE INDEX IF NOT EXISTS idx_pp_game ON poker_players(game_id);
+
+        CREATE TABLE IF NOT EXISTS poker_actions (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            game_id     INTEGER NOT NULL REFERENCES poker_games(id) ON DELETE CASCADE,
+            player_id   INTEGER NOT NULL REFERENCES poker_players(id),
+            action      TEXT NOT NULL,
+            amount      INTEGER NOT NULL DEFAULT 0,
+            round       INTEGER NOT NULL,
+            created_at  INTEGER DEFAULT (unixepoch())
+        );
+        CREATE INDEX IF NOT EXISTS idx_pa_game ON poker_actions(game_id);
+    """)
+    conn.commit()
+
     # ── 自动导入卡牌数据 (幂等: 已存在的跳过, 新加的自动补入) ──
     _seed_card_data_if_needed(conn)
 

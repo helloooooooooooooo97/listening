@@ -82,12 +82,9 @@ def get_deck_meta() -> dict[str, Any]:
 
 def load_card_data() -> list[dict[str, Any]]:
     """Load card data from the JSON file specified in config."""
+    from config import resolve_path
     cfg = get_config()
-    path = Path(cfg["cards"]["data_path"])
-    if not path.exists():
-        # Try relative to backend dir
-        alt = Path(__file__).resolve().parent.parent.parent.parent / cfg["cards"]["data_path"]
-        path = alt
+    path = resolve_path(cfg["cards"]["data_path"])
     with open(path) as f:
         data = json.load(f)
         # fashion.json wraps cards in { season, title, subtitle, theme, cards: [...] }

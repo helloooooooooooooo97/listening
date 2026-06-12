@@ -13,6 +13,7 @@ const FavoritesView = lazy(() => import('../views/FavoritesView'));
 const CollectionsView = lazy(() => import('../views/CollectionsView'));
 const CollectionDetailView = lazy(() => import('../views/CollectionDetailView'));
 const GameView = lazy(() => import('../views/GameView'));
+const PokerGameView = lazy(() => import('../views/PokerGameView'));
 const CardsView = lazy(() => import('../views/CardsView'));
 const DeckDetailView = lazy(() => import('../views/DeckDetailView'));
 
@@ -103,6 +104,7 @@ export default function ContentPanel({ activeSection, lessons, clips, wordCount,
       {section === 'favorites' && <ViewTransition id="favorites"><FavoritesView /></ViewTransition>}
       {section === 'settings' && <ViewTransition id="settings"><SettingsView /></ViewTransition>}
       {section === 'game' && <ViewTransition id="game"><GameView /></ViewTransition>}
+      {section === 'poker' && <ViewTransition id="poker"><PokerGameView /></ViewTransition>}
       {section === 'cards' && <ViewTransition id="cards"><CardsView /></ViewTransition>}
     </Suspense>
   );

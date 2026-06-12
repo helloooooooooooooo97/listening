@@ -1,8 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
-import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiTag, HiCog6Tooth, HiChartBar, HiFolderOpen, HiSparkles, HiRectangleStack } from 'react-icons/hi2';
+import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiTag, HiCog6Tooth, HiChartBar, HiFolderOpen, HiSparkles, HiRectangleStack, HiCubeTransparent } from 'react-icons/hi2';
 import CurrencyBadge from './CurrencyBadge';
 
-export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'collections' | 'stats' | 'favorites' | 'settings' | 'game' | 'cards';
+export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'collections' | 'stats' | 'favorites' | 'settings' | 'game' | 'cards' | 'poker';
 
 interface Props {
   activeSection: NavSection;
@@ -22,6 +22,7 @@ const NAV_ITEMS: [NavSection, string, React.ComponentType<{size:number}>, number
   ['collections', '合集', HiFolderOpen, 0],
   ['stats', '统计', HiChartBar, 0],
   ['game', '游戏', HiSparkles, 0],
+  ['poker', '词牌', HiCubeTransparent, 0],
   ['cards', '卡组', HiRectangleStack, 0],
 ];
 

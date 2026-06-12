@@ -1,5 +1,6 @@
 """Currency API — inspiration points balance, transactions, and settlement."""
-from __future__ import annotations
+
+from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query
 from database import get_conn, locked
@@ -26,7 +27,7 @@ def balance():
 @router.get("/transactions")
 @locked
 def transactions(
-    source: str | None = Query(None, description="Filter by source"),
+    source: Optional[str] = Query(None, description="Filter by source"),
     limit: int = Query(50, ge=1, le=200),
     offset: int = Query(0, ge=0),
 ):

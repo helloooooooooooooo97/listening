@@ -1,5 +1,4 @@
 """Progress API — dictation, play history, word progress, reviews."""
-from __future__ import annotations
 
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel
@@ -43,18 +42,18 @@ class WordReviewIn(BaseModel):
     score: float
 
 
-class BatchReviewIn(BaseModel):
-    session_id: str
-    source: str = "review"
-    mode: str = "fill-in"
-    results: list[BatchReviewItem]
-
-
 class BatchReviewItem(BaseModel):
     word: str
     correct: bool = False
     score: float = 0
     session_index: int = 0
+
+
+class BatchReviewIn(BaseModel):
+    session_id: str
+    source: str = "review"
+    mode: str = "fill-in"
+    results: list[BatchReviewItem]
 
 
 # ── Dictation ──

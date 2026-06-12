@@ -649,3 +649,104 @@ export function getEarningToday(): Promise<{ date: string; sources: EarningSourc
 export function syncCurrency(): Promise<SyncResponse> {
   return post<SyncResponse>('/api/currency/sync', {});
 }
+
+// ── Poker API ──
+
+export interface PokerStatus {
+  can_play: boolean;
+  owned_cards_count: number;
+  balance: number;
+}
+
+export interface PlayableCard {
+  id: string;
+  name: string;
+  title: string;
+  rarity: string;
+  png: string;
+  keywords: string[];
+}
+
+export interface PokerCommunityWord {
+  word: string | null;
+  revealed: boolean;
+  index: number;
+}
+
+export interface PokerPlayerState {
+  id: number;
+  player_type: string;
+  total_bet: number;
+  folded: boolean;
+  is_winner: boolean;
+  match_count: number | null;
+  card_id?: string | null;
+  card_name?: string | null;
+  card_rarity?: string | null;
+  keywords?: string[] | null;
+  balance_before?: number | null;
+}
+
+export interface PokerGameState {
+  game_id: number;
+  status: string;
+  phase: string;
+  round: number;
+  pot: number;
+  community_words: PokerCommunityWord[];
+  players: PokerPlayerState[];
+  human_player_id: number | null;
+  can_act: boolean;
+  current_bet: number;
+  total_actions: number;
+  showdown?: {
+    results: {
+      player_id: number;
+      player_type: string;
+      card_name: string;
+      card_rarity: string;
+      keywords: string[];
+      matches: number;
+      is_winner: boolean;
+    }[];
+    tie: boolean;
+    winner_player_id: number;
+  };
+}
+
+export interface PokerHistory {
+  game_id: number;
+  pot: number;
+  human_card: string | null;
+  is_win: boolean;
+  rounds: number;
+  completed_at: number;
+}
+
+export function getPokerStatus(): Promise<PokerStatus> {
+  return get<PokerStatus>('/api/game/poker/status');
+}
+
+export function getPlayableCards(): Promise<{ cards: PlayableCard[] }> {
+  return get<{ cards: PlayableCard[] }>('/api/game/poker/cards');
+}
+
+export function createPokerGame(cardId: string): Promise<PokerGameState> {
+  return post<PokerGameState>('/api/game/poker/create', { card_id: cardId });
+}
+
+export function getPokerGameState(gameId: number): Promise<PokerGameState> {
+  return get<PokerGameState>(`/api/game/poker/${gameId}`);
+}
+
+export function pokerAction(gameId: number, action: string, amount?: number): Promise<PokerGameState> {
+  return post<PokerGameState>(`/api/game/poker/${gameId}/action`, { action, amount: amount || 0 });
+}
+
+export function getPokerResult(gameId: number): Promise<PokerGameState> {
+  return get<PokerGameState>(`/api/game/poker/${gameId}/result`);
+}
+
+export function getPokerHistory(limit?: number): Promise<{ games: PokerHistory[] }> {
+  return get<{ games: PokerHistory[] }>(`/api/game/poker/history/all${limit ? `?limit=${limit}` : ''}`);
+}
