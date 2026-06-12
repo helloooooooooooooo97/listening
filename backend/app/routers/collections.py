@@ -55,7 +55,7 @@ def update_collection(collection_id: int, data: CollectionUpdate, svc: Collectio
 
     sets = ", ".join(f"{k}=?" for k in updates)
     values = list(updates.values()) + [collection_id]
-    conn.execute(f"UPDATE collections SET {sets}, updated_at=datetime('now') WHERE id=?", values)
+    conn.execute(f"UPDATE collections SET {sets}, updated_at=unixepoch() WHERE id=?", values)
     conn.commit()
     row = conn.execute("SELECT * FROM collections WHERE id=?", [collection_id]).fetchone()
     return dict(row)

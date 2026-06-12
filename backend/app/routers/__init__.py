@@ -54,6 +54,7 @@ from .stats import router as stats_router
 from .import_route import router as import_router
 from .collections import router as collections_router
 from .cards import router as cards_router
+from .currency import router as currency_router
 
 routers = [
     router,             # lessons
@@ -66,4 +67,5 @@ routers = [
     import_router,
     collections_router,
     cards_router,
+    currency_router,
 ]

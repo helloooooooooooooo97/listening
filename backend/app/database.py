@@ -102,7 +102,7 @@ def init_db():
             text TEXT NOT NULL,
             note TEXT DEFAULT '',
             color TEXT DEFAULT '#facc15',
-            created_at TEXT DEFAULT (datetime('now'))
+            created_at INTEGER DEFAULT (unixepoch())
         );
         CREATE INDEX IF NOT EXISTS idx_clips_audio ON clips(audio_id);
 
@@ -112,7 +112,7 @@ def init_db():
             audio_id TEXT NOT NULL,
             audio_title TEXT NOT NULL,
             duration_seconds REAL DEFAULT 0,
-            played_at TEXT DEFAULT (datetime('now'))
+            played_at INTEGER DEFAULT (unixepoch())
         );
         CREATE INDEX IF NOT EXISTS idx_play_audio ON play_history(audio_id);
 
@@ -126,7 +126,7 @@ def init_db():
             total_seconds REAL DEFAULT 0,
             dictation_avg_score REAL DEFAULT 0,
             dictation_count INTEGER DEFAULT 0,
-            updated_at TEXT DEFAULT (datetime('now'))
+            updated_at INTEGER DEFAULT (unixepoch())
         );
 
         -- 听写记录
@@ -138,7 +138,7 @@ def init_db():
             score REAL NOT NULL,
             user_input TEXT DEFAULT '',
             expected_text TEXT DEFAULT '',
-            created_at TEXT DEFAULT (datetime('now'))
+            created_at INTEGER DEFAULT (unixepoch())
         );
         CREATE INDEX IF NOT EXISTS idx_dict_audio ON dictation_history(audio_id);
 
@@ -148,7 +148,7 @@ def init_db():
             word TEXT NOT NULL UNIQUE,
             known INTEGER DEFAULT 0,
             reviewed_count INTEGER DEFAULT 0,
-            reviewed_at TEXT DEFAULT (datetime('now'))
+            reviewed_at INTEGER DEFAULT (unixepoch())
         );
         CREATE INDEX IF NOT EXISTS idx_word_p ON word_progress(word);
 
@@ -170,7 +170,7 @@ def init_db():
             audio_id TEXT NOT NULL,
             audio_title TEXT NOT NULL,
             listened_date TEXT NOT NULL,
-            created_at TEXT DEFAULT (datetime('now'))
+            created_at INTEGER DEFAULT (unixepoch())
         );
         CREATE INDEX IF NOT EXISTS idx_lw_date ON listened_words(listened_date);
         CREATE INDEX IF NOT EXISTS idx_lw_word ON listened_words(word);
@@ -185,7 +185,7 @@ def init_db():
             title TEXT NOT NULL DEFAULT '',
             subtitle TEXT DEFAULT '',
             extra_data TEXT DEFAULT '{}',
-            created_at TEXT DEFAULT (datetime('now'))
+            created_at INTEGER DEFAULT (unixepoch())
         );
         CREATE UNIQUE INDEX IF NOT EXISTS idx_fav_item ON favorites(item_id, item_type);
     """)
@@ -212,8 +212,8 @@ def init_db():
             dynamic_type TEXT DEFAULT NULL,
             item_count INTEGER DEFAULT 0,
             sort_order INTEGER DEFAULT 0,
-            created_at TEXT DEFAULT (datetime('now')),
-            updated_at TEXT DEFAULT (datetime('now'))
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch())
         );
 
         CREATE TABLE IF NOT EXISTS collection_items (
@@ -229,7 +229,7 @@ def init_db():
             end_time REAL DEFAULT 0,
             extra_data TEXT DEFAULT '{}',
             sort_order INTEGER DEFAULT 0,
-            added_at TEXT DEFAULT (datetime('now'))
+            added_at INTEGER DEFAULT (unixepoch())
         );
         CREATE INDEX IF NOT EXISTS idx_ci_collection ON collection_items(collection_id);
         CREATE INDEX IF NOT EXISTS idx_ci_ref ON collection_items(collection_id, item_ref);
@@ -280,7 +280,7 @@ def init_db():
             correct INTEGER NOT NULL DEFAULT 0,
             score REAL NOT NULL DEFAULT 0,
             session_index INTEGER NOT NULL DEFAULT 0,
-            created_at TEXT DEFAULT (datetime('now'))
+            created_at INTEGER DEFAULT (unixepoch())
         );
         CREATE INDEX IF NOT EXISTS idx_rh_session ON review_history(session_id);
         CREATE INDEX IF NOT EXISTS idx_rh_word ON review_history(word);
@@ -296,8 +296,8 @@ def init_db():
             translated_text TEXT NOT NULL,
             source_type TEXT NOT NULL DEFAULT 'sentence',
             extra_data TEXT DEFAULT NULL,
-            created_at TEXT DEFAULT (datetime('now')),
-            updated_at TEXT DEFAULT (datetime('now'))
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch())
         );
         CREATE INDEX IF NOT EXISTS idx_translations_hash ON translations(source_hash);
     """)
@@ -310,7 +310,7 @@ def init_db():
             card_id TEXT NOT NULL UNIQUE,
             season INTEGER NOT NULL DEFAULT 1,
             obtained INTEGER NOT NULL DEFAULT 0,
-            obtained_at TEXT DEFAULT NULL,
+            obtained_at INTEGER DEFAULT NULL,
             obtained_by TEXT DEFAULT ''
         );
 
@@ -322,12 +322,40 @@ def init_db():
 
         CREATE TABLE IF NOT EXISTS card_draw_log (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            drawn_at TEXT DEFAULT (datetime('now')),
+            drawn_at INTEGER DEFAULT (unixepoch()),
             card_id TEXT NOT NULL,
             match_score REAL NOT NULL DEFAULT 0,
             reviewed_words_snapshot INTEGER NOT NULL DEFAULT 0
         );
     """)
+    conn.commit()
+
+    # ── 代币经济系统 (灵感值) ──
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS currency (
+            id        INTEGER PRIMARY KEY AUTOINCREMENT,
+            balance   INTEGER NOT NULL DEFAULT 0,
+            earned    INTEGER NOT NULL DEFAULT 0,
+            spent     INTEGER NOT NULL DEFAULT 0
+        );
+
+        CREATE TABLE IF NOT EXISTS currency_transactions (
+            id            INTEGER PRIMARY KEY AUTOINCREMENT,
+            amount        INTEGER NOT NULL,
+            balance_after INTEGER NOT NULL,
+            source        TEXT NOT NULL,
+            ref_id        TEXT DEFAULT '',
+            ref_summary   TEXT DEFAULT '',
+            created_at    INTEGER DEFAULT (unixepoch()),
+            UNIQUE(source, ref_id)
+        );
+        CREATE INDEX IF NOT EXISTS idx_ct_source ON currency_transactions(source);
+        CREATE INDEX IF NOT EXISTS idx_ct_date  ON currency_transactions(created_at);
+    """)
+    conn.commit()
+
+    # Seed the single currency row if not exists
+    conn.execute("INSERT OR IGNORE INTO currency (id, balance, earned, spent) VALUES (1, 0, 0, 0)")
     conn.commit()
 
     # ── 自动导入卡牌数据 (幂等: 已存在的跳过, 新加的自动补入) ──

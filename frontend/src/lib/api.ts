@@ -147,7 +147,7 @@ export interface AudioDetailStats {
   completed: boolean;
   clips_count: number;
   last_position: number;
-  last_practiced: string;
+  last_practiced: number;
 }
 
 export function getAudioDetailStats(audioId: string): Promise<AudioDetailStats> {
@@ -172,7 +172,7 @@ export interface DictRecord {
   score: number;
   user_input: string;
   expected_text: string;
-  created_at: string;
+  created_at: number;
 }
 
 export interface AudioGroup {
@@ -180,7 +180,7 @@ export interface AudioGroup {
   audio_title: string;
   avg_score: number;
   total_sentences: number;
-  last_practiced: string;
+  last_practiced: number;
   records: DictRecord[];
 }
 
@@ -203,7 +203,7 @@ export function getAudioProgress(): Promise<{ audios: AudioProgress[] }> {
 
 export interface Activity {
   type: string;
-  time: string;
+  time: number;
   detail: string;
 }
 
@@ -246,7 +246,7 @@ export interface FavoriteItem {
   title: string;
   subtitle: string;
   extra_data: string;
-  created_at: string;
+  created_at: number;
 }
 
 export function getFavorites(): Promise<FavoriteItem[]> {
@@ -521,6 +521,9 @@ export interface CardListResponse {
 
 export interface DrawStatusResponse {
   can_draw: boolean;
+  can_afford: boolean;
+  balance: number;
+  draw_cost: number;
   new_words_since_last_draw: number;
   min_new_words: number;
   qualified_candidates: number;
@@ -549,6 +552,35 @@ export interface DrawResponse {
   draw_id: string;
   words: DrawWord[];
   new_words_since_last_draw: number;
+  balance: number;
+  draw_cost: number;
+}
+
+export interface CurrencyBalance {
+  balance: number;
+  earned: number;
+  spent: number;
+}
+
+export interface CurrencyTransaction {
+  id: number;
+  amount: number;
+  balance_after: number;
+  source: string;
+  ref_id: string;
+  ref_summary: string;
+  created_at: number;
+}
+
+export interface EarningSource {
+  source: string;
+  total: number;
+  count: number;
+}
+
+export interface SyncResponse {
+  settled: number;
+  balance: number;
 }
 
 export interface DrawPickResponse {
@@ -597,4 +629,23 @@ export function pickDrawWord(drawId: string, word: string): Promise<DrawPickResp
 
 export function unlockCard(cardId: string, obtainedBy = 'draw'): Promise<UnlockResponse> {
   return post<UnlockResponse>(`/api/cards/collection/${cardId}`, { obtained_by: obtainedBy });
+}
+
+// ── Currency API ──
+
+export function getCurrencyBalance(): Promise<CurrencyBalance> {
+  return get<CurrencyBalance>('/api/currency/balance');
+}
+
+export function getCurrencyTransactions(source?: string): Promise<{ transactions: CurrencyTransaction[]; total: number }> {
+  const params = source ? `?source=${source}` : '';
+  return get<{ transactions: CurrencyTransaction[]; total: number }>(`/api/currency/transactions${params}`);
+}
+
+export function getEarningToday(): Promise<{ date: string; sources: EarningSource[] }> {
+  return get<{ date: string; sources: EarningSource[] }>('/api/currency/earning-today');
+}
+
+export function syncCurrency(): Promise<SyncResponse> {
+  return post<SyncResponse>('/api/currency/sync', {});
 }

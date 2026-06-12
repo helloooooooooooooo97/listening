@@ -29,15 +29,15 @@ def overview():
     today = datetime.now().strftime("%Y-%m-%d")
     yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     today_sec = conn.execute(
-        "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at)=?", [today]
+        "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at, 'unixepoch')=?", [today]
     ).fetchone()[0]
     yesterday_sec = conn.execute(
-        "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at)=?", [yesterday]
+        "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at, 'unixepoch')=?", [yesterday]
     ).fetchone()[0]
 
     # Streak
     rows = conn.execute(
-        "SELECT DISTINCT date(played_at) FROM play_history WHERE date(played_at) > date('now', '-365 days')"
+        "SELECT DISTINCT date(played_at, 'unixepoch') FROM play_history WHERE date(played_at, 'unixepoch') > date('now', '-365 days')"
     ).fetchall()
     active_dates = {r[0] for r in rows}
     streak = 0
@@ -62,6 +62,10 @@ def overview():
         "SELECT COUNT(*) FROM word_progress WHERE known=1 AND (last_score IS NULL OR last_score < 80)"
     ).fetchone()[0]
 
+    # Currency balance
+    currency_row = conn.execute("SELECT balance FROM currency WHERE id=1").fetchone()
+    currency_balance = currency_row["balance"] if currency_row else 0
+
     return {
         "total_listening_seconds": total_sec,
         "completed_audios": completed,
@@ -75,6 +79,7 @@ def overview():
         "today_seconds": today_sec,
         "yesterday_seconds": yesterday_sec,
         "due_words": due_words,
+        "currency_balance": currency_balance,
     }
 
 
@@ -87,7 +92,7 @@ def daily_time(days: int = Query(default=7, ge=1, le=90)):
     for i in range(days - 1, -1, -1):
         day = (datetime.now() - timedelta(days=i)).strftime("%Y-%m-%d")
         sec = conn.execute(
-            "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at)=?", [day]
+            "SELECT COALESCE(SUM(duration_seconds),0) FROM play_history WHERE date(played_at, 'unixepoch')=?", [day]
         ).fetchone()[0]
         result.append({"date": day, "seconds": sec})
     return {"days": result}
@@ -101,7 +106,7 @@ def dictation_trend(limit: int = Query(default=20, ge=1, le=100)):
     rows = conn.execute(
         "SELECT audio_title, score, created_at FROM dictation_history ORDER BY created_at DESC LIMIT ?", [limit]
     ).fetchall()
-    return {"scores": [{"date": r["created_at"][:10], "audio": r["audio_title"], "score": r["score"]} for r in rows][::-1]}
+    return {"scores": [{"date": datetime.fromtimestamp(r["created_at"]).strftime("%Y-%m-%d"), "audio": r["audio_title"], "score": r["score"]} for r in rows][::-1]}
 
 
 @router.get("/dictation-records")
@@ -178,7 +183,7 @@ def audio_detail(audio_id: str):
     row = conn.execute(
         "SELECT MAX(created_at) FROM dictation_history WHERE audio_id=?", [audio_id]
     ).fetchone()
-    last_practiced = row[0] if row and row[0] else ""
+    last_practiced = int(row[0]) if row and row[0] else 0
 
     return {
         "audio_id": audio_id,
@@ -275,7 +280,7 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
     ).fetchall()
     for r in plays:
         activities.append({
-            "type": "play", "time": r["played_at"],
+            "type": "play", "time": int(r["played_at"]),
             "detail": f"学习了 {r['audio_title']} ({int(r['duration_seconds'])}秒)",
         })
 
@@ -284,7 +289,7 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
     ).fetchall()
     for r in dicts:
         activities.append({
-            "type": "dictation", "time": r["created_at"],
+            "type": "dictation", "time": int(r["created_at"]),
             "detail": f"完成听写 {r['audio_title']} ({r['score']}%)",
         })
 
@@ -293,7 +298,7 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
     ).fetchall()
     for r in clip_rows:
         activities.append({
-            "type": "clip", "time": r["created_at"],
+            "type": "clip", "time": int(r["created_at"]),
             "detail": f"收藏片段: {r['text'][:40]}...",
         })
 
@@ -302,7 +307,7 @@ def recent_activity(limit: int = Query(default=20, ge=1, le=100)):
     ).fetchall()
     for r in words:
         activities.append({
-            "type": "word", "time": r["reviewed_at"],
+            "type": "word", "time": int(r["reviewed_at"]),
             "detail": f"掌握单词 '{r['word']}'",
         })
 

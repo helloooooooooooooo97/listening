@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { HiMusicalNote, HiHome, HiBookOpen, HiBookmark, HiTag, HiCog6Tooth, HiChartBar, HiFolderOpen, HiSparkles, HiRectangleStack } from 'react-icons/hi2';
+import CurrencyBadge from './CurrencyBadge';
 
 export type NavSection = 'home' | 'courses' | 'clips' | 'words' | 'collections' | 'stats' | 'favorites' | 'settings' | 'game' | 'cards';
 
@@ -97,6 +98,11 @@ export default function Sidebar({ activeSection, onSectionChange, lessonCount, c
             activeSection === 'settings' ? 'text-primary' : 'text-secondary hover:text-primary hover:bg-[var(--bg-hover)]'
           }`}>
           <HiCog6Tooth size={16} /> 设置
+        </div>
+
+        {/* Spacer + currency badge */}
+        <div className="mt-auto pt-4 px-3">
+          <CurrencyBadge />
         </div>
       </div>
     </aside>

@@ -13,6 +13,7 @@ from services.card_service import (
     load_card_data,
     get_deck_meta,
 )
+from services.currency_service import settle, deduct_for_draw, get_balance
 from config import get_config
 
 router = APIRouter(prefix="/api/cards", tags=["cards"])
@@ -28,7 +29,7 @@ def _get_obtained_ids(conn) -> set[str]:
     rows = conn.execute("SELECT card_id FROM card_collection WHERE obtained=1").fetchall()
     return {r["card_id"] for r in rows}
 
-def _get_reviewed_words_since(conn, since: str | None) -> set[str]:
+def _get_reviewed_words_since(conn, since: int | None) -> set[str]:
     if since:
         rows = conn.execute(
             "SELECT DISTINCT word FROM review_history WHERE created_at > ?", [since]
@@ -107,6 +108,10 @@ def list_cards():
 def draw_status():
     cfg = get_config()
     conn = get_conn()
+    # Settle currency first
+    settle(conn)
+    bal = get_balance(conn)
+    draw_cost = cfg["currency"]["draw"]["cost"]
     cards = load_card_data()
     obtained = _get_obtained_ids(conn)
     signatures = _get_card_signatures(conn)
@@ -120,6 +125,9 @@ def draw_status():
     can_draw = len(reviewed) >= min_words and len(candidates) >= effective_min
     return {
         "can_draw": can_draw,
+        "can_afford": bal["balance"] >= draw_cost,
+        "balance": bal["balance"],
+        "draw_cost": draw_cost,
         "new_words_since_last_draw": len(reviewed),
         "min_new_words": min_words,
         "qualified_candidates": len(candidates),
@@ -131,6 +139,16 @@ def draw_status():
 def perform_draw():
     cfg = get_config()
     conn = get_conn()
+
+    # 1. Settle any pending earnings
+    settle(conn)
+
+    # 2. Check balance
+    bal = get_balance(conn)
+    draw_cost = cfg["currency"]["draw"]["cost"]
+    if bal["balance"] < draw_cost:
+        raise HTTPException(status_code=402, detail=f"Insufficient IP: need {draw_cost}, have {bal['balance']}")
+
     cards = load_card_data()
     obtained = _get_obtained_ids(conn)
     signatures = _get_card_signatures(conn)
@@ -145,6 +163,10 @@ def perform_draw():
     effective_min = min(min_qualified, unobtained) if unobtained > 0 else min_qualified
     if len(candidates) < effective_min:
         raise HTTPException(status_code=400, detail=f"Need {effective_min} qualified cards, got {len(candidates)}")
+
+    # 3. Deduct IP
+    deduct_for_draw(conn)
+
     picks = _pick_unique_words(candidates[:3], cards)
     deck = get_deck_meta()
     deck_title = deck.get("title", "")
@@ -155,8 +177,15 @@ def perform_draw():
         mapping[word] = cid
         words_info.append({"word": word, "deck": deck_title})
     _draw_session[draw_id] = mapping
+    bal_after = get_balance(conn)
     random.shuffle(words_info)
-    return {"draw_id": draw_id, "words": words_info, "new_words_since_last_draw": len(reviewed)}
+    return {
+        "draw_id": draw_id,
+        "words": words_info,
+        "new_words_since_last_draw": len(reviewed),
+        "balance": bal_after["balance"],
+        "draw_cost": draw_cost,
+    }
 
 @router.post("/draw/pick")
 @locked
@@ -188,7 +217,7 @@ def pick_word(data: dict):
     sig = signatures.get(card_id, [])
     score = compute_match_score(reviewed, sig)
     conn.execute(
-        "UPDATE card_collection SET obtained=1, obtained_at=datetime('now'), obtained_by='draw' WHERE card_id=?",
+        "UPDATE card_collection SET obtained=1, obtained_at=unixepoch(), obtained_by='draw' WHERE card_id=?",
         [card_id],
     )
     conn.execute(

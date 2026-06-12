@@ -27,7 +27,7 @@ class ProgressRepository:
             new_count = row["dictation_count"] + 1
             new_avg = (row["dictation_avg_score"] * row["dictation_count"] + score) / new_count
             self._conn.execute(
-                "UPDATE audio_progress SET dictation_count=?, dictation_avg_score=?, completed=1, updated_at=datetime('now') WHERE audio_id=?",
+                "UPDATE audio_progress SET dictation_count=?, dictation_avg_score=?, completed=1, updated_at=unixepoch() WHERE audio_id=?",
                 [new_count, round(new_avg, 1), audio_id],
             )
         else:
@@ -59,7 +59,7 @@ class ProgressRepository:
         ).fetchone()
         if existing:
             self._conn.execute(
-                "UPDATE audio_progress SET total_seconds=total_seconds+?, updated_at=datetime('now') WHERE audio_id=?",
+                "UPDATE audio_progress SET total_seconds=total_seconds+?, updated_at=unixepoch() WHERE audio_id=?",
                 [duration_seconds, audio_id],
             )
         else:
@@ -77,7 +77,7 @@ class ProgressRepository:
         ).fetchone()
         if existing:
             self._conn.execute(
-                "UPDATE audio_progress SET completed=?, last_position=?, total_seconds=total_seconds+?, updated_at=datetime('now') WHERE audio_id=?",
+                "UPDATE audio_progress SET completed=?, last_position=?, total_seconds=total_seconds+?, updated_at=unixepoch() WHERE audio_id=?",
                 [int(completed), last_position, total_seconds, audio_id],
             )
         else:
@@ -98,7 +98,7 @@ class ProgressRepository:
     def set_word_known(self, word: str, known: bool) -> None:
         self._conn.execute(
             "INSERT OR REPLACE INTO word_progress (word, known, reviewed_count, reviewed_at) "
-            "VALUES (?,?,COALESCE((SELECT reviewed_count FROM word_progress WHERE word=?),0)+1,datetime('now'))",
+            "VALUES (?,?,COALESCE((SELECT reviewed_count FROM word_progress WHERE word=?),0)+1,unixepoch())",
             [word, 1 if known else 0, word],
         )
         self._conn.commit()
@@ -109,9 +109,9 @@ class ProgressRepository:
         """Record a word review session. Updates review count, score, and timestamp."""
         self._conn.execute(
             "INSERT INTO word_progress (word, known, reviewed_count, last_score, reviewed_at) "
-            "VALUES (?,1,1,?,datetime('now')) "
+            "VALUES (?,1,1,?,unixepoch()) "
             "ON CONFLICT(word) DO UPDATE SET "
-            "  reviewed_count=reviewed_count+1, last_score=?, reviewed_at=datetime('now'), known=1",
+            "  reviewed_count=reviewed_count+1, last_score=?, reviewed_at=unixepoch(), known=1",
             [word, score, score],
         )
         self._conn.commit()
@@ -185,7 +185,7 @@ class ProgressRepository:
             FROM listened_words lw
             JOIN word_progress wp ON wp.word = lw.word
             WHERE lw.listened_date = date('now')
-              AND wp.reviewed_at >= datetime('now', '-1 day')
+              AND wp.reviewed_at >= unixepoch() - 86400
         """).fetchone()
         return {
             "total_words": stats["total_words"] if stats else 0,
@@ -224,9 +224,9 @@ class ProgressRepository:
             # Update word_progress
             self._conn.execute(
                 "INSERT INTO word_progress (word, known, reviewed_count, last_score, reviewed_at) "
-                "VALUES (?,1,1,?,datetime('now')) "
+                "VALUES (?,1,1,?,unixepoch()) "
                 "ON CONFLICT(word) DO UPDATE SET "
-                "  reviewed_count=reviewed_count+1, last_score=?, reviewed_at=datetime('now'), known=1",
+                "  reviewed_count=reviewed_count+1, last_score=?, reviewed_at=unixepoch(), known=1",
                 [word, score, score],
             )
         self._conn.commit()
@@ -253,11 +253,11 @@ class ProgressRepository:
         today_row = self._conn.execute("""
             SELECT COUNT(*) AS total, SUM(correct) AS correct
             FROM review_history
-            WHERE date(created_at) = date('now')
+            WHERE date(created_at, 'unixepoch') = date('now')
         """).fetchone()
         # Streak: consecutive days with reviews
         streak_rows = self._conn.execute("""
-            SELECT DISTINCT date(created_at) AS d
+            SELECT DISTINCT date(created_at, 'unixepoch') AS d
             FROM review_history
             ORDER BY d DESC
             LIMIT 90

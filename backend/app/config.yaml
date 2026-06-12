@@ -81,3 +81,20 @@ cards:
   # 收藏历史
   collection:
     max_records: 200                               # 收藏记录保留上限
+
+# ── 代币经济系统 (灵感值) ──
+
+currency:
+  earn:
+    listen_per_second: 1        # 每秒听音频 → 1 IP
+    listen_daily_cap: 3600      # 听音频每日 IP 上限 (60 min)
+    review_per_word: 5          # 每复习一个词基础值
+    review_bonus_threshold: 80  # 得分 ≥ 80 翻倍 → 10 IP
+    review_daily_cap: 500       # 复习每日 IP 上限
+    dictation_per_sentence: 15  # 每句听写基础值
+    dictation_daily_cap: 300    # 听写每日 IP 上限
+    daily_bonus: 10             # 每日首次活跃奖励
+    word_mastery_bonus: 5       # 掌握一个新单词
+
+  draw:
+    cost: 300                    # 每次抽卡消耗

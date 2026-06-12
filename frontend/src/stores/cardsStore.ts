@@ -24,6 +24,9 @@ export interface CardsStore {
 
   /** Draw state */
   canDraw: boolean;
+  canAfford: boolean;
+  balance: number;
+  drawCost: number;
   newWordsSinceDraw: number;
   minNewWords: number;
   qualifiedCandidates: number;
@@ -50,6 +53,9 @@ export const useCardsStore = create<CardsStore>((set, get) => ({
   deckSeason: 1,
   loading: false,
   canDraw: false,
+  canAfford: false,
+  balance: 0,
+  drawCost: 300,
   newWordsSinceDraw: 0,
   minNewWords: 15,
   qualifiedCandidates: 0,
@@ -81,6 +87,9 @@ export const useCardsStore = create<CardsStore>((set, get) => ({
       const data = await getDrawStatus();
       set({
         canDraw: data.can_draw,
+        canAfford: data.can_afford ?? false,
+        balance: data.balance ?? 0,
+        drawCost: data.draw_cost ?? 300,
         newWordsSinceDraw: data.new_words_since_last_draw,
         minNewWords: data.min_new_words,
         qualifiedCandidates: data.qualified_candidates,
@@ -92,7 +101,7 @@ export const useCardsStore = create<CardsStore>((set, get) => ({
     set({ drawLoading: true });
     try {
       const data = await performDraw();
-      set({ drawId: data.draw_id, drawWords: data.words, showWords: true, newWordsSinceDraw: data.new_words_since_last_draw });
+      set({ drawId: data.draw_id, drawWords: data.words, showWords: true, newWordsSinceDraw: data.new_words_since_last_draw, balance: data.balance });
     } catch {
       set({ canDraw: false });
     }

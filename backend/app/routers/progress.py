@@ -4,8 +4,9 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel
 
-from database import get_conn
+from database import get_conn, locked
 from repositories.progress_repo import ProgressRepository
+from services.currency_service import settle
 
 router = APIRouter(prefix="/api/progress", tags=["progress"])
 
@@ -60,9 +61,11 @@ class BatchReviewItem(BaseModel):
 
 
 @router.post("/dictation", status_code=201)
+@locked
 def add_dictation(data: DictationCreate, repo: ProgressRepository = Depends(get_repo)):
     repo.add_dictation(data.audio_id, data.audio_title, data.sentence_index, data.score, data.user_input, data.expected_text)
     repo.update_dictation_progress(data.audio_id, data.audio_title, data.score)
+    settle(get_conn())
     return {"ok": True}
 
 
@@ -75,9 +78,11 @@ def list_history(repo: ProgressRepository = Depends(get_repo)):
 
 
 @router.post("/play-history", status_code=201)
+@locked
 def add_history(data: PlayCreate, repo: ProgressRepository = Depends(get_repo)):
     repo.add_play_history(data.audio_id, data.audio_title, data.duration_seconds)
     repo.upsert_play_progress(data.audio_id, data.audio_title, data.duration_seconds)
+    settle(get_conn())
     return {"ok": True}
 
 
@@ -90,8 +95,10 @@ def list_word_progress(repo: ProgressRepository = Depends(get_repo)):
 
 
 @router.post("/words")
+@locked
 def set_word_known(data: WordKnownUpdate, repo: ProgressRepository = Depends(get_repo)):
     repo.set_word_known(data.word, data.known)
+    settle(get_conn())
     return {"ok": True}
 
 
@@ -99,12 +106,15 @@ def set_word_known(data: WordKnownUpdate, repo: ProgressRepository = Depends(get
 
 
 @router.post("/words/review", status_code=201)
+@locked
 def submit_review(data: WordReviewIn, repo: ProgressRepository = Depends(get_repo)):
     repo.add_review(data.word, data.score)
+    settle(get_conn())
     return {"ok": True}
 
 
 @router.post("/review/batch", status_code=201)
+@locked
 def submit_batch_review(data: BatchReviewIn, repo: ProgressRepository = Depends(get_repo)):
     """Batch-submit a review session: writes to review_history + updates word_progress."""
     result = repo.batch_review(
@@ -113,6 +123,7 @@ def submit_batch_review(data: BatchReviewIn, repo: ProgressRepository = Depends(
         mode=data.mode,
         results=[r.model_dump() for r in data.results],
     )
+    settle(get_conn())
     return result
 
 

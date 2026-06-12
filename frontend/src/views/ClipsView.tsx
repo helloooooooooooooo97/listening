@@ -15,7 +15,10 @@ interface Props {
   onDeleteClip: (id: string) => void;
 }
 
-function fmtDate(iso: string) { return new Date(iso).toLocaleDateString('zh-CN',{month:'short',day:'numeric'}); }
+function fmtDate(ts: number | string) {
+  const d = typeof ts === 'number' ? new Date(ts * 1000) : new Date(ts);
+  return d.toLocaleDateString('zh-CN',{month:'short',day:'numeric'});
+}
 
 export default function ClipsView({ clips, onDeleteClip }: Props) {
   const [search, setSearch] = useState('');

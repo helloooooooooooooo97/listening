@@ -95,16 +95,16 @@ export default function CardsView() {
                     </p>
                     {!store.showWords && !store.showResult && (
                       <p className="text-xs text-tertiary mt-0.5">
-                        已复习 <strong className="text-primary">{store.newWordsSinceDraw}</strong> / {store.minNewWords} 词
-                        {store.qualifiedCandidates > 0 ? ` · ${store.qualifiedCandidates} 张卡可匹配` : ''}
+                        <span className="tabular-nums">{store.balance}</span> ✨ · 消耗 <span className="tabular-nums">{store.drawCost}</span> IP
+                        {store.qualifiedCandidates > 0 ? ` · ${store.qualifiedCandidates} 张可匹配` : ''}
                       </p>
                     )}
                   </div>
                 </div>
                 {!store.showWords && !store.showResult && (
-                  <button onClick={handleDraw} disabled={!store.canDraw || store.drawLoading}
+                  <button onClick={handleDraw} disabled={!store.canDraw || !store.canAfford || store.drawLoading}
                     className={`flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer whitespace-nowrap
-                      ${store.canDraw
+                      ${store.canDraw && store.canAfford
                         ? 'bg-[var(--accent)] on-accent hover:opacity-90 hover:scale-105 active:scale-95'
                         : 'bg-[var(--bg-secondary)] text-tertiary opacity-50 cursor-not-allowed'
                       }`}>
@@ -113,7 +113,7 @@ export default function CardsView() {
                     ) : (
                       <HiSparkles size={16} />
                     )}
-                    抽卡
+                    {!store.canAfford && store.canDraw ? '灵感值不足' : '抽卡'}
                   </button>
                 )}
               </div>

@@ -71,7 +71,7 @@ export default function AudioStatsBar({ audioId }: Props) {
         <span>🔤 {stats.total_sentences} 句 · {stats.total_words} 词</span>
         {stats.dictation_count > 0 && <span>📝 听写 {stats.dictation_count} 次</span>}
         {stats.completed && <span className="text-emerald-500">✓ 已完成</span>}
-        {stats.last_practiced && <span>最近 {stats.last_practiced.slice(0, 10)}</span>}
+        {stats.last_practiced ? <span>最近 {new Date(stats.last_practiced * 1000).toLocaleDateString('zh-CN')}</span> : null}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import type { CardMeta } from '../../lib/api';
 import { cardImageUrl } from '../../lib/api';
 import CardRarityBadge from './CardRarityBadge';
+import { CLIP_COLORS } from '../../constants/colors';
 
 interface CardGridProps {
   cards: CardMeta[];
@@ -30,26 +31,17 @@ function cardShadow(rarity: string, obtained: boolean): string {
   return '0 0 12px ' + c.replace('0.25', '0.08').replace('0.3', '0.1').replace('0.35', '0.12').replace('0.4', '0.15');
 }
 
-/** Vibrant colour palette for the keyword word-wall */
-const PROMO_COLORS = [
-  { text: '#facc15', glow: 'rgba(250,204,21,0.7)' },   // bright yellow
-  { text: '#38bdf8', glow: 'rgba(56,189,248,0.6)' },   // electric blue
-  { text: '#e879f9', glow: 'rgba(232,121,249,0.55)' }, // hot pink
-  { text: '#4ade80', glow: 'rgba(74,222,128,0.55)' },  // neon green
-  { text: '#fb923c', glow: 'rgba(251,146,60,0.6)' },   // vibrant orange
-  { text: '#f472b6', glow: 'rgba(244,114,182,0.55)' }, // rose pink
-  { text: '#2dd4bf', glow: 'rgba(45,212,191,0.55)' },  // bright teal
-  { text: '#a78bfa', glow: 'rgba(167,139,250,0.55)' }, // soft purple
-];
-
-function randomRot(seed: number) {
-  return ((seed * 7 + seed % 3) % 7 - 3) + 'deg';
+function hashId(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
 }
 
-/** Word-wall display for unobtained cards — large promotional keywords, no details on click */
+/** Keyword preview for unobtained cards — colored but no glow, each card unique */
 function UnobtainedWordWall({ card }: { card: CardMeta }) {
-  const words = card.keywords.length > 0 ? card.keywords : card.vocab_signature.slice(0, 10);
+  const words = (card.keywords.length > 0 ? card.keywords : card.vocab_signature).slice(0, 7);
   const accent = RARITY_COLORS[card.rarity] || RARITY_COLORS.R;
+  const seed = hashId(card.id);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-2 overflow-hidden relative"
@@ -57,17 +49,15 @@ function UnobtainedWordWall({ card }: { card: CardMeta }) {
         background: `linear-gradient(160deg, ${accent}08 0%, ${accent}18 100%)`,
       }}>
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2.5 px-1.5">
-        {words.slice(0, 7).map((kw, i) => {
-          const c = PROMO_COLORS[(card.id.charCodeAt(0) + i * 5) % PROMO_COLORS.length];
-          const big = i % 3 === 0;
+        {words.map((kw, i) => {
+          const big = (seed + i * 3) % 5 < 2;
           return (
             <span key={i}
               className={`font-black leading-none tracking-tight ${big ? 'text-[28px]' : 'text-[18px]'}`}
               style={{
-                color: c.text,
-                textShadow: `0 0 ${big ? '20' : '10'}px ${c.glow}`,
-                fontWeight: i % 2 === 0 ? 900 : 800,
-                transform: `rotate(${randomRot(i + card.id.length)})`,
+                color: CLIP_COLORS[(seed + i * 5) % CLIP_COLORS.length],
+                fontWeight: (seed + i) % 2 === 0 ? 900 : 800,
+                transform: `rotate(${((seed + i * 7) % 15 - 7)}deg)`,
               }}>
               {kw}
             </span>
@@ -76,7 +66,7 @@ function UnobtainedWordWall({ card }: { card: CardMeta }) {
       </div>
       <div className="absolute bottom-2 left-0 right-0 text-center">
         <span className="text-[11px] font-black tracking-[0.15em]"
-          style={{ color: accent + 'cc', letterSpacing: '0.15em' }}>
+          style={{ color: accent + '99', letterSpacing: '0.15em' }}>
           {words.length > 7 ? `${words.length} 词待解锁` : '待解锁'}
         </span>
       </div>

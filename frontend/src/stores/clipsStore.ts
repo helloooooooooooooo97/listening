@@ -11,7 +11,7 @@ interface ClipApiRow {
   text: string;
   note: string;
   color: string;
-  created_at: string;
+  created_at: number;
   ai_analysis?: string | null;
 }
 
