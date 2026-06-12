@@ -4,6 +4,13 @@ app:
   title: "英语听力 API"
   version: "0.3.2"
 
+  # 日志配置
+  logging:
+    level: "INFO"
+    # dir 留空则默认 data/logs/
+    dir: ""
+    # 允许的选项: DEBUG, INFO, WARNING, ERROR
+
   # 数据目录
   data:
     lessons_dir: "data/lessons"                    # 课程 JSON + 音频文件目录
@@ -97,4 +104,4 @@ currency:
     word_mastery_bonus: 5       # 掌握一个新单词
 
   draw:
-    cost: 300                    # 每次抽卡消耗
+    cost: 1                      # 每次抽卡消耗

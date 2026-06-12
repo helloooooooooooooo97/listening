@@ -205,112 +205,93 @@ function PokerTableView({ game, selectedBet, betting, onSetBet, onAction, onRefr
   humanPlayerId?: number | null;
 }) {
   const isCompleted = game.status === 'completed';
-  const isShowdown = game.phase === 'showdown' || isCompleted;
   const human = game.players.find(p => p.player_type === 'human');
   const humanKeywords = human?.keywords || [];
-
-  // Auto-refresh for AI thinking delay
   const [polling, setPolling] = useState(false);
 
   return (
     <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-y-auto">
-      {/* Header */}
-      <div className="flex-shrink-0 flex items-center justify-between px-6 pt-10 pb-3">
-        <div className="flex items-center gap-2">
-          <button onClick={onBack} className="text-tertiary hover:text-secondary cursor-pointer p-1">
-            <HiArrowLeft size={16} />
-          </button>
-          <span className="text-xs font-semibold text-tertiary">
-            Round {game.round}/{5}
-          </span>
+      {/* Compact header */}
+      <div className="flex-shrink-0 flex items-center justify-between px-5 pt-8 pb-2">
+        <button onClick={onBack} className="text-tertiary hover:text-secondary cursor-pointer p-1">
+          <HiArrowLeft size={16} />
+        </button>
+        <div className="flex items-center gap-4 text-xs">
+          <span className="text-tertiary">第 <strong className="text-primary">{game.round}</strong>/5 轮</span>
+          <span className="font-bold text-[var(--accent)]">🏆 <span className="tabular-nums">{game.pot}</span></span>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-tertiary">
-            <span className="tabular-nums font-bold text-primary">{game.current_bet || 0}</span> 当前注
-          </span>
-          <span className="text-xs font-bold text-[var(--accent)]">
-            🏆 <span className="tabular-nums">{game.pot}</span> IP
-          </span>
-        </div>
+        <div className="w-6" /> {/* spacer */}
       </div>
 
-      {/* Community Cards */}
-      <div className="flex-shrink-0 px-6 py-4">
-        <div className="flex justify-center gap-2">
+      {/* Community words — compact chips */}
+      <div className="flex-shrink-0 px-5 py-3">
+        <div className="flex justify-center gap-1.5">
           {game.community_words.map((cw, i) => (
             <div key={i}
-              className={`w-20 h-24 rounded-xl border flex flex-col items-center justify-center transition-all duration-500
+              className={`px-2.5 py-1.5 rounded-lg text-[10px] font-semibold border transition-all
                 ${cw.revealed
-                  ? 'border-[var(--accent)]/20 bg-[var(--bg-secondary)]'
-                  : 'border-[var(--border-secondary)] bg-[var(--bg-tertiary)] opacity-60'
+                  ? 'border-[var(--accent)]/25 bg-[var(--bg-secondary)] text-primary'
+                  : 'border-[var(--border-secondary)] text-tertiary/30'
                 }`}>
               {cw.revealed ? (
-                <>
-                  <span className="text-xs font-bold text-primary text-center px-1 leading-tight break-all">
-                    {cw.word}
-                  </span>
-                  <button className="mt-1 text-tertiary hover:text-secondary transition-colors"
-                    onClick={() => {
-                      const utterance = new SpeechSynthesisUtterance(cw.word || '');
-                      utterance.lang = 'en-US';
-                      speechSynthesis.speak(utterance);
-                    }}>
-                    <HiSpeakerWave size={10} />
+                <span className="flex items-center gap-1">
+                  {cw.word}
+                  <button onClick={(e) => { e.stopPropagation(); speechSynthesis.speak(new SpeechSynthesisUtterance(cw.word!)); }}
+                    className="text-tertiary hover:text-secondary">
+                    <HiSpeakerWave size={9} />
                   </button>
-                </>
-              ) : (
-                <span className="text-sm font-bold text-tertiary/40">?</span>
-              )}
+                </span>
+              ) : '?'}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Players */}
-      <div className="flex-shrink-0 px-6 py-2">
-        <div className="flex justify-center gap-3">
-          {game.players.map(p => (
-            <div key={p.id}
-              className={`flex-1 max-w-[100px] rounded-xl p-3 text-center transition-all
-                ${p.folded ? 'opacity-30' : ''}
-                ${p.is_winner ? 'ring-2 ring-[var(--accent)]' : ''}
-              `}
-              style={{ background: 'var(--bg-tertiary)' }}>
-              {/* Card */}
-              <div className="w-full aspect-[3/4] rounded-lg mb-1.5 overflow-hidden relative mx-auto"
-                style={{ background: 'var(--bg-secondary)', maxWidth: 60 }}>
-                {p.player_type === 'human' && p.card_name ? (
-                  <img src={cardImageUrl(p.card_name.toLowerCase().replace(/\s+/g, '_'))} alt={p.card_name}
-                    className="w-full h-full object-cover"
-                    onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <span className="text-sm opacity-30">🂠</span>
-                  </div>
-                )}
+      {/* Player area — 2×2 grid, poker table feel */}
+      <div className="flex-1 flex items-center justify-center px-5 pb-2">
+        <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
+          {game.players.map(p => {
+            const isHuman = p.player_type === 'human';
+            const imgUrl = isHuman && p.card_name
+              ? cardImageUrl(p.card_name.toLowerCase().replace(/\s+/g, '_'))
+              : null;
+            const kw = isHuman ? humanKeywords : [];
+            const matchedCount = kw.filter(k => game.community_words.some(cw => cw.revealed && cw.word === k)).length;
+            return (
+              <div key={p.id}
+                className={`rounded-xl p-3 text-center transition-all ${p.folded ? 'opacity-35' : ''} ${p.is_winner ? 'ring-2 ring-[var(--accent)]/40' : ''}`}
+                style={{ background: p.is_winner ? 'var(--bg-tertiary)' : 'var(--bg-secondary)' }}>
+                {/* Card image */}
+                <div className="w-14 h-[76px] mx-auto rounded-lg overflow-hidden mb-1.5 border border-white/5"
+                  style={{ background: 'var(--bg-primary)' }}>
+                  {imgUrl ? (
+                    <img src={imgUrl} alt={p.card_name!} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-lg">🂠</div>
+                  )}
+                </div>
+                <p className="text-[10px] font-bold text-primary truncate">
+                  {isHuman ? '你' : `AI-${p.id}`}
+                  {p.is_winner && ' 👑'}
+                </p>
+                <p className="text-[8px] text-tertiary">
+                  {p.folded ? '弃牌' : isHuman && matchedCount > 0 ? `✓${matchedCount}` : `$${p.total_bet}`}
+                </p>
               </div>
-              {/* Name / Bet */}
-              <p className="text-[9px] font-semibold text-primary truncate">
-                {p.player_type === 'human' ? '你' : `AI-${p.id}`}
-              </p>
-              <p className="text-[8px] text-tertiary">
-                {p.folded ? '已弃牌' : `已下 ${p.total_bet}`}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
-      {/* Match info */}
-      {humanKeywords.length > 0 && (
-        <div className="flex-shrink-0 px-6 py-2">
-          <div className="flex flex-wrap justify-center gap-1 max-w-md mx-auto">
-            {humanKeywords.map((kw, i) => {
+      {/* Matched keywords inline — only show when relevant */}
+      {!isCompleted && humanKeywords.length > 0 && (
+        <div className="flex-shrink-0 px-5 pb-1">
+          <div className="flex flex-wrap justify-center gap-1 max-w-xs mx-auto">
+            {humanKeywords.slice(0, 6).map(kw => {
               const matched = game.community_words.some(cw => cw.revealed && cw.word === kw);
               return (
-                <span key={i}
-                  className={`text-[9px] px-1.5 py-0.5 rounded transition-all
-                    ${matched ? 'bg-emerald-500/20 text-emerald-400 font-semibold' : 'text-tertiary/50'}`}>
+                <span key={kw}
+                  className={`text-[8px] px-1.5 py-0.5 rounded transition-all ${matched ? 'bg-emerald-500/20 text-emerald-400 font-semibold' : 'text-tertiary/40'}`}>
                   {matched ? '✓ ' : ''}{kw}
                 </span>
               );
@@ -321,37 +302,36 @@ function PokerTableView({ game, selectedBet, betting, onSetBet, onAction, onRefr
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
-        <div className="flex-shrink-0 px-6 py-4">
-          <div className="max-w-sm mx-auto space-y-3">
+        <div className="flex-shrink-0 px-5 py-3 border-t border-white/5">
+          <div className="max-w-xs mx-auto space-y-2.5">
             {/* Bet slider */}
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] text-tertiary w-8 text-right">5</span>
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] text-tertiary w-6 text-right">5</span>
               <input type="range" min={5} max={50} step={5}
-                value={selectedBet}
+                value={selectedBet} disabled={betting}
                 onChange={e => onSetBet(Number(e.target.value))}
-                className="flex-1 accent-[var(--accent)]"
-                disabled={betting} />
-              <span className="text-[10px] text-tertiary w-8">50</span>
-              <span className="text-xs font-bold text-primary tabular-nums w-10 text-right">{selectedBet}</span>
+                className="flex-1 accent-[var(--accent)] h-1" />
+              <span className="text-[9px] text-tertiary w-6">50</span>
+              <span className="text-xs font-bold text-primary tabular-nums w-8 text-right">{selectedBet}</span>
             </div>
 
-            {/* Action buttons */}
+            {/* Action buttons — 3 compact buttons */}
             <div className="flex gap-2">
               <button onClick={() => onAction('check')} disabled={betting}
-                className="flex-1 py-2.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer
-                  hover:bg-[var(--bg-hover)] disabled:opacity-30"
-                style={{ borderColor: 'var(--border-primary)', color: 'var(--text-secondary)' }}>
-                <HiCheck size={14} className="inline mr-1" />过牌
+                className="flex-1 py-2 rounded-lg text-[10px] font-semibold border cursor-pointer
+                  hover:bg-white/5 disabled:opacity-30 transition-all"
+                style={{ borderColor: 'var(--border-primary)' }}>
+                <HiCheck size={12} className="inline mr-0.5" />过牌
               </button>
               <button onClick={() => onAction('bet', selectedBet)} disabled={betting}
-                className="flex-1 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer
-                  bg-[var(--accent)] on-accent hover:opacity-90 disabled:opacity-30">
-                <HiSparkles size={14} className="inline mr-1" />下注 {selectedBet}
+                className="flex-1 py-2 rounded-lg text-[10px] font-semibold cursor-pointer
+                  bg-[var(--accent)] on-accent hover:opacity-90 disabled:opacity-30 transition-all">
+                <HiSparkles size={12} className="inline mr-0.5" />{selectedBet}
               </button>
               <button onClick={() => onAction('fold')} disabled={betting}
-                className="flex-1 py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer
-                  bg-[var(--bg-secondary)] text-tertiary hover:text-[var(--accent)] disabled:opacity-30">
-                <HiXMark size={14} className="inline mr-1" />弃牌
+                className="flex-1 py-2 rounded-lg text-[10px] font-semibold cursor-pointer
+                  bg-[var(--bg-secondary)] text-tertiary hover:text-[var(--accent)] disabled:opacity-30 transition-all">
+                <HiXMark size={12} className="inline mr-0.5" />弃牌
               </button>
             </div>
           </div>
@@ -360,32 +340,31 @@ function PokerTableView({ game, selectedBet, betting, onSetBet, onAction, onRefr
 
       {/* Waiting state */}
       {!isCompleted && game.phase === 'betting' && !game.can_act && (
-        <div className="flex-shrink-0 px-6 py-4 text-center">
+        <div className="flex-shrink-0 px-5 py-4 text-center border-t border-white/5">
           <div className="flex items-center justify-center gap-2">
-            <div className="w-3 h-3 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
-            <span className="text-xs text-tertiary">等待 AI 决策...</span>
+            <div className="w-2.5 h-2.5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+            <span className="text-[10px] text-tertiary">等待 AI...</span>
           </div>
         </div>
       )}
 
-      {/* Result overlay */}
+      {/* Showdown result */}
       {isCompleted && game.showdown && (
         <ShowdownResult showdown={game.showdown} pot={game.pot}
           onPlayAgain={() => { onBack(); }}
-          players={game.players}
+          communityWords={game.community_words}
         />
       )}
 
-      {/* Simple completed state without showdown (all fold) */}
+      {/* All fold — simple win screen */}
       {isCompleted && !game.showdown && (
-        <div className="flex-1 flex items-center justify-center px-6 pb-8">
-          <div className="text-center max-w-sm">
-            <HiTrophy size={48} className="mx-auto text-[var(--accent)] mb-3" />
-            <h2 className="text-lg font-bold text-primary mb-1">🎉 全部 AI 弃牌！</h2>
-            <p className="text-sm text-tertiary mb-2">你赢得了 <strong className="text-[var(--accent)] tabular-nums">{game.pot}</strong> IP</p>
-            <p className="text-xs text-tertiary">不战而屈人之兵</p>
+        <div className="flex-1 flex items-center justify-center px-5 pb-6">
+          <div className="text-center">
+            <HiTrophy size={36} className="mx-auto text-[var(--accent)] mb-2" />
+            <h2 className="text-base font-bold text-primary mb-1">🎉 AI 全弃牌！</h2>
+            <p className="text-xs text-tertiary mb-4">赢得 <strong className="text-[var(--accent)]">{game.pot}</strong> IP</p>
             <button onClick={() => { onBack(); }}
-              className="mt-6 px-6 py-2.5 rounded-xl text-sm font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+              className="px-5 py-2 rounded-lg text-xs font-bold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
               再来一局
             </button>
           </div>
@@ -394,10 +373,10 @@ function PokerTableView({ game, selectedBet, betting, onSetBet, onAction, onRefr
 
       {/* Waiting for showdown */}
       {game.phase === 'showdown' && !isCompleted && (
-        <div className="flex-1 flex items-center justify-center px-6 pb-8">
+        <div className="flex-1 flex items-center justify-center px-5 pb-6">
           <div className="text-center">
-            <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-xs text-tertiary">摊牌中...</p>
+            <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin mx-auto mb-2" />
+            <p className="text-[10px] text-tertiary">摊牌中...</p>
           </div>
         </div>
       )}
@@ -407,82 +386,70 @@ function PokerTableView({ game, selectedBet, betting, onSetBet, onAction, onRefr
 
 // ── Showdown ──
 
-function ShowdownResult({ showdown, pot, onPlayAgain, players }: {
+function ShowdownResult({ showdown, pot, onPlayAgain, communityWords }: {
   showdown: NonNullable<PokerGameState['showdown']>;
   pot: number;
   onPlayAgain: () => void;
-  players: PokerGameState['players'];
+  communityWords?: PokerGameState['community_words'];
 }) {
-  const winner = showdown.results.find(r => r.is_winner);
   const humanResult = showdown.results.find(r => r.player_type === 'human');
   const isWin = humanResult?.is_winner;
 
   return (
-    <div className="flex-1 px-6 pb-8">
-      <div className="max-w-lg mx-auto space-y-4">
-        <div className="text-center">
-          <HiTrophy size={40} className={`mx-auto mb-2 ${isWin ? 'text-[var(--accent)]' : 'text-tertiary opacity-30'}`} />
-          <h2 className={`text-lg font-bold ${isWin ? 'text-primary' : 'text-tertiary'}`}>
-            {isWin ? '🎉 你赢了！' : '💔 这局输了'}
-          </h2>
-          <p className="text-sm text-tertiary mt-1">
-            底池 <strong className="tabular-nums">{pot}</strong> IP
-            {isWin ? ' 已加入你的余额' : ''}
+    <div className="flex-1 px-5 pb-6 overflow-y-auto">
+      <div className="max-w-sm mx-auto space-y-4">
+
+        {/* Win/loss banner */}
+        <div className={`text-center py-4 px-4 rounded-xl ${isWin ? 'bg-emerald-500/10' : 'bg-red-500/5'}`}>
+          <p className={`text-lg font-bold ${isWin ? 'text-emerald-400' : 'text-tertiary'}`}>
+            {isWin ? '🎉 你赢了！' : '💔 输了'}
           </p>
+          <p className="text-xs text-tertiary mt-0.5">底池 <strong className="tabular-nums">{pot}</strong> IP{isWin ? ' 已入账' : ''}</p>
         </div>
 
-        {/* All player cards */}
-        <div className="space-y-2">
-          <h3 className="text-xs font-semibold text-tertiary uppercase tracking-wider">摊牌</h3>
-          {showdown.results.filter(r => !r.is_winner || r.player_type === 'human').map(r => (
-            <div key={r.player_id}
-              className={`rounded-xl p-3 border ${r.is_winner ? 'border-[var(--accent)]/30' : 'border-transparent'}`}
-              style={{ background: r.is_winner ? 'var(--bg-tertiary)' : 'var(--bg-secondary)' }}>
-              <div className="flex items-center gap-3">
-                <div>
-                  <p className="text-xs font-bold text-primary">
-                    {r.player_type === 'human' ? '你' : 'AI'}
-                    {r.is_winner && ' 👑'}
-                  </p>
-                  <p className="text-[10px] text-tertiary">{r.card_name}</p>
+        {/* All players — compact grid */}
+        <div className="grid grid-cols-4 gap-2">
+          {showdown.results.map(r => {
+            const imgUrl = r.card_png ? cardImageUrl(r.card_png) : null;
+            return (
+              <div key={r.player_id}
+                className={`rounded-lg p-2 text-center transition-all ${r.folded ? 'opacity-40' : ''} ${r.is_winner ? 'ring-1 ring-emerald-500/40' : ''}`}
+                style={{ background: r.is_winner ? 'var(--bg-tertiary)' : 'var(--bg-secondary)' }}>
+                {/* Card image */}
+                <div className="w-full aspect-[3/4] rounded-md overflow-hidden mb-1 border border-white/5"
+                  style={{ background: 'var(--bg-primary)' }}>
+                  {imgUrl ? (
+                    <img src={imgUrl} alt={r.card_name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-base">🂠</div>
+                  )}
                 </div>
-                <div className="flex-1 flex flex-wrap gap-1 justify-end">
-                  {r.keywords.map(kw => (
-                    <span key={kw}
-                      className={`text-[8px] px-1.5 py-0.5 rounded
-                        ${showdown.results.flatMap(r => r.keywords.includes(kw) ? [kw] : []).includes(kw)
-                          ? 'bg-emerald-500/20 text-emerald-400'
-                          : 'text-tertiary/50'}`}>
-                      {kw}
-                    </span>
-                  ))}
-                </div>
-                <div className="text-right">
-                  <span className="text-lg font-bold text-primary tabular-nums">{r.matches}</span>
-                  <span className="text-[9px] text-tertiary ml-0.5">匹配</span>
-                </div>
+                <p className="text-[8px] font-bold text-primary truncate">
+                  {r.player_type === 'human' ? '你' : ''}
+                  {r.is_winner ? ' 👑' : ''}
+                </p>
+                <p className="text-[7px] text-tertiary truncate">{r.card_name}</p>
+                <p className="text-[9px] font-bold tabular-nums mt-0.5">{r.matches}<span className="text-[7px] text-tertiary font-normal">/5</span></p>
               </div>
-            </div>
-          ))}
-
-          {/* AI cards that are shown for first time */}
-          <details className="text-[10px] text-tertiary">
-            <summary className="cursor-pointer hover:text-secondary">查看 AI 底牌</summary>
-            <div className="mt-2 space-y-1">
-              {showdown.results.filter(r => r.player_type !== 'human').map(r => (
-                <div key={r.player_id} className="flex items-center gap-2 px-2 py-1 rounded"
-                  style={{ background: 'var(--bg-tertiary)' }}>
-                  <span className="font-semibold text-primary">{r.card_name}</span>
-                  <span className="text-tertiary">({r.rarity})</span>
-                  <span className="ml-auto font-bold tabular-nums">{r.matches} 匹配</span>
-                </div>
-              ))}
-            </div>
-          </details>
+            );
+          })}
         </div>
+
+        {/* Community words — tiny recap */}
+        <details className="text-[9px] text-tertiary/60 text-center">
+          <summary className="cursor-pointer hover:text-secondary">公共词</summary>
+          <div className="mt-1.5 flex justify-center flex-wrap gap-1">
+            {communityWords?.map((cw, i) => (
+              <span key={i}
+                className={`text-[8px] px-1.5 py-0.5 rounded ${cw.revealed ? 'bg-white/10 text-tertiary' : 'bg-white/5 text-tertiary/30'}`}>
+                {cw.revealed ? cw.word : `?`}
+              </span>
+            ))}
+          </div>
+        </details>
 
         <button onClick={onPlayAgain}
-          className="w-full py-3 rounded-xl text-sm font-bold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+          className="w-full py-2.5 rounded-lg text-xs font-bold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
           再来一局
         </button>
       </div>

@@ -705,8 +705,10 @@ export interface PokerGameState {
       player_type: string;
       card_name: string;
       card_rarity: string;
+      card_png: string;
       keywords: string[];
       matches: number;
+      folded: boolean;
       is_winner: boolean;
     }[];
     tie: boolean;

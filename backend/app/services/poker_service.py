@@ -6,8 +6,11 @@ import random
 from datetime import datetime
 
 from database import get_conn
+from log_config import get_logger
 from services.card_service import load_card_data
 from services.currency_service import get_balance
+
+logger = get_logger("poker")
 
 # ── Constants ──
 
@@ -64,6 +67,15 @@ def _card_rarity(card_id: str) -> str:
         if card["id"] == card_id:
             return card.get("rarity", "R")
     return "R"
+
+
+def _card_png(card_id: str) -> str:
+    """Return the PNG filename for a card (without extension)."""
+    cards = load_card_data()
+    for card in cards:
+        if card["id"] == card_id:
+            return card.get("png", "")
+    return ""
 
 
 RARITY_ORDER = {"UR": 4, "SSR": 3, "SR": 2, "R": 1}
@@ -255,6 +267,9 @@ def create_game(human_card_id: str) -> dict:
     conn.execute("UPDATE poker_games SET pot=? WHERE id=?", [total_ante, game_id])
     conn.commit()
 
+    logger.info("Game #%d created — human card=%s words=%s pot=%d",
+                game_id, human_card_id, words, total_ante)
+
     return get_game_state(game_id)
 
 
@@ -345,27 +360,29 @@ def get_game_state(game_id: int) -> dict:
 
 
 def _compute_showdown(players: list[dict], words: list[str]) -> dict:
-    """Compute showdown results from players and community words."""
-    active = [p for p in players if not p["folded"]]
-    if not active:
-        return {"results": [], "tie": False, "winner_player_id": None}
-
-    results = []
-    for p in active:
+    """Compute showdown results — all players' potential score against ALL words."""
+    all_results = []
+    for p in players:
         kw = _card_keywords(p["card_id"])
-        matches = sum(1 for w in words if w in kw)
-        results.append({
+        matches = sum(1 for w in words if w in kw)  # against ALL community words
+        all_results.append({
             "player_id": p["id"],
             "player_type": p["player_type"],
             "card_name": _card_name(p["card_id"]),
             "card_rarity": p["card_rarity"],
+            "card_png": _card_png(p["card_id"]),
             "keywords": list(kw),
             "matches": matches,
+            "folded": bool(p["folded"]),
             "is_winner": bool(p["is_winner"]),
         })
 
-    winner = next((r for r in results if r["is_winner"]), None)
-    return {"results": results, "tie": False, "winner_player_id": winner["player_id"] if winner else None}
+    active = [r for r in all_results if not r["folded"]]
+    if not active:
+        return {"results": all_results, "tie": False, "winner_player_id": None}
+
+    winner = next((r for r in all_results if r["is_winner"]), None)
+    return {"results": all_results, "tie": False, "winner_player_id": winner["player_id"] if winner else None}
 
 
 def player_action(game_id: int, action: str, amount: int = 0) -> dict:
@@ -384,6 +401,9 @@ def player_action(game_id: int, action: str, amount: int = 0) -> dict:
     round_num = game["round"]
     if round_num > ROUNDS:
         raise ValueError("Game already at showdown")
+
+    logger.info("Game #%d round %d — human action=%s amount=%d",
+                game_id, round_num, action, amount)
 
     # Validate action
     balance = get_balance(conn)
@@ -432,8 +452,14 @@ def player_action(game_id: int, action: str, amount: int = 0) -> dict:
             else:
                 _record_action(game_id, ai["id"], "call", current_bet, round_num)
 
-    # If all AI folded, human wins immediately
-    if all_ai_folded and len(ai_players) > 0:
+    # Re-fetch players so fold state is up-to-date after AI loop
+    players = _get_players(game_id)
+    non_folded_ai = [p for p in players if p["player_type"] == "ai" and not p["folded"]]
+
+    # If all AI folded (either in this call or in a previous round), human wins immediately
+    if len(non_folded_ai) == 0:
+        logger.info("Game #%d round %d — all AI folded, human wins pot=%d",
+                    game_id, round_num, game["pot"])
         conn.execute("UPDATE poker_players SET is_winner=1 WHERE id=?", [human["id"]])
         bal = get_balance(conn)
         new_bal = bal["balance"] + game["pot"]
@@ -459,13 +485,15 @@ def player_action(game_id: int, action: str, amount: int = 0) -> dict:
 
     if all_acted:
         if round_num >= ROUNDS:
-            # Go to showdown
+            logger.info("Game #%d round %d — all acted, going to showdown", game_id, round_num)
             result = _run_showdown(game_id)
         else:
-            # Advance to next round
+            logger.info("Game #%d round %d → %d", game_id, round_num, round_num + 1)
             _next_round_phase(game)
             result = get_game_state(game_id)
     else:
+        logger.info("Game #%d round %d — not all acted yet (non_folded=%d acted=%d)",
+                    game_id, round_num, len(non_folded), len(acted))
         result = get_game_state(game_id)
 
     # Re-fetch updated game for response
@@ -502,6 +530,9 @@ def _run_showdown(game_id: int) -> dict:
     winner = results[0]["player"]
     is_tie = len(results) > 1 and results[0]["matches"] == results[1]["matches"] and results[0]["rarity"] == results[1]["rarity"]
 
+    logger.info("Game #%d showdown — %d active, winner=%s matches=%d tie=%s",
+                game_id, len(active_players), winner["player_type"], results[0]["matches"], is_tie)
+
     if is_tie:
         # Split pot equally
         share = game["pot"] // len([r for r in results if r["matches"] == results[0]["matches"] and r["rarity"] == results[0]["rarity"]])
@@ -536,20 +567,26 @@ def _run_showdown(game_id: int) -> dict:
     conn.commit()
 
     result_state = get_game_state(game_id)
-    # Add showdown details
+    # Build full showdown: ALL players' potential against ALL community words
+    all_players = _get_players(game_id)
+    all_words = json.loads(game["community_words"])
+    full_results = []
+    for p in all_players:
+        kw = _card_keywords(p["card_id"])
+        matches = sum(1 for w in all_words if w in kw)
+        full_results.append({
+            "player_id": p["id"],
+            "player_type": p["player_type"],
+            "card_name": _card_name(p["card_id"]),
+            "card_rarity": p["card_rarity"],
+            "card_png": _card_png(p["card_id"]),
+            "keywords": list(kw),
+            "matches": matches,
+            "folded": bool(p["folded"]),
+            "is_winner": p["id"] == winner["id"],
+        })
     result_state["showdown"] = {
-        "results": [
-            {
-                "player_id": r["player"]["id"],
-                "player_type": r["player"]["player_type"],
-                "card_name": _card_name(r["player"]["card_id"]),
-                "card_rarity": r["player"]["card_rarity"],
-                "keywords": list(_card_keywords(r["player"]["card_id"])),
-                "matches": r["matches"],
-                "is_winner": r["player"]["id"] == winner["id"],
-            }
-            for r in results
-        ],
+        "results": full_results,
         "tie": is_tie,
         "winner_player_id": winner["id"],
     }

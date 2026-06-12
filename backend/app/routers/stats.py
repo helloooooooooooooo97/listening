@@ -11,6 +11,13 @@ from services import list_lessons, get_stats as get_lesson_stats
 router = APIRouter(prefix="/api/stats", tags=["stats"])
 
 
+@router.get("")
+@locked
+def stats_root():
+    """Redirect bare /api/stats to /overview."""
+    return overview()
+
+
 @router.get("/overview")
 @locked
 def overview():

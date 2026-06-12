@@ -10,10 +10,22 @@ from fastapi.staticfiles import StaticFiles
 
 from database import init_db
 from config import load_config, get_config
+from log_config import configure_logging, get_logger
 
 # Load config first (so db path comes from config)
 cfg = load_config()
+
+# Initialize logging
+logging_cfg = cfg.get("app", {}).get("logging", {})
+configure_logging(
+    log_dir=logging_cfg.get("dir") or None,
+    level=logging_cfg.get("level", "INFO"),
+)
+logger = get_logger()
+
 init_db()
+
+logger.info("App starting — version %s", cfg.get("app", {}).get("version", "?"))
 
 app = FastAPI(title="英语听力 API", version="0.3.2")
 
@@ -29,6 +41,7 @@ app.add_middleware(
 # ── Global exception handler ──
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
+    logger.exception("Unhandled exception on %s %s", request.method, request.url.path)
     return JSONResponse(status_code=500, content={"error": str(exc)})
 
 
@@ -51,9 +64,9 @@ from config import resolve_path
 _img_path = resolve_path(_img_rel)
 if _img_path.is_dir():
     app.mount(_cfg["cards"]["image_url_prefix"], StaticFiles(directory=str(_img_path)), name="card_images")
-    print(f"  📁 Card images mounted: {_img_path}")
+    logger.info("Card images mounted: %s", _img_path)
 else:
-    print(f"  ⚠️  Card image dir not found: {_img_path}")
+    logger.warning("Card image dir not found: %s", _img_path)
 
 # Serve frontend static files (must be last — mount at `/` catches everything)
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), '../..', cfg["app"]["frontend"]["dist_dir"])

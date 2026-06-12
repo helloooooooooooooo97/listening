@@ -85,7 +85,8 @@ def _seed_card_data_if_needed(conn):
             )
         conn.commit()
     except Exception as e:
-        print(f"  ⚠️  Card data seed skipped: {e}")
+        import logging
+        logging.getLogger("english_app.database").warning("Card data seed skipped: %s", e)
 
 
 def init_db():
