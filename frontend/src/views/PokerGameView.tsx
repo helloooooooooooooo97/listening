@@ -651,7 +651,7 @@ function PlayerSeat({
         )}
       </div>
 
-      {/* Label below card (bottom = you, left/right = AI) */}
+      {/* Label below card (bottom = you, left/right/top = AI) */}
       {isBottom ? (
         <div className="text-center mt-1.5">
           <p className={`text-sm font-bold ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/80'}`}>
@@ -662,11 +662,18 @@ function PlayerSeat({
           </p>
         </div>
       ) : (
-        <p className="text-[10px] font-bold mt-1.5 text-center text-white/60 max-w-[80px] truncate">
-          {position === 'left' || position === 'right' ? `AI-${player.id}` : ''}
-          {player.folded ? ' 弃牌' : ''}
-          {isWinner && isCompleted && !isBottom ? ' 👑' : ''}
-        </p>
+        <div className="text-center mt-1">
+          <p className="text-[10px] font-bold text-white/60 max-w-[80px] truncate">
+            AI-{player.id}
+            {player.folded ? ' 弃牌' : ''}
+            {isWinner && isCompleted && !isBottom ? ' 👑' : ''}
+          </p>
+          {!player.folded && (
+            <p className="text-[9px] text-[var(--accent)]/70 font-semibold tabular-nums">
+              ${player.total_bet}
+            </p>
+          )}
+        </div>
       )}
     </div>
   );

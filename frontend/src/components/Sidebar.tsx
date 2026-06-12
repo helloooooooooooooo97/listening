@@ -21,9 +21,9 @@ const NAV_ITEMS: [NavSection, string, React.ComponentType<{size:number}>, number
   ['words', '单词', HiTag, 0],
   ['collections', '合集', HiFolderOpen, 0],
   ['stats', '统计', HiChartBar, 0],
-  ['game', '听了个听', HiSparkles, 0],
-  ['poker', '词牌', HiCubeTransparent, 0],
   ['cards', '卡组', HiRectangleStack, 0],
+  ['game', '听了个听', HiSparkles, 0],
+  ['poker', '德州听词', HiCubeTransparent, 0],
 ];
 
 export default function Sidebar({ activeSection, onSectionChange, lessonCount, clipsCount, wordCount, collectionCount }: Props) {
