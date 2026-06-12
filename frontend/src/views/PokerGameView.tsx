@@ -314,6 +314,7 @@ function PokerTableView({
   const humanKeywords = human?.keywords || [];
   const [dealAnimate, setDealAnimate] = useState(false);
   const [showKeywords, setShowKeywords] = useState(false);
+  const [previewCard, setPreviewCard] = useState<{ name: string; rarity: string; png: string } | null>(null);
   const prevRoundRef = useRef(game.round);
 
   // Trigger deal animation on round change
@@ -442,9 +443,61 @@ function PokerTableView({
                 communityWords={game.community_words}
                 position={s.pos}
                 game={game}
+                onCardClick={(name, rarity, png) => setPreviewCard({ name, rarity, png })}
               />
             ));
           })()}
+
+          {/* ── Result overlay (showdown / quick-win) ── */}
+          {isCompleted && (
+            <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/50 backdrop-blur-sm rounded-2xl animate-fade-in">
+              {game.showdown ? (
+                <ShowdownResult
+                  showdown={game.showdown}
+                  pot={game.pot}
+                  communityWords={game.community_words}
+                  onPlayAgain={() => { onBack(); }}
+                />
+              ) : (
+                <div className="text-center px-6">
+                  <div className="mb-3">
+                    <span className="text-5xl">🎉</span>
+                  </div>
+                  <h2 className="text-2xl font-extrabold text-white mb-1">全胜！</h2>
+                  <p className="text-sm text-white/50 mb-4">AI 全部弃牌，赢得底池</p>
+                  <p className="text-3xl font-extrabold text-[var(--accent)] mb-5 tabular-nums">+{game.pot} IP</p>
+                  <button onClick={() => { onBack(); }}
+                    className="w-56 py-3.5 rounded-xl text-sm font-bold bg-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
+                    style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
+                    再来一局
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Showdown phase (waiting) — overlay ── */}
+          {game.phase === 'showdown' && !isCompleted && (
+            <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-2xl">
+              <div className="flex items-center justify-center gap-3 py-4">
+                <div className="relative w-5 h-5">
+                  <div className="absolute inset-0 border-2 border-white/5 rounded-full" />
+                  <div className="absolute inset-0 border-2 border-transparent border-t-[var(--accent)] rounded-full animate-spin" />
+                </div>
+                <span className="text-sm text-white/40">摊牌中...</span>
+              </div>
+            </div>
+          )}
+
+          {/* ── Card preview modal ── */}
+          {previewCard && (
+            <CardPreviewModal
+              name={previewCard.name}
+              rarity={previewCard.rarity}
+              png={previewCard.png}
+              onClose={() => setPreviewCard(null)}
+            />
+          )}
         </div>
 
         {/* ── Keywords hint (human player's keywords) ── */}
@@ -476,7 +529,7 @@ function PokerTableView({
         )}
       </div>
 
-      {/* ── Bottom controls / result ── */}
+      {/* ── Bottom controls ── */}
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
@@ -587,16 +640,16 @@ function PokerTableView({
   );
 }
 
-// ─── Player Seat ───
 
 function PlayerSeat({
-  player, isHuman, communityWords, position, game,
+  player, isHuman, communityWords, position, game, onCardClick,
 }: {
   player: PokerPlayerState;
   isHuman: boolean;
   communityWords: PokerGameState['community_words'];
   position: 'top' | 'left' | 'right' | 'bottom';
   game: PokerGameState;
+  onCardClick?: (name: string, rarity: string, png: string) => void;
 }) {
   const cfg = rc(player.card_rarity || 'R');
   const isWinner = player.is_winner;
@@ -628,10 +681,16 @@ function PlayerSeat({
         </p>
       )}
 
-      {/* Player card — bottom player gets larger + accent glow */}
-      <div className={`relative rounded-xl overflow-hidden transition-all duration-300
+      {/* Player card — bottom player gets larger + accent glow. Click to preview. */}
+      <div className={`relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer
         ${isWinner && isCompleted ? 'ring-2' : ''} ${player.folded ? 'grayscale' : ''}
-        ${isBottom ? 'ring-2 ring-[var(--accent)]/30' : ''} ${cardW} ${cardH}`}
+        ${isBottom ? 'ring-2 ring-[var(--accent)]/30' : ''} ${cardW} ${cardH}
+        hover:ring-2 hover:ring-white/20`}
+        onClick={() => {
+          const imgName = player.card_name?.toLowerCase().replace(/\s+/g, '_') || '';
+          const rarity = player.card_rarity || 'R';
+          if (imgName) onCardClick?.(player.card_name || '', rarity, imgName);
+        }}
         style={{
           background: 'rgba(255,255,255,0.04)',
           border: `2px solid ${isCompleted && isWinner ? cfg.border : isBottom ? 'rgba(250,45,72,0.25)' : 'rgba(255,255,255,0.08)'}`,
@@ -676,6 +735,40 @@ function PlayerSeat({
           {isWinner && isCompleted && !isBottom ? ' 👑' : ''}
         </p>
       )}
+    </div>
+  );
+}
+
+// ─── Card Preview Modal ───
+
+function CardPreviewModal({ name, rarity, png, onClose }: {
+  name: string; rarity: string; png: string; onClose: () => void;
+}) {
+  const cfg = rc(rarity);
+  return (
+    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-2xl"
+      onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="w-48 animate-scale-in" onClick={e => e.stopPropagation()}>
+        <div className="rounded-2xl overflow-hidden border-2"
+          style={{
+            borderColor: cfg.border,
+            boxShadow: `0 0 40px ${cfg.glow}50, 0 8px 32px rgba(0,0,0,0.5)`,
+          }}>
+          <img src={cardImageUrl(png)} alt={name}
+            className="w-full object-cover" />
+        </div>
+        <div className="text-center mt-3">
+          <p className="text-base font-bold text-white">{name}</p>
+          <span className="inline-block text-xs px-2 py-0.5 rounded-md font-extrabold mt-1"
+            style={{ background: cfg.bg, color: cfg.color }}>
+            {cfg.label}
+          </span>
+        </div>
+        <button onClick={onClose}
+          className="w-full mt-3 py-2 rounded-xl text-xs font-bold bg-white/10 text-white/70 hover:bg-white/15 hover:text-white transition-colors cursor-pointer">
+          关闭
+        </button>
+      </div>
     </div>
   );
 }
