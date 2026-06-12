@@ -334,23 +334,18 @@ function PokerTableView({
   useEffect(() => {
     if (isCompleted || game.phase === 'showdown') return;
 
-    const revealed = game.community_words
-      .filter(cw => cw.revealed && cw.word)
-      .map(cw => cw.word!);
-    if (revealed.length === 0) return;
+    // Only play the word revealed in this round (index = round - 1)
+    const cw = game.community_words[game.round - 1];
+    if (!cw?.revealed || !cw.word) return;
 
-    let currentIdx = 0;
     let timer: number;
 
-    const playNext = () => {
-      playWordAudio(revealed[currentIdx]);
-      currentIdx = (currentIdx + 1) % revealed.length;
-      // After full cycle, wait longer before restarting
-      const delay = currentIdx === 0 ? 6000 : 2500;
-      timer = window.setTimeout(playNext, delay);
+    const playCurrent = () => {
+      playWordAudio(cw.word!);
+      timer = window.setTimeout(playCurrent, 5000);
     };
 
-    timer = window.setTimeout(playNext, 1000);
+    timer = window.setTimeout(playCurrent, 1000);
 
     return () => {
       clearTimeout(timer);
@@ -536,7 +531,7 @@ function PokerTableView({
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-3">
+        <div className="flex-shrink-0 px-5 pb-6 pt-3 mb-8">
           <div className="max-w-sm mx-auto">
             {/* Bet slider */}
             <div className="flex items-center gap-4 mb-4">
@@ -587,7 +582,7 @@ function PokerTableView({
 
       {/* Waiting for AI */}
       {!isCompleted && game.phase === 'betting' && !game.can_act && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-3">
+        <div className="flex-shrink-0 px-5 pb-6 pt-3 mb-8">
           <div className="flex items-center justify-center gap-3 py-4">
             <div className="relative w-5 h-5">
               <div className="absolute inset-0 border-2 border-white/5 rounded-full" />
