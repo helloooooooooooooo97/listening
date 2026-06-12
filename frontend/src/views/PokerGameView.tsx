@@ -101,7 +101,7 @@ function PokerLobby({
         </div>
 
         <div className="mt-2">
-          <h1 className="text-2xl font-extrabold text-primary tracking-tight">🃏 词牌对决</h1>
+          <h1 className="text-2xl font-extrabold text-primary tracking-tight">🃏 德州听词</h1>
           <p className="text-xs text-tertiary mt-1 max-w-xs">
             德州扑克式词汇对决 · 选一张角色牌，与 3 名 AI 对战，匹配公共词赢取底池
           </p>
