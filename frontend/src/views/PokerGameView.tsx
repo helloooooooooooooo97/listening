@@ -328,6 +328,32 @@ function PokerTableView({
     if (!prevRoundRef.current) prevRoundRef.current = game.round;
   }, [game.round]);
 
+  // Auto-play revealed community words on loop while round is active
+  useEffect(() => {
+    if (isCompleted || game.phase === 'showdown') return;
+
+    const revealed = game.community_words
+      .filter(cw => cw.revealed && cw.word)
+      .map(cw => cw.word!);
+    if (revealed.length === 0) return;
+
+    const speakWords = () => {
+      revealed.forEach(word => {
+        const u = new SpeechSynthesisUtterance(word);
+        u.rate = 0.75;
+        speechSynthesis.speak(u);
+      });
+    };
+
+    speakWords();
+    const interval = setInterval(speakWords, 8000);
+
+    return () => {
+      clearInterval(interval);
+      speechSynthesis.cancel();
+    };
+  }, [game.round, isCompleted, game.phase]);
+
   const potSize = game.pot;
 
   return (
