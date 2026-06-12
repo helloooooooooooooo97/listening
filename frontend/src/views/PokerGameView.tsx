@@ -333,33 +333,33 @@ function PokerTableView({
   return (
     <div className="h-full flex flex-col bg-gradient-to-b from-[#0a0a0b] via-[#0f1a12] to-[#0a0a0b] overflow-hidden">
       {/* ── Table header ── */}
-      <div className="flex-shrink-0 flex items-center justify-between px-5 pt-10 pb-0 z-10">
+      <div className="flex-shrink-0 flex items-center justify-between px-5 pt-10 pb-1 z-10">
         <button onClick={onBack}
-          className="w-8 h-8 rounded-xl flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/5 transition-colors cursor-pointer">
-          <HiArrowLeft size={16} />
+          className="w-9 h-9 rounded-xl flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/5 transition-colors cursor-pointer">
+          <HiArrowLeft size={18} />
         </button>
 
         {/* Round & Pot display */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] text-white/50"
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/50"
             style={{ background: 'rgba(255,255,255,0.04)' }}>
-            <HiClock size={11} />
+            <HiClock size={13} />
             第 {game.round}/5 轮
           </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold"
+          <div className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold"
             style={{
               background: 'rgba(250,45,72,0.12)',
               color: 'var(--accent)',
-              boxShadow: '0 0 12px rgba(250,45,72,0.15)',
+              boxShadow: '0 0 16px rgba(250,45,72,0.2)',
             }}>
-            <HiSparkles size={14} />
-            <span className="tabular-nums" key={potSize}>{potSize}</span>
-            <span className="text-[9px] font-normal text-white/50">IP</span>
+            <HiSparkles size={16} />
+            <span className="tabular-nums text-base" key={potSize}>{potSize}</span>
+            <span className="text-[10px] font-normal text-white/50">IP</span>
           </div>
         </div>
 
         {/* Spacer */}
-        <div className="w-8" />
+        <div className="w-9" />
       </div>
 
       {/* ── Table area ── */}
@@ -374,38 +374,38 @@ function PokerTableView({
         />
 
         {/* Player positions + Community words */}
-        <div className="relative w-full max-w-md" style={{ minHeight: '340px' }}>
+        <div className="relative w-full max-w-3xl" style={{ minHeight: '560px' }}>
           {/* ── Community words (center) ── */}
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center gap-1.5 z-10">
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center gap-2 sm:gap-3 z-10">
             {game.community_words.map((cw, i) => (
               <div key={i}
-                className={`relative w-12 h-[68px] sm:w-14 sm:h-[80px] rounded-xl border transition-all duration-500 flex items-center justify-center
+                className={`relative w-16 h-[90px] sm:w-20 sm:h-[112px] rounded-2xl border-2 transition-all duration-500 flex items-center justify-center
                   ${cw.revealed
-                    ? 'border-white/10 scale-100 opacity-100'
-                    : 'border-white/5 scale-95 opacity-60'
+                    ? 'border-white/15 scale-100 opacity-100'
+                    : 'border-white/5 scale-95 opacity-50'
                   }
                   ${dealAnimate && cw.revealed ? 'animate-scale-in' : ''}`}
                 style={{
                   background: cw.revealed
-                    ? 'linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))'
-                    : 'linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
-                  boxShadow: cw.revealed ? '0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)' : 'none',
+                    ? 'linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))'
+                    : 'linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))',
+                  boxShadow: cw.revealed ? '0 6px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)' : 'none',
                   animationDelay: `${i * 80}ms`,
                 }}>
                 {cw.revealed ? (
-                  <div className="flex flex-col items-center gap-0.5">
-                    <span className="text-[11px] font-bold text-white/90 leading-tight text-center px-0.5">{cw.word}</span>
+                  <div className="flex flex-col items-center gap-1">
+                    <span className="text-sm font-bold text-white/90 leading-tight text-center px-1">{cw.word}</span>
                     <button onClick={(e) => { e.stopPropagation(); speechSynthesis.speak(new SpeechSynthesisUtterance(cw.word!)); }}
                       className="text-white/30 hover:text-white/60 transition-colors cursor-pointer">
-                      <HiSpeakerWave size={9} />
+                      <HiSpeakerWave size={11} />
                     </button>
                   </div>
                 ) : (
-                  <span className="text-white/15 text-lg font-bold">?</span>
+                  <span className="text-white/20 text-2xl font-bold">?</span>
                 )}
                 {/* Step indicator */}
-                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2">
-                  <span className={`text-[8px] ${cw.revealed ? 'text-emerald-400/60' : 'text-white/20'}`}>
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2">
+                  <span className={`text-[10px] ${cw.revealed ? 'text-emerald-400/70' : 'text-white/20'}`}>
                     {cw.revealed ? '✦' : '·'}
                   </span>
                 </div>
@@ -414,29 +414,37 @@ function PokerTableView({
           </div>
 
           {/* ── Table oval background ── */}
-          <div className="absolute inset-0 top-4 bottom-4 mx-4 rounded-[100px] border border-white/5"
+          <div className="absolute inset-0 top-4 bottom-4 mx-6 rounded-[120px] border border-white/5"
             style={{
-              background: 'radial-gradient(ellipse at 50% 60%, rgba(16,185,129,0.04), transparent 70%)',
+              background: 'radial-gradient(ellipse at 50% 60%, rgba(16,185,129,0.06), transparent 70%)',
             }}
           />
 
           {/* ── Players around the table ── */}
-          {game.players.map((p, idx) => {
-            const isHuman = p.player_type === 'human';
-            // Position: top-2 players, bottom-2 players
-            const topRow = idx < 2;
-            const leftSide = idx % 2 === 0;
-            return (
+          {/* Layout:
+                 [top]
+           [left]     [right]
+                 [bottom] ← 你
+          */}
+          {(() => {
+            const ai = game.players.filter(p => p.player_type === 'ai');
+            const human = game.players.find(p => p.player_type === 'human');
+            const seats: { player: PokerPlayerState; pos: 'top' | 'left' | 'right' | 'bottom' }[] = [];
+            if (ai[0]) seats.push({ player: ai[0], pos: 'top' });
+            if (ai[1]) seats.push({ player: ai[1], pos: 'left' });
+            if (ai[2]) seats.push({ player: ai[2], pos: 'right' });
+            if (human) seats.push({ player: human, pos: 'bottom' });
+            return seats.map(s => (
               <PlayerSeat
-                key={p.id}
-                player={p}
-                isHuman={isHuman}
+                key={s.player.id}
+                player={s.player}
+                isHuman={s.player.player_type === 'human'}
                 communityWords={game.community_words}
-                position={topRow ? (leftSide ? 'top-left' : 'top-right') : (leftSide ? 'bottom-left' : 'bottom-right')}
+                position={s.pos}
                 game={game}
               />
-            );
-          })}
+            ));
+          })()}
         </div>
 
         {/* ── Keywords hint (human player's keywords) ── */}
@@ -472,45 +480,45 @@ function PokerTableView({
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-2">
-          <div className="max-w-xs mx-auto">
+        <div className="flex-shrink-0 px-5 pb-6 pt-3">
+          <div className="max-w-sm mx-auto">
             {/* Bet slider */}
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-[9px] text-white/30 w-4 text-right">5</span>
+            <div className="flex items-center gap-4 mb-4">
+              <span className="text-xs text-white/30 w-5 text-right">5</span>
               <div className="flex-1 relative">
                 <input type="range" min={5} max={50} step={5}
                   value={selectedBet} disabled={betting}
                   onChange={e => onSetBet(Number(e.target.value))}
-                  className="w-full h-1.5 rounded-full appearance-none cursor-pointer accent-[var(--accent)]"
+                  className="w-full h-2 rounded-full appearance-none cursor-pointer accent-[var(--accent)]"
                   style={{
                     background: 'rgba(255,255,255,0.08)',
                   }} />
               </div>
-              <span className="text-[9px] text-white/30 w-4">50</span>
-              <div className="flex items-center gap-0.5 min-w-[48px] justify-end">
-                <span className="text-sm font-extrabold text-white tabular-nums">{selectedBet}</span>
-                <span className="text-[8px] text-white/30">IP</span>
+              <span className="text-xs text-white/30 w-5">50</span>
+              <div className="flex items-center gap-1 min-w-[60px] justify-end">
+                <span className="text-lg font-extrabold text-white tabular-nums">{selectedBet}</span>
+                <span className="text-[10px] text-white/30">IP</span>
               </div>
             </div>
 
             {/* Action buttons */}
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <ActionButton
-                icon={<HiCheck size={13} />}
+                icon={<HiCheck size={15} />}
                 label="过牌"
                 onClick={() => onAction('check')}
                 disabled={betting}
                 variant="secondary"
               />
               <ActionButton
-                icon={<HiStar size={13} />}
+                icon={<HiStar size={15} />}
                 label={String(selectedBet)}
                 onClick={() => onAction('bet', selectedBet)}
                 disabled={betting}
                 variant="primary"
               />
               <ActionButton
-                icon={<HiXMark size={13} />}
+                icon={<HiXMark size={15} />}
                 label="弃牌"
                 onClick={() => onAction('fold')}
                 disabled={betting}
@@ -523,13 +531,13 @@ function PokerTableView({
 
       {/* Waiting for AI */}
       {!isCompleted && game.phase === 'betting' && !game.can_act && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-2">
-          <div className="flex items-center justify-center gap-2 py-3">
-            <div className="relative w-4 h-4">
+        <div className="flex-shrink-0 px-5 pb-6 pt-3">
+          <div className="flex items-center justify-center gap-3 py-4">
+            <div className="relative w-5 h-5">
               <div className="absolute inset-0 border-2 border-white/5 rounded-full" />
               <div className="absolute inset-0 border-2 border-transparent border-t-white/40 rounded-full animate-spin" />
             </div>
-            <span className="text-[10px] text-white/40">等待 AI 行动...</span>
+            <span className="text-sm text-white/40">等待 AI 行动...</span>
           </div>
         </div>
       )}
@@ -546,16 +554,16 @@ function PokerTableView({
 
       {/* All AI folded — quick win */}
       {isCompleted && !game.showdown && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-2">
-          <div className="max-w-xs mx-auto text-center animate-scale-in">
-            <div className="mb-2">
-              <span className="text-3xl">🎉</span>
+        <div className="flex-shrink-0 px-5 pb-6 pt-3">
+          <div className="max-w-sm mx-auto text-center animate-scale-in">
+            <div className="mb-3">
+              <span className="text-5xl">🎉</span>
             </div>
-            <h2 className="text-lg font-extrabold text-white mb-0.5">全胜！</h2>
-            <p className="text-xs text-white/50 mb-3">AI 全部弃牌，赢得底池</p>
-            <p className="text-2xl font-extrabold text-[var(--accent)] mb-4 tabular-nums">+{game.pot} IP</p>
+            <h2 className="text-2xl font-extrabold text-white mb-1">全胜！</h2>
+            <p className="text-sm text-white/50 mb-4">AI 全部弃牌，赢得底池</p>
+            <p className="text-3xl font-extrabold text-[var(--accent)] mb-5 tabular-nums">+{game.pot} IP</p>
             <button onClick={() => { onBack(); }}
-              className="w-full py-3 rounded-xl text-sm font-bold bg-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
+              className="w-full py-3.5 rounded-xl text-sm font-bold bg-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
               style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
               再来一局
             </button>
@@ -565,13 +573,13 @@ function PokerTableView({
 
       {/* Showdown phase (waiting) */}
       {game.phase === 'showdown' && !isCompleted && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-2">
-          <div className="flex items-center justify-center gap-2 py-3">
-            <div className="relative w-4 h-4">
+        <div className="flex-shrink-0 px-5 pb-6 pt-3">
+          <div className="flex items-center justify-center gap-3 py-4">
+            <div className="relative w-5 h-5">
               <div className="absolute inset-0 border-2 border-white/5 rounded-full" />
               <div className="absolute inset-0 border-2 border-transparent border-t-[var(--accent)] rounded-full animate-spin" />
             </div>
-            <span className="text-[10px] text-white/40">摊牌中...</span>
+            <span className="text-sm text-white/40">摊牌中...</span>
           </div>
         </div>
       )}
@@ -587,7 +595,7 @@ function PlayerSeat({
   player: PokerPlayerState;
   isHuman: boolean;
   communityWords: PokerGameState['community_words'];
-  position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  position: 'top' | 'left' | 'right' | 'bottom';
   game: PokerGameState;
 }) {
   const cfg = rc(player.card_rarity || 'R');
@@ -595,63 +603,79 @@ function PlayerSeat({
   const isCompleted = game.status === 'completed';
   const kw = player.keywords || [];
   const matchedCount = kw.filter(k => communityWords.some(cw => cw.revealed && cw.word === k)).length;
+  const isBottom = position === 'bottom';
 
-  // Position styles
+  // Position styles — traditional poker table: top / left / right / bottom
   const posStyles: Record<string, string> = {
-    'top-left': 'top-0 left-0',
-    'top-right': 'top-0 right-0',
-    'bottom-left': 'bottom-0 left-0',
-    'bottom-right': 'bottom-0 right-0',
+    top: 'top-0 left-1/2 -translate-x-1/2',
+    left: 'top-1/2 -translate-y-1/2 -left-2 sm:left-2 md:left-8',
+    right: 'top-1/2 -translate-y-1/2 -right-2 sm:right-2 md:right-8',
+    bottom: 'bottom-0 left-1/2 -translate-x-1/2',
   };
 
+  const cardW = isBottom ? 'w-24' : 'w-[72px]';
+  const cardH = isBottom ? 'h-[130px]' : 'h-[98px]';
+
   return (
-    <div className={`absolute ${posStyles[position]} z-20 transition-all duration-500`}
+    <div className={`absolute ${posStyles[position]} z-20 transition-all duration-500 flex flex-col items-center`}
       style={{
         opacity: player.folded && !isCompleted ? 0.3 : 1,
-        transform: isWinner && isCompleted ? 'translateY(-2px)' : 'none',
       }}>
-      <div className="flex flex-col items-center gap-1">
-        {/* Player card */}
-        <div className={`relative rounded-xl overflow-hidden transition-all duration-300
-          ${isWinner && isCompleted ? 'ring-2' : ''} ${player.folded ? 'grayscale' : ''}`}
-          style={{
-            width: '52px',
-            height: '70px',
-            background: 'rgba(255,255,255,0.04)',
-            border: `1px solid ${isCompleted && isWinner ? cfg.border : 'rgba(255,255,255,0.08)'}`,
-            boxShadow: isCompleted && isWinner
-              ? `0 0 20px ${cfg.glow}40, 0 4px 12px rgba(0,0,0,0.3)`
-              : '0 2px 8px rgba(0,0,0,0.2)',
-          }}>
-          {isHuman ? (
-            <img src={cardImageUrl(player.card_name!.toLowerCase().replace(/\s+/g, '_'))}
-              alt={player.card_name || ''}
-              className="w-full h-full object-cover" />
-          ) : isCompleted && player.card_name ? (
-            <img src={cardImageUrl(player.card_name!.toLowerCase().replace(/\s+/g, '_'))}
-              alt={player.card_name}
-              className="w-full h-full object-cover" />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="w-8 h-10 rounded border border-white/10 flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.06))' }}>
-                <span className="text-white/20 text-lg">🂠</span>
-              </div>
-            </div>
-          )}
-        </div>
+      {/* Label above card for top-position player */}
+      {position === 'top' && (
+        <p className={`text-xs font-bold mb-1.5 text-center ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/70'}`}>
+          AI-{player.id}{isWinner && isCompleted && ' 👑'}
+        </p>
+      )}
 
-        {/* Player info */}
-        <div className="text-center">
-          <p className={`text-[9px] font-bold truncate max-w-[60px] ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/70'}`}>
-            {isHuman ? '你' : `AI-${player.id}`}
-            {isWinner && isCompleted && ' 👑'}
+      {/* Player card — bottom player gets larger + accent glow */}
+      <div className={`relative rounded-xl overflow-hidden transition-all duration-300
+        ${isWinner && isCompleted ? 'ring-2' : ''} ${player.folded ? 'grayscale' : ''}
+        ${isBottom ? 'ring-2 ring-[var(--accent)]/30' : ''} ${cardW} ${cardH}`}
+        style={{
+          background: 'rgba(255,255,255,0.04)',
+          border: `2px solid ${isCompleted && isWinner ? cfg.border : isBottom ? 'rgba(250,45,72,0.25)' : 'rgba(255,255,255,0.08)'}`,
+          boxShadow: isCompleted && isWinner
+            ? `0 0 30px ${cfg.glow}40, 0 4px 16px rgba(0,0,0,0.4)`
+            : isBottom
+              ? '0 0 18px rgba(250,45,72,0.2)'
+              : '0 4px 12px rgba(0,0,0,0.3)',
+        }}>
+        {isHuman ? (
+          <img src={cardImageUrl(player.card_name!.toLowerCase().replace(/\s+/g, '_'))}
+            alt={player.card_name || ''}
+            className="w-full h-full object-cover" />
+        ) : isCompleted && player.card_name ? (
+          <img src={cardImageUrl(player.card_name!.toLowerCase().replace(/\s+/g, '_'))}
+            alt={player.card_name}
+            className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="w-12 h-16 rounded-lg border border-white/10 flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08))' }}>
+              <span className="text-white/20 text-2xl">🂠</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Label below card (bottom = you, left/right = AI) */}
+      {isBottom ? (
+        <div className="text-center mt-1.5">
+          <p className={`text-sm font-bold ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/80'}`}>
+            你{isWinner && isCompleted && ' 👑'}
           </p>
-          <p className="text-[7px] text-white/30">
-            {player.folded ? '弃牌' : isHuman && !isCompleted && matchedCount > 0 ? `✓${matchedCount}` : `$${player.total_bet}`}
+          <p className="text-[10px] text-white/40">
+            {player.folded ? '弃牌' : !isCompleted && matchedCount > 0 ? `✓${matchedCount} 匹配` : `$${player.total_bet}`}
           </p>
         </div>
-      </div>
+      ) : (
+        <p className="text-[10px] font-bold mt-1.5 text-center text-white/60 max-w-[80px] truncate">
+          {position === 'left' || position === 'right' ? `AI-${player.id}` : ''}
+          {player.folded ? ' 弃牌' : ''}
+          {isWinner && isCompleted && !isBottom ? ' 👑' : ''}
+        </p>
+      )}
     </div>
   );
 }
@@ -688,15 +712,15 @@ function ActionButton({
 
   return (
     <button onClick={onClick} disabled={disabled}
-      className="flex-1 py-2.5 rounded-xl text-[10px] font-semibold transition-all duration-200 cursor-pointer
+      className="flex-1 py-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer
         disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
       style={{
         background: s.bg,
         color: s.color,
         border: s.border,
-        boxShadow: variant === 'primary' ? '0 2px 8px rgba(250,45,72,0.25)' : 'none',
+        boxShadow: variant === 'primary' ? '0 2px 10px rgba(250,45,72,0.3)' : 'none',
       }}>
-      <span className="flex items-center justify-center gap-1">
+      <span className="flex items-center justify-center gap-1.5">
         {icon}
         {label}
       </span>
@@ -727,25 +751,23 @@ function ShowdownResult({
   }, []);
 
   return (
-    <div className="flex-shrink-0 px-5 pb-6 pt-2 overflow-y-auto max-h-[50vh]">
+    <div className="flex-shrink-0 px-5 pb-6 pt-3 overflow-y-auto max-h-[60vh]">
       <div className="max-w-sm mx-auto animate-fade-in">
         {/* Result banner */}
-        <div className={`text-center py-4 px-4 rounded-2xl mb-4 relative overflow-hidden ${
-          isWin ? '' : ''
-        }`}
+        <div className={`text-center py-5 px-6 rounded-2xl mb-5 relative overflow-hidden`}
           style={{
             background: isWin
-              ? 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.08))'
-              : 'linear-gradient(135deg, rgba(239,68,68,0.08), rgba(220,38,38,0.04))',
-            border: `1px solid ${isWin ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.1)'}`,
+              ? 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(5,150,105,0.1))'
+              : 'linear-gradient(135deg, rgba(239,68,68,0.1), rgba(220,38,38,0.06))',
+            border: `1px solid ${isWin ? 'rgba(16,185,129,0.25)' : 'rgba(239,68,68,0.15)'}`,
           }}>
           {/* Particles for win */}
           {isWin && (
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               {[...Array(10)].map((_, i) => (
-                <div key={i} className="absolute w-1 h-1 rounded-full animate-ping"
+                <div key={i} className="absolute w-1.5 h-1.5 rounded-full animate-ping"
                   style={{
-                    background: i % 2 === 0 ? 'rgba(16,185,129,0.4)' : 'rgba(250,45,72,0.3)',
+                    background: i % 2 === 0 ? 'rgba(16,185,129,0.5)' : 'rgba(250,45,72,0.4)',
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
                     animationDelay: `${i * 0.2}s`,
@@ -755,54 +777,54 @@ function ShowdownResult({
             </div>
           )}
 
-          <div className={`text-xl font-extrabold mb-1 ${isWin ? 'text-emerald-400' : 'text-white/50'}`}>
+          <div className={`text-xl font-extrabold mb-1 ${isWin ? 'text-emerald-400' : 'text-white/60'}`}>
             {isWin ? '🏆 胜利！' : '💔 本局惜败'}
           </div>
-          <div className="text-xs text-white/40">
-            底池 <strong className={`tabular-nums ${isWin ? 'text-emerald-400' : 'text-white/60'}`}>{pot}</strong> IP
+          <div className="text-sm text-white/50">
+            底池 <strong className={`tabular-nums ${isWin ? 'text-emerald-400' : 'text-white/70'}`}>{pot}</strong> IP
             {!isWin && ' · 再接再厉'}
           </div>
         </div>
 
         {/* All cards — comparison grid */}
-        <div className="mb-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[9px] text-white/40 uppercase tracking-widest">摊牌结果</span>
-            <span className="text-[8px] text-white/20">匹配数</span>
+        <div className="mb-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs text-white/40 uppercase tracking-widest">摊牌结果</span>
+            <span className="text-[10px] text-white/20">匹配数</span>
           </div>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-4 gap-3">
             {sorted.map((r, i) => {
               const cfg = rc(r.card_rarity);
               const isHum = r.player_type === 'human';
               return (
                 <div key={r.player_id}
-                  className={`rounded-xl p-1.5 text-center transition-all duration-500 ${
+                  className={`rounded-xl p-2 text-center transition-all duration-500 ${
                     r.folded ? 'opacity-30' : ''
                   } ${r.is_winner ? 'ring-1' : ''}`}
                   style={{
                     background: r.is_winner
                       ? `linear-gradient(135deg, ${cfg.bg}, transparent)`
                       : 'rgba(255,255,255,0.03)',
-                    border: `1px solid ${r.is_winner ? cfg.border : 'rgba(255,255,255,0.04)'}`,
+                    border: `1px solid ${r.is_winner ? cfg.border : 'rgba(255,255,255,0.06)'}`,
                     transform: revealed ? 'scale(1)' : 'scale(0.9)',
                     opacity: revealed ? (r.folded ? 0.3 : 1) : 0,
                     animationDelay: `${i * 100}ms`,
                   }}>
                   {/* Card mini */}
-                  <div className="w-full aspect-[3/4] rounded-lg overflow-hidden mb-1"
+                  <div className="w-full aspect-[3/4] rounded-lg overflow-hidden mb-1.5"
                     style={{ background: 'rgba(0,0,0,0.3)' }}>
                     <img src={cardImageUrl(r.card_png)} alt={r.card_name}
                       className="w-full h-full object-cover" />
                   </div>
                   {!r.folded && (
-                    <div className="flex items-center justify-center gap-0.5 mt-0.5">
-                      <span className={`text-[13px] font-extrabold tabular-nums ${r.is_winner ? 'text-emerald-400' : 'text-white/60'}`}>
+                    <div className="flex items-center justify-center gap-0.5">
+                      <span className={`text-base font-extrabold tabular-nums ${r.is_winner ? 'text-emerald-400' : 'text-white/70'}`}>
                         {r.matches}
                       </span>
-                      <span className="text-[7px] text-white/25">/5</span>
+                      <span className="text-[8px] text-white/30">/5</span>
                     </div>
                   )}
-                  <p className="text-[7px] text-white/30 truncate mt-0.5">
+                  <p className="text-[9px] text-white/40 truncate mt-0.5">
                     {isHum ? '你' : ''}
                     {r.is_winner ? ' 👑' : ''}
                   </p>
@@ -814,15 +836,15 @@ function ShowdownResult({
 
         {/* Community words recap */}
         {communityWords && (
-          <details className="mb-4 text-center">
-            <summary className="text-[9px] text-white/30 cursor-pointer hover:text-white/50 transition-colors">
+          <details className="mb-5 text-center">
+            <summary className="text-xs text-white/30 cursor-pointer hover:text-white/50 transition-colors">
               公共词回顾
             </summary>
-            <div className="flex justify-center flex-wrap gap-1 mt-1.5">
+            <div className="flex justify-center flex-wrap gap-2 mt-2">
               {communityWords.map((cw, i) => (
                 <span key={i}
-                  className={`text-[8px] px-1.5 py-0.5 rounded-full ${
-                    cw.revealed ? 'bg-white/5 text-white/40' : 'bg-white/5 text-white/15'
+                  className={`text-[10px] px-2 py-1 rounded-full ${
+                    cw.revealed ? 'bg-white/8 text-white/40' : 'bg-white/5 text-white/20'
                   }`}>
                   {cw.revealed ? cw.word : '?'}
                 </span>
@@ -833,13 +855,13 @@ function ShowdownResult({
 
         {/* Play again */}
         <button onClick={onPlayAgain}
-          className="w-full py-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer active:scale-[0.98]"
+          className="w-full py-3.5 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer active:scale-[0.98]"
           style={{
             background: isWin
               ? 'linear-gradient(135deg, var(--accent), #ff6b7f)'
-              : 'rgba(255,255,255,0.06)',
+              : 'rgba(255,255,255,0.08)',
             color: isWin ? '#fff' : 'rgba(255,255,255,0.7)',
-            border: isWin ? 'none' : '1px solid rgba(255,255,255,0.08)',
+            border: isWin ? 'none' : '1px solid rgba(255,255,255,0.1)',
           }}>
           再来一局
         </button>
