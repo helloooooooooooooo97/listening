@@ -1,18 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HiCubeTransparent, HiArrowLeft, HiCheck, HiXMark, HiSpeakerWave, HiTrophy, HiInformationCircle, HiSparkles } from 'react-icons/hi2';
+import {
+  HiArrowLeft, HiCheck, HiXMark, HiSpeakerWave,
+  HiTrophy, HiStar, HiPlay, HiClock, HiInformationCircle,
+  HiChevronDown, HiSparkles,
+} from 'react-icons/hi2';
 import { usePokerStore } from '../stores/pokerStore';
 import { cardImageUrl } from '../lib/api';
-import type { PokerGameState } from '../lib/api';
+import type { PokerGameState, PokerPlayerState } from '../lib/api';
 import { useCurrencyStore } from '../stores/currencyStore';
 
-const RARITY_LABEL: Record<string, string> = { R: 'R', SR: 'SR', SSR: 'SSR', UR: 'UR' };
-const RARITY_COLORS: Record<string, string> = { R: '#3b82f6', SR: '#a855f7', SSR: '#fb923c', UR: '#fbbf24' };
+// ─── Rarity config (consistent with CardDetailModal) ───
+
+const RARITY_CFG: Record<string, { label: string; color: string; glow: string; bg: string; border: string }> = {
+  R:   { label: 'R',  color: '#3b82f6', glow: 'rgba(59,130,246,0.4)',  bg: 'rgba(59,130,246,0.12)',  border: 'rgba(59,130,246,0.3)' },
+  SR:  { label: 'SR', color: '#a855f7', glow: 'rgba(168,85,247,0.45)', bg: 'rgba(168,85,247,0.12)', border: 'rgba(168,85,247,0.35)' },
+  SSR: { label: 'SSR',color: '#fb923c', glow: 'rgba(251,146,60,0.5)', bg: 'rgba(251,146,60,0.12)', border: 'rgba(251,146,60,0.4)' },
+  UR:  { label: 'UR', color: '#fbbf24', glow: 'rgba(251,191,36,0.55)',bg: 'rgba(251,191,36,0.12)', border: 'rgba(251,191,36,0.45)' },
+};
+
+function rc(rarity: string) { return RARITY_CFG[rarity] || RARITY_CFG.R; }
 
 function fmtTime(ts: number) {
   const d = new Date(ts * 1000);
   return d.toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
 }
+
+// ─── Main view ───
 
 export default function PokerGameView() {
   const store = usePokerStore();
@@ -20,171 +34,261 @@ export default function PokerGameView() {
   const loadBalance = useCurrencyStore(s => s.loadBalance);
   const { lobbyMode, loading, game, cards, history, canPlay, balance, selectedBet, betting } = store;
 
+  useEffect(() => { store.loadLobby(); }, []);
   useEffect(() => {
-    store.loadLobby();
-  }, []);
-
-  // Reload balance after game ends
-  useEffect(() => {
-    if (game?.status === 'completed') {
-      loadBalance();
-    }
+    if (game?.status === 'completed') loadBalance();
   }, [game?.status]);
 
   if (lobbyMode === 'lobby') {
-    return <PokerLobby
-      cards={cards}
-      history={history}
-      canPlay={canPlay}
-      balance={balance}
-      loading={loading}
-      onStart={store.startGame}
-      onBack={() => navigate(-1)}
-    />;
+    return (
+      <PokerLobby
+        cards={cards}
+        history={history}
+        canPlay={canPlay}
+        balance={balance}
+        loading={loading}
+        onStart={store.startGame}
+        onBack={() => navigate(-1)}
+      />
+    );
   }
 
   if (!game) return null;
 
-  return <PokerTableView
-    game={game}
-    selectedBet={selectedBet}
-    betting={betting}
-    onSetBet={store.setSelectedBet}
-    onAction={store.doAction}
-    onRefresh={store.refreshGame}
-    onBack={() => { store.backToLobby(); store.loadLobby(); }}
-    humanPlayerId={store.game?.human_player_id}
-  />;
+  return (
+    <PokerTableView
+      game={game}
+      selectedBet={selectedBet}
+      betting={betting}
+      onSetBet={store.setSelectedBet}
+      onAction={store.doAction}
+      onBack={() => { store.backToLobby(); store.loadLobby(); }}
+    />
+  );
 }
 
-// ── Lobby ──
+// ════════════════════════════════════════════════════════════
+//  LOBBY — upgraded with card-game elegance
+// ════════════════════════════════════════════════════════════
 
-function PokerLobby({ cards, history, canPlay, balance, loading, onStart, onBack }: {
+function PokerLobby({
+  cards, history, canPlay, balance, loading, onStart, onBack,
+}: {
   cards: { id: string; name: string; rarity: string; png: string; keywords: string[] }[];
   history: { game_id: number; pot: number; human_card: string | null; is_win: boolean; completed_at: number }[];
-  canPlay: boolean;
-  balance: number;
-  loading: boolean;
-  onStart: (cardId: string) => void;
-  onBack: () => void;
+  canPlay: boolean; balance: number; loading: boolean;
+  onStart: (cardId: string) => void; onBack: () => void;
 }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [rulesOpen, setRulesOpen] = useState(false);
 
   return (
     <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-y-auto">
-      <div className="flex-shrink-0 px-6 pt-10 pb-4">
-        <div className="flex items-center gap-3 mb-4">
-          <button onClick={onBack} className="text-tertiary hover:text-secondary cursor-pointer p-1">
-            <HiArrowLeft size={18} />
+      {/* ── Header ── */}
+      <div className="flex-shrink-0 px-6 pt-10 pb-2">
+        <div className="flex items-center gap-3 mb-2">
+          <button onClick={onBack} className="w-8 h-8 rounded-xl flex items-center justify-center text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
+            <HiArrowLeft size={16} />
           </button>
-          <HiCubeTransparent size={20} className="text-[var(--accent)]" />
-          <h1 className="text-xl font-extrabold text-primary">词牌对决</h1>
+          <div className="flex-1" />
+          {/* Balance chip */}
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
+            style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
+            <HiStar size={13} className="text-[var(--accent)]" />
+            <span className="tabular-nums">{balance}</span>
+            <span className="text-tertiary font-normal">IP</span>
+          </div>
         </div>
-        <p className="text-xs text-tertiary">德州扑克式词汇对决 · 选一张角色牌与 3 名 AI 对战</p>
+
+        <div className="mt-2">
+          <h1 className="text-2xl font-extrabold text-primary tracking-tight">🃏 词牌对决</h1>
+          <p className="text-xs text-tertiary mt-1 max-w-xs">
+            德州扑克式词汇对决 · 选一张角色牌，与 3 名 AI 对战，匹配公共词赢取底池
+          </p>
+        </div>
       </div>
 
+      {/* ── Body ── */}
       <div className="flex-1 px-6 pb-8 space-y-6">
+
         {loading ? (
-          <div className="flex justify-center py-16">
-            <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+          <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <div className="relative w-10 h-10">
+              <div className="absolute inset-0 border-2 border-[var(--border-secondary)] rounded-full" />
+              <div className="absolute inset-0 border-2 border-transparent border-t-[var(--accent)] rounded-full animate-spin" />
+            </div>
+            <span className="text-xs text-tertiary animate-pulse">加载牌局...</span>
           </div>
         ) : (
           <>
-            {/* Card selection */}
-            <div>
-              <h2 className="text-xs font-semibold text-tertiary uppercase tracking-wider mb-3">选择你的角色牌</h2>
+
+            {/* ── Card selection ── */}
+            <section>
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="text-xs font-semibold text-tertiary uppercase tracking-widest">选择角色牌</h2>
+                <span className="text-[10px] text-tertiary">{cards.length} 张可用</span>
+              </div>
+
               {cards.length === 0 ? (
-                <div className="text-center py-8 rounded-xl border border-dashed border-[var(--border-secondary)]">
-                  <p className="text-xs text-tertiary">还没有收藏卡牌，先去抽卡吧！</p>
+                <div className="flex flex-col items-center justify-center py-12 rounded-2xl border border-dashed border-[var(--border-secondary)]"
+                  style={{ background: 'var(--bg-tertiary)' }}>
+                  <div className="w-16 h-20 rounded-lg mb-3 flex items-center justify-center text-3xl opacity-30"
+                    style={{ background: 'var(--bg-secondary)' }}>🂠</div>
+                  <p className="text-xs text-tertiary">还没有收藏卡牌</p>
+                  <p className="text-[10px] text-tertiary/60 mt-0.5">先去抽卡收集角色吧！</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-                  {cards.map(card => (
-                    <button key={card.id} onClick={() => setSelectedId(card.id)}
-                      className={`relative rounded-xl overflow-hidden border-2 transition-all cursor-pointer text-left
-                        ${selectedId === card.id
-                          ? 'border-[var(--accent)] shadow-lg shadow-[var(--accent)]/20 scale-[1.02]'
-                          : 'border-[var(--border-primary)] hover:border-[var(--accent)]/30'
-                        }`}
-                      style={{ background: 'var(--bg-secondary)' }}>
-                      <div className="aspect-[3/4] relative">
-                        <img src={cardImageUrl(card.png)} alt={card.name}
-                          className="w-full h-full object-cover" />
-                        <div className="absolute top-1.5 right-1.5">
-                          <span className="text-[9px] px-1.5 py-0.5 rounded font-bold"
-                            style={{
-                              background: (RARITY_COLORS[card.rarity] || '#6b7280') + '30',
-                              color: RARITY_COLORS[card.rarity] || '#6b7280',
-                            }}>
-                            {RARITY_LABEL[card.rarity] || card.rarity}
-                          </span>
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                  {cards.map(card => {
+                    const cfg = rc(card.rarity);
+                    const isSelected = selectedId === card.id;
+                    return (
+                      <button key={card.id} onClick={() => setSelectedId(card.id)}
+                        className="group relative rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer text-left focus:outline-none"
+                        style={{
+                          background: 'var(--bg-secondary)',
+                          boxShadow: isSelected ? `0 0 0 2px ${cfg.color}, 0 8px 24px ${cfg.glow}20` : '0 1px 3px rgba(0,0,0,0.04)',
+                          transform: isSelected ? 'translateY(-4px)' : 'none',
+                        }}>
+                        {/* Rarity stripe top */}
+                        <div className="absolute top-0 left-0 right-0 h-1 z-10"
+                          style={{ background: `linear-gradient(90deg, ${cfg.color}88, ${cfg.color})` }} />
+
+                        <div className="aspect-[3/4] relative">
+                          <img src={cardImageUrl(card.png)} alt={card.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+
+                          {/* Rarity badge */}
+                          <div className="absolute top-2 right-2 z-10">
+                            <span className="text-[9px] px-1.5 py-0.5 rounded-md font-extrabold tracking-wider"
+                              style={{ background: cfg.bg, color: cfg.color, boxShadow: `0 0 8px ${cfg.glow}40` }}>
+                              {cfg.label}
+                            </span>
+                          </div>
+
+                          {/* Gradient overlay at bottom */}
+                          <div className="absolute bottom-0 left-0 right-0 h-1/2"
+                            style={{ background: 'linear-gradient(transparent 20%, rgba(0,0,0,0.75))' }} />
+
+                          <div className="absolute bottom-0 left-0 right-0 p-2">
+                            <p className="text-[11px] font-bold text-white truncate drop-shadow-sm">{card.name}</p>
+                          </div>
                         </div>
-                        <div className="absolute bottom-0 left-0 right-0 p-1.5"
-                          style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))' }}>
-                          <p className="text-[10px] font-semibold text-white truncate">{card.name}</p>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
+
+                        {/* Selection indicator */}
+                        {isSelected && (
+                          <div className="absolute top-2 left-2 z-10">
+                            <div className="w-5 h-5 rounded-full flex items-center justify-center"
+                              style={{ background: cfg.color }}>
+                              <HiCheck size={11} className="text-white" />
+                            </div>
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
-            </div>
+            </section>
 
-            {/* Start button */}
+            {/* ── Start button ── */}
             <button onClick={() => selectedId && onStart(selectedId)}
               disabled={!selectedId || !canPlay}
-              className={`w-full py-3 rounded-xl text-sm font-bold transition-all cursor-pointer
-                ${selectedId && canPlay
-                  ? 'bg-[var(--accent)] on-accent hover:opacity-90 active:scale-[0.98]'
-                  : 'bg-[var(--bg-secondary)] text-tertiary opacity-50 cursor-not-allowed'
-                }`}>
-              {!canPlay ? '✨ 余额不足，需要至少 10 IP' : selectedId ? '🎴 开始对决 · 底注 10 IP' : '请选择一张角色牌'}
+              className="relative w-full py-3.5 rounded-2xl text-sm font-bold transition-all duration-300 overflow-hidden cursor-pointer disabled:cursor-not-allowed"
+              style={{
+                background: selectedId && canPlay
+                  ? 'linear-gradient(135deg, var(--accent), #ff6b7f)'
+                  : 'var(--bg-secondary)',
+                color: selectedId && canPlay ? '#fff' : 'var(--text-tertiary)',
+                opacity: selectedId && canPlay ? 1 : 0.5,
+              }}>
+              {selectedId && canPlay ? (
+                <span className="flex items-center justify-center gap-2">
+                  <HiPlay size={16} />
+                  开始对决 · 底注 <strong>10</strong> IP
+                </span>
+              ) : !canPlay ? (
+                <span className="flex items-center justify-center gap-1.5">
+                  <HiStar size={14} />
+                  余额不足，需要至少 10 IP
+                </span>
+              ) : (
+                <span>请选择一张角色牌</span>
+              )}
             </button>
 
-            {/* Balance info */}
-            <div className="flex items-center justify-center gap-4 text-[10px] text-tertiary">
-              <span>余额: <strong className="text-primary tabular-nums">{balance}</strong> ✨</span>
-              <span>· 底注: <strong>10</strong> IP</span>
+            {/* ── Quick stats ── */}
+            <div className="flex items-center justify-center gap-6 text-[10px] text-tertiary">
+              <span className="flex items-center gap-1">
+                余额 <strong className="text-primary tabular-nums">{balance}</strong>
+              </span>
+              <span className="w-px h-3" style={{ background: 'var(--border-primary)' }} />
+              <span className="flex items-center gap-1">
+                底注 <strong>10</strong> IP
+              </span>
+              <span className="w-px h-3" style={{ background: 'var(--border-primary)' }} />
+              <span className="flex items-center gap-1">
+                <HiTrophy size={10} className="text-[var(--accent)]" />
+                胜率{' '}
+                <strong className="tabular-nums">
+                  {history.length > 0
+                    ? Math.round((history.filter(h => h.is_win).length / history.length) * 100)
+                    : 0}%
+                </strong>
+              </span>
             </div>
 
-            {/* History */}
+            {/* ── History ── */}
             {history.length > 0 && (
-              <div>
-                <h2 className="text-xs font-semibold text-tertiary uppercase tracking-wider mb-3">最近对局</h2>
-                <div className="space-y-1">
+              <section>
+                <h2 className="text-xs font-semibold text-tertiary uppercase tracking-widest mb-3">最近对局</h2>
+                <div className="space-y-1.5">
                   {history.slice(0, 5).map(h => (
                     <div key={h.game_id}
-                      className="flex items-center justify-between px-3 py-2 rounded-lg text-xs"
+                      className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-colors"
                       style={{ background: 'var(--bg-tertiary)' }}>
-                      <div className="flex items-center gap-2">
-                        <span className={h.is_win ? 'text-emerald-400' : 'text-[var(--accent)]'}>
-                          {h.is_win ? '🏆 胜' : '💔 负'}
+                      <div className="flex items-center gap-2.5">
+                        <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold ${
+                          h.is_win ? 'bg-emerald-500/15 text-emerald-400' : 'bg-red-500/10 text-[var(--accent)]'
+                        }`}>
+                          {h.is_win ? '胜' : '负'}
                         </span>
                         <span className="text-tertiary">{h.human_card || '—'}</span>
                       </div>
                       <div className="flex items-center gap-3 text-tertiary">
-                        <span>底池 {h.pot} IP</span>
-                        <span>{h.completed_at ? fmtTime(h.completed_at) : ''}</span>
+                        <span className="tabular-nums">
+                          {h.is_win ? '+' : ''}{h.pot} IP
+                        </span>
+                        <span className="text-[9px] opacity-60">{h.completed_at ? fmtTime(h.completed_at) : ''}</span>
                       </div>
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
             )}
 
-            {/* Rules */}
-            <details className="text-xs text-tertiary">
-              <summary className="cursor-pointer hover:text-secondary font-medium">📖 游戏规则</summary>
-              <div className="mt-2 space-y-1 pl-2 leading-relaxed">
-                <p>• 每局 4 人（你 + 3 AI），每人底注 10 IP</p>
-                <p>• 你选一张角色牌，AI 各分配一张（隐藏）</p>
-                <p>• 场上有 5 张单词牌，每轮翻开 1 张</p>
-                <p>• 每轮你可以：过牌 ✓ / 下注 ✨ / 弃牌 ✗</p>
-                <p>• 你的角色 keywords 匹配的单词越多，牌力越强</p>
-                <p>• 第 5 轮后摊牌，匹配最多者赢全池</p>
-                <p>• AI 也匹配关键词，但你看不到他们的牌</p>
-              </div>
-            </details>
+            {/* ── Rules ── */}
+            <section>
+              <button onClick={() => setRulesOpen(!rulesOpen)}
+                className="flex items-center gap-2 text-xs text-tertiary hover:text-secondary transition-colors cursor-pointer">
+                <HiInformationCircle size={14} />
+                游戏规则
+                <HiChevronDown size={12} className={`transition-transform duration-200 ${rulesOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {rulesOpen && (
+                <div className="mt-3 px-3.5 py-3 rounded-xl text-xs leading-relaxed animate-fade-in"
+                  style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                    <p>🎴 每局 4 人对战</p>
+                    <p>🃏 每人选一张角色牌</p>
+                    <p>📖 场上有 5 张单词牌</p>
+                    <p>🔓 每轮翻开 1 张</p>
+                    <p>✓ 过牌 · ✨ 下注 · ✗ 弃牌</p>
+                    <p>🏆 匹配最多者赢全池</p>
+                  </div>
+                </div>
+              )}
+            </section>
           </>
         )}
       </div>
@@ -192,191 +296,282 @@ function PokerLobby({ cards, history, canPlay, balance, loading, onStart, onBack
   );
 }
 
-// ── Game Table ──
+// ════════════════════════════════════════════════════════════
+//  POKER TABLE — the main game view
+// ════════════════════════════════════════════════════════════
 
-function PokerTableView({ game, selectedBet, betting, onSetBet, onAction, onRefresh, onBack, humanPlayerId }: {
+function PokerTableView({
+  game, selectedBet, betting, onSetBet, onAction, onBack,
+}: {
   game: PokerGameState;
-  selectedBet: number;
-  betting: boolean;
+  selectedBet: number; betting: boolean;
   onSetBet: (amount: number) => void;
   onAction: (action: string, amount?: number) => void;
-  onRefresh: () => void;
   onBack: () => void;
-  humanPlayerId?: number | null;
 }) {
   const isCompleted = game.status === 'completed';
   const human = game.players.find(p => p.player_type === 'human');
   const humanKeywords = human?.keywords || [];
-  const [polling, setPolling] = useState(false);
+  const [dealAnimate, setDealAnimate] = useState(false);
+  const [showKeywords, setShowKeywords] = useState(false);
+  const prevRoundRef = useRef(game.round);
+
+  // Trigger deal animation on round change
+  useEffect(() => {
+    if (game.round !== prevRoundRef.current) {
+      setDealAnimate(true);
+      const t = setTimeout(() => setDealAnimate(false), 600);
+      prevRoundRef.current = game.round;
+      return () => clearTimeout(t);
+    }
+    // First mount
+    if (!prevRoundRef.current) prevRoundRef.current = game.round;
+  }, [game.round]);
+
+  const potSize = game.pot;
 
   return (
-    <div className="h-full flex flex-col bg-[var(--bg-primary)] overflow-y-auto">
-      {/* Compact header */}
-      <div className="flex-shrink-0 flex items-center justify-between px-5 pt-8 pb-2">
-        <button onClick={onBack} className="text-tertiary hover:text-secondary cursor-pointer p-1">
+    <div className="h-full flex flex-col bg-gradient-to-b from-[#0a0a0b] via-[#0f1a12] to-[#0a0a0b] overflow-hidden">
+      {/* ── Table header ── */}
+      <div className="flex-shrink-0 flex items-center justify-between px-5 pt-10 pb-0 z-10">
+        <button onClick={onBack}
+          className="w-8 h-8 rounded-xl flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/5 transition-colors cursor-pointer">
           <HiArrowLeft size={16} />
         </button>
-        <div className="flex items-center gap-4 text-xs">
-          <span className="text-tertiary">第 <strong className="text-primary">{game.round}</strong>/5 轮</span>
-          <span className="font-bold text-[var(--accent)]">🏆 <span className="tabular-nums">{game.pot}</span></span>
+
+        {/* Round & Pot display */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] text-white/50"
+            style={{ background: 'rgba(255,255,255,0.04)' }}>
+            <HiClock size={11} />
+            第 {game.round}/5 轮
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold"
+            style={{
+              background: 'rgba(250,45,72,0.12)',
+              color: 'var(--accent)',
+              boxShadow: '0 0 12px rgba(250,45,72,0.15)',
+            }}>
+            <HiSparkles size={14} />
+            <span className="tabular-nums" key={potSize}>{potSize}</span>
+            <span className="text-[9px] font-normal text-white/50">IP</span>
+          </div>
         </div>
-        <div className="w-6" /> {/* spacer */}
+
+        {/* Spacer */}
+        <div className="w-8" />
       </div>
 
-      {/* Community words — compact chips */}
-      <div className="flex-shrink-0 px-5 py-3">
-        <div className="flex justify-center gap-1.5">
-          {game.community_words.map((cw, i) => (
-            <div key={i}
-              className={`px-2.5 py-1.5 rounded-lg text-[10px] font-semibold border transition-all
-                ${cw.revealed
-                  ? 'border-[var(--accent)]/25 bg-[var(--bg-secondary)] text-primary'
-                  : 'border-[var(--border-secondary)] text-tertiary/30'
-                }`}>
-              {cw.revealed ? (
-                <span className="flex items-center gap-1">
-                  {cw.word}
-                  <button onClick={(e) => { e.stopPropagation(); speechSynthesis.speak(new SpeechSynthesisUtterance(cw.word!)); }}
-                    className="text-tertiary hover:text-secondary">
-                    <HiSpeakerWave size={9} />
-                  </button>
-                </span>
-              ) : '?'}
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* ── Table area ── */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-2 relative overflow-hidden">
 
-      {/* Player area — 2×2 grid, poker table feel */}
-      <div className="flex-1 flex items-center justify-center px-5 pb-2">
-        <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
-          {game.players.map(p => {
-            const isHuman = p.player_type === 'human';
-            const imgUrl = isHuman && p.card_name
-              ? cardImageUrl(p.card_name.toLowerCase().replace(/\s+/g, '_'))
-              : null;
-            const kw = isHuman ? humanKeywords : [];
-            const matchedCount = kw.filter(k => game.community_words.some(cw => cw.revealed && cw.word === k)).length;
-            return (
-              <div key={p.id}
-                className={`rounded-xl p-3 text-center transition-all ${p.folded ? 'opacity-35' : ''} ${p.is_winner ? 'ring-2 ring-[var(--accent)]/40' : ''}`}
-                style={{ background: p.is_winner ? 'var(--bg-tertiary)' : 'var(--bg-secondary)' }}>
-                {/* Card image */}
-                <div className="w-14 h-[76px] mx-auto rounded-lg overflow-hidden mb-1.5 border border-white/5"
-                  style={{ background: 'var(--bg-primary)' }}>
-                  {imgUrl ? (
-                    <img src={imgUrl} alt={p.card_name!} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-lg">🂠</div>
-                  )}
+        {/* Table felt texture through subtle gradient */}
+        <div className="absolute inset-0 rounded-[40px] opacity-20"
+          style={{
+            background: `radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.08) 0%, transparent 70%),
+                        radial-gradient(ellipse at 50% 80%, rgba(59,130,246,0.05) 0%, transparent 60%)`,
+          }}
+        />
+
+        {/* Player positions + Community words */}
+        <div className="relative w-full max-w-md" style={{ minHeight: '340px' }}>
+          {/* ── Community words (center) ── */}
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center gap-1.5 z-10">
+            {game.community_words.map((cw, i) => (
+              <div key={i}
+                className={`relative w-12 h-[68px] sm:w-14 sm:h-[80px] rounded-xl border transition-all duration-500 flex items-center justify-center
+                  ${cw.revealed
+                    ? 'border-white/10 scale-100 opacity-100'
+                    : 'border-white/5 scale-95 opacity-60'
+                  }
+                  ${dealAnimate && cw.revealed ? 'animate-scale-in' : ''}`}
+                style={{
+                  background: cw.revealed
+                    ? 'linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))'
+                    : 'linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
+                  boxShadow: cw.revealed ? '0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)' : 'none',
+                  animationDelay: `${i * 80}ms`,
+                }}>
+                {cw.revealed ? (
+                  <div className="flex flex-col items-center gap-0.5">
+                    <span className="text-[11px] font-bold text-white/90 leading-tight text-center px-0.5">{cw.word}</span>
+                    <button onClick={(e) => { e.stopPropagation(); speechSynthesis.speak(new SpeechSynthesisUtterance(cw.word!)); }}
+                      className="text-white/30 hover:text-white/60 transition-colors cursor-pointer">
+                      <HiSpeakerWave size={9} />
+                    </button>
+                  </div>
+                ) : (
+                  <span className="text-white/15 text-lg font-bold">?</span>
+                )}
+                {/* Step indicator */}
+                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2">
+                  <span className={`text-[8px] ${cw.revealed ? 'text-emerald-400/60' : 'text-white/20'}`}>
+                    {cw.revealed ? '✦' : '·'}
+                  </span>
                 </div>
-                <p className="text-[10px] font-bold text-primary truncate">
-                  {isHuman ? '你' : `AI-${p.id}`}
-                  {p.is_winner && ' 👑'}
-                </p>
-                <p className="text-[8px] text-tertiary">
-                  {p.folded ? '弃牌' : isHuman && matchedCount > 0 ? `✓${matchedCount}` : `$${p.total_bet}`}
-                </p>
               </div>
+            ))}
+          </div>
+
+          {/* ── Table oval background ── */}
+          <div className="absolute inset-0 top-4 bottom-4 mx-4 rounded-[100px] border border-white/5"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 60%, rgba(16,185,129,0.04), transparent 70%)',
+            }}
+          />
+
+          {/* ── Players around the table ── */}
+          {game.players.map((p, idx) => {
+            const isHuman = p.player_type === 'human';
+            // Position: top-2 players, bottom-2 players
+            const topRow = idx < 2;
+            const leftSide = idx % 2 === 0;
+            return (
+              <PlayerSeat
+                key={p.id}
+                player={p}
+                isHuman={isHuman}
+                communityWords={game.community_words}
+                position={topRow ? (leftSide ? 'top-left' : 'top-right') : (leftSide ? 'bottom-left' : 'bottom-right')}
+                game={game}
+              />
             );
           })}
         </div>
+
+        {/* ── Keywords hint (human player's keywords) ── */}
+        {!isCompleted && humanKeywords.length > 0 && (
+          <div className="mt-2">
+            <button onClick={() => setShowKeywords(!showKeywords)}
+              className="text-[9px] text-white/30 hover:text-white/50 transition-colors cursor-pointer flex items-center gap-1">
+              <HiInformationCircle size={10} />
+              查看关键词 {showKeywords ? '▲' : '▼'}
+            </button>
+            {showKeywords && (
+              <div className="flex flex-wrap justify-center gap-1 mt-1.5 animate-fade-in">
+                {humanKeywords.slice(0, 8).map(kw => {
+                  const matched = game.community_words.some(cw => cw.revealed && cw.word === kw);
+                  return (
+                    <span key={kw}
+                      className={`text-[8px] px-1.5 py-0.5 rounded-full transition-all ${
+                        matched
+                          ? 'bg-emerald-500/15 text-emerald-400 font-semibold'
+                          : 'text-white/25 bg-white/5'
+                      }`}>
+                      {matched ? '✓ ' : ''}{kw}
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Matched keywords inline — only show when relevant */}
-      {!isCompleted && humanKeywords.length > 0 && (
-        <div className="flex-shrink-0 px-5 pb-1">
-          <div className="flex flex-wrap justify-center gap-1 max-w-xs mx-auto">
-            {humanKeywords.slice(0, 6).map(kw => {
-              const matched = game.community_words.some(cw => cw.revealed && cw.word === kw);
-              return (
-                <span key={kw}
-                  className={`text-[8px] px-1.5 py-0.5 rounded transition-all ${matched ? 'bg-emerald-500/20 text-emerald-400 font-semibold' : 'text-tertiary/40'}`}>
-                  {matched ? '✓ ' : ''}{kw}
-                </span>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      {/* ── Bottom controls / result ── */}
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
-        <div className="flex-shrink-0 px-5 py-3 border-t border-white/5">
-          <div className="max-w-xs mx-auto space-y-2.5">
+        <div className="flex-shrink-0 px-5 pb-6 pt-2">
+          <div className="max-w-xs mx-auto">
             {/* Bet slider */}
-            <div className="flex items-center gap-2">
-              <span className="text-[9px] text-tertiary w-6 text-right">5</span>
-              <input type="range" min={5} max={50} step={5}
-                value={selectedBet} disabled={betting}
-                onChange={e => onSetBet(Number(e.target.value))}
-                className="flex-1 accent-[var(--accent)] h-1" />
-              <span className="text-[9px] text-tertiary w-6">50</span>
-              <span className="text-xs font-bold text-primary tabular-nums w-8 text-right">{selectedBet}</span>
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-[9px] text-white/30 w-4 text-right">5</span>
+              <div className="flex-1 relative">
+                <input type="range" min={5} max={50} step={5}
+                  value={selectedBet} disabled={betting}
+                  onChange={e => onSetBet(Number(e.target.value))}
+                  className="w-full h-1.5 rounded-full appearance-none cursor-pointer accent-[var(--accent)]"
+                  style={{
+                    background: 'rgba(255,255,255,0.08)',
+                  }} />
+              </div>
+              <span className="text-[9px] text-white/30 w-4">50</span>
+              <div className="flex items-center gap-0.5 min-w-[48px] justify-end">
+                <span className="text-sm font-extrabold text-white tabular-nums">{selectedBet}</span>
+                <span className="text-[8px] text-white/30">IP</span>
+              </div>
             </div>
 
-            {/* Action buttons — 3 compact buttons */}
+            {/* Action buttons */}
             <div className="flex gap-2">
-              <button onClick={() => onAction('check')} disabled={betting}
-                className="flex-1 py-2 rounded-lg text-[10px] font-semibold border cursor-pointer
-                  hover:bg-white/5 disabled:opacity-30 transition-all"
-                style={{ borderColor: 'var(--border-primary)' }}>
-                <HiCheck size={12} className="inline mr-0.5" />过牌
-              </button>
-              <button onClick={() => onAction('bet', selectedBet)} disabled={betting}
-                className="flex-1 py-2 rounded-lg text-[10px] font-semibold cursor-pointer
-                  bg-[var(--accent)] on-accent hover:opacity-90 disabled:opacity-30 transition-all">
-                <HiSparkles size={12} className="inline mr-0.5" />{selectedBet}
-              </button>
-              <button onClick={() => onAction('fold')} disabled={betting}
-                className="flex-1 py-2 rounded-lg text-[10px] font-semibold cursor-pointer
-                  bg-[var(--bg-secondary)] text-tertiary hover:text-[var(--accent)] disabled:opacity-30 transition-all">
-                <HiXMark size={12} className="inline mr-0.5" />弃牌
-              </button>
+              <ActionButton
+                icon={<HiCheck size={13} />}
+                label="过牌"
+                onClick={() => onAction('check')}
+                disabled={betting}
+                variant="secondary"
+              />
+              <ActionButton
+                icon={<HiStar size={13} />}
+                label={String(selectedBet)}
+                onClick={() => onAction('bet', selectedBet)}
+                disabled={betting}
+                variant="primary"
+              />
+              <ActionButton
+                icon={<HiXMark size={13} />}
+                label="弃牌"
+                onClick={() => onAction('fold')}
+                disabled={betting}
+                variant="danger"
+              />
             </div>
           </div>
         </div>
       )}
 
-      {/* Waiting state */}
+      {/* Waiting for AI */}
       {!isCompleted && game.phase === 'betting' && !game.can_act && (
-        <div className="flex-shrink-0 px-5 py-4 text-center border-t border-white/5">
-          <div className="flex items-center justify-center gap-2">
-            <div className="w-2.5 h-2.5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
-            <span className="text-[10px] text-tertiary">等待 AI...</span>
+        <div className="flex-shrink-0 px-5 pb-6 pt-2">
+          <div className="flex items-center justify-center gap-2 py-3">
+            <div className="relative w-4 h-4">
+              <div className="absolute inset-0 border-2 border-white/5 rounded-full" />
+              <div className="absolute inset-0 border-2 border-transparent border-t-white/40 rounded-full animate-spin" />
+            </div>
+            <span className="text-[10px] text-white/40">等待 AI 行动...</span>
           </div>
         </div>
       )}
 
       {/* Showdown result */}
       {isCompleted && game.showdown && (
-        <ShowdownResult showdown={game.showdown} pot={game.pot}
-          onPlayAgain={() => { onBack(); }}
+        <ShowdownResult
+          showdown={game.showdown}
+          pot={game.pot}
           communityWords={game.community_words}
+          onPlayAgain={() => { onBack(); }}
         />
       )}
 
-      {/* All fold — simple win screen */}
+      {/* All AI folded — quick win */}
       {isCompleted && !game.showdown && (
-        <div className="flex-1 flex items-center justify-center px-5 pb-6">
-          <div className="text-center">
-            <HiTrophy size={36} className="mx-auto text-[var(--accent)] mb-2" />
-            <h2 className="text-base font-bold text-primary mb-1">🎉 AI 全弃牌！</h2>
-            <p className="text-xs text-tertiary mb-4">赢得 <strong className="text-[var(--accent)]">{game.pot}</strong> IP</p>
+        <div className="flex-shrink-0 px-5 pb-6 pt-2">
+          <div className="max-w-xs mx-auto text-center animate-scale-in">
+            <div className="mb-2">
+              <span className="text-3xl">🎉</span>
+            </div>
+            <h2 className="text-lg font-extrabold text-white mb-0.5">全胜！</h2>
+            <p className="text-xs text-white/50 mb-3">AI 全部弃牌，赢得底池</p>
+            <p className="text-2xl font-extrabold text-[var(--accent)] mb-4 tabular-nums">+{game.pot} IP</p>
             <button onClick={() => { onBack(); }}
-              className="px-5 py-2 rounded-lg text-xs font-bold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+              className="w-full py-3 rounded-xl text-sm font-bold bg-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
+              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
               再来一局
             </button>
           </div>
         </div>
       )}
 
-      {/* Waiting for showdown */}
+      {/* Showdown phase (waiting) */}
       {game.phase === 'showdown' && !isCompleted && (
-        <div className="flex-1 flex items-center justify-center px-5 pb-6">
-          <div className="text-center">
-            <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin mx-auto mb-2" />
-            <p className="text-[10px] text-tertiary">摊牌中...</p>
+        <div className="flex-shrink-0 px-5 pb-6 pt-2">
+          <div className="flex items-center justify-center gap-2 py-3">
+            <div className="relative w-4 h-4">
+              <div className="absolute inset-0 border-2 border-white/5 rounded-full" />
+              <div className="absolute inset-0 border-2 border-transparent border-t-[var(--accent)] rounded-full animate-spin" />
+            </div>
+            <span className="text-[10px] text-white/40">摊牌中...</span>
           </div>
         </div>
       )}
@@ -384,72 +579,268 @@ function PokerTableView({ game, selectedBet, betting, onSetBet, onAction, onRefr
   );
 }
 
-// ── Showdown ──
+// ─── Player Seat ───
 
-function ShowdownResult({ showdown, pot, onPlayAgain, communityWords }: {
+function PlayerSeat({
+  player, isHuman, communityWords, position, game,
+}: {
+  player: PokerPlayerState;
+  isHuman: boolean;
+  communityWords: PokerGameState['community_words'];
+  position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  game: PokerGameState;
+}) {
+  const cfg = rc(player.card_rarity || 'R');
+  const isWinner = player.is_winner;
+  const isCompleted = game.status === 'completed';
+  const kw = player.keywords || [];
+  const matchedCount = kw.filter(k => communityWords.some(cw => cw.revealed && cw.word === k)).length;
+
+  // Position styles
+  const posStyles: Record<string, string> = {
+    'top-left': 'top-0 left-0',
+    'top-right': 'top-0 right-0',
+    'bottom-left': 'bottom-0 left-0',
+    'bottom-right': 'bottom-0 right-0',
+  };
+
+  return (
+    <div className={`absolute ${posStyles[position]} z-20 transition-all duration-500`}
+      style={{
+        opacity: player.folded && !isCompleted ? 0.3 : 1,
+        transform: isWinner && isCompleted ? 'translateY(-2px)' : 'none',
+      }}>
+      <div className="flex flex-col items-center gap-1">
+        {/* Player card */}
+        <div className={`relative rounded-xl overflow-hidden transition-all duration-300
+          ${isWinner && isCompleted ? 'ring-2' : ''} ${player.folded ? 'grayscale' : ''}`}
+          style={{
+            width: '52px',
+            height: '70px',
+            background: 'rgba(255,255,255,0.04)',
+            border: `1px solid ${isCompleted && isWinner ? cfg.border : 'rgba(255,255,255,0.08)'}`,
+            boxShadow: isCompleted && isWinner
+              ? `0 0 20px ${cfg.glow}40, 0 4px 12px rgba(0,0,0,0.3)`
+              : '0 2px 8px rgba(0,0,0,0.2)',
+          }}>
+          {isHuman ? (
+            <img src={cardImageUrl(player.card_name!.toLowerCase().replace(/\s+/g, '_'))}
+              alt={player.card_name || ''}
+              className="w-full h-full object-cover" />
+          ) : isCompleted && player.card_name ? (
+            <img src={cardImageUrl(player.card_name!.toLowerCase().replace(/\s+/g, '_'))}
+              alt={player.card_name}
+              className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="w-8 h-10 rounded border border-white/10 flex items-center justify-center"
+                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.06))' }}>
+                <span className="text-white/20 text-lg">🂠</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Player info */}
+        <div className="text-center">
+          <p className={`text-[9px] font-bold truncate max-w-[60px] ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/70'}`}>
+            {isHuman ? '你' : `AI-${player.id}`}
+            {isWinner && isCompleted && ' 👑'}
+          </p>
+          <p className="text-[7px] text-white/30">
+            {player.folded ? '弃牌' : isHuman && !isCompleted && matchedCount > 0 ? `✓${matchedCount}` : `$${player.total_bet}`}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Action Button ───
+
+function ActionButton({
+  icon, label, onClick, disabled, variant,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+  disabled: boolean;
+  variant: 'primary' | 'secondary' | 'danger';
+}) {
+  const styles = {
+    primary: {
+      bg: 'linear-gradient(135deg, var(--accent), #ff6b7f)',
+      color: '#fff',
+      border: 'none',
+    },
+    secondary: {
+      bg: 'rgba(255,255,255,0.06)',
+      color: 'rgba(255,255,255,0.7)',
+      border: '1px solid rgba(255,255,255,0.08)',
+    },
+    danger: {
+      bg: 'rgba(239,68,68,0.1)',
+      color: 'rgba(239,68,68,0.7)',
+      border: '1px solid rgba(239,68,68,0.15)',
+    },
+  };
+  const s = styles[variant];
+
+  return (
+    <button onClick={onClick} disabled={disabled}
+      className="flex-1 py-2.5 rounded-xl text-[10px] font-semibold transition-all duration-200 cursor-pointer
+        disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
+      style={{
+        background: s.bg,
+        color: s.color,
+        border: s.border,
+        boxShadow: variant === 'primary' ? '0 2px 8px rgba(250,45,72,0.25)' : 'none',
+      }}>
+      <span className="flex items-center justify-center gap-1">
+        {icon}
+        {label}
+      </span>
+    </button>
+  );
+}
+
+// ════════════════════════════════════════════════════════════
+//  SHOWDOWN RESULT — dramatic reveal
+// ════════════════════════════════════════════════════════════
+
+function ShowdownResult({
+  showdown, pot, communityWords, onPlayAgain,
+}: {
   showdown: NonNullable<PokerGameState['showdown']>;
   pot: number;
-  onPlayAgain: () => void;
   communityWords?: PokerGameState['community_words'];
+  onPlayAgain: () => void;
 }) {
   const humanResult = showdown.results.find(r => r.player_type === 'human');
   const isWin = humanResult?.is_winner;
+  const sorted = [...showdown.results].sort((a, b) => b.matches - a.matches);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setRevealed(true), 300);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
-    <div className="flex-1 px-5 pb-6 overflow-y-auto">
-      <div className="max-w-sm mx-auto space-y-4">
+    <div className="flex-shrink-0 px-5 pb-6 pt-2 overflow-y-auto max-h-[50vh]">
+      <div className="max-w-sm mx-auto animate-fade-in">
+        {/* Result banner */}
+        <div className={`text-center py-4 px-4 rounded-2xl mb-4 relative overflow-hidden ${
+          isWin ? '' : ''
+        }`}
+          style={{
+            background: isWin
+              ? 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.08))'
+              : 'linear-gradient(135deg, rgba(239,68,68,0.08), rgba(220,38,38,0.04))',
+            border: `1px solid ${isWin ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.1)'}`,
+          }}>
+          {/* Particles for win */}
+          {isWin && (
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[...Array(10)].map((_, i) => (
+                <div key={i} className="absolute w-1 h-1 rounded-full animate-ping"
+                  style={{
+                    background: i % 2 === 0 ? 'rgba(16,185,129,0.4)' : 'rgba(250,45,72,0.3)',
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animationDelay: `${i * 0.2}s`,
+                    animationDuration: '1.5s',
+                  }} />
+              ))}
+            </div>
+          )}
 
-        {/* Win/loss banner */}
-        <div className={`text-center py-4 px-4 rounded-xl ${isWin ? 'bg-emerald-500/10' : 'bg-red-500/5'}`}>
-          <p className={`text-lg font-bold ${isWin ? 'text-emerald-400' : 'text-tertiary'}`}>
-            {isWin ? '🎉 你赢了！' : '💔 输了'}
-          </p>
-          <p className="text-xs text-tertiary mt-0.5">底池 <strong className="tabular-nums">{pot}</strong> IP{isWin ? ' 已入账' : ''}</p>
-        </div>
-
-        {/* All players — compact grid */}
-        <div className="grid grid-cols-4 gap-2">
-          {showdown.results.map(r => {
-            const imgUrl = r.card_png ? cardImageUrl(r.card_png) : null;
-            return (
-              <div key={r.player_id}
-                className={`rounded-lg p-2 text-center transition-all ${r.folded ? 'opacity-40' : ''} ${r.is_winner ? 'ring-1 ring-emerald-500/40' : ''}`}
-                style={{ background: r.is_winner ? 'var(--bg-tertiary)' : 'var(--bg-secondary)' }}>
-                {/* Card image */}
-                <div className="w-full aspect-[3/4] rounded-md overflow-hidden mb-1 border border-white/5"
-                  style={{ background: 'var(--bg-primary)' }}>
-                  {imgUrl ? (
-                    <img src={imgUrl} alt={r.card_name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-base">🂠</div>
-                  )}
-                </div>
-                <p className="text-[8px] font-bold text-primary truncate">
-                  {r.player_type === 'human' ? '你' : ''}
-                  {r.is_winner ? ' 👑' : ''}
-                </p>
-                <p className="text-[7px] text-tertiary truncate">{r.card_name}</p>
-                <p className="text-[9px] font-bold tabular-nums mt-0.5">{r.matches}<span className="text-[7px] text-tertiary font-normal">/5</span></p>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Community words — tiny recap */}
-        <details className="text-[9px] text-tertiary/60 text-center">
-          <summary className="cursor-pointer hover:text-secondary">公共词</summary>
-          <div className="mt-1.5 flex justify-center flex-wrap gap-1">
-            {communityWords?.map((cw, i) => (
-              <span key={i}
-                className={`text-[8px] px-1.5 py-0.5 rounded ${cw.revealed ? 'bg-white/10 text-tertiary' : 'bg-white/5 text-tertiary/30'}`}>
-                {cw.revealed ? cw.word : `?`}
-              </span>
-            ))}
+          <div className={`text-xl font-extrabold mb-1 ${isWin ? 'text-emerald-400' : 'text-white/50'}`}>
+            {isWin ? '🏆 胜利！' : '💔 本局惜败'}
           </div>
-        </details>
+          <div className="text-xs text-white/40">
+            底池 <strong className={`tabular-nums ${isWin ? 'text-emerald-400' : 'text-white/60'}`}>{pot}</strong> IP
+            {!isWin && ' · 再接再厉'}
+          </div>
+        </div>
 
+        {/* All cards — comparison grid */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[9px] text-white/40 uppercase tracking-widest">摊牌结果</span>
+            <span className="text-[8px] text-white/20">匹配数</span>
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            {sorted.map((r, i) => {
+              const cfg = rc(r.card_rarity);
+              const isHum = r.player_type === 'human';
+              return (
+                <div key={r.player_id}
+                  className={`rounded-xl p-1.5 text-center transition-all duration-500 ${
+                    r.folded ? 'opacity-30' : ''
+                  } ${r.is_winner ? 'ring-1' : ''}`}
+                  style={{
+                    background: r.is_winner
+                      ? `linear-gradient(135deg, ${cfg.bg}, transparent)`
+                      : 'rgba(255,255,255,0.03)',
+                    border: `1px solid ${r.is_winner ? cfg.border : 'rgba(255,255,255,0.04)'}`,
+                    transform: revealed ? 'scale(1)' : 'scale(0.9)',
+                    opacity: revealed ? (r.folded ? 0.3 : 1) : 0,
+                    animationDelay: `${i * 100}ms`,
+                  }}>
+                  {/* Card mini */}
+                  <div className="w-full aspect-[3/4] rounded-lg overflow-hidden mb-1"
+                    style={{ background: 'rgba(0,0,0,0.3)' }}>
+                    <img src={cardImageUrl(r.card_png)} alt={r.card_name}
+                      className="w-full h-full object-cover" />
+                  </div>
+                  {!r.folded && (
+                    <div className="flex items-center justify-center gap-0.5 mt-0.5">
+                      <span className={`text-[13px] font-extrabold tabular-nums ${r.is_winner ? 'text-emerald-400' : 'text-white/60'}`}>
+                        {r.matches}
+                      </span>
+                      <span className="text-[7px] text-white/25">/5</span>
+                    </div>
+                  )}
+                  <p className="text-[7px] text-white/30 truncate mt-0.5">
+                    {isHum ? '你' : ''}
+                    {r.is_winner ? ' 👑' : ''}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Community words recap */}
+        {communityWords && (
+          <details className="mb-4 text-center">
+            <summary className="text-[9px] text-white/30 cursor-pointer hover:text-white/50 transition-colors">
+              公共词回顾
+            </summary>
+            <div className="flex justify-center flex-wrap gap-1 mt-1.5">
+              {communityWords.map((cw, i) => (
+                <span key={i}
+                  className={`text-[8px] px-1.5 py-0.5 rounded-full ${
+                    cw.revealed ? 'bg-white/5 text-white/40' : 'bg-white/5 text-white/15'
+                  }`}>
+                  {cw.revealed ? cw.word : '?'}
+                </span>
+              ))}
+            </div>
+          </details>
+        )}
+
+        {/* Play again */}
         <button onClick={onPlayAgain}
-          className="w-full py-2.5 rounded-lg text-xs font-bold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer">
+          className="w-full py-3 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer active:scale-[0.98]"
+          style={{
+            background: isWin
+              ? 'linear-gradient(135deg, var(--accent), #ff6b7f)'
+              : 'rgba(255,255,255,0.06)',
+            color: isWin ? '#fff' : 'rgba(255,255,255,0.7)',
+            border: isWin ? 'none' : '1px solid rgba(255,255,255,0.08)',
+          }}>
           再来一局
         </button>
       </div>
