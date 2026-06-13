@@ -5,7 +5,7 @@ import {
   HiArrowLeft, HiClock, HiSparkles, HiCheck, HiXMark, HiSpeakerWave,
 } from 'react-icons/hi2';
 import type { PokerGameState, PokerPlayerState } from '../../../lib/api';
-import { useWordAudio } from '../../../hooks/useWordAudio';
+import { useWordAudio, primeWordAudioContext } from '../../../hooks/useWordAudio';
 import Spinner from '../../ui/Spinner';
 import PlayerSeat from './player-seat';
 import ShowdownResult from './showdown-result';
@@ -57,6 +57,7 @@ export default function PokerTableView({
   const { playWordOnClick } = useWordAudio();
 
   const handleCommunityWordClick = useCallback((index: number, word: string) => {
+    primeWordAudioContext();
     playWordOnClick(word);
     setUserRevealed(prev => ({ ...prev, [index]: true }));
   }, [playWordOnClick]);

@@ -314,6 +314,7 @@ def get_game_state(game_id: int) -> dict:
              "revealed": bool((game["revealed_mask"] >> i) & 1), "index": i}
             for i in range(min(len(words), ROUNDS))
         ],
+        "audio_words": words[:ROUNDS],
         "players": player_list,
         "human_player_id": human["id"] if human else None,
         "can_act": can_act,
