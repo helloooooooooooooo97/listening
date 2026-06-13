@@ -345,7 +345,23 @@ export default function PokerTableView({
 
         {/* Player positions + Community words */}
         <div className="relative w-full max-w-4xl" style={{ minHeight: '480px' }}>
-          {renderCommunityWords()}
+          {isCompleted ? (
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4">
+              <p className="text-lg font-bold text-primary">🏆 +{potSize} IP</p>
+              <div className="flex gap-3">
+                <button onClick={() => { onBack(); }}
+                  className="px-5 py-2 rounded-xl text-sm font-bold bg-white/10 text-white/80 hover:bg-white/15 transition-colors cursor-pointer">
+                  再来一局
+                </button>
+                <button onClick={() => { onBack(); }}
+                  className="px-5 py-2 rounded-xl text-sm font-bold bg-transparent text-white/50 hover:text-white/70 border border-white/10 hover:border-white/20 transition-colors cursor-pointer">
+                  退出游戏
+                </button>
+              </div>
+            </div>
+          ) : (
+            renderCommunityWords()
+          )}
 
 
           {/* ── Table oval background ── */}
@@ -385,19 +401,6 @@ export default function PokerTableView({
       </div>
 
       {/* ── Bottom controls ── */}
-
-      {/* Completed — result bar */}
-      {isCompleted && (
-        <div className="flex-shrink-0 flex items-center justify-center gap-4 px-5 pb-5 pt-2">
-          <span className="text-sm font-bold text-white/80">
-            {game.showdown ? '🏆 摊牌结束' : '🎉 AI 全部弃牌'} · 赢得 <span className="text-[var(--accent)]">+{potSize}</span> IP
-          </span>
-          <button onClick={() => { onBack(); }}
-            className="px-4 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-white/80 hover:bg-white/15 transition-colors cursor-pointer">
-            再来一局
-          </button>
-        </div>
-      )}
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
