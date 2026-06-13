@@ -163,8 +163,8 @@ export default function PlayerBar({ onQueueToggle }: Props) {
         );
       })()}
 
-      {/* ── Bottom Player Bar (always visible) ── */}
-      <div className={`fixed bottom-0 right-0 z-40 transition-all duration-300 ${expanded ? 'left-0' : 'left-0 md:left-56'}`}
+      {/* ── Bottom Player Bar (hidden on mobile) ── */}
+      <div className={`fixed bottom-0 right-0 z-40 transition-all duration-300 hidden md:block ${expanded ? 'left-0' : 'left-0 md:left-56'}`}
         style={{
           background: 'var(--glass-bg)',
           borderTop: '1px solid var(--border-primary)',

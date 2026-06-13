@@ -127,7 +127,7 @@ function AppContent() {
         activeSection={activeSection}
         onSectionChange={(s) => navigate(`/${s === 'home' ? '' : s}`)}
       />
-      <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-16 md:pb-16" style={{ paddingBottom: 'calc(64px + env(safe-area-inset-bottom, 0px))' }}>
+      <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-0 md:pb-16" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
         <ContentPanel
           activeSection={activeSection}
           lessons={lessons}
