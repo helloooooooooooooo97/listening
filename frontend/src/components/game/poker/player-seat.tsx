@@ -86,31 +86,45 @@ export default function PlayerSeat({
         {cards.length > 0 ? cards.map((c, ci) => {
           const sc = scores[ci] ?? 0;
           const scoreColor = sc >= 4 ? '#34d399' : sc >= 2 ? '#fbbf24' : '#6b7280';
+          const cardKw: string[] = (c as any).keywords || [];
+          const matchedWords = communityWords
+            .filter(cw => cw.revealed && cw.word && cardKw.includes(cw.word))
+            .map(cw => cw.word!) as string[];
           return (
-            <div key={ci} onClick={() => {
-              if (onCardClick) onCardClick(c.name, c.rarity, c.png, []);
-            }}
-              className={`relative rounded-lg border ${RARITY_BORDER[c.rarity] || 'border-white/15'} bg-gradient-to-b ${RARITY_BG[c.rarity] || 'from-white/5 to-white/0'} flex flex-col items-center justify-center text-center transition-all duration-300 cursor-pointer hover:ring-1 hover:ring-white/20
-                ${isWinner && isCompleted ? 'ring-1 ring-amber-400/40' : ''}
-                ${player.folded ? 'grayscale' : ''}`}
-              style={{
-                width: 60,
-                height: 84,
-              }}>
-              {isHuman || isCompleted ? (
-                <img src={cardImageUrl(c.png)} alt={c.name}
-                  className="w-full h-full object-cover rounded-lg absolute inset-0" />
-              ) : (
-                <div className="w-full h-full rounded-lg flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08))' }}>
-                  <span className="text-white/20 text-lg">🂠</span>
+            <div key={ci} className="flex flex-col items-center gap-0.5">
+              <div onClick={() => {
+                if (onCardClick) onCardClick(c.name, c.rarity, c.png, cardKw);
+              }}
+                className={`relative rounded-lg border ${RARITY_BORDER[c.rarity] || 'border-white/15'} bg-gradient-to-b ${RARITY_BG[c.rarity] || 'from-white/5 to-white/0'} flex flex-col items-center justify-center text-center transition-all duration-300 cursor-pointer hover:ring-1 hover:ring-white/20
+                  ${isWinner && isCompleted ? 'ring-1 ring-amber-400/40' : ''}
+                  ${player.folded ? 'grayscale' : ''}`}
+                style={{
+                  width: 60,
+                  height: 84,
+                }}>
+                {isHuman || isCompleted ? (
+                  <img src={cardImageUrl(c.png)} alt={c.name}
+                    className="w-full h-full object-cover rounded-lg absolute inset-0" />
+                ) : (
+                  <div className="w-full h-full rounded-lg flex items-center justify-center"
+                    style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08))' }}>
+                    <span className="text-white/20 text-lg">🂠</span>
+                  </div>
+                )}
+                {/* Score — always visible */}
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
+                  style={{ background: scoreColor, color: '#000' }}>
+                  {sc}
+                </div>
+              </div>
+              {/* Matched words below card */}
+              {matchedWords.length > 0 && (
+                <div className="flex flex-wrap justify-center gap-0.5 max-w-[60px]">
+                  {matchedWords.map(w => (
+                    <span key={w} className="text-[6px] text-emerald-400/70 truncate">{w}</span>
+                  ))}
                 </div>
               )}
-              {/* Score — always visible */}
-              <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
-                style={{ background: scoreColor, color: '#000' }}>
-                {sc}
-              </div>
             </div>
           );
         }) : (

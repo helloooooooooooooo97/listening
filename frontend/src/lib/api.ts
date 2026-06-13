@@ -685,7 +685,7 @@ export interface PokerPlayerState {
   card_rarity?: string | null;
   keywords?: string[] | null;
   balance_before?: number | null;
-  cards?: { card_id: string; name: string; rarity: string; png: string }[];
+  cards?: { card_id: string; name: string; rarity: string; png: string; keywords?: string[] }[];
   scores?: number[];
   hand?: { rank: number; name: string };
 }
@@ -715,7 +715,7 @@ export interface PokerGameState {
       matches: number;
       folded: boolean;
       is_winner: boolean;
-      cards?: { card_id: string; name: string; rarity: string; png: string }[];
+      cards?: { card_id: string; name: string; rarity: string; png: string; keywords?: string[] }[];
       scores?: number[];
       hand?: { rank: number; name: string };
     }[];

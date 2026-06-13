@@ -84,8 +84,9 @@ def _card_data(card_id: str) -> dict:
     for c in cards:
         if c["id"] == card_id:
             return {"card_id": c["id"], "name": c.get("name", c["id"]),
-                    "rarity": c.get("rarity", "R"), "png": c.get("png", "")}
-    return {"card_id": card_id, "name": card_id, "rarity": "R", "png": ""}
+                    "rarity": c.get("rarity", "R"), "png": c.get("png", ""),
+                    "keywords": [kw.lower() for kw in c.get("keywords", [])]}
+    return {"card_id": card_id, "name": card_id, "rarity": "R", "png": "", "keywords": []}
 
 def _pick_human_cards(conn) -> list[str]:
     rows = conn.execute("SELECT card_id FROM card_collection WHERE obtained=1").fetchall()

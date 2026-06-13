@@ -28,7 +28,8 @@ export default function PokerTableView({
 }: PokerTableViewProps) {
   const isCompleted = game.status === 'completed';
   const [previewCard, setPreviewCard] = useState<{
-    name: string; rarity: string; png: string; keywords: string[];
+    name: string; rarity: string; png: string; keywords?: string[]; title?: string; motto?: string;
+    matchedWords?: string[];
   } | null>(null);
   const prevPotRef = useRef(game.pot);
   const [potPulse, setPotPulse] = useState(false);
@@ -388,11 +389,13 @@ export default function PokerTableView({
           {/* ── Card preview modal ── */}
           {previewCard && (
             <CardPreviewModal
-              name={previewCard.name}
-              rarity={previewCard.rarity}
-              png={previewCard.png}
-              keywords={previewCard.keywords}
-              communityWords={game.community_words}
+              card={previewCard}
+              matchedWords={(() => {
+                const kw = previewCard.keywords || [];
+                return game.community_words
+                  .filter(cw => cw.revealed && cw.word && kw.includes(cw.word))
+                  .map(cw => cw.word!);
+              })()}
               onClose={() => setPreviewCard(null)}
             />
           )}
