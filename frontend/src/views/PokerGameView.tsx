@@ -4,13 +4,13 @@ import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePokerStore } from '../stores/pokerStore';
 import { useCurrencyStore } from '../stores/currencyStore';
-import { PokerLobby, PokerTableView } from '../components/game/poker';
+import { PokerLobby, PokerTableView, PokerV2TableView } from '../components/game/poker';
 
 export default function PokerGameView() {
   const navigate = useNavigate();
   const store = usePokerStore();
   const loadBalance = useCurrencyStore(s => s.loadBalance);
-  const { lobbyMode, loading, starting, audioLoadProgress, game, cards, history, canPlay, balance, selectedBet, betting, error } = store;
+  const { lobbyMode, loading, starting, audioLoadProgress, game, cards, history, canPlay, balance, selectedBet, betting, error, v2Mode, v2RoundResult, v2RoundNum, v2TotalRounds, v2TotalNet, v2SessionOver } = store;
 
   useEffect(() => { store.loadLobby(); }, []);
   useEffect(() => {
@@ -39,6 +39,33 @@ export default function PokerGameView() {
         onClearError={store.clearError}
         onBack={() => navigate(-1)}
         onStart={store.startGame}
+        onStartV2={() => store.startV2Game()}
+      />
+    );
+  }
+
+  // v2 mode
+  if (v2Mode) {
+    if (!v2RoundResult) {
+      return (
+        <div className="h-full flex items-center justify-center bg-[#0a0a1a]">
+          <div className="text-center">
+            <div className="animate-spin text-4xl mb-3">🎲</div>
+            <p className="text-sm text-tertiary">正在开始...</p>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <PokerV2TableView
+        roundResult={v2RoundResult}
+        roundNum={v2RoundNum}
+        totalRounds={v2TotalRounds}
+        totalNet={v2TotalNet}
+        sessionOver={v2SessionOver}
+        error={error}
+        onPlayNext={() => store.playV2Round()}
+        onBack={() => { store.backToLobby(); store.loadLobby(); }}
       />
     );
   }

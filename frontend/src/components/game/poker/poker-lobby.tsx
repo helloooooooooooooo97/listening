@@ -26,10 +26,11 @@ interface PokerLobbyProps {
   onClearError: () => void;
   onBack: () => void;
   onStart: (cardId: string) => void;
+  onStartV2?: () => void;
 }
 
 export default function PokerLobby({
-  cards, history, canPlay, balance, loading, starting, audioLoadProgress, error, onClearError, onBack, onStart,
+  cards, history, canPlay, balance, loading, starting, audioLoadProgress, error, onClearError, onBack, onStart, onStartV2,
 }: PokerLobbyProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [rulesOpen, setRulesOpen] = useState(false);
@@ -193,6 +194,22 @@ export default function PokerLobby({
                 <span>请选择一张角色牌</span>
               )}
             </button>
+
+            {/* ── v2 play button ── */}
+            {onStartV2 && (
+              <button onClick={onStartV2}
+                disabled={!canPlay || starting}
+                className="relative w-full py-2.5 rounded-2xl text-xs font-bold transition-all duration-300 overflow-hidden cursor-pointer disabled:cursor-not-allowed mt-2"
+                style={{
+                  background: canPlay ? 'linear-gradient(135deg, #8b5cf6, #6366f1)' : 'var(--bg-secondary)',
+                  color: canPlay ? '#fff' : 'var(--text-tertiary)',
+                  opacity: canPlay ? 1 : 0.5,
+                }}>
+                <span className="flex items-center justify-center gap-2">
+                  🎲 新玩法: 每人5张卡 · 比牌型 · 每回合 5 IP
+                </span>
+              </button>
+            )}
 
             {/* ── Quick stats ── */}
             <div className="flex items-center justify-center gap-6 text-[10px] text-tertiary">

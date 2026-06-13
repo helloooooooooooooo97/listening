@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { PokerGameState, PlayableCard, PokerHistory } from '../lib/api';
+import type { PokerGameState, PlayableCard, PokerHistory, PokerV2RoundResult } from '../lib/api';
 import {
   getPokerStatus,
   getPlayableCards,
@@ -7,6 +7,7 @@ import {
   pokerAction,
   getPokerGameState,
   getPokerHistory,
+  pokerV2Round,
 } from '../lib/api';
 import { preloadWordsAudio } from '../hooks/useWordAudio';
 
@@ -35,10 +36,19 @@ export interface PokerStore {
   audioLoadProgress: number;
   error: string | null;
 
+  // v1 (old)
   game: PokerGameState | null;
   gameId: number | null;
   selectedBet: number;
   betting: boolean;
+
+  // v2 (new)
+  v2Mode: boolean;
+  v2RoundResult: PokerV2RoundResult | null;
+  v2RoundNum: number;
+  v2TotalRounds: number;
+  v2TotalNet: number;
+  v2SessionOver: boolean;
 
   loadLobby: () => Promise<void>;
   startGame: (cardId: string) => Promise<void>;
@@ -47,6 +57,10 @@ export interface PokerStore {
   refreshGame: () => Promise<void>;
   backToLobby: () => void;
   clearError: () => void;
+
+  // v2 actions
+  startV2Game: () => Promise<void>;
+  playV2Round: () => Promise<void>;
 }
 
 export const usePokerStore = create<PokerStore>((set, get) => ({
@@ -63,6 +77,14 @@ export const usePokerStore = create<PokerStore>((set, get) => ({
   gameId: null,
   selectedBet: 10,
   betting: false,
+
+  // v2
+  v2Mode: false,
+  v2RoundResult: null,
+  v2RoundNum: 0,
+  v2TotalRounds: 10,
+  v2TotalNet: 0,
+  v2SessionOver: false,
 
   clearError: () => set({ error: null }),
 
@@ -87,7 +109,7 @@ export const usePokerStore = create<PokerStore>((set, get) => ({
   },
 
   startGame: async (cardId: string) => {
-    set({ starting: true, betting: false, error: null, audioLoadProgress: 0 });
+    set({ starting: true, betting: false, error: null, audioLoadProgress: 0, v2Mode: false });
     try {
       const state = await createPokerGame(cardId);
       const words = pokerAudioWords(state);
@@ -135,5 +157,37 @@ export const usePokerStore = create<PokerStore>((set, get) => ({
     }
   },
 
-  backToLobby: () => set({ lobbyMode: 'lobby', game: null, gameId: null, error: null }),
+  backToLobby: () => set({
+    lobbyMode: 'lobby', game: null, gameId: null, error: null,
+    v2Mode: false, v2RoundResult: null, v2RoundNum: 0, v2TotalNet: 0, v2SessionOver: false,
+  }),
+
+  // ── v2 ──
+
+  startV2Game: async () => {
+    set({ lobbyMode: 'playing', v2Mode: true, v2RoundResult: null, v2RoundNum: 0, v2TotalNet: 0, v2SessionOver: false, error: null });
+    // 直接打第一回合
+    const s = get();
+    if (s.v2Mode) await s.playV2Round();
+  },
+
+  playV2Round: async () => {
+    const { v2RoundNum, v2TotalRounds } = get();
+    if (v2RoundNum >= v2TotalRounds) {
+      set({ v2SessionOver: true });
+      return;
+    }
+    set({ error: null });
+    try {
+      const result = await pokerV2Round();
+      set({
+        v2RoundResult: result,
+        v2RoundNum: v2RoundNum + 1,
+        v2TotalNet: get().v2TotalNet + result.net,
+        balance: result.balance_after,
+      });
+    } catch (e) {
+      set({ error: parseError(e) });
+    }
+  },
 }));
