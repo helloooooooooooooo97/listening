@@ -685,6 +685,9 @@ export interface PokerPlayerState {
   card_rarity?: string | null;
   keywords?: string[] | null;
   balance_before?: number | null;
+  cards?: { card_id: string; name: string; rarity: string; png: string }[];
+  scores?: number[];
+  hand?: { rank: number; name: string };
 }
 
 export interface PokerGameState {
@@ -712,6 +715,9 @@ export interface PokerGameState {
       matches: number;
       folded: boolean;
       is_winner: boolean;
+      cards?: { card_id: string; name: string; rarity: string; png: string }[];
+      scores?: number[];
+      hand?: { rank: number; name: string };
     }[];
     tie: boolean;
     winner_player_id: number;
@@ -735,8 +741,8 @@ export function getPlayableCards(): Promise<{ cards: PlayableCard[] }> {
   return get<{ cards: PlayableCard[] }>('/api/game/poker/cards');
 }
 
-export function createPokerGame(cardId: string): Promise<PokerGameState> {
-  return post<PokerGameState>('/api/game/poker/create', { card_id: cardId });
+export function createPokerGame(): Promise<PokerGameState> {
+  return post<PokerGameState>('/api/game/poker/create', {});
 }
 
 export function getPokerGameState(gameId: number): Promise<PokerGameState> {
@@ -753,39 +759,4 @@ export function getPokerResult(gameId: number): Promise<PokerGameState> {
 
 export function getPokerHistory(limit?: number): Promise<{ games: PokerHistory[] }> {
   return get<{ games: PokerHistory[] }>(`/api/game/poker/history/all${limit ? `?limit=${limit}` : ''}`);
-}
-
-
-// ── Poker v2 API ──
-
-export interface PokerV2Card {
-  card_id: string;
-  name: string;
-  rarity: string;
-  png: string;
-}
-
-export interface PokerV2Player {
-  type: string;
-  name: string;
-  cards: PokerV2Card[];
-  scores: number[];
-  hand: { rank: number; name: string };
-}
-
-export interface PokerV2RoundResult {
-  words: string[];
-  players: PokerV2Player[];
-  winner_index: number;
-  winner_name: string;
-  winner_hand: string;
-  pot: number;
-  cost: number;
-  reward: number;
-  net: number;
-  balance_after: number;
-}
-
-export function pokerV2Round(): Promise<PokerV2RoundResult> {
-  return post<PokerV2RoundResult>('/api/game/poker/v2/round', {});
 }

@@ -1,4 +1,4 @@
-// ─── Player Seat — individual player display around the poker table ───
+// ─── Player Seat — 每人展示5张卡+命中数,保留赌桌布局 ───
 
 import { useEffect, useRef, useState } from 'react';
 import { cardImageUrl } from '../../../lib/api';
@@ -18,6 +18,20 @@ interface PlayerSeatProps {
   onCardClick?: (name: string, rarity: string, png: string, keywords: string[]) => void;
 }
 
+const RARITY_BORDER: Record<string, string> = {
+  R: 'border-blue-500/30', SR: 'border-purple-500/30',
+  SSR: 'border-orange-500/30', UR: 'border-amber-500/30',
+};
+const RARITY_BG: Record<string, string> = {
+  R: 'from-blue-500/10 to-blue-600/5', SR: 'from-purple-500/10 to-purple-600/5',
+  SSR: 'from-orange-500/10 to-orange-600/5', UR: 'from-amber-400/10 to-amber-600/5',
+};
+
+const HAND_LABELS: Record<number, string> = {
+  1: '五福临门', 2: '一条龙', 3: '四喜临门', 4: '葫芦',
+  5: '三花聚顶', 6: '两对', 7: '一对', 8: '散牌',
+};
+
 export default function PlayerSeat({
   player, cardPng, isHuman, communityWords, position, game, seatIndex,
   isThinking, entranceDelay, onCardClick,
@@ -25,13 +39,22 @@ export default function PlayerSeat({
   const cfg = rc(player.card_rarity || 'R');
   const isWinner = player.is_winner;
   const isCompleted = game.status === 'completed';
-  const kw = player.keywords || [];
-  const matchedCount = kw.filter(k => communityWords.some(cw => cw.revealed && cw.word === k)).length;
   const isBottom = position === 'bottom';
   const prevFoldedRef = useRef(player.folded);
   const [showFoldAnim, setShowFoldAnim] = useState(false);
 
-  // Trigger fold animation on fold
+  const cards = player.cards || [];
+  const scores = player.scores || [];
+  const hand = player.hand;
+  const revealedCount = communityWords.filter(cw => cw.revealed).length;
+
+  // Compute per-card match count based on REVEALED words only
+  const perCardMatches = cards.map(c => {
+    const kw = c.name ? player.keywords || [] : [];
+    // Approximate: use the player's keyword list to check
+    return communityWords.filter(cw => cw.revealed && cw.word).length;
+  });
+
   useEffect(() => {
     if (player.folded && !prevFoldedRef.current) {
       setShowFoldAnim(true);
@@ -42,19 +65,17 @@ export default function PlayerSeat({
     prevFoldedRef.current = player.folded;
   }, [player.folded]);
 
-  // Position styles — traditional poker table: top / left / right / bottom
   const posStyles: Record<string, string> = {
     top: 'top-0 left-1/2 -translate-x-1/2',
-    left: 'top-1/2 -translate-y-1/2 left-0 md:left-8',
-    right: 'top-1/2 -translate-y-1/2 right-0 md:right-8',
+    left: 'top-1/2 -translate-y-1/2 left-0 md:left-4',
+    right: 'top-1/2 -translate-y-1/2 right-0 md:right-4',
     bottom: 'bottom-0 left-1/2 -translate-x-1/2',
   };
 
-  const cardW = isBottom ? 'w-24' : 'w-20';
-  const cardH = isBottom ? 'h-[130px]' : 'h-[108px]';
+  const label = isBottom ? '你' : `AI-${(seatIndex ?? 0) + 1}`;
 
   return (
-    <div className={`absolute ${posStyles[position]} z-20 transition-all duration-500 flex flex-col items-center
+    <div className={`absolute ${posStyles[position]} z-20 transition-all duration-500 flex flex-col items-center gap-0.5
         ${entranceDelay !== undefined && entranceDelay > 0 ? 'animate-seat-pop-in' : ''}
         ${isThinking ? 'animate-think-glow' : ''}
         ${showFoldAnim ? 'animate-fold-shrink' : ''}`}
@@ -62,90 +83,80 @@ export default function PlayerSeat({
         opacity: player.folded && !isCompleted ? 0.3 : 1,
         animationDelay: entranceDelay ? `${entranceDelay}ms` : '0ms',
       }}>
-      {/* Label above card for top / left / right (keeps visual center aligned with community words) */}
-      {position !== 'bottom' && (
-        <p className={`text-xs font-bold mb-1.5 text-center ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/70'}`}>
-          AI-{(seatIndex ?? 0) + 1}{isWinner && isCompleted && ' 👑'}
-        </p>
-      )}
 
-      {/* Player card — bottom player gets larger + accent glow. Click to preview. */}
-      <div className={`relative rounded-xl overflow-hidden transition-all duration-300 ${player.folded && !isCompleted ? '' : 'cursor-pointer'}
-        ${isWinner && isCompleted ? 'ring-2' : ''} ${player.folded ? 'grayscale' : ''} ${player.folded && !isCompleted ? 'pointer-events-none' : ''}
-        ${isBottom ? 'ring-2 ring-[var(--accent)]/30' : ''} ${cardW} ${cardH}
-        ${isThinking ? 'animate-think-shake' : ''}
-        hover:ring-2 hover:ring-white/20`}
-        onClick={() => {
-          const imgName = cardPng || player.card_name?.toLowerCase().replace(/\s+/g, '_') || '';
-          const rarity = player.card_rarity || 'R';
-          if (imgName) onCardClick?.(player.card_name || '', rarity, imgName, player.keywords || []);
-        }}
-        style={{
-          background: 'rgba(255,255,255,0.04)',
-          border: `2px solid ${isCompleted && isWinner ? cfg.border : isBottom ? 'rgba(250,45,72,0.25)' : 'rgba(255,255,255,0.08)'}`,
-          boxShadow: isCompleted && isWinner
-            ? `0 0 30px ${cfg.glow}40, 0 4px 16px rgba(0,0,0,0.4)`
-            : isBottom
-              ? '0 0 18px rgba(250,45,72,0.2)'
-              : isThinking
-                ? '0 0 14px rgba(16,185,129,0.25)'
-                : '0 4px 12px rgba(0,0,0,0.3)',
-        }}>
-        {isHuman ? (
-          <img src={cardImageUrl(cardPng || player.card_name!.toLowerCase().replace(/\s+/g, '_'))}
-            alt={player.card_name || ''}
-            className="w-full h-full object-cover" />
-        ) : isCompleted && (cardPng || player.card_name) ? (
-          <img src={cardImageUrl(cardPng || player.card_name!.toLowerCase().replace(/\s+/g, '_'))}
-            alt={player.card_name || ''}
-            className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="w-12 h-16 rounded-lg border border-white/10 flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08))' }}>
-              <span className="text-white/20 text-3xl">🂠</span>
+      {/* Name + hand badge */}
+      <div className="flex items-center gap-1.5 mb-0.5">
+        <span className={`text-xs font-bold ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/80'}`}>
+          {label}{isWinner && isCompleted && ' 👑'}
+        </span>
+        {isCompleted && hand && (
+          <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full text-black"
+            style={{
+              background: hand.rank <= 2 ? 'linear-gradient(135deg, #fbbf24, #f97316)' :
+                          hand.rank <= 4 ? 'linear-gradient(135deg, #38bdf8, #6366f1)' :
+                          hand.rank <= 6 ? 'linear-gradient(135deg, #a3a3a3, #787878)' :
+                          'linear-gradient(135deg, #d4d4d4, #a3a3a3)'
+            }}>
+            {HAND_LABELS[hand.rank] || hand.name}
+          </span>
+        )}
+      </div>
+
+      {/* 5 cards row */}
+      <div className="flex gap-1">
+        {cards.length > 0 ? cards.map((c, ci) => {
+          const sc = scores[ci] ?? 0;
+          const scoreColor = sc >= 4 ? '#34d399' : sc >= 2 ? '#fbbf24' : '#6b7280';
+          const mini = !isBottom;
+          return (
+            <div key={ci} onClick={() => {
+              if (onCardClick) onCardClick(c.name, c.rarity, c.png, []);
+            }}
+              className={`relative rounded-lg border ${RARITY_BORDER[c.rarity] || 'border-white/15'} bg-gradient-to-b ${RARITY_BG[c.rarity] || 'from-white/5 to-white/0'} flex flex-col items-center justify-center text-center transition-all duration-300 cursor-pointer hover:ring-1 hover:ring-white/20
+                ${isWinner && isCompleted ? 'ring-1 ring-amber-400/40' : ''}
+                ${player.folded ? 'grayscale' : ''}`}
+              style={{
+                width: mini ? 46 : 56,
+                height: mini ? 64 : 80,
+              }}>
+              {isHuman || isCompleted ? (
+                <img src={cardImageUrl(c.png)} alt={c.name}
+                  className="w-full h-full object-cover rounded-lg absolute inset-0" />
+              ) : (
+                <div className="w-full h-full rounded-lg flex items-center justify-center"
+                  style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08))' }}>
+                  <span className="text-white/20 text-lg">🂠</span>
+                </div>
+              )}
+              {/* Score badge on top */}
+              {isCompleted && (
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
+                  style={{ background: scoreColor, color: '#000' }}>
+                  {sc}
+                </div>
+              )}
             </div>
+          );
+        }) : (
+          /* Fallback: card back */
+          <div className="w-[46px] h-[64px] rounded-lg flex items-center justify-center"
+            style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08))', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <span className="text-white/20 text-lg">🂠</span>
           </div>
         )}
       </div>
 
-      {/* Label below card — always show bet amount + match count if any */}
-      {isBottom ? (
-        <div className="text-center mt-1.5">
-          <p className={`text-sm font-bold ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/80'}`}>
-            你{isWinner && isCompleted && ' 👑'}
-          </p>
-          <div className="flex items-center justify-center gap-1">
-            {player.folded ? (
-              <span className="text-[10px] text-white/30">✗ 弃牌</span>
-            ) : (
-              <>
-                <span className="text-[10px] text-white/50 font-semibold tabular-nums">${player.total_bet}</span>
-                {!isCompleted && matchedCount > 0 && (
-                  <span className="text-[9px] text-emerald-400/70">✓{matchedCount}</span>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-      ) : (
-        <div className="text-center mt-1 flex flex-col items-center">
-          {player.folded ? (
-            <p className="text-[9px] text-white/30">✗ 弃牌</p>
-          ) : (
-            <>
-              <p className="text-[9px] text-white/50 font-semibold tabular-nums">${player.total_bet}</p>
-              {!isCompleted && matchedCount > 0 && (
-                <p className="text-[7px] text-emerald-400/70">✓{matchedCount}</p>
-              )}
-            </>
-          )}
-        </div>
-      )}
+      {/* Bet / folded info */}
+      <div className="text-center mt-0.5">
+        {player.folded ? (
+          <span className="text-[9px] text-white/30">✗ 弃牌</span>
+        ) : (
+          <span className="text-[9px] text-white/50 font-semibold tabular-nums">${player.total_bet}</span>
+        )}
+      </div>
 
-      {/* Thinking dots indicator */}
       {isThinking && (
-        <div className="flex items-center gap-1 mt-1 animate-thinking-dots">
+        <div className="flex items-center gap-1 mt-0.5 animate-thinking-dots">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60" />
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60" />
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/60" />

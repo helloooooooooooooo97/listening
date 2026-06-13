@@ -5,7 +5,6 @@ from fastapi import APIRouter, HTTPException, Query
 
 from database import get_conn, locked
 from services.poker_service import create_game, get_game_state, player_action, get_game_history
-from services.poker_v2_service import new_round as poker_v2_round
 from services.card_service import load_card_data
 
 router = APIRouter(prefix="/api/game/poker", tags=["poker"])
@@ -57,13 +56,10 @@ def list_playable_cards():
 
 @router.post("/create")
 @locked
-def start_game(data: dict):
-    """Create a new poker game. Requires a card_id to play with."""
-    card_id = data.get("card_id")
-    if not card_id:
-        raise HTTPException(status_code=400, detail="card_id is required")
+def start_game():
+    """Create a new poker game. 每人自动抽5张卡."""
     try:
-        state = create_game(card_id)
+        state = create_game()
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     return state
@@ -108,16 +104,3 @@ def game_result(game_id: int):
 @locked
 def history(limit: int = Query(default=20, ge=1, le=50)):
     return {"games": get_game_history(limit)}
-
-
-# ── v2 新玩法 ──
-
-@router.post("/v2/round")
-@locked
-def poker_v2_round_endpoint():
-    """执行一回合 v2 玩法: 每人抽5张 → 5个公共词 → 比牌型."""
-    try:
-        result = poker_v2_round()
-        return result
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
