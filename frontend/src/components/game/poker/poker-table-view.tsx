@@ -227,7 +227,7 @@ export default function PokerTableView({
     return (
       <>
         {/* AI (top) — single opponent */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 z-10">
+        <div className="absolute top-1 left-1/2 -translate-x-1/2 z-10">
           {ai[0] && (
             <PlayerSeat
               player={ai[0]}
@@ -246,7 +246,7 @@ export default function PokerTableView({
 
         {/* Human (bottom) */}
         {human && (
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10">
+          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 z-10">
             <PlayerSeat
               player={human}
               cardPng={cardPngMap[human.card_name?.toLowerCase() || '']}
@@ -345,7 +345,7 @@ export default function PokerTableView({
         />
 
         {/* Player positions + Community words */}
-        <div className="relative w-full max-w-4xl" style={{ minHeight: '340px' }}>
+        <div className="relative w-full max-w-4xl" style={{ minHeight: '400px' }}>
           {isCompleted ? (
             <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4">
               <p className="text-lg font-bold text-primary">🏆 +{potSize} IP</p>
