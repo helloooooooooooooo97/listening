@@ -206,12 +206,6 @@ export default function PokerTableView({
                 </div>
               </div>
             </div>
-            {/* Step indicator */}
-            <div className={`absolute -bottom-4 left-1/2 -translate-x-1/2`}>
-              <span className={`text-[10px] ${isFlipped ? 'text-emerald-400/70' : cw.revealed ? 'text-yellow-400/50' : 'text-white/20'}`}>
-                {isFlipped ? '✦' : (cw.revealed ? '◈' : '·')}
-              </span>
-            </div>
           </button>
           {/* Human bet below */}
           <div className="text-[9px] text-amber-400/60 font-mono tabular-nums">${humanBet}</div>
