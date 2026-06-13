@@ -21,7 +21,7 @@ interface PokerTableViewProps {
   onSetBet: (amount: number) => void;
   onAction: (action: string, amount?: number) => void;
   onBack: () => void;
-  onRestart?: () => void;
+  onRestart: () => void;
 }
 
 export default function PokerTableView({
@@ -199,11 +199,11 @@ export default function PokerTableView({
                 <div className="flex flex-col items-center gap-1 w-full px-1.5">
                   <span className="text-[10px] sm:text-sm leading-tight font-bold text-white/90 text-center break-words w-full max-w-full">{cw.word}</span>
                   {isFlipped && (
-                    <button
+                    <span
                       onClick={(e) => { e.stopPropagation(); if (cw.word) playWordOnClick(cw.word); }}
-                      className="text-white/30 hover:text-white/60 transition-colors cursor-pointer">
+                      className="text-white/30 hover:text-white/60 transition-colors cursor-pointer inline-flex items-center justify-center">
                       <HiSpeakerWave size={11} />
-                    </button>
+                    </span>
                   )}
                 </div>
               </div>
@@ -348,10 +348,10 @@ export default function PokerTableView({
         {/* Player positions + Community words */}
         <div className="relative w-full max-w-4xl" style={{ minHeight: '400px' }}>
           {isCompleted ? (
-            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4">
+            <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4">
               <p className="text-lg font-bold text-primary">🏆 +{potSize} IP</p>
               <div className="flex gap-3">
-                <button onClick={() => { onRestart?.(); }}
+                <button onClick={() => { onRestart(); }}
                   className="px-5 py-2 rounded-xl text-sm font-bold bg-white/10 text-white/80 hover:bg-white/15 transition-colors cursor-pointer">
                   再来一局
                 </button>
