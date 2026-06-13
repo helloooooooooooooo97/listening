@@ -262,10 +262,12 @@ def get_game_state(game_id: int) -> dict:
     actions = _get_actions(game_id)
     words = json.loads(game["community_words"])
 
+    # Only count revealed words for progressive scoring
+    revealed_words = [w for i, w in enumerate(words) if (game["revealed_mask"] >> i) & 1]
     player_list = []
     for p in players:
         card_ids = json.loads(p["card_id"])
-        scores = calc_scores(words, card_ids)
+        scores = calc_scores(revealed_words, card_ids)
         hand = evaluate_hand(scores)
         entry = {
             "id": p["id"],
