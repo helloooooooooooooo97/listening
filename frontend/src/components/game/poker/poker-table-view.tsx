@@ -8,7 +8,6 @@ import type { PokerGameState, PokerPlayerState } from '../../../lib/api';
 import { useWordAudio, primeWordAudioContext } from '../../../hooks/useWordAudio';
 import Spinner from '../../ui/Spinner';
 import PlayerSeat from './player-seat';
-import ShowdownResult from './showdown-result';
 import CardPreviewModal from './card-preview-modal';
 import ActionButton from './action-button';
 
@@ -346,35 +345,7 @@ export default function PokerTableView({
 
           {renderPlayers()}
 
-          {/* ── Result overlay (showdown / quick-win) ── */}
-          {isCompleted && (
-            <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/50 backdrop-blur-sm rounded-2xl animate-fade-in">
-              {game.showdown ? (
-                <ShowdownResult
-                  showdown={game.showdown}
-                  pot={game.pot}
-                  communityWords={game.community_words}
-                  onPlayAgain={() => { onBack(); }}
-                />
-              ) : (
-                <div className="text-center px-6">
-                  <div className="mb-3">
-                    <span className="text-5xl">🎉</span>
-                  </div>
-                  <h2 className="text-2xl font-extrabold text-white mb-1">全胜！</h2>
-                  <p className="text-sm text-white/50 mb-4">AI 全部弃牌，赢得底池</p>
-                  <p className="text-3xl font-extrabold text-[var(--accent)] mb-5 tabular-nums">+{game.pot} IP</p>
-                  <button onClick={() => { onBack(); }}
-                    className="w-56 py-3.5 rounded-xl text-sm font-bold bg-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
-                    style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)' }}>
-                    再来一局
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* ── Showdown phase (waiting) — overlay ── */}
+          {/* ── Result overlay — removed, winner gets 👑 in seat instead ── */}
           {game.phase === 'showdown' && !isCompleted && (
             <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-2xl">
               <div className="flex items-center justify-center gap-3 py-4">
@@ -400,6 +371,19 @@ export default function PokerTableView({
       </div>
 
       {/* ── Bottom controls ── */}
+
+      {/* Completed — result bar */}
+      {isCompleted && (
+        <div className="flex-shrink-0 flex items-center justify-center gap-4 px-5 pb-5 pt-2">
+          <span className="text-sm font-bold text-white/80">
+            {game.showdown ? '🏆 摊牌结束' : '🎉 AI 全部弃牌'} · 赢得 <span className="text-[var(--accent)]">+{potSize}</span> IP
+          </span>
+          <button onClick={() => { onBack(); }}
+            className="px-4 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-white/80 hover:bg-white/15 transition-colors cursor-pointer">
+            再来一局
+          </button>
+        </div>
+      )}
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
