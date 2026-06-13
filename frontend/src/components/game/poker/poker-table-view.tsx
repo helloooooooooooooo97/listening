@@ -222,23 +222,22 @@ export default function PokerTableView({
 
     return (
       <>
-        {/* AI row (top) */}
-        <div className="absolute top-2 left-4 right-4 flex justify-center gap-3 z-10">
-          {ai.map((p, i) => (
+        {/* AI (top) — single opponent */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10">
+          {ai[0] && (
             <PlayerSeat
-              key={p.id}
-              player={p}
-              cardPng={cardPngMap[p.card_name?.toLowerCase() || '']}
+              player={ai[0]}
+              cardPng={cardPngMap[ai[0].card_name?.toLowerCase() || '']}
               isHuman={false}
               communityWords={game.community_words}
               position="top"
-              seatIndex={i}
+              seatIndex={0}
               game={game}
-              isThinking={isAIThinking && game.acting_player_id === p.id}
-              entranceDelay={animState === 'entering' ? 300 + i * 120 : 0}
+              isThinking={isAIThinking && game.acting_player_id === ai[0].id}
+              entranceDelay={animState === 'entering' ? 300 : 0}
               onCardClick={(name, rarity, png, keywords) => setPreviewCard({ name, rarity, png, keywords })}
             />
-          ))}
+          )}
         </div>
 
         {/* Human (bottom) */}

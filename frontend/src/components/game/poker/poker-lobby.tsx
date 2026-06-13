@@ -66,7 +66,7 @@ export default function PokerLobby({
             <section className="rounded-2xl p-4" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)' }}>
               <h2 className="text-xs font-semibold text-tertiary uppercase tracking-widest mb-3">玩法说明</h2>
               <ul className="space-y-2 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                <li>🎴 你与 3 位 AI 每人随机获得 <strong className="text-primary">5 张角色牌</strong></li>
+                <li>🎴 你与 AI 每人随机获得 <strong className="text-primary">5 张角色牌</strong></li>
                 <li>📢 每回合揭晓 1 个公共词汇, 共 5 回合</li>
                 <li>✨ 每个词命中的卡 = 该词在卡牌 keywords 中</li>
                 <li>🃏 5 张卡的命中数组成<strong className="text-primary">牌型</strong> (五福临门→散牌)</li>

@@ -208,12 +208,12 @@ def create_game() -> dict:
 
     # 每人抽5张
     human_cards = _pick_human_cards(conn)
-    cardsets = [human_cards] + [_pick_ai_cards() for _ in range(3)]
+    cardsets = [human_cards] + [_pick_ai_cards() for _ in range(1)]
 
     words = _pick_community_words()
 
     # 扣人类底注
-    total_ante = ANTE * 4
+    total_ante = ANTE * 2
     human_bal_after = human_balance - ANTE
     conn.execute("UPDATE currency SET balance=?, spent=spent+? WHERE id=1", [human_bal_after, ANTE])
     conn.execute(
