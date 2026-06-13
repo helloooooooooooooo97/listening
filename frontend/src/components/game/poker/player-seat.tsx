@@ -117,11 +117,11 @@ export default function PlayerSeat({
                   {sc}
                 </div>
               </div>
-              {/* Matched words below card */}
+              {/* Matched words below card — vertical */}
               {matchedWords.length > 0 && (
-                <div className="flex flex-wrap justify-center gap-0.5 max-w-[60px]">
+                <div className="flex flex-col items-center gap-0 max-w-[64px]">
                   {matchedWords.map(w => (
-                    <span key={w} className="text-[6px] text-emerald-400/70 truncate">{w}</span>
+                    <span key={w} className="text-[9px] text-emerald-400/80 leading-tight truncate w-full text-center">{w}</span>
                   ))}
                 </div>
               )}
