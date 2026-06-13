@@ -677,6 +677,7 @@ export interface PokerPlayerState {
   id: number;
   player_type: string;
   total_bet: number;
+  round_bets: number[];
   folded: boolean;
   is_winner: boolean;
   match_count: number | null;
@@ -703,7 +704,7 @@ export interface PokerGameState {
   acting_player_id: number | null;
   can_act: boolean;
   current_bet: number;
-  total_actions: number;
+  total_actions?: number;
   showdown?: {
     results: {
       player_id: number;
@@ -720,7 +721,7 @@ export interface PokerGameState {
       hand?: { rank: number; name: string };
     }[];
     tie: boolean;
-    winner_player_id: number;
+    winner_player_id: number | null;
   };
 }
 

@@ -25,7 +25,7 @@ interface PokerTableViewProps {
 }
 
 export default function PokerTableView({
-  game, cardPngMap, selectedBet, betting, error, onClearError, onSetBet, onAction, onBack,
+  game, cardPngMap, selectedBet, betting, error, onClearError, onSetBet, onAction, onBack, onRestart,
 }: PokerTableViewProps) {
   const isCompleted = game.status === 'completed';
   const [previewCard, setPreviewCard] = useState<{
@@ -79,23 +79,30 @@ export default function PokerTableView({
     return () => clearTimeout(t);
   }, []);
 
-  // Reveal glow on new community word
+  // Reveal glow on new community word — auto-flip it
   useEffect(() => {
     const revealedCount = game.community_words.filter(cw => cw.revealed).length;
     if (revealedCount > prevRevealedCountRef.current) {
       const newIdx = revealedCount - 1;
+      const cw = game.community_words[newIdx];
+      // Auto-flip the newly revealed word
+      if (cw?.word) {
+        primeWordAudioContext();
+        playWordOnClick(cw.word);
+        setUserRevealed(prev => ({ ...prev, [newIdx]: true }));
+      }
       setRevealGlowIdx(newIdx);
       const t = setTimeout(() => setRevealGlowIdx(-1), 700);
       prevRevealedCountRef.current = revealedCount;
       return () => clearTimeout(t);
     }
     prevRevealedCountRef.current = revealedCount;
-  }, [game.community_words]);
+  }, [game.community_words, playWordOnClick]);
 
   // Announcement on round change
   useEffect(() => {
     if (game.round > 1) {
-      const text = `📢 第 ${game.round} 轮 · 点击开牌`;
+      const text = `📢 第 ${game.round} 轮`;
       setAnnouncement({ key: Date.now(), text });
       if (announceTimerRef.current !== null) clearTimeout(announceTimerRef.current);
       announceTimerRef.current = window.setTimeout(() => {
@@ -151,8 +158,8 @@ export default function PokerTableView({
   const potSize = game.pot;
   const aiPlayer = game.players.find(p => p.player_type === 'ai');
   const humanPlayer = game.players.find(p => p.player_type === 'human');
-  const aiRoundBets = (aiPlayer as any)?.round_bets ?? [];
-  const humanRoundBets = (humanPlayer as any)?.round_bets ?? [];
+  const aiRoundBets = aiPlayer?.round_bets ?? [];
+  const humanRoundBets = humanPlayer?.round_bets ?? [];
 
   // Render community word cards (center of table) with 3D flip
   const renderCommunityWords = () => (
@@ -167,7 +174,7 @@ export default function PokerTableView({
           <button
             type="button"
             disabled={!canReveal}
-            className={`card-flip-container relative min-w-[52px] w-14 h-[76px] sm:w-20 sm:h-[110px] border-0 p-0 bg-transparent
+            className={`card-flip-container relative min-w-[58px] w-[58px] h-[84px] sm:w-24 sm:h-[120px] border-0 p-0 bg-transparent
               ${animState === 'entering' ? 'animate-card-deal-drop' : ''}
               ${canReveal ? 'cursor-pointer hover:ring-1 hover:ring-emerald-400/40 hover:scale-105 transition-all duration-200' : 'cursor-default'}`}
             style={{
@@ -241,6 +248,7 @@ export default function PokerTableView({
               isThinking={isAIThinking && game.acting_player_id === ai[0].id}
               entranceDelay={animState === 'entering' ? 300 : 0}
               onCardClick={(name, rarity, png, keywords) => setPreviewCard({ name, rarity, png, keywords })}
+              revealedIndices={userRevealed}
             />
           )}
         </div>
@@ -258,6 +266,7 @@ export default function PokerTableView({
               game={game}
               entranceDelay={animState === 'entering' ? 600 : 0}
               onCardClick={(name, rarity, png, keywords) => setPreviewCard({ name, rarity, png, keywords })}
+              revealedIndices={userRevealed}
             />
           </div>
         )}

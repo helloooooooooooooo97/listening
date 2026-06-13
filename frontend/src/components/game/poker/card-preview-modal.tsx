@@ -3,7 +3,6 @@
 import { HiXMark, HiSparkles } from 'react-icons/hi2';
 import { cardImageUrl } from '../../../lib/api';
 import { rarity as rarityCfg } from '../../../constants/rarity';
-import type { PokerV2Card } from '../../../lib/api';
 
 interface CardPreviewModalProps {
   card: {

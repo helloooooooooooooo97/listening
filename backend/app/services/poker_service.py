@@ -331,6 +331,7 @@ def get_game_state(game_id: int) -> dict:
         "can_act": can_act,
         "acting_player_id": acting_player_id,
         "current_bet": current_bet,
+        "total_actions": len(actions),
     }
 
     if game["status"] == "completed":
@@ -356,12 +357,18 @@ def _compute_showdown(players: list[dict], words: list[str]) -> dict:
         })
 
     active = [r for r in all_results if not r["folded"]]
+    if not active:
+        return {"results": all_results, "winner_player_id": None, "tie": False}
+
     active.sort(key=lambda r: hand_sort_key(r["hand"], r["scores"]), reverse=True)
-    winner = active[0] if active else None
+    winner = active[0]
+
+    is_tie = len(active) > 1 and hand_sort_key(active[0]["hand"], active[0]["scores"]) == hand_sort_key(active[1]["hand"], active[1]["scores"])
 
     return {
         "results": all_results,
         "winner_player_id": winner["player_id"] if winner else None,
+        "tie": is_tie,
     }
 
 def player_action(game_id: int, action: str, amount: int = 0) -> dict:
@@ -398,6 +405,19 @@ def player_action(game_id: int, action: str, amount: int = 0) -> dict:
         )
 
     _record_action(game_id, human["id"], action, amount, round_num)
+
+    # ── Human folded → AI wins immediately ──
+    if action == "fold":
+        logger.info("Game #%d round %d — human folded, pot=%d", game_id, round_num, game["pot"])
+        ai_player = next((p for p in players if p["player_type"] == "ai"), None)
+        if ai_player:
+            conn.execute("UPDATE poker_players SET is_winner=1 WHERE id=?", [ai_player["id"]])
+            conn.execute("UPDATE poker_games SET status='completed', winner_player_id=?, winner_match_count=0, completed_at=unixepoch() WHERE id=?",
+                         [ai_player["id"], game_id])
+        else:
+            conn.execute("UPDATE poker_games SET status='completed', completed_at=unixepoch() WHERE id=?", [game_id])
+        conn.commit()
+        return get_game_state(game_id)
 
     words = json.loads(game["community_words"])
     ai_players = [p for p in players if p["player_type"] == "ai" and not p["folded"]]

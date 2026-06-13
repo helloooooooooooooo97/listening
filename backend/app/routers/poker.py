@@ -2,12 +2,18 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel
 
 from database import get_conn, locked
-from services.poker_service import create_game, get_game_state, player_action, get_game_history
+from services.poker_service import ANTE, create_game, get_game_state, player_action, get_game_history
 from services.card_service import load_card_data
 
 router = APIRouter(prefix="/api/game/poker", tags=["poker"])
+
+
+class PokerActionRequest(BaseModel):
+    action: str
+    amount: int = 0
 
 
 @router.get("/status")
@@ -24,7 +30,7 @@ def status():
     owned_cards = [dict(r) for r in cards]
 
     return {
-        "can_play": len(owned_cards) >= 1 and balance >= 10,
+        "can_play": len(owned_cards) >= 1 and balance >= ANTE,
         "owned_cards_count": len(owned_cards),
         "balance": balance,
     }
@@ -76,13 +82,11 @@ def game_state(game_id: int):
 
 @router.post("/{game_id}/action")
 @locked
-def perform_action(game_id: int, data: dict):
-    action = data.get("action", "")
-    if action not in ("check", "bet", "fold"):
-        raise HTTPException(status_code=400, detail=f"Invalid action: {action}")
-    amount = data.get("amount", 0)
+def perform_action(game_id: int, data: PokerActionRequest):
+    if data.action not in ("check", "bet", "fold"):
+        raise HTTPException(status_code=400, detail=f"Invalid action: {data.action}")
     try:
-        state = player_action(game_id, action, amount)
+        state = player_action(game_id, data.action, data.amount)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     return state
