@@ -8,6 +8,7 @@ import { useAiStore } from '../stores/aiStore';
 import type { WordAnalysis } from '../types/lesson';
 import { getWords, getWordDetail, getKnownWords, setWordKnown, getDueWords, submitWordReview, getTodayWords, getTodayStats, getDictionaryEntry, type WordSummary, type WordDetail, type WordDictionary, type DueWord, type TodayWord, type TodayStats } from '../lib/api';
 import { useWordAudio } from '../hooks/useWordAudio';
+import Spinner from '../components/ui/Spinner';
 import ReviewModal from '../components/words/ReviewModal';
 import FilterDrawer from '../components/words/FilterDrawer';
 import WordDetailPanel from '../components/words/WordDetailPanel';
@@ -34,7 +35,7 @@ function TagBadge({ tag }: { tag: string }) {
 // ── Shared tab content wrapper ──
 
 function TabContent({ loading, empty, emptyMessage, children }: { loading: boolean; empty: boolean; emptyMessage: string; children: React.ReactNode }) {
-  if (loading) return <div className="flex items-center justify-center py-16"><div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center py-16"><Spinner size={20} /></div>;
   if (empty) return <p className="text-tertiary text-sm py-8 text-center">{emptyMessage}</p>;
   return <div className="space-y-0.5">{children}</div>;
 }
@@ -501,7 +502,7 @@ export default function WordsView() {
                 <div ref={loadMoreRef} className="h-4" />
                 {loadingMore && (
                   <div className="flex justify-center py-4">
-                    <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+                    <Spinner size={20} />
                   </div>
                 )}
               </TabContent>
@@ -513,7 +514,7 @@ export default function WordsView() {
             <>
               {dueWordsLoading ? (
                 <div className="flex items-center justify-center py-16">
-                  <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+                  <Spinner size={20} />
                 </div>
               ) : dueWords.length === 0 ? (
                 <p className="text-tertiary text-sm py-8">暂无待复习单词 🎉</p>

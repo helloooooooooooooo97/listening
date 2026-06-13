@@ -179,7 +179,6 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
                             isAnalyzing={analyzingClips.has(clip.text)}
                             onAnalyze={handleAnalyze}
                             onViewAnalysis={setViewingAnalysis}
-                            onViewAnalysis={setViewingAnalysis}
                             onEdit={(id, data) => updateClip(id, data)}
                             onDelete={id => removeClip(id)}
                             onAddToQueue={c => { addToQueue({ kind: 'clip', clip: c }); addToast('已加入队列', 'success'); }}

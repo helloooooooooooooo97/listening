@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HiArrowLeft, HiArrowPath, HiSparkles } from 'react-icons/hi2';
+import { HiArrowLeft, HiArrowPath, HiSparkles, HiXMark } from 'react-icons/hi2';
 import { useGameStore } from '../stores/gameStore';
+import Spinner from '../components/ui/Spinner';
 import { getTodayWords, getDueWords, getWords } from '../lib/api';
-import { useWordAudio } from '../hooks/useWordAudio';
+import { useWordAudio, preloadWordsAudio } from '../hooks/useWordAudio';
 import GameBoard from '../components/game/GameBoard';
 import SlotBar from '../components/game/SlotBar';
 import GameModal from '../components/game/GameModal';
@@ -13,11 +14,13 @@ import type { Difficulty } from '../components/game/levelGenerator';
 export default function GameView() {
   const navigate = useNavigate();
   const store = useGameStore();
-  const { playWordAudio } = useWordAudio();
+  const { playWordOnClick } = useWordAudio();
   const [allWords, setAllWords] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [starting, setStarting] = useState(false);
+  const [startError, setStartError] = useState<string | null>(null);
+  const [preloadProgress, setPreloadProgress] = useState(0);
 
-  // ── Difficulty adjustment toast ──
   useEffect(() => {
     if (store.difficultyMessage) {
       const timer = setTimeout(() => store.clearDifficultyMessage(), 3000);
@@ -26,12 +29,11 @@ export default function GameView() {
   }, [store.difficultyMessage, store]);
 
   const handleTileClick = useCallback((tileId: string) => {
+    const word = useGameStore.getState().tiles.find(t => t.id === tileId)?.word;
+    if (word) playWordOnClick(word);
     store.clickTile(tileId);
-    const tile = store.tiles.find(t => t.id === tileId);
-    if (tile) playWordAudio(tile.word);
-  }, [store, playWordAudio]);
+  }, [store, playWordOnClick]);
 
-  // On mount, gather available words
   useEffect(() => {
     setLoading(true);
     Promise.all([
@@ -45,41 +47,104 @@ export default function GameView() {
     });
   }, []);
 
-  const handleStart = (difficulty: Difficulty, source: string) => {
-    let words: string[] = [];
-    if (source === 'today') {
-      getTodayWords().then(d => { store.initGame(d.words.map(w => w.word), difficulty, 'today'); }).catch(() => {});
+  const tryStartGame = useCallback(async (words: string[], difficulty: Difficulty, source: string) => {
+    setStartError(null);
+    setPreloadProgress(0);
+    const ok = store.initGame(words, difficulty, source);
+    if (!ok) {
+      setStartError('单词不足，请选择其他来源或降低难度');
       return;
     }
-    if (source === 'review') {
-      getDueWords(200).then(d => { store.initGame(d.words.map(w => w.word), difficulty, 'review'); }).catch(() => {});
-      return;
+    await preloadWordsAudio(useGameStore.getState().words, ({ done, total, phase }) => {
+      const base = phase === 'metadata' ? 0 : 55;
+      const span = phase === 'metadata' ? 55 : 45;
+      setPreloadProgress(total > 0 ? Math.min(100, Math.round(base + (done / total) * span)) : base);
+    });
+    setPreloadProgress(100);
+  }, [store]);
+
+  const handleStart = async (difficulty: Difficulty, source: string) => {
+    setStarting(true);
+    setStartError(null);
+    try {
+      if (source === 'today') {
+        const d = await getTodayWords();
+        await tryStartGame(d.words.map(w => w.word), difficulty, 'today');
+        return;
+      }
+      if (source === 'review') {
+        const d = await getDueWords(200);
+        await tryStartGame(d.words.map(w => w.word), difficulty, 'review');
+        return;
+      }
+      await tryStartGame(allWords, difficulty, 'all');
+    } catch {
+      setStartError('加载失败，请检查网络后重试');
+    } finally {
+      setStarting(false);
     }
-    store.initGame(allWords, difficulty, 'all');
   };
+
+  const handleReplay = useCallback(() => {
+    const s = useGameStore.getState();
+    void tryStartGame(s.words, s.difficulty, s.gameSource);
+  }, [tryStartGame]);
 
   if (loading) {
     return (
       <div className="h-full flex items-center justify-center bg-[var(--bg-primary)]">
-        <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+        <Spinner size={24} />
       </div>
     );
   }
 
-  // Level select screen
+  if (starting) {
+    return (
+      <div className="h-full flex items-center justify-center bg-[var(--bg-primary)] px-8">
+        <div className="w-full max-w-xs flex flex-col items-center gap-5">
+          <Spinner size={42} />
+          <div className="w-full text-center">
+            <p className="text-sm font-semibold text-primary">正在缓冲本局音频</p>
+            <p className="text-xs text-tertiary mt-1">准备好后再开始，点击会更干脆</p>
+          </div>
+          <div className="w-full h-1.5 rounded-full overflow-hidden bg-white/5">
+            <div
+              className="h-full rounded-full bg-[var(--accent)] transition-all duration-300"
+              style={{ width: `${preloadProgress}%` }}
+            />
+          </div>
+          <span className="text-[11px] tabular-nums text-tertiary">{preloadProgress}%</span>
+        </div>
+      </div>
+    );
+  }
+
   if (store.status === 'idle') {
     return (
       <div className="h-full bg-[var(--bg-primary)] overflow-y-auto">
-        <GameLevelSelect onStart={handleStart} onBack={() => navigate(-1)} onPlaySample={w => playWordAudio(w)} />
+        {startError && (
+          <div className="mx-6 mt-4 px-4 py-2.5 rounded-xl text-xs flex items-center justify-between gap-2"
+            style={{ background: 'rgba(239,68,68,0.1)', color: 'var(--text-secondary)', border: '1px solid rgba(239,68,68,0.2)' }}>
+            <span>{startError}</span>
+            <button onClick={() => setStartError(null)} className="text-tertiary hover:text-secondary cursor-pointer">
+              <HiXMark size={14} />
+            </button>
+          </div>
+        )}
+        <GameLevelSelect
+          onStart={handleStart}
+          onBack={() => navigate(-1)}
+          onPlaySample={w => playWordOnClick(w)}
+          starting={starting}
+        />
       </div>
     );
   }
 
-  // Game over modal
   if (store.status === 'won' || store.status === 'lost') {
     return (
       <div className="h-full bg-[var(--bg-primary)] overflow-y-auto">
-        <GameHeader />
+        <GameHeader onRestart={handleReplay} />
         <div className="px-4 py-8">
           <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={handleTileClick} />
           <div className="mt-6">
@@ -92,26 +157,23 @@ export default function GameView() {
           totalWords={store.totalWords}
           elapsed={store.elapsed}
           matchedWords={store.matchedWords}
-          onReplay={() => store.initGame(store.words, store.difficulty)}
+          onReplay={handleReplay}
           onQuit={() => { store.reset(); }}
         />
       </div>
     );
   }
 
-  // Playing
   return (
     <div className="h-full bg-[var(--bg-primary)] flex flex-col overflow-y-auto relative">
-      {/* Difficulty toast */}
       {store.difficultyMessage && (
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-lg shadow-lg text-xs font-medium animate-fade-in"
           style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', border: '1px solid var(--border-primary)' }}>
           {store.difficultyMessage}
         </div>
       )}
-      <GameHeader />
+      <GameHeader onRestart={handleReplay} />
 
-      {/* Progress */}
       <div className="px-6 py-2">
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
@@ -131,7 +193,6 @@ export default function GameView() {
         </div>
       </div>
 
-      {/* Board */}
       <div className="flex-1 flex items-center justify-center px-4 py-4 relative">
         {store.slot.filter(s => s !== null).length >= store.slotCapacity && (
           <div className="absolute inset-0 z-10 rounded-lg pointer-events-none"
@@ -140,7 +201,6 @@ export default function GameView() {
         <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={handleTileClick} />
       </div>
 
-      {/* Slot + Tools (same container) */}
       <div className="pb-6 flex justify-center">
         <SlotBar
           slot={store.slot}
@@ -156,7 +216,7 @@ export default function GameView() {
   );
 }
 
-function GameHeader() {
+function GameHeader({ onRestart }: { onRestart: () => void }) {
   const navigate = useNavigate();
   const store = useGameStore();
   return (
@@ -169,7 +229,7 @@ function GameHeader() {
       <span className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
         {store.difficulty === 'easy' ? '简单' : store.difficulty === 'medium' ? '中等' : '困难'}
       </span>
-      <button onClick={() => store.initGame(store.words, store.difficulty)}
+      <button onClick={onRestart}
         className="flex items-center gap-1 text-xs transition-colors cursor-pointer"
         style={{ color: 'var(--text-tertiary)' }}>
         <HiArrowPath size={13} />

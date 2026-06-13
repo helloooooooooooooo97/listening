@@ -45,6 +45,12 @@ export function waitForReady(a: HTMLAudioElement, fn: () => void) {
   }
 }
 
+export function isAudioReadyForLesson(lessonId: string): boolean {
+  const url = `${API_BASE}/api/lessons/${lessonId}/audio`;
+  if (_currentSrc !== url) return false;
+  return getAudio().readyState >= HTMLMediaElement.HAVE_FUTURE_DATA;
+}
+
 export function findSentenceIndex(lesson: { transcript: { start: number }[] } | null, time: number): number {
   if (!lesson) return -1;
   for (let i = lesson.transcript.length - 1; i >= 0; i--) {
@@ -76,6 +82,11 @@ export function safePlay(a: HTMLAudioElement): Promise<boolean> {
 
 // Preload pool
 const _preloadPool = new Map<string, HTMLAudioElement>();
+
+export function getPreloadedLessonAudio(lessonId: string): HTMLAudioElement | null {
+  return _preloadPool.get(lessonId) ?? null;
+}
+
 export function preloadLessonAudio(lessonIds: string[]) {
   for (const id of lessonIds) {
     if (_preloadPool.has(id)) continue;
@@ -86,4 +97,22 @@ export function preloadLessonAudio(lessonIds: string[]) {
     el.volume = 0;
     _preloadPool.set(id, el);
   }
+}
+
+/** Preload lesson audio and wait until every file is ready to play. */
+export function preloadLessonAudioAndWait(lessonIds: string[]): Promise<void> {
+  const waits: Promise<void>[] = [];
+  for (const id of lessonIds) {
+    let el = _preloadPool.get(id);
+    if (!el) {
+      el = new Audio();
+      el.preload = 'auto';
+      el.src = `${API_BASE}/api/lessons/${id}/audio`;
+      el.load();
+      el.volume = 0;
+      _preloadPool.set(id, el);
+    }
+    waits.push(new Promise(resolve => waitForReady(el!, resolve)));
+  }
+  return Promise.all(waits).then(() => {});
 }

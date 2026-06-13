@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { HiXMark, HiPlay } from 'react-icons/hi2';
-import { useAudioStore } from '../../stores/audioStore';
+import { useAudioStore, getAudio } from '../../stores/audioStore';
+import { safePlay } from '../../lib/audioEngine';
+import Spinner from '../ui/Spinner';
 import { getWordSentences, getDictionaryEntry, type WordSentence, type WordDictionary } from '../../lib/api';
 
 interface ReviewFlashcardProps {
@@ -13,7 +15,6 @@ interface ReviewFlashcardProps {
 
 export default function ReviewFlashcard({ word, index, total, onScore, onClose }: ReviewFlashcardProps) {
   const viewClip = useAudioStore(s => s.viewClip);
-  const togglePlay = useAudioStore(s => s.togglePlay);
 
   const [sentence, setSentence] = useState<WordSentence | null>(null);
   const [dictionary, setDictionary] = useState<WordDictionary | null>(null);
@@ -34,7 +35,7 @@ export default function ReviewFlashcard({ word, index, total, onScore, onClose }
           const st = Math.max(0, sent.start_time);
           const et = sent.end_time + 0.5;
           viewClip({ id: '', lessonId: sent.lesson_id, lessonTitle: sent.lesson_title, startWordId: '', endWordId: '', startTime: st, endTime: et, text: sent.sentence_text, note: 'review', color: '#facc15', createdAt: '' });
-          setTimeout(() => togglePlay(), 300);
+          setTimeout(() => safePlay(getAudio()), 300);
         }
       }).catch(() => {}),
     ]).finally(() => setLoading(false));
@@ -45,7 +46,7 @@ export default function ReviewFlashcard({ word, index, total, onScore, onClose }
     const st = Math.max(0, sentence.start_time);
     const et = sentence.end_time + 0.5;
     viewClip({ id: '', lessonId: sentence.lesson_id, lessonTitle: sentence.lesson_title, startWordId: '', endWordId: '', startTime: st, endTime: et, text: sentence.sentence_text, note: 'review', color: '#facc15', createdAt: '' });
-    setTimeout(() => togglePlay(), 100);
+    setTimeout(() => safePlay(getAudio()), 100);
   };
 
   return (
@@ -66,7 +67,7 @@ export default function ReviewFlashcard({ word, index, total, onScore, onClose }
       <div className="rounded-xl p-8 mb-5 text-center min-h-[200px]" style={{ background: 'var(--bg-tertiary)' }}>
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+            <Spinner size={24} />
           </div>
         ) : revealed ? (
           <div className="space-y-3">

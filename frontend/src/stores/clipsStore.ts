@@ -27,7 +27,7 @@ function toAudioClip(c: ClipApiRow): AudioClip {
     text: c.text,
     note: c.note || '',
     color: c.color || '#facc15',
-    createdAt: c.created_at || '',
+    createdAt: c.created_at ? String(c.created_at) : '',
     ai_analysis: c.ai_analysis ?? null,
   };
 }

@@ -18,7 +18,7 @@ export default function GameModal({ isWin, matchedCount, totalWords, elapsed, ma
   const pct = totalWords > 0 ? Math.round((matchedCount / totalWords) * 100) : 0;
   const remaining = totalWords - matchedCount;
   const [showWords, setShowWords] = useState(false);
-  const { playWordAudio } = useWordAudio();
+  const { playWordOnClick } = useWordAudio();
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -82,7 +82,7 @@ export default function GameModal({ isWin, matchedCount, totalWords, elapsed, ma
                     <div key={i}
                       className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-[var(--bg-hover)] transition-colors group">
                       <span className="flex-1 text-xs text-left text-secondary">{i + 1}. {w}</span>
-                      <button onClick={() => playWordAudio(w)}
+                      <button onClick={() => playWordOnClick(w)}
                         className="opacity-0 group-hover:opacity-100 text-tertiary hover:text-secondary transition-all cursor-pointer"
                         title="播放音频">
                         <HiPlay size={12} />

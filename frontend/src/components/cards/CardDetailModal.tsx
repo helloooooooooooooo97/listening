@@ -2,41 +2,15 @@ import { HiXMark, HiSparkles } from 'react-icons/hi2';
 import type { CardMeta } from '../../lib/api';
 import { cardImageUrl } from '../../lib/api';
 import CardRarityBadge from './CardRarityBadge';
+import { rarity as rarityCfg } from '../../constants/rarity';
 
 interface CardDetailModalProps {
   card: CardMeta;
   onClose: () => void;
 }
 
-const RARITY_GLOW: Record<string, { border: string; shadow: string; accent: string; gradient: string }> = {
-  R: {
-    border: 'rgba(59,130,246,0.3)',
-    shadow: '0 0 30px rgba(59,130,246,0.15)',
-    accent: '#3b82f6',
-    gradient: 'linear-gradient(135deg, rgba(59,130,246,0.08), transparent)',
-  },
-  SR: {
-    border: 'rgba(168,85,247,0.35)',
-    shadow: '0 0 30px rgba(168,85,247,0.2)',
-    accent: '#a855f7',
-    gradient: 'linear-gradient(135deg, rgba(168,85,247,0.08), transparent)',
-  },
-  SSR: {
-    border: 'rgba(251,146,60,0.4)',
-    shadow: '0 0 35px rgba(251,146,60,0.25)',
-    accent: '#fb923c',
-    gradient: 'linear-gradient(135deg, rgba(251,146,60,0.1), transparent)',
-  },
-  UR: {
-    border: 'rgba(251,191,36,0.45)',
-    shadow: '0 0 40px rgba(251,191,36,0.3)',
-    accent: '#fbbf24',
-    gradient: 'linear-gradient(135deg, rgba(251,191,36,0.1), transparent)',
-  },
-};
-
 export default function CardDetailModal({ card, onClose }: CardDetailModalProps) {
-  const glow = RARITY_GLOW[card.rarity] || RARITY_GLOW.R;
+  const glow = rarityCfg(card.rarity);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
@@ -63,7 +37,7 @@ export default function CardDetailModal({ card, onClose }: CardDetailModalProps)
             style={{ background: glow.gradient }}>
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h2 className="text-xl font-bold" style={{ color: glow.accent }}>{card.name}</h2>
+                <h2 className="text-xl font-bold" style={{ color: glow.color }}>{card.name}</h2>
                 <p className="text-xs text-tertiary mt-0.5">{card.title}</p>
                 <div className="mt-1.5"><CardRarityBadge rarity={card.rarity} /></div>
               </div>
@@ -80,7 +54,7 @@ export default function CardDetailModal({ card, onClose }: CardDetailModalProps)
                 <div className="flex flex-wrap gap-1">
                   {card.keywords.map(kw => (
                     <span key={kw} className="text-[10px] px-1.5 py-0.5 rounded text-tertiary"
-                      style={{ background: `${glow.accent}15` }}>{kw}</span>
+                      style={{ background: `${glow.color}15` }}>{kw}</span>
                   ))}
                 </div>
               </div>
@@ -113,7 +87,7 @@ export default function CardDetailModal({ card, onClose }: CardDetailModalProps)
 
             {/* Obtained info */}
             {card.obtained && (
-              <div className="flex items-center gap-1.5 text-[11px]" style={{ color: glow.accent }}>
+              <div className="flex items-center gap-1.5 text-[11px]" style={{ color: glow.color }}>
                 <HiSparkles size={12} /> 已收藏
               </div>
             )}

@@ -105,8 +105,6 @@ export interface GameStore {
   slotCapacity: number;
   elapsed: number;
   tools: { shuffle: number; undo: number; remove3: number };
-  /** Transient: word currently being eliminated (for animation). Cleared after 300ms. */
-  matchingWord: string | null;
   /** Transient: whether the last elimination succeeded (for green flash). Cleared after 300ms. */
   lastMatchSuccess: boolean;
   /** Dynamic difficulty adaptation tracking */
@@ -119,7 +117,7 @@ export interface GameStore {
   /** Word source for this session (today / review / all) */
   gameSource: string;
 
-  initGame: (allWords: string[], difficulty: Difficulty, source?: string) => void;
+  initGame: (allWords: string[], difficulty: Difficulty, source?: string) => boolean;
   clickTile: (tileId: string) => void;
   useShuffle: () => void;
   useUndo: () => void;
@@ -155,7 +153,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
   slotCapacity: SLOT_CAPACITY,
   elapsed: 0,
   tools: { shuffle: 1, undo: 2, remove3: 1 },
-  matchingWord: null,
   lastMatchSuccess: false,
   consecutiveWins: loadStreak().consecutiveWins,
   consecutiveLosses: loadStreak().consecutiveLosses,
@@ -167,7 +164,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   initGame: (allWords, difficulty, source = 'all') => {
     const config = generateLevel(allWords, difficulty);
-    if (!config) return;
+    if (!config) return false;
 
     const inDegree = buildInDegree(config.tiles);
 
@@ -183,7 +180,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
       slotCapacity: SLOT_CAPACITY,
       elapsed: 0,
       tools: { shuffle: 1, undo: 2, remove3: 1 },
-      matchingWord: null,
       lastMatchSuccess: false,
       toolsUsed: { shuffle: 0, undo: 0, remove3: 0 },
       gameSource: source,
@@ -199,6 +195,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       }
       set({ elapsed: Math.floor((Date.now() - start) / 1000) });
     }, 1000);
+    return true;
   },
 
   clickTile: (tileId) => {
@@ -267,7 +264,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
         slot: cleanSlot,
         matchedWords: newMatched,
         status: isWin ? 'won' : 'playing',
-        matchingWord: null,
         lastMatchSuccess: true,
       });
 
@@ -295,7 +291,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   useShuffle: () => {
     const state = get();
-    if (state.tools.shuffle <= 0 || state.status !== 'playing' || state.matchingWord) return;
+    if (state.tools.shuffle <= 0 || state.status !== 'playing') return;
     const words = state.tiles.map(t => t.word);
     for (let i = words.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -308,7 +304,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   useUndo: () => {
     const state = get();
-    if (state.tools.undo <= 0 || state.status !== 'playing' || state.matchingWord) return;
+    if (state.tools.undo <= 0 || state.status !== 'playing') return;
     const slotCopy = [...state.slot];
     let lastIdx = -1;
     for (let i = slotCopy.length - 1; i >= 0; i--) {
@@ -333,7 +329,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   useRemove3: () => {
     const state = get();
-    if (state.tools.remove3 <= 0 || state.status !== 'playing' || state.matchingWord) return;
+    if (state.tools.remove3 <= 0 || state.status !== 'playing') return;
     const slotCopy = [...state.slot];
     let removed = 0;
     for (let i = 0; i < slotCopy.length && removed < 3; i++) {
@@ -356,7 +352,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
       totalWords: 0,
       elapsed: 0,
       tools: { shuffle: 1, undo: 2, remove3: 1 },
-      matchingWord: null,
       lastMatchSuccess: false,
       consecutiveWins: streak.consecutiveWins,
       consecutiveLosses: streak.consecutiveLosses,

@@ -4,6 +4,7 @@ import { HiArrowLeft } from 'react-icons/hi2';
 import { useCardsStore } from '../stores/cardsStore';
 import type { CardMeta } from '../lib/api';
 import CardGrid from '../components/cards/CardGrid';
+import Spinner from '../components/ui/Spinner';
 import CardDetailModal from '../components/cards/CardDetailModal';
 
 export default function DeckDetailView() {
@@ -68,7 +69,7 @@ export default function DeckDetailView() {
           </p>
           {store.loading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+              <Spinner size={24} />
             </div>
           ) : (
             <CardGrid cards={deckCards} onCardClick={c => setSelectedCard(c)} variant="deck" />

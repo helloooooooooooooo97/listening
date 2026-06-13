@@ -1,4 +1,5 @@
 import { HiSparkles, HiXMark } from 'react-icons/hi2';
+import Spinner from '../ui/Spinner';
 import type { DrawCandidate } from '../../lib/api';
 import { cardImageUrl } from '../../lib/api';
 import CardRarityBadge from './CardRarityBadge';
@@ -27,7 +28,7 @@ export default function CardUnlockModal({ candidates, onPick, onClose, loading }
 
           {loading ? (
             <div className="py-12">
-              <div className="w-8 h-8 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin mx-auto mb-4" />
+              <Spinner size={32} className="mx-auto mb-4" />
               <p className="text-sm text-tertiary">匹配计算中...</p>
             </div>
           ) : (

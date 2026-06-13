@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { HiXMark } from 'react-icons/hi2';
-import { useAudioStore } from '../../stores/audioStore';
+import { useAudioStore, getAudio } from '../../stores/audioStore';
+import { safePlay } from '../../lib/audioEngine';
 import { getWordSentences, submitWordReview, type WordSentence } from '../../lib/api';
+import Spinner from '../ui/Spinner';
 
 // ── Helper ──
 function cleanWordText(raw: string) {
@@ -18,7 +20,6 @@ interface ReviewFillInProps {
 
 export default function ReviewFillIn({ word, index, total, onScore, onClose }: ReviewFillInProps) {
   const viewClip = useAudioStore(s => s.viewClip);
-  const togglePlay = useAudioStore(s => s.togglePlay);
 
   const [sentence, setSentence] = useState<WordSentence | null>(null);
   const [loading, setLoading] = useState(false);
@@ -41,7 +42,7 @@ export default function ReviewFillIn({ word, index, total, onScore, onClose }: R
           const st = Math.max(0, sent.start_time);
           const et = sent.end_time + 0.5;
           viewClip({ id: '', lessonId: sent.lesson_id, lessonTitle: sent.lesson_title, startWordId: '', endWordId: '', startTime: st, endTime: et, text: sent.sentence_text, note: 'review', color: '#facc15', createdAt: '' });
-          setTimeout(() => togglePlay(), 300);
+          setTimeout(() => safePlay(getAudio()), 300);
         }
       })
       .catch(() => {})
@@ -82,7 +83,7 @@ export default function ReviewFillIn({ word, index, total, onScore, onClose }: R
       <div className="rounded-xl p-6 mb-5 min-h-[120px]" style={{ background: 'var(--bg-tertiary)' }}>
         {loading ? (
           <div className="flex items-center justify-center py-8">
-            <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+            <Spinner size={20} />
           </div>
         ) : sentence ? (
           <div>

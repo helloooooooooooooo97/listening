@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { HiXMark, HiCubeTransparent, HiPlay, HiPencilSquare, HiMicrophone, HiSparkles, HiSun } from 'react-icons/hi2';
 import { getCurrencyTransactions } from '../lib/api';
 import { useCurrencyStore } from '../stores/currencyStore';
+import Spinner from './ui/Spinner';
 import type { CurrencyTransaction } from '../lib/api';
 
-const SOURCE_META: Record<string, { label: string; icon: React.ComponentType<{ size?: number }>; color: string }> = {
+const SOURCE_META: Record<string, { label: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement> & { size?: number }>; color: string }> = {
   listen:      { label: '听音频',   icon: HiPlay,          color: '#3b82f6' },
   review:      { label: '复习单词', icon: HiPencilSquare,  color: '#10b981' },
   dictation:   { label: '听写',     icon: HiMicrophone,    color: '#a855f7' },
@@ -64,7 +65,7 @@ export default function TransactionPanel({ open, onClose }: Props) {
         <div className="flex-1 overflow-y-auto p-3 space-y-1">
           {loading ? (
             <div className="flex justify-center py-8">
-              <div className="w-5 h-5 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+              <Spinner size={20} />
             </div>
           ) : txs.length === 0 ? (
             <p className="text-center text-xs text-tertiary py-8">暂无交易记录</p>

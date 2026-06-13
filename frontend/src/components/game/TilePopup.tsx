@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { getDictionaryEntry, type WordDictionary } from '../../lib/api';
+import Spinner from '../ui/Spinner';
 
 interface TilePopupProps {
   word: string;
@@ -51,7 +52,7 @@ export default function TilePopup({ word, anchorEl, onClose }: TilePopupProps) {
       >
         {loading ? (
           <div className="flex items-center gap-2 py-1">
-            <div className="w-3 h-3 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+            <Spinner size={12} />
             <span className="text-tertiary">查询中...</span>
           </div>
         ) : dict ? (

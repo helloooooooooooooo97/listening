@@ -694,8 +694,10 @@ export interface PokerGameState {
   round: number;
   pot: number;
   community_words: PokerCommunityWord[];
+  audio_words?: string[];
   players: PokerPlayerState[];
   human_player_id: number | null;
+  acting_player_id: number | null;
   can_act: boolean;
   current_bet: number;
   total_actions: number;

@@ -6,6 +6,7 @@ import { getDictationRecords, getKnownWords, setWordKnown, type AudioGroup, type
 import { alignDictation } from '../lib/dictationAligner';
 import { useAudioStore } from '../stores/audioStore';
 import { useClipsStore } from '../stores/clipsStore';
+import Spinner from './ui/Spinner';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { usePlaylistStore } from '../stores/playlistStore';
 import { useToastStore } from '../stores/toastStore';
@@ -208,7 +209,7 @@ export default function PlaybackDetailTabs({
           onOpenDictation={onOpenDictation}
           hoveredClipId={hoveredClipId}
           activeClipId={activeClipId}
-          activeTab={sideTab}
+          activeTab={sideTab === 'words' ? undefined : sideTab}
           dictationWordResults={dictationBySentence.map(s => s.wordResults)}
           lyricDisplayMode={lyricDisplayMode}
           translationEnabled={translationEnabled}
@@ -245,7 +246,7 @@ export default function PlaybackDetailTabs({
             {sideTab === 'dictation' && (
               loadingDictation ? (
                 <div className="flex items-center justify-center py-16">
-                  <div className="w-5 h-5 border-2 border-white/10 border-t-[var(--accent)] rounded-full animate-spin" />
+                  <Spinner size={20} />
                 </div>
               ) : dictationRecords.length === 0 ? (
                 <p className="text-center text-tertiary text-sm py-16">暂无听写记录</p>

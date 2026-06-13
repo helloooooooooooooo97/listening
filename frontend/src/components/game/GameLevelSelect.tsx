@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { HiSun, HiArrowPath, HiBookOpen, HiSparkles, HiPlay } from 'react-icons/hi2';
+import Spinner from '../ui/Spinner';
 import type { Difficulty } from './levelGenerator';
 
 interface GameLevelSelectProps {
   onStart: (difficulty: Difficulty, source: string) => void;
   onBack: () => void;
   onPlaySample?: (word: string) => void;
+  starting?: boolean;
 }
 
 const SAMPLE_WORDS: Record<string, string> = {
@@ -26,7 +28,7 @@ const SOURCE_ICONS: Record<string, React.ReactNode> = {
   all: <HiBookOpen size={13} />,
 };
 
-export default function GameLevelSelect({ onStart, onBack, onPlaySample }: GameLevelSelectProps) {
+export default function GameLevelSelect({ onStart, onBack, onPlaySample, starting }: GameLevelSelectProps) {
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [source, setSource] = useState('today');
 
@@ -100,8 +102,10 @@ export default function GameLevelSelect({ onStart, onBack, onPlaySample }: GameL
             返回
           </button>
           <button onClick={() => onStart(difficulty, source)}
-            className="flex-1 py-3.5 rounded-xl text-base font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer flex items-center justify-center gap-1.5">
-            <HiSparkles size={16} /> 开始游戏
+            disabled={starting}
+            className="flex-1 py-3.5 rounded-xl text-base font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed">
+            {starting ? <Spinner size={16} /> : <HiSparkles size={16} />}
+            {starting ? '加载中...' : '开始游戏'}
           </button>
         </div>
       </div>

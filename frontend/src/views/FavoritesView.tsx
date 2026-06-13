@@ -15,6 +15,7 @@ import { removeFavorite, getLessonById } from '../lib/api';
 import { useClipAnalysis } from '../hooks/useClipAnalysis';
 import ClipActions from '../components/ClipActions';
 import ClipAnalysisModal from '../components/ClipAnalysisModal';
+import type { AudioClip } from '../types/lesson';
 
 const TYPE_META = {
   audio: { icon: HiMusicalNote, gradient: 'var(--card-gradient)', label: '音频' },

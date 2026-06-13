@@ -2,7 +2,33 @@
 
 > 每个版本的详细评审见对应目录下的 `review-report.md`
 >
-> 当前最新：**v0.3.5** ✅
+> 当前最新：**v0.3.6** ✅ · 进行中：**v0.3.7**
+
+## v0.3.7 — 沉浸感动效 + Bug 修复 ✅
+
+**日期**: 2026-06-13 · [📋 产品计划](v0.3.7/product-plan.md) · [🐛 Bug 计划](v0.3.7/bug-plan.md) · [📋 评审报告](v0.3.7/review-report.md)
+
+**主题**: 德州听词沉浸感动效（product-plan）+ 听了个听/德州听词 Bug 修复（bug-plan），重点包括 Safari 点击播词手势链断裂、静默失败、移动端缺口。
+
+| 优先级 | 模块 | 内容 |
+|---|---|---|
+| 🔴 P0 | Safari 音频 | 共享 AudioContext、预加载、TTS 双轨即时反馈、失败可见 |
+| 🔴 P0 | 静默失败 | GameView / pokerStore 错误提示、启动失败 banner |
+| 🔴 P0 | 听了个听移动端 | MobileTabBar 补 game 入口、棋盘响应式 cellSize |
+| 🟡 P1 | 德州听词 UX | AI 思考座位、摊牌粒子 seed、Lobby 返回 |
+| 🟢 P2 | 收尾 | 触屏 hover、fmtTime、matchingWord 死代码清理 |
+
+## v0.3.6 — 桌面端 UI 全面优化 ✅
+
+**日期**: 2026-06-12 · [📋 产品计划](v0.3.6/product-plan.md) · [📋 评审报告](v0.3.6/review-report.md)
+
+**主题**: 架构层面拆分 PokerGameView（958行→46行），提取统一组件（RarityConfig / Spinner），打磨 3D 卡牌翻转 / 音效系统 / 胜利特效，修复 12 个 UI bug，补齐移动端导航入口。
+
+| 优先级 | 模块 | 内容 |
+|---|---|---|
+| 🔴 P0 | 架构重构 | PokerGameView 拆分为 6 独立子组件、统一 RarityConfig、提取 Spinner 组件 |
+| 🟡 P1 | 交互增强 | 3D 卡牌翻转、5 种音效合成、底池脉冲动画、胜利粒子特效、固定筹码按钮（10~1000） |
+| 🟢 P2 | Bug 修复 & 移动端 | 修复 12 个 UI bug，MobileTabBar 补全入口，波形图 resize 不消失，窗口 960×660 |
 
 ## v0.3.5 — 卡牌对决 UI 专业重设计 ✅
 

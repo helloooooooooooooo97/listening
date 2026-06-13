@@ -2,6 +2,7 @@ import { useRef, useCallback } from 'react';
 import { HiPlay, HiSparkles, HiXMark } from 'react-icons/hi2';
 import type { WordDetail, WordDictionary } from '../../lib/api';
 import type { WordAnalysis } from '../../types/lesson';
+import Spinner from '../ui/Spinner';
 function _fmtTime(s: number) { const m = Math.floor(s / 60); return `${m}:${Math.floor(s % 60).toString().padStart(2, '0')}`; }
 
 // TagBadge colors
@@ -119,7 +120,7 @@ export default function WordDetailPanel({
                       }`}
                       title={aiLoading ? '分析中...' : 'AI 单词分析'}>
                       {aiLoading ? (
-                        <div className="w-3.5 h-3.5 border-2 border-white/10 border-t-[var(--accent)] rounded-full animate-spin" />
+                        <Spinner size={14} />
                       ) : (
                         <HiSparkles size={16} />
                       )}
@@ -204,7 +205,7 @@ export default function WordDetailPanel({
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
           {loadingDetail ? (
             <div className="flex items-center justify-center py-16">
-              <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+              <Spinner size={24} />
             </div>
           ) : Object.entries(groupedOccurrences).length > 0 ? (
             Object.entries(groupedOccurrences).map(([lid, g]) => (

@@ -34,7 +34,10 @@ export default function FilterDrawer({ collectionFilter, categoryFilter, examFil
       ]);
       const cats = [...new Set(lessonsData.map(l => l.category || 'Other'))].sort();
       setCategories(cats);
-      const dynCols = cols.filter(c => c.is_dynamic && c.dynamic_type && !c.dynamic_type.startsWith('category:'));
+      const dynCols = cols.flatMap(c => {
+        if (!c.is_dynamic || !c.dynamic_type || c.dynamic_type.startsWith('category:')) return [];
+        return [{ id: c.id, name: c.name, dynamic_type: c.dynamic_type }];
+      });
       setCollections(dynCols);
       const counts: Record<string, number> = {};
       const results = await Promise.all([
@@ -44,8 +47,16 @@ export default function FilterDrawer({ collectionFilter, categoryFilter, examFil
       ]);
       if (results[0]) counts['all'] = results[0].total;
       let idx = 1;
-      for (const cat of cats) { if (results[idx]) counts[`cat:${cat}`] = results[idx].total; idx++; }
-      for (const col of dynCols) { if (results[idx]) counts[`col:${col.dynamic_type}`] = results[idx].total; idx++; }
+      for (const cat of cats) {
+        const result = results[idx];
+        if (result) counts[`cat:${cat}`] = result.total;
+        idx++;
+      }
+      for (const col of dynCols) {
+        const result = results[idx];
+        if (result) counts[`col:${col.dynamic_type}`] = result.total;
+        idx++;
+      }
       setFilterCounts(counts);
     })();
   }, []);

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiRectangleStack, HiHeart, HiChevronRight, HiSparkles, HiCheckCircle, HiArrowPath, HiAcademicCap, HiBookOpen, HiCubeTransparent } from 'react-icons/hi2';
 import { useCardsStore } from '../stores/cardsStore';
+import Spinner from '../components/ui/Spinner';
 import type { CardMeta } from '../lib/api';
 import CardDetailModal from '../components/cards/CardDetailModal';
 import CardRarityBadge from '../components/cards/CardRarityBadge';
@@ -109,7 +110,7 @@ export default function CardsView() {
                         : 'bg-[var(--bg-secondary)] text-tertiary opacity-50 cursor-not-allowed'
                       }`}>
                     {store.drawLoading ? (
-                      <div className="w-4 h-4 border-2 border-white/10 border-t-white rounded-full animate-spin" />
+                      <Spinner size={16} accent="#fff" />
                     ) : (
                       <HiSparkles size={16} />
                     )}
@@ -246,7 +247,7 @@ export default function CardsView() {
             {/* ── Deck cards grid ── */}
             {store.loading ? (
               <div className="flex items-center justify-center py-16">
-                <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+                <Spinner size={24} />
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">

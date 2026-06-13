@@ -16,7 +16,7 @@ logger = get_logger("poker")
 
 ANTE = 10
 MIN_BET = 5
-MAX_BET = 50
+MAX_BET = 1000
 ROUNDS = 5
 
 
@@ -327,6 +327,15 @@ def get_game_state(game_id: int) -> dict:
             "showdown" if round_num > ROUNDS else \
             "betting"
 
+    # First non-folded player who hasn't acted this round
+    acting_player_id = None
+    if phase == "betting" and round_num <= ROUNDS:
+        non_folded = [p for p in players if not p["folded"]]
+        for p in non_folded:
+            if p["id"] not in acted_player_ids:
+                acting_player_id = p["id"]
+                break
+
     # Current bet to match (highest bet this round excluding antes)
     round_actions = [a for a in actions if a["round"] == round_num]
     current_bet = max((a["amount"] for a in round_actions if a["action"] in ("bet", "raise")), default=0)
@@ -345,9 +354,11 @@ def get_game_state(game_id: int) -> dict:
             }
             for i in range(min(len(words), ROUNDS))
         ],
+        "audio_words": words[:ROUNDS],
         "players": player_list,
         "human_player_id": human["id"] if human else None,
         "can_act": can_act,
+        "acting_player_id": acting_player_id,
         "current_bet": current_bet,
         "total_actions": len(actions),
     }
