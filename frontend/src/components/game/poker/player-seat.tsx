@@ -89,7 +89,6 @@ export default function PlayerSeat({
         {cards.length > 0 ? cards.map((c, ci) => {
           const sc = scores[ci] ?? 0;
           const scoreColor = sc >= 4 ? '#34d399' : sc >= 2 ? '#fbbf24' : '#6b7280';
-          const mini = !isBottom;
           return (
             <div key={ci} onClick={() => {
               if (onCardClick) onCardClick(c.name, c.rarity, c.png, []);
@@ -98,8 +97,8 @@ export default function PlayerSeat({
                 ${isWinner && isCompleted ? 'ring-1 ring-amber-400/40' : ''}
                 ${player.folded ? 'grayscale' : ''}`}
               style={{
-                width: mini ? 52 : 60,
-                height: mini ? 72 : 84,
+                width: 60,
+                height: 84,
               }}>
               {isHuman || isCompleted ? (
                 <img src={cardImageUrl(c.png)} alt={c.name}
