@@ -212,41 +212,53 @@ export default function PokerTableView({
     </div>
   );
 
-  // Render players around the table
+  // Render players — AI at top row, human at bottom, community words in middle
   const renderPlayers = () => {
     const ai = game.players.filter(p => p.player_type === 'ai');
     const human = game.players.find(p => p.player_type === 'human');
-    const seats: { player: PokerPlayerState; pos: 'top' | 'left' | 'right' | 'bottom' }[] = [];
-    if (ai[0]) seats.push({ player: ai[0], pos: 'top' });
-    if (ai[1]) seats.push({ player: ai[1], pos: 'left' });
-    if (ai[2]) seats.push({ player: ai[2], pos: 'right' });
-    if (human) seats.push({ player: human, pos: 'bottom' });
 
     const isAIThinking = !isCompleted && game.phase === 'betting' && !betting
       && game.acting_player_id != null && game.acting_player_id !== human?.id;
-    let thinkingSeatIndex = -1;
-    if (isAIThinking && game.acting_player_id != null) {
-      thinkingSeatIndex = seats.findIndex(s => s.player.id === game.acting_player_id);
-    }
 
-    return seats.map((s, idx) => {
-      const cardPng = cardPngMap[s.player.card_name?.toLowerCase() || ''];
-      return (
-        <PlayerSeat
-          key={s.player.id}
-          player={s.player}
-          cardPng={cardPng}
-          isHuman={s.player.player_type === 'human'}
-          communityWords={game.community_words}
-          position={s.pos}
-          seatIndex={idx}
-          game={game}
-          isThinking={thinkingSeatIndex === idx}
-          entranceDelay={animState === 'entering' ? 300 + idx * 120 : 0}
-          onCardClick={(name, rarity, png, keywords) => setPreviewCard({ name, rarity, png, keywords })}
-        />
-      );
-    });
+    return (
+      <>
+        {/* AI row (top) */}
+        <div className="absolute top-2 left-4 right-4 flex justify-center gap-3 z-10">
+          {ai.map((p, i) => (
+            <PlayerSeat
+              key={p.id}
+              player={p}
+              cardPng={cardPngMap[p.card_name?.toLowerCase() || '']}
+              isHuman={false}
+              communityWords={game.community_words}
+              position="top"
+              seatIndex={i}
+              game={game}
+              isThinking={isAIThinking && game.acting_player_id === p.id}
+              entranceDelay={animState === 'entering' ? 300 + i * 120 : 0}
+              onCardClick={(name, rarity, png, keywords) => setPreviewCard({ name, rarity, png, keywords })}
+            />
+          ))}
+        </div>
+
+        {/* Human (bottom) */}
+        {human && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10">
+            <PlayerSeat
+              player={human}
+              cardPng={cardPngMap[human.card_name?.toLowerCase() || '']}
+              isHuman={true}
+              communityWords={game.community_words}
+              position="bottom"
+              seatIndex={3}
+              game={game}
+              entranceDelay={animState === 'entering' ? 600 : 0}
+              onCardClick={(name, rarity, png, keywords) => setPreviewCard({ name, rarity, png, keywords })}
+            />
+          </div>
+        )}
+      </>
+    );
   };
 
   return (

@@ -36,7 +36,6 @@ export default function PlayerSeat({
   player, cardPng, isHuman, communityWords, position, game, seatIndex,
   isThinking, entranceDelay, onCardClick,
 }: PlayerSeatProps) {
-  const cfg = rc(player.card_rarity || 'R');
   const isWinner = player.is_winner;
   const isCompleted = game.status === 'completed';
   const isBottom = position === 'bottom';
@@ -46,14 +45,6 @@ export default function PlayerSeat({
   const cards = player.cards || [];
   const scores = player.scores || [];
   const hand = player.hand;
-  const revealedCount = communityWords.filter(cw => cw.revealed).length;
-
-  // Compute per-card match count based on REVEALED words only
-  const perCardMatches = cards.map(c => {
-    const kw = c.name ? player.keywords || [] : [];
-    // Approximate: use the player's keyword list to check
-    return communityWords.filter(cw => cw.revealed && cw.word).length;
-  });
 
   useEffect(() => {
     if (player.folded && !prevFoldedRef.current) {
@@ -65,23 +56,14 @@ export default function PlayerSeat({
     prevFoldedRef.current = player.folded;
   }, [player.folded]);
 
-  const posStyles: Record<string, string> = {
-    top: 'top-0 left-1/2 -translate-x-1/2',
-    left: 'top-1/2 -translate-y-1/2 left-0 md:left-4',
-    right: 'top-1/2 -translate-y-1/2 right-0 md:right-4',
-    bottom: 'bottom-0 left-1/2 -translate-x-1/2',
-  };
-
   const label = isBottom ? '你' : `AI-${(seatIndex ?? 0) + 1}`;
 
   return (
-    <div className={`absolute ${posStyles[position]} z-20 transition-all duration-500 flex flex-col items-center gap-0.5
-        ${entranceDelay !== undefined && entranceDelay > 0 ? 'animate-seat-pop-in' : ''}
+    <div className={`transition-all duration-500 flex flex-col items-center gap-0.5
         ${isThinking ? 'animate-think-glow' : ''}
         ${showFoldAnim ? 'animate-fold-shrink' : ''}`}
       style={{
         opacity: player.folded && !isCompleted ? 0.3 : 1,
-        animationDelay: entranceDelay ? `${entranceDelay}ms` : '0ms',
       }}>
 
       {/* Name + hand badge */}
@@ -116,8 +98,8 @@ export default function PlayerSeat({
                 ${isWinner && isCompleted ? 'ring-1 ring-amber-400/40' : ''}
                 ${player.folded ? 'grayscale' : ''}`}
               style={{
-                width: mini ? 46 : 56,
-                height: mini ? 64 : 80,
+                width: mini ? 52 : 60,
+                height: mini ? 72 : 84,
               }}>
               {isHuman || isCompleted ? (
                 <img src={cardImageUrl(c.png)} alt={c.name}
