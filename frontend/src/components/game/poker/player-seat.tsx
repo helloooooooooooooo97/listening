@@ -111,14 +111,16 @@ export default function PlayerSeat({
                     <span className="text-white/20 text-lg">🂠</span>
                   </div>
                 )}
-                {/* Score — always visible */}
-                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
-                  style={{ background: scoreColor, color: '#000' }}>
-                  {sc}
-                </div>
+                {/* Score — human always, AI only at settlement */}
+                {(isHuman || isCompleted) && (
+                  <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
+                    style={{ background: scoreColor, color: '#000' }}>
+                    {sc}
+                  </div>
+                )}
               </div>
-              {/* Matched words below card — vertical */}
-              {matchedWords.length > 0 && (
+              {/* Matched words — human always, AI only at settlement */}
+              {(isHuman || isCompleted) && matchedWords.length > 0 && (
                 <div className="flex flex-col items-center gap-0 max-w-[64px]">
                   {matchedWords.map(w => (
                     <span key={w} className="text-[9px] text-emerald-400/80 leading-tight truncate w-full text-center">{w}</span>
