@@ -56,7 +56,7 @@ export default function PlayerSeat({
     prevFoldedRef.current = player.folded;
   }, [player.folded]);
 
-  const label = isBottom ? '你' : `AI-${(seatIndex ?? 0) + 1}`;
+  const label = isBottom ? '' : '';
 
   return (
     <div className={`transition-all duration-500 flex flex-col items-center gap-0.5
@@ -66,12 +66,9 @@ export default function PlayerSeat({
         opacity: player.folded && !isCompleted ? 0.3 : 1,
       }}>
 
-      {/* Name + hand badge */}
-      <div className="flex items-center gap-1.5 mb-0.5">
-        <span className={`text-xs font-bold ${isWinner && isCompleted ? 'text-[var(--accent)]' : 'text-white/80'}`}>
-          {label}{isWinner && isCompleted && ' 👑'}
-        </span>
-        {isCompleted && hand && (
+      {/* Hand badge (settlement only) */}
+      {isCompleted && hand && (
+        <div className="mb-0.5">
           <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full text-black"
             style={{
               background: hand.rank <= 2 ? 'linear-gradient(135deg, #fbbf24, #f97316)' :
@@ -81,8 +78,8 @@ export default function PlayerSeat({
             }}>
             {HAND_LABELS[hand.rank] || hand.name}
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* 5 cards row */}
       <div className="flex gap-1">
@@ -122,15 +119,6 @@ export default function PlayerSeat({
             style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.08))', border: '1px solid rgba(255,255,255,0.08)' }}>
             <span className="text-white/20 text-lg">🂠</span>
           </div>
-        )}
-      </div>
-
-      {/* Bet / folded info */}
-      <div className="text-center mt-0.5">
-        {player.folded ? (
-          <span className="text-[9px] text-white/30">✗ 弃牌</span>
-        ) : (
-          <span className="text-[9px] text-white/50 font-semibold tabular-nums">${player.total_bet}</span>
         )}
       </div>
 

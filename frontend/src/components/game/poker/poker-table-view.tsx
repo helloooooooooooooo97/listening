@@ -149,8 +149,8 @@ export default function PokerTableView({
   const potSize = game.pot;
   const aiPlayer = game.players.find(p => p.player_type === 'ai');
   const humanPlayer = game.players.find(p => p.player_type === 'human');
-  const aiBet = aiPlayer?.total_bet ?? 0;
-  const humanBet = humanPlayer?.total_bet ?? 0;
+  const aiRoundBets = (aiPlayer as any)?.round_bets ?? [];
+  const humanRoundBets = (humanPlayer as any)?.round_bets ?? [];
 
   // Render community word cards (center of table) with 3D flip
   const renderCommunityWords = () => (
@@ -160,8 +160,8 @@ export default function PokerTableView({
         const canReveal = Boolean(cw.word) && cw.revealed && !userRevealed[i] && !isCompleted;
         return (
         <div key={i} className="relative flex flex-col items-center gap-0.5">
-          {/* AI bet above */}
-          <div className="text-[9px] text-purple-400/60 font-mono tabular-nums">${aiBet}</div>
+          {/* AI round bet above */}
+          <div className="text-[9px] text-purple-400/60 font-mono tabular-nums">${aiRoundBets[i] ?? 0}</div>
           <button
             type="button"
             disabled={!canReveal}
@@ -207,8 +207,8 @@ export default function PokerTableView({
               </div>
             </div>
           </button>
-          {/* Human bet below */}
-          <div className="text-[9px] text-amber-400/60 font-mono tabular-nums">${humanBet}</div>
+          {/* Human round bet below */}
+          <div className="text-[9px] text-amber-400/60 font-mono tabular-nums">${humanRoundBets[i] ?? 0}</div>
         </div>
         );
       })}

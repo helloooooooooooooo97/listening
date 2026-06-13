@@ -264,6 +264,13 @@ def get_game_state(game_id: int) -> dict:
 
     # Only count revealed words for progressive scoring
     revealed_words = [w for i, w in enumerate(words) if (game["revealed_mask"] >> i) & 1]
+    # Per-round bet amounts
+    round_bets_map: dict[int, list[int]] = {}
+    for p in players:
+        round_bets_map[p["id"]] = [0] * ROUNDS
+    for a in actions:
+        if a["action"] in ("bet", "call", "raise") and a["round"] >= 1 and a["round"] <= ROUNDS:
+            round_bets_map[a["player_id"]][a["round"] - 1] += a["amount"]
     player_list = []
     for p in players:
         card_ids = json.loads(p["card_id"])
@@ -273,6 +280,7 @@ def get_game_state(game_id: int) -> dict:
             "id": p["id"],
             "player_type": p["player_type"],
             "total_bet": p["total_bet"],
+            "round_bets": round_bets_map.get(p["id"], [0] * ROUNDS),
             "folded": bool(p["folded"]),
             "is_winner": bool(p["is_winner"]),
             "match_count": p["match_count"],
