@@ -408,7 +408,7 @@ export default function PokerTableView({
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-3 mb-8">
+        <div className="flex-shrink-0 px-5 pb-12 pt-3">
           <div className="max-w-sm mx-auto">
             {/* Action row: check | bet amounts | fold */}
             <div className="flex items-center gap-2">
