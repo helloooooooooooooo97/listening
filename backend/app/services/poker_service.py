@@ -8,8 +8,10 @@ from datetime import datetime
 
 from database import get_conn
 from log_config import get_logger
+from pathlib import Path
 from services.card_service import load_card_data
 from services.currency_service import get_balance
+from text_utils import clean_word
 
 logger = get_logger("poker")
 
@@ -23,21 +25,49 @@ CARDS_PER_PLAYER = 5
 
 RARITY_ORDER = {"UR": 4, "SSR": 3, "SR": 2, "R": 1}
 
-# ── Card helpers ──
+# ── Helpers ──
 
-def _all_keywords() -> list[str]:
+def _audio_words_set() -> set[str]:
+    """Return the set of all words that appear in at least one lesson (have audio)."""
+    from services import LESSONS_DIR, _load_lesson
+    words: set[str] = set()
+    if LESSONS_DIR.exists():
+        for json_file in sorted(LESSONS_DIR.glob("*.json")):
+            try:
+                lesson = _load_lesson(json_file)
+                for w in lesson.words:
+                    cleaned = clean_word(w.text)
+                    if cleaned:
+                        words.add(cleaned)
+            except Exception:
+                continue
+    return words
+
+# Cache the audio words set (refreshed on each game create)
+_AUDIO_WORDS_CACHE: set[str] | None = None
+
+def _get_audio_words() -> set[str]:
+    global _AUDIO_WORDS_CACHE
+    if _AUDIO_WORDS_CACHE is None:
+        _AUDIO_WORDS_CACHE = _audio_words_set()
+    return _AUDIO_WORDS_CACHE
+
+def _all_keywords_with_audio() -> list[str]:
+    """Return card keywords that also have lesson audio."""
     cards = load_card_data()
+    audio = _get_audio_words()
     seen: set[str] = set()
     result: list[str] = []
     for card in cards:
         for kw in card.get("keywords", []):
-            if kw.lower() not in seen:
-                seen.add(kw.lower())
-                result.append(kw.lower())
+            kwl = kw.lower()
+            if kwl in audio and kwl not in seen:
+                seen.add(kwl)
+                result.append(kwl)
     return result
 
 def _pick_community_words() -> list[str]:
-    pool = _all_keywords()
+    pool = _all_keywords_with_audio()
     if len(pool) < 5:
         pool = ["fashion", "elegance", "freedom", "art", "innovation"]
     return random.sample(pool, 5)
