@@ -73,3 +73,4 @@ frontend/src-tauri/target/
 *.app
 *.dmg
 .cargo/
+

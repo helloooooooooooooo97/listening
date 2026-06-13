@@ -62,6 +62,16 @@ export default function PokerTableView({
     setUserRevealed(prev => ({ ...prev, [index]: true }));
   }, [playWordOnClick]);
 
+  // Auto-flip the first unrevealed community word (called after bet/check)
+  const autoFlipCurrentWord = () => {
+    const idx = game.community_words.findIndex(cw => cw.revealed && !userRevealed[game.community_words.indexOf(cw)]);
+    if (idx >= 0 && game.community_words[idx]?.word) {
+      primeWordAudioContext();
+      playWordOnClick(game.community_words[idx].word!);
+      setUserRevealed(prev => ({ ...prev, [idx]: true }));
+    }
+  };
+
   // Entrance animation sequence
   useEffect(() => {
     const t = setTimeout(() => setAnimState('ready'), 1500);
@@ -72,7 +82,8 @@ export default function PokerTableView({
   useEffect(() => {
     const revealedCount = game.community_words.filter(cw => cw.revealed).length;
     if (revealedCount > prevRevealedCountRef.current) {
-      setRevealGlowIdx(revealedCount - 1);
+      const newIdx = revealedCount - 1;
+      setRevealGlowIdx(newIdx);
       const t = setTimeout(() => setRevealGlowIdx(-1), 700);
       prevRevealedCountRef.current = revealedCount;
       return () => clearTimeout(t);
@@ -399,7 +410,7 @@ export default function PokerTableView({
               <ActionButton
                 icon={<HiCheck size={15} />}
                 label="过牌"
-                onClick={() => onAction('check')}
+                onClick={() => { autoFlipCurrentWord(); onAction('check'); }}
                 disabled={betting}
                 variant="secondary"
               />
@@ -408,6 +419,7 @@ export default function PokerTableView({
                 {[10, 50, 100, 500, 1000].map(amount => (
                   <button key={amount}
                     onClick={() => {
+                      autoFlipCurrentWord();
                       // Chip fly animation toward pot area
                       const id = ++chipIdRef.current;
                       const dx = (Math.random() - 0.5) * 60;
