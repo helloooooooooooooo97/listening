@@ -55,7 +55,7 @@ export default function PokerGameView() {
       onAction={store.doAction}
       onBack={() => { store.backToLobby(); store.loadLobby(); }}
       key={game.game_id}
-      onRestart={() => store.startGame()}
+      onRestart={() => { store.backToLobby(); store.loadLobby(); }}
     />
   );
 }
