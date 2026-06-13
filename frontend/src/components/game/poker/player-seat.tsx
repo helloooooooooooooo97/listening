@@ -109,13 +109,11 @@ export default function PlayerSeat({
                   <span className="text-white/20 text-lg">🂠</span>
                 </div>
               )}
-              {/* Score badge on top */}
-              {isCompleted && (
-                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
-                  style={{ background: scoreColor, color: '#000' }}>
-                  {sc}
-                </div>
-              )}
+              {/* Score — always visible */}
+              <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
+                style={{ background: scoreColor, color: '#000' }}>
+                {sc}
+              </div>
             </div>
           );
         }) : (
