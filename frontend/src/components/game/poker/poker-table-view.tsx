@@ -408,7 +408,7 @@ export default function PokerTableView({
 
       {/* Betting controls */}
       {!isCompleted && game.phase === 'betting' && game.can_act && (
-        <div className="flex-shrink-0 px-5 pb-12 pt-3">
+        <div className="flex-shrink-0 px-5 pb-24 pt-3">
           <div className="max-w-sm mx-auto">
             {/* Action row: check | bet amounts | fold */}
             <div className="flex items-center gap-2">
@@ -456,7 +456,7 @@ export default function PokerTableView({
 
       {/* Waiting for AI */}
       {!isCompleted && game.phase === 'betting' && !game.can_act && (
-        <div className="flex-shrink-0 px-5 pb-6 pt-3 mb-8">
+        <div className="flex-shrink-0 px-5 pb-24 pt-3">
           <div className="flex items-center justify-center gap-3 py-4">
             <div className="flex items-center gap-1 animate-thinking-dots">
               <span className="w-2 h-2 rounded-full bg-emerald-400/40" />
