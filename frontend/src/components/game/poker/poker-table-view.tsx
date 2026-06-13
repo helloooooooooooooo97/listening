@@ -161,7 +161,7 @@ export default function PokerTableView({
         return (
         <div key={i} className="relative flex flex-col items-center gap-0.5">
           {/* AI bet above */}
-          <div className="text-[8px] text-purple-400/50 font-mono tabular-nums">AI ${aiBet}</div>
+          <div className="text-[9px] text-purple-400/60 font-mono tabular-nums">${aiBet}</div>
           <button
             type="button"
             disabled={!canReveal}
@@ -214,7 +214,7 @@ export default function PokerTableView({
             </div>
           </button>
           {/* Human bet below */}
-          <div className="text-[8px] text-amber-400/50 font-mono tabular-nums">你 ${humanBet}</div>
+          <div className="text-[9px] text-amber-400/60 font-mono tabular-nums">${humanBet}</div>
         </div>
         );
       })}
