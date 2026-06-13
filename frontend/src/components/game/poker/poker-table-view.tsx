@@ -147,6 +147,10 @@ export default function PokerTableView({
   }, [game.players, game.pot]);
 
   const potSize = game.pot;
+  const aiPlayer = game.players.find(p => p.player_type === 'ai');
+  const humanPlayer = game.players.find(p => p.player_type === 'human');
+  const aiBet = aiPlayer?.total_bet ?? 0;
+  const humanBet = humanPlayer?.total_bet ?? 0;
 
   // Render community word cards (center of table) with 3D flip
   const renderCommunityWords = () => (
@@ -155,58 +159,63 @@ export default function PokerTableView({
         const isFlipped = cw.revealed && userRevealed[i];
         const canReveal = Boolean(cw.word) && cw.revealed && !userRevealed[i] && !isCompleted;
         return (
-        <button
-          key={i}
-          type="button"
-          disabled={!canReveal}
-          className={`card-flip-container relative min-w-[52px] w-14 h-[76px] sm:w-20 sm:h-[110px] border-0 p-0 bg-transparent
-            ${animState === 'entering' ? 'animate-card-deal-drop' : ''}
-            ${canReveal ? 'cursor-pointer hover:ring-1 hover:ring-emerald-400/40 hover:scale-105 transition-all duration-200' : 'cursor-default'}`}
-          style={{
-            animationDelay: animState === 'entering' ? `${700 + i * 100}ms` : `${i * 80}ms`,
-          }}
-          onClick={() => {
-            if (!canReveal || !cw.word) return;
-            handleCommunityWordClick(i, cw.word);
-          }}>
-          <div className={`card-flip-inner rounded-2xl ${isFlipped ? 'flipped' : ''}`}>
-            {/* Front face — unrevealed (?) */}
-            <div className="card-flip-front rounded-2xl border-2 border-white/5"
-              style={{
-                background: 'linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))',
-              }}>
-              <span className="text-white/20 text-2xl font-bold">?</span>
-              {canReveal && (
-                <span className="absolute bottom-1 text-[6px] text-white/30">点击开牌</span>
-              )}
-            </div>
-            {/* Back face — revealed word */}
-            <div className={`card-flip-back rounded-2xl border-2 border-white/15 ${
-                revealGlowIdx === i ? 'animate-word-reveal-glow' : isFlipped ? 'animate-word-ambient' : ''
-              }`}
-              style={{
-                background: 'linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))',
-                boxShadow: '0 6px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)',
-              }}>
-              <div className="flex flex-col items-center gap-1 w-full px-1.5">
-                <span className="text-[10px] sm:text-sm leading-tight font-bold text-white/90 text-center break-words w-full max-w-full">{cw.word}</span>
-                {isFlipped && (
-                  <button
-                    onClick={(e) => { e.stopPropagation(); if (cw.word) playWordOnClick(cw.word); }}
-                    className="text-white/30 hover:text-white/60 transition-colors cursor-pointer">
-                    <HiSpeakerWave size={11} />
-                  </button>
+        <div key={i} className="relative flex flex-col items-center gap-0.5">
+          {/* AI bet above */}
+          <div className="text-[8px] text-purple-400/50 font-mono tabular-nums">AI ${aiBet}</div>
+          <button
+            type="button"
+            disabled={!canReveal}
+            className={`card-flip-container relative min-w-[52px] w-14 h-[76px] sm:w-20 sm:h-[110px] border-0 p-0 bg-transparent
+              ${animState === 'entering' ? 'animate-card-deal-drop' : ''}
+              ${canReveal ? 'cursor-pointer hover:ring-1 hover:ring-emerald-400/40 hover:scale-105 transition-all duration-200' : 'cursor-default'}`}
+            style={{
+              animationDelay: animState === 'entering' ? `${700 + i * 100}ms` : `${i * 80}ms`,
+            }}
+            onClick={() => {
+              if (!canReveal || !cw.word) return;
+              handleCommunityWordClick(i, cw.word);
+            }}>
+            <div className={`card-flip-inner rounded-2xl ${isFlipped ? 'flipped' : ''}`}>
+              {/* Front face — unrevealed (?) */}
+              <div className="card-flip-front rounded-2xl border-2 border-white/5"
+                style={{
+                  background: 'linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))',
+                }}>
+                <span className="text-white/20 text-2xl font-bold">?</span>
+                {canReveal && (
+                  <span className="absolute bottom-1 text-[6px] text-white/30">点击开牌</span>
                 )}
               </div>
+              {/* Back face — revealed word */}
+              <div className={`card-flip-back rounded-2xl border-2 border-white/15 ${
+                  revealGlowIdx === i ? 'animate-word-reveal-glow' : isFlipped ? 'animate-word-ambient' : ''
+                }`}
+                style={{
+                  background: 'linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))',
+                  boxShadow: '0 6px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)',
+                }}>
+                <div className="flex flex-col items-center gap-1 w-full px-1.5">
+                  <span className="text-[10px] sm:text-sm leading-tight font-bold text-white/90 text-center break-words w-full max-w-full">{cw.word}</span>
+                  {isFlipped && (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); if (cw.word) playWordOnClick(cw.word); }}
+                      className="text-white/30 hover:text-white/60 transition-colors cursor-pointer">
+                      <HiSpeakerWave size={11} />
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-          {/* Step indicator */}
-          <div className={`absolute -bottom-4 left-1/2 -translate-x-1/2`}>
-            <span className={`text-[10px] ${isFlipped ? 'text-emerald-400/70' : cw.revealed ? 'text-yellow-400/50' : 'text-white/20'}`}>
-              {isFlipped ? '✦' : (cw.revealed ? '◈' : '·')}
-            </span>
-          </div>
-        </button>
+            {/* Step indicator */}
+            <div className={`absolute -bottom-4 left-1/2 -translate-x-1/2`}>
+              <span className={`text-[10px] ${isFlipped ? 'text-emerald-400/70' : cw.revealed ? 'text-yellow-400/50' : 'text-white/20'}`}>
+                {isFlipped ? '✦' : (cw.revealed ? '◈' : '·')}
+              </span>
+            </div>
+          </button>
+          {/* Human bet below */}
+          <div className="text-[8px] text-amber-400/50 font-mono tabular-nums">你 ${humanBet}</div>
+        </div>
         );
       })}
     </div>
