@@ -90,9 +90,9 @@ def _card_data(card_id: str) -> dict:
 def _pick_human_cards(conn) -> list[str]:
     rows = conn.execute("SELECT card_id FROM card_collection WHERE obtained=1").fetchall()
     owned = [r["card_id"] for r in rows]
-    if len(owned) >= CARDS_PER_PLAYER:
-        return random.sample(owned, CARDS_PER_PLAYER)
-    return owned + random.choices(owned, k=CARDS_PER_PLAYER - len(owned)) if owned else []
+    if not owned:
+        return []
+    return random.choices(owned, k=CARDS_PER_PLAYER)
 
 def _pick_ai_cards() -> list[str]:
     all_cards = load_card_data()
