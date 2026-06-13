@@ -54,6 +54,7 @@ export default function PokerGameView() {
       onSetBet={store.setSelectedBet}
       onAction={store.doAction}
       onBack={() => { store.backToLobby(); store.loadLobby(); }}
+      onRestart={() => store.startGame()}
     />
   );
 }

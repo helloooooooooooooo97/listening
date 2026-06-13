@@ -21,6 +21,7 @@ interface PokerTableViewProps {
   onSetBet: (amount: number) => void;
   onAction: (action: string, amount?: number) => void;
   onBack: () => void;
+  onRestart?: () => void;
 }
 
 export default function PokerTableView({
@@ -350,7 +351,7 @@ export default function PokerTableView({
             <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4">
               <p className="text-lg font-bold text-primary">🏆 +{potSize} IP</p>
               <div className="flex gap-3">
-                <button onClick={() => { onBack(); }}
+                <button onClick={() => { onRestart?.(); }}
                   className="px-5 py-2 rounded-xl text-sm font-bold bg-white/10 text-white/80 hover:bg-white/15 transition-colors cursor-pointer">
                   再来一局
                 </button>
