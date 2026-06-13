@@ -415,7 +415,6 @@ export default function PokerTableView({
                   <button key={amount}
                     onClick={() => {
                       autoFlipCurrentWord();
-                      // Chip fly animation toward pot area
                       const id = ++chipIdRef.current;
                       const dx = (Math.random() - 0.5) * 60;
                       const dy = -(180 + Math.random() * 60);

@@ -84,6 +84,17 @@ export default function PlayerSeat({
         )}
       </div>
 
+      {/* AI: bet above cards, human: bet below */}
+      {!isBottom && (
+        <div className="text-center mb-0.5">
+          {player.folded ? (
+            <span className="text-[9px] text-white/30">✗ 弃牌</span>
+          ) : (
+            <span className="text-[9px] text-white/50 font-semibold tabular-nums">${player.total_bet}</span>
+          )}
+        </div>
+      )}
+
       {/* 5 cards row */}
       <div className="flex gap-1">
         {cards.length > 0 ? cards.map((c, ci) => {
@@ -125,14 +136,16 @@ export default function PlayerSeat({
         )}
       </div>
 
-      {/* Bet / folded info */}
-      <div className="text-center mt-0.5">
-        {player.folded ? (
-          <span className="text-[9px] text-white/30">✗ 弃牌</span>
-        ) : (
-          <span className="text-[9px] text-white/50 font-semibold tabular-nums">${player.total_bet}</span>
-        )}
-      </div>
+      {/* Human: bet below cards */}
+      {isBottom && (
+        <div className="text-center mt-0.5">
+          {player.folded ? (
+            <span className="text-[9px] text-white/30">✗ 弃牌</span>
+          ) : (
+            <span className="text-[9px] text-white/50 font-semibold tabular-nums">${player.total_bet}</span>
+          )}
+        </div>
+      )}
 
       {isThinking && (
         <div className="flex items-center gap-1 mt-0.5 animate-thinking-dots">
