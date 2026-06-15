@@ -30,16 +30,29 @@ def get_lesson_detail(lesson_id: str):
     return lesson
 
 
+_MIME_MAP: dict[str, str] = {
+    ".mp3": "audio/mpeg",
+    ".m4a": "audio/mp4",
+    ".wav": "audio/wav",
+    ".ogg": "audio/ogg",
+    ".aac": "audio/aac",
+    ".flac": "audio/flac",
+    ".mp4": "audio/mp4",
+    ".webm": "audio/webm",
+}
+
 @router.get("/{lesson_id}/audio")
 def get_lesson_audio(lesson_id: str):
     """Stream the audio file for a lesson."""
     audio_path = get_audio_path(lesson_id)
     if audio_path is None:
         raise HTTPException(status_code=404, detail=f"Audio for lesson '{lesson_id}' not found")
+    suffix = audio_path.suffix.lower()
+    media_type = _MIME_MAP.get(suffix, "application/octet-stream")
     return FileResponse(
         path=str(audio_path),
-        media_type="audio/mpeg",
-        filename=f"{lesson_id}.mp3",
+        media_type=media_type,
+        filename=f"{lesson_id}{suffix}",
     )
 
 
@@ -53,6 +66,9 @@ from .progress import router as progress_router
 from .stats import router as stats_router
 from .import_route import router as import_router
 from .collections import router as collections_router
+from .cards import router as cards_router
+from .currency import router as currency_router
+from .poker import router as poker_router
 
 routers = [
     router,             # lessons
@@ -64,4 +80,7 @@ routers = [
     stats_router,
     import_router,
     collections_router,
+    cards_router,
+    currency_router,
+    poker_router,
 ]

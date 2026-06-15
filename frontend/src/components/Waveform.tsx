@@ -43,6 +43,7 @@ export default function Waveform({
   const containerRef = useRef<HTMLDivElement>(null);
   const peaksRef = useRef<Float32Array | null>(null);
   const [ready, setReady] = useState(false);
+  const [resizeKey, setResizeKey] = useState(0);
   const theme = useThemeStore(s => s.mode);
 
   // Hover & ripple state
@@ -98,7 +99,10 @@ export default function Waveform({
     resizeCanvas();
     const container = containerRef.current;
     if (!container) return;
-    const observer = new ResizeObserver(() => resizeCanvas());
+    const observer = new ResizeObserver(() => {
+      resizeCanvas();
+      setResizeKey(k => k + 1);
+    });
     observer.observe(container);
     return () => observer.disconnect();
   }, [resizeCanvas, ready]);
@@ -157,7 +161,7 @@ export default function Waveform({
       const ex = selEnd * stepX + stepX;
       ctx.beginPath(); ctx.moveTo(ex, 4); ctx.lineTo(ex, h - 4); ctx.stroke();
     }
-  }, [currentTime, duration, ready, resolvedPlayed, resolvedUnplayed, displayRange, theme]);
+  }, [currentTime, duration, ready, resolvedPlayed, resolvedUnplayed, displayRange, theme, resizeKey]);
 
   const getTimeFromEvent = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();

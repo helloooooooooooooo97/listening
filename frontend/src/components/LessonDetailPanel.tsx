@@ -25,9 +25,12 @@ interface Props {
 
 function fmt(t: number) { const m = Math.floor(t / 60); return `${m}:${Math.floor(t % 60).toString().padStart(2, '0')}`; }
 
-function fmtDate(iso: string) {
-  try { return new Date(iso).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' }); }
-  catch { return iso?.slice(0, 10) || ''; }
+function fmtDate(ts: number | string) {
+  try {
+    const d = typeof ts === 'number' ? new Date(ts * 1000) : new Date(ts);
+    return d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+  }
+  catch { return String(ts).slice(0, 10); }
 }
 
 export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose, onSeekSentence, highlightSentence }: Props) {
@@ -175,7 +178,6 @@ export default function LessonDetailPanel({ lessonId, lessonTitle, tab, onClose,
                             analysis={clipAnalyses.get(clip.text) ?? null}
                             isAnalyzing={analyzingClips.has(clip.text)}
                             onAnalyze={handleAnalyze}
-                            onViewAnalysis={setViewingAnalysis}
                             onViewAnalysis={setViewingAnalysis}
                             onEdit={(id, data) => updateClip(id, data)}
                             onDelete={id => removeClip(id)}

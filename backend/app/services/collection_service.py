@@ -307,6 +307,6 @@ class CollectionService:
             "SELECT COUNT(*) FROM collection_items WHERE collection_id=?", [collection_id]
         ).fetchone()[0]
         self._conn.execute(
-            "UPDATE collections SET item_count=?, updated_at=datetime('now') WHERE id=?",
+            "UPDATE collections SET item_count=?, updated_at=unixepoch() WHERE id=?",
             [count, collection_id],
         )

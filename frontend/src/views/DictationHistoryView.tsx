@@ -117,7 +117,7 @@ export default function DictationHistoryView() {
                     <div className="flex-1 min-w-0">
                       <h2 className="text-sm font-bold text-primary">{g.audio_title}</h2>
                       <p className="text-xs text-tertiary mt-0.5">
-                        {g.total_sentences} 个句子 · 最近练习 {g.last_practiced?.slice(0, 10)}
+                        {g.total_sentences} 个句子 · 最近练习 {g.last_practiced ? new Date(g.last_practiced * 1000).toLocaleDateString('zh-CN') : ''}
                       </p>
                     </div>
                     {/* Play */}
@@ -193,7 +193,7 @@ export default function DictationHistoryView() {
                                 </div>
                               )}
                               {/* Date */}
-                              <p className="text-xs text-tertiary">{r.created_at?.slice(0, 16)}</p>
+                              <p className="text-xs text-tertiary">{r.created_at ? new Date(r.created_at * 1000).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : ''}</p>
                             </div>
                             {/* Right: play sentence */}
                             <button

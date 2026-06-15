@@ -264,7 +264,7 @@ function isSolvable(tiles: TileData[]): boolean {
         if (inClickable.length >= needed) {
           // Add to slot, then match
           for (let i = 0; i < needed; i++) {
-            slot.push(inClickable[i].word);
+            slot.push(tileMap.get(inClickable[i])!.word);
             removeTilesWithoutUpdate(inClickable[i], remaining, tileMap, inDegree);
           }
           // Remove 3 from slot

@@ -36,7 +36,7 @@ function AppContent() {
   const pathToSection = (path: string): NavSection => {
     const seg = path.split('/')[1] || 'home';
     if (seg === 'collections') return 'collections';
-    const valid: NavSection[] = ['home','courses','clips','words','collections','stats','favorites','settings','game'];
+    const valid: NavSection[] = ['home','courses','clips','words','collections','stats','favorites','settings','game','poker','cards'];
     return valid.includes(seg as NavSection) ? (seg as NavSection) : 'home';
   };
   const activeSection = pathToSection(location.pathname);
@@ -127,7 +127,7 @@ function AppContent() {
         activeSection={activeSection}
         onSectionChange={(s) => navigate(`/${s === 'home' ? '' : s}`)}
       />
-      <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-16 md:pb-16" style={{ paddingBottom: 'calc(64px + env(safe-area-inset-bottom, 0px))' }}>
+      <main className="flex-1 flex flex-col overflow-hidden min-w-0 pb-0 md:pb-16" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
         <ContentPanel
           activeSection={activeSection}
           lessons={lessons}

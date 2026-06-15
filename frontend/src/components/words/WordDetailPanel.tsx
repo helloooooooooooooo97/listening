@@ -1,6 +1,8 @@
+import { useRef, useCallback } from 'react';
 import { HiPlay, HiSparkles, HiXMark } from 'react-icons/hi2';
 import type { WordDetail, WordDictionary } from '../../lib/api';
 import type { WordAnalysis } from '../../types/lesson';
+import Spinner from '../ui/Spinner';
 function _fmtTime(s: number) { const m = Math.floor(s / 60); return `${m}:${Math.floor(s % 60).toString().padStart(2, '0')}`; }
 
 // TagBadge colors
@@ -51,6 +53,18 @@ export default function WordDetailPanel({
       [l.id]: { title: l.title, times: l.occurrences },
     }), {} as Record<string, { title: string; times: number[] }>)
     : {};
+
+  // ── Scroll to currently playing occurrence ──
+  const lastPlayedRef = useRef<number | null>(null);
+  const playRef = useCallback((lid: string, title: string, word: string, time: number) => {
+    lastPlayedRef.current = time;
+    onPlayAt(lid, title, word, time);
+    // Use RAF to let the DOM update before scrolling
+    requestAnimationFrame(() => {
+      const btn = document.querySelector(`[data-play-occ="${lid}-${time}"]`);
+      btn?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }, [onPlayAt]);
 
   return (
     <>
@@ -106,7 +120,7 @@ export default function WordDetailPanel({
                       }`}
                       title={aiLoading ? '分析中...' : 'AI 单词分析'}>
                       {aiLoading ? (
-                        <div className="w-3.5 h-3.5 border-2 border-white/10 border-t-[var(--accent)] rounded-full animate-spin" />
+                        <Spinner size={14} />
                       ) : (
                         <HiSparkles size={16} />
                       )}
@@ -191,22 +205,30 @@ export default function WordDetailPanel({
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
           {loadingDetail ? (
             <div className="flex items-center justify-center py-16">
-              <div className="w-6 h-6 border-2 border-white/10 border-t-[#fa2d48] rounded-full animate-spin" />
+              <Spinner size={24} />
             </div>
           ) : Object.entries(groupedOccurrences).length > 0 ? (
             Object.entries(groupedOccurrences).map(([lid, g]) => (
               <div key={lid}>
                 <p className="text-xs font-bold text-tertiary uppercase tracking-[0.15em] mb-2">{g.title}</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {g.times.map((t, i) => (
-                    <button key={i}
-                      onClick={() => onPlayAt(lid, g.title, selected!.word, t)}
-                      className="flex items-center gap-1 px-2.5 py-1 rounded-md text-xs text-secondary hover:text-white hover:bg-[var(--bg-hover)] transition-colors cursor-pointer font-mono"
-                      title={`播放 ${_fmtTime(t)}`}>
-                      <HiPlay size={10} className="text-tertiary" />
-                      {_fmtTime(t)}
-                    </button>
-                  ))}
+                  {g.times.map((t, i) => {
+                    const isPlaying = lastPlayedRef.current === t;
+                    return (
+                      <button key={i}
+                        data-play-occ={`${lid}-${t}`}
+                        onClick={() => playRef(lid, g.title, selected!.word, t)}
+                        className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs transition-colors cursor-pointer font-mono ${
+                          isPlaying
+                            ? 'bg-[var(--accent)]/20 text-[var(--accent)] ring-1 ring-[var(--accent)]/30'
+                            : 'text-secondary hover:text-white hover:bg-[var(--bg-hover)]'
+                        }`}
+                        title={`播放 ${_fmtTime(t)}`}>
+                        <HiPlay size={10} className={isPlaying ? 'text-[var(--accent)]' : 'text-tertiary'} />
+                        {_fmtTime(t)}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             ))

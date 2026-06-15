@@ -7,7 +7,16 @@ from pathlib import Path
 
 from models import LessonSummary, ListeningLesson
 
-LESSONS_DIR = Path(__file__).resolve().parent.parent / "data" / "lessons"
+# ── Resolve paths from config.yaml (loaded by main.py before this module is imported) ──
+def _resolve_lessons_dir() -> Path:
+    try:
+        from config import resolve_path, get_config
+        cfg = get_config()
+        return resolve_path(cfg["app"]["data"]["lessons_dir"])
+    except Exception:
+        return Path(__file__).resolve().parent.parent.parent / "data" / "lessons"
+
+LESSONS_DIR = _resolve_lessons_dir()
 
 # ── Module-level cache (invalidate when any .json mtime changes) ──
 _cache: dict[str, object] = {}

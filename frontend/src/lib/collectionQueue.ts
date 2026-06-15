@@ -1,6 +1,15 @@
-import { getLessonById } from './api';
+import { getLessonById, getWordSentencesBatch } from './api';
 import type { AudioClip, CollectionItem, ListeningLesson } from '../types/lesson';
 import type { QueueItem } from '../stores/playlistStore';
+
+type WordSentenceHit = {
+  lesson_id: string;
+  lesson_title: string;
+  start_time: number;
+  end_time: number;
+};
+
+type WordSentenceCache = Record<string, WordSentenceHit[] | { sentences: WordSentenceHit[] }>;
 
 type ClipExtra = {
   lessonId?: string;
@@ -65,24 +74,40 @@ function makeClip(item: CollectionItem, lesson: ListeningLesson | null, extra: C
 }
 
 export async function collectionItemsToQueueItems(items: CollectionItem[]): Promise<QueueItem[]> {
-  const lessonCache: Record<string, ListeningLesson> = {};
+  // Promise-based cache: store the promise, not the result.
+  // Multiple callers sharing the same lessonId get the same promise.
+  const lessonCache: Record<string, Promise<ListeningLesson>> = {};
 
-  const fetchLesson = async (lessonId: string) => {
-    if (!lessonCache[lessonId]) lessonCache[lessonId] = await getLessonById(lessonId);
+  const fetchLesson = (lessonId: string): Promise<ListeningLesson> => {
+    if (!lessonCache[lessonId]) lessonCache[lessonId] = getLessonById(lessonId);
     return lessonCache[lessonId];
   };
 
-  const queueItems: QueueItem[] = [];
-  for (const item of items) {
-    const queueItem = await collectionItemToQueueItem(item, fetchLesson).catch(() => null);
-    if (queueItem) queueItems.push(queueItem);
+  // Pre-fetch slow-path words in a single batch request
+  const slowWords = [...new Set(
+    items
+      .filter(i => i.item_type === 'word' && !i.lesson_id)
+      .map(i => i.title || i.item_ref)
+      .filter(Boolean),
+  )];
+  let wordSentenceCache: WordSentenceCache = {};
+  if (slowWords.length > 0) {
+    const batchResult = await getWordSentencesBatch(slowWords, 'favorites,recent_plays');
+    wordSentenceCache = batchResult.results;
   }
-  return queueItems;
+
+  const results = await Promise.all(
+    items.map(item =>
+      collectionItemToQueueItem(item, fetchLesson, wordSentenceCache).catch(() => null),
+    ),
+  );
+  return results.filter((r): r is QueueItem => r !== null);
 }
 
 export async function collectionItemToQueueItem(
   item: CollectionItem,
   fetchLesson: (lessonId: string) => Promise<ListeningLesson> = getLessonById,
+  wordSentenceCache?: WordSentenceCache,
 ): Promise<QueueItem | null> {
   const extra = parseExtraData(item.extra_data);
   const lessonId = lessonIdForItem(item, extra);
@@ -123,6 +148,42 @@ export async function collectionItemToQueueItem(
       start,
       end,
       text: item.title || sentence?.text || '',
+    };
+  }
+
+  if (item.item_type === 'word') {
+    const word = item.title || item.item_ref;
+    if (!word) return null;
+
+    // Fast path: collection item already has lesson_id — no API calls needed.
+    // playQueueItem will add padding via queueItemToClip, preserving the
+    // user click gesture for Safari autoplay (no async gap).
+    if (item.lesson_id) {
+      return {
+        kind: 'word',
+        lessonId: item.lesson_id,
+        lessonTitle: item.lesson_title || item.subtitle || '',
+        word,
+        start: item.start_time || 0,
+        end: item.end_time || (item.start_time || 0) + 5,
+      };
+    }
+
+    // Slow path: use batch cache (single API call for all words) or fallback.
+    let cached = wordSentenceCache?.[word];
+    if (!cached && wordSentenceCache) {
+      cached = wordSentenceCache[word.toLowerCase()];
+    }
+    const sentences = Array.isArray(cached) ? cached : cached?.sentences;
+    if (!sentences?.length) return null;
+    const sent = sentences[0];
+    return {
+      kind: 'word',
+      lessonId: sent.lesson_id,
+      lessonTitle: sent.lesson_title || item.lesson_title || item.subtitle || '',
+      word,
+      start: sent.start_time,
+      end: sent.end_time,
     };
   }
 

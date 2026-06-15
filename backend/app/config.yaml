@@ -1,0 +1,107 @@
+# ── 全局应用配置 ──
+
+app:
+  title: "英语听力 API"
+  version: "0.3.2"
+
+  # 日志配置
+  logging:
+    level: "INFO"
+    # dir 留空则默认 data/logs/
+    dir: ""
+    # 允许的选项: DEBUG, INFO, WARNING, ERROR
+
+  # 数据目录
+  data:
+    lessons_dir: "data/lessons"                    # 课程 JSON + 音频文件目录
+    wordlists_dir: "data/wordlists"                  # 词库文件目录（CET-4/6, IELTS 等）
+    db_path: "data/audio.db"                       # SQLite 数据库路径
+
+  # 课程导入
+  import:
+    supported_formats: [".mp3", ".wav", ".m4a", ".ogg"]
+    whisperx_bin: ".venv-whisperx/bin/whisperx"    # WhisperX 可执行文件路径（相对项目根）
+
+  # CORS
+  cors:
+    allow_origins: ["*"]
+
+  # 前端静态文件
+  frontend:
+    dist_dir: "frontend/dist"                      # 前端 build 输出
+
+# ── 卡牌系统配置 ──
+
+cards:
+  # 卡组数据
+  data_path: "data/cards/fashion.json"             # 卡牌 JSON 数据
+  image_path: "data/cards/image/"                  # 卡牌图片目录
+  image_url_prefix: "/api/cards/image/"            # 图片 URL 前缀
+
+  # 词汇签名提取
+  signature:
+    stop_words:                                    # 提取签名词时过滤的停用词
+      - "the"
+      - "a"
+      - "an"
+      - "is"
+      - "are"
+      - "was"
+      - "were"
+      - "be"
+      - "been"
+      - "in"
+      - "on"
+      - "at"
+      - "of"
+      - "to"
+      - "for"
+      - "with"
+      - "by"
+      - "and"
+      - "or"
+      - "but"
+      - "it"
+      - "its"
+      - "he"
+      - "she"
+      - "they"
+      - "them"
+      - "his"
+      - "her"
+      - "their"
+      - "that"
+      - "this"
+      - "from"
+      - "as"
+      - "not"
+      - "no"
+    stem_merge: true                               # 同一词根是否合并（如 fashion / fashionable）
+
+  # 抽卡规则
+  draw:
+    min_new_words: 1                               # K — 上次抽卡后至少复习多少个新词（去重，测试用 1）
+    coverage_threshold: 0                          # T — 词汇覆盖度阈值（测试用 10%）
+    min_qualified_cards: 3                         # 至少多少张卡满足覆盖度才能抽卡
+    candidate_count: 3                             # 展示给用户的候选卡牌数（三选一）
+
+  # 收藏历史
+  collection:
+    max_records: 200                               # 收藏记录保留上限
+
+# ── 代币经济系统 (灵感值) ──
+
+currency:
+  earn:
+    listen_per_second: 1        # 每秒听音频 → 1 IP
+    listen_daily_cap: 3600      # 听音频每日 IP 上限 (60 min)
+    review_per_word: 5          # 每复习一个词基础值
+    review_bonus_threshold: 80  # 得分 ≥ 80 翻倍 → 10 IP
+    review_daily_cap: 500       # 复习每日 IP 上限
+    dictation_per_sentence: 15  # 每句听写基础值
+    dictation_daily_cap: 300    # 听写每日 IP 上限
+    daily_bonus: 10             # 每日首次活跃奖励
+    word_mastery_bonus: 5       # 掌握一个新单词
+
+  draw:
+    cost: 1                      # 每次抽卡消耗

@@ -10,6 +10,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import type { LoopMode } from '../types/lesson';
 import { getLessonById } from '../lib/api';
 import Waveform from './Waveform';
+import Spinner from './ui/Spinner';
 import HeartButton from './HeartButton';
 import EmbeddedDictation from './dictation/EmbeddedDictation';
 import PlaybackDetailTabs from './PlaybackDetailTabs';
@@ -162,8 +163,8 @@ export default function PlayerBar({ onQueueToggle }: Props) {
         );
       })()}
 
-      {/* ── Bottom Player Bar (always visible) ── */}
-      <div className={`fixed bottom-0 right-0 z-40 transition-all duration-300 ${expanded ? 'left-0' : 'left-0 md:left-56'}`}
+      {/* ── Bottom Player Bar (hidden on mobile) ── */}
+      <div className={`fixed bottom-0 right-0 z-40 transition-all duration-300 hidden md:block ${expanded ? 'left-0' : 'left-0 md:left-56'}`}
         style={{
           background: 'var(--glass-bg)',
           borderTop: '1px solid var(--border-primary)',
@@ -239,13 +240,13 @@ export default function PlayerBar({ onQueueToggle }: Props) {
               disabled={!hasContent || loading}
               className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-150 cursor-pointer select-none ${
                 !hasContent ? 'bg-[var(--bg-tertiary)] text-tertiary cursor-default' :
-                loading ? 'bg-[var(--bg-active)] animate-pulse' :
+                loading ? 'bg-[var(--bg-active)]' :
                 pressing ? 'bg-white scale-90' :
                 'bg-white hover:scale-105'
               }`}
               style={hasContent && !loading ? { boxShadow: '0 4px 20px rgba(0,0,0,0.4)' } : {}}>
               {loading
-                ? <span className=""><HiBackward size={18}/></span>
+                ? <Spinner size={18} />
                 : playing ? <span className={hasContent ? 'text-black' : 'text-tertiary'}><HiPause size={20}/></span>
                 : <span className={hasContent ? 'text-black' : 'text-tertiary'}><HiPlay size={20}/></span>}
             </button>

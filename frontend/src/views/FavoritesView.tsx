@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { HiHeart, HiPlay, HiMusicalNote, HiBookmark, HiTag, HiCheckCircle, HiTrash } from 'react-icons/hi2';
+
+function fmtDate(ts: number | string | undefined) {
+  if (!ts) return '';
+  const d = typeof ts === 'number' ? new Date(ts * 1000) : new Date(ts);
+  return d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+}
 import { useAudioStore } from '../stores/audioStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useClipsStore } from '../stores/clipsStore';
@@ -9,6 +15,7 @@ import { removeFavorite, getLessonById } from '../lib/api';
 import { useClipAnalysis } from '../hooks/useClipAnalysis';
 import ClipActions from '../components/ClipActions';
 import ClipAnalysisModal from '../components/ClipAnalysisModal';
+import type { AudioClip } from '../types/lesson';
 
 const TYPE_META = {
   audio: { icon: HiMusicalNote, gradient: 'var(--card-gradient)', label: '音频' },
@@ -208,7 +215,7 @@ export default function FavoritesView() {
                               <div className="flex-1 min-w-0">
                                 <p className="text-[14px] text-secondary leading-relaxed line-clamp-2">"{item.title}"</p>
                                 <div className="flex items-center gap-2 mt-1">
-                                  {item.created_at && <span className="text-xs text-tertiary">{item.created_at.slice(0, 10)}</span>}
+                                  {item.created_at && <span className="text-xs text-tertiary">{fmtDate(item.created_at)}</span>}
                                 </div>
                               </div>
                               <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
@@ -270,14 +277,14 @@ export default function FavoritesView() {
                         <>
                           <p className="text-[14px] text-secondary leading-relaxed line-clamp-2">"{item.title}"</p>
                           <div className="flex items-center gap-2 mt-1.5">
-                            <span className="text-xs text-tertiary">{item.subtitle} · {item.created_at?.slice(0, 10)}</span>
+                            <span className="text-xs text-tertiary">{item.subtitle} · {fmtDate(item.created_at)}</span>
                           </div>
                         </>
                       ) : (
                         <>
                           <p className="text-sm font-medium text-primary">{item.title}</p>
                           <p className="text-xs text-tertiary mt-0.5">{item.subtitle}</p>
-                          {item.item_type === 'audio' && <p className="text-xs text-tertiary mt-0.5">{item.created_at?.slice(0, 10)}</p>}
+                          {item.item_type === 'audio' && <p className="text-xs text-tertiary mt-0.5">{fmtDate(item.created_at)}</p>}
                         </>
                       )}
                     </div>

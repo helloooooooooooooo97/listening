@@ -68,8 +68,8 @@ export interface CollectionSummary {
   dynamic_type: string | null;
   item_count: number;
   sort_order: number;
-  created_at: string;
-  updated_at?: string;
+  created_at: number;
+  updated_at?: number;
 }
 
 export interface CollectionItem {

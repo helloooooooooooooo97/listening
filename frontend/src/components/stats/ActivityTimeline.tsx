@@ -23,7 +23,7 @@ export default function ActivityTimeline({ activities, loading }: { activities: 
               a.type==='play'?'bg-blue-400':a.type==='dictation'?'bg-[#fa2d48]':a.type==='clip'?'bg-emerald-400':'bg-amber-400'
             }`} />
             <span className="text-xs text-secondary flex-1 truncate">{a.detail}</span>
-            <span className="text-xs text-tertiary">{a.time?.slice(11,16)}</span>
+            <span className="text-xs text-tertiary">{a.time ? new Date(a.time * 1000).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
           </div>
         ))}
       </div>

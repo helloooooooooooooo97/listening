@@ -9,6 +9,7 @@ import { useToastStore } from '../stores/toastStore';
 import { getLessonById } from '../lib/api';
 import { collectionItemToQueueItem, collectionItemsToQueueItems } from '../lib/collectionQueue';
 import { useClipAnalysis } from '../hooks/useClipAnalysis';
+import { useWordAudio } from '../hooks/useWordAudio';
 import { useCollectionFilter, COLOR_HEX } from '../hooks/useCollectionFilter';
 import { normalizeColor } from '../constants/colors';
 import type { AudioClip, CollectionItem } from '../types/lesson';
@@ -55,6 +56,7 @@ export default function CollectionDetailView() {
   const addToast = useToastStore(s => s.addToast);
   const allClips = useClipsStore(s => s.clips ?? []);
   const items = current?.items || [];
+  const { playWordOnClick } = useWordAudio();
   const [playConfigOpen, setPlayConfigOpen] = useState(false);
   const [playShuffle, setPlayShuffle] = useState(false);
   const updateClip = useClipsStore(s => s.updateClip);
@@ -119,7 +121,17 @@ export default function CollectionDetailView() {
         };
         playClip(clip, lesson);
       } else if (item.item_type === 'word') {
-        addToast('单词暂不支持直接播放', 'info');
+        const word = item.title || item.item_ref;
+        if (!word) return;
+
+        const queueItem = await collectionItemToQueueItem(item);
+        if (queueItem) {
+          useAudioStore.getState().playQueueItem(queueItem);
+          addToast(`正在播放: ${word}`, 'info');
+          return;
+        }
+
+        playWordOnClick(word);
       }
     } catch {
       addToast('播放失败', 'error');

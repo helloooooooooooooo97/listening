@@ -147,7 +147,7 @@ export interface AudioDetailStats {
   completed: boolean;
   clips_count: number;
   last_position: number;
-  last_practiced: string;
+  last_practiced: number;
 }
 
 export function getAudioDetailStats(audioId: string): Promise<AudioDetailStats> {
@@ -172,7 +172,7 @@ export interface DictRecord {
   score: number;
   user_input: string;
   expected_text: string;
-  created_at: string;
+  created_at: number;
 }
 
 export interface AudioGroup {
@@ -180,7 +180,7 @@ export interface AudioGroup {
   audio_title: string;
   avg_score: number;
   total_sentences: number;
-  last_practiced: string;
+  last_practiced: number;
   records: DictRecord[];
 }
 
@@ -203,7 +203,7 @@ export function getAudioProgress(): Promise<{ audios: AudioProgress[] }> {
 
 export interface Activity {
   type: string;
-  time: string;
+  time: number;
   detail: string;
 }
 
@@ -218,6 +218,8 @@ export interface WordSummary {
   word: string;
   count: number;
   tags?: string[];
+  difficulty_score?: number | null;
+  difficulty_level?: WordDifficultyLevel | null;
 }
 
 /** Full word detail with audio timestamps, fetched on demand. */
@@ -237,6 +239,17 @@ export interface WordDictionary {
   tags: string[];
 }
 
+export type WordDifficultyLevel = 'easy' | 'medium' | 'hard';
+
+export interface WordDifficulty {
+  word: string;
+  score: number;
+  level: WordDifficultyLevel;
+  freq: number;
+  length: number;
+  tags: string[];
+}
+
 // ── Favorites ──
 
 export interface FavoriteItem {
@@ -246,7 +259,7 @@ export interface FavoriteItem {
   title: string;
   subtitle: string;
   extra_data: string;
-  created_at: string;
+  created_at: number;
 }
 
 export function getFavorites(): Promise<FavoriteItem[]> {
@@ -294,6 +307,7 @@ export function getWords(params: {
   category?: string;
   collection?: string;
   exam?: string;
+  difficulty?: string;
 } = {}): Promise<{ total: number; words: WordSummary[] }> {
   const sp = new URLSearchParams();
   if (params.q) sp.set('q', params.q);
@@ -304,8 +318,21 @@ export function getWords(params: {
   if (params.category) sp.set('category', params.category);
   if (params.collection) sp.set('collection', params.collection);
   if (params.exam) sp.set('exam', params.exam);
+  if (params.difficulty) sp.set('difficulty', params.difficulty);
   const qs = sp.toString();
   return get(`/api/words${qs ? `?${qs}` : ''}`);
+}
+
+export function getWordDifficulty(level?: string, offset = 0, limit = 50): Promise<{ total: number; words: WordDifficulty[] }> {
+  const sp = new URLSearchParams();
+  if (level) sp.set('level', level);
+  sp.set('offset', String(offset));
+  sp.set('limit', String(limit));
+  return get(`/api/words/difficulty?${sp.toString()}`);
+}
+
+export function getWordDifficultyDetail(word: string): Promise<WordDifficulty> {
+  return get(`/api/words/difficulty/${encodeURIComponent(word)}`);
 }
 
 /** Fetch full word detail with lesson occurrences (audio timestamps). */
@@ -325,14 +352,23 @@ export interface DueWord {
   reviewed_count: number;
   last_score: number | null;
   reviewed_at: string;
+  difficulty_score?: number | null;
+  difficulty_level?: WordDifficultyLevel | null;
 }
 
-export function getDueWords(limit = 20): Promise<{ words: DueWord[] }> {
-  return get(`/api/progress/words/due?limit=${limit}`);
+export function getDueWords(limit = 20, level?: string): Promise<{ words: DueWord[] }> {
+  const sp = new URLSearchParams();
+  sp.set('limit', String(limit));
+  if (level) sp.set('level', level);
+  return get(`/api/progress/words/due?${sp.toString()}`);
 }
 
-export function getDueWordsCount(): Promise<{ count: number }> {
-  return get('/api/progress/words/due-count');
+export function getDueWordsByLevel(level: string, limit = 20): Promise<{ words: DueWord[] }> {
+  return getDueWords(limit, level);
+}
+
+export function getDueWordsCount(level?: string): Promise<{ count: number }> {
+  return get(`/api/progress/words/due-count${level ? `?level=${encodeURIComponent(level)}` : ''}`);
 }
 
 export function submitWordReview(word: string, score: number): Promise<{ ok: boolean }> {
@@ -372,6 +408,13 @@ export function getWordSentences(word: string, prioritize?: string): Promise<{ s
   let url = `/api/words/${encodeURIComponent(word)}/sentences`;
   if (prioritize) url += `?prioritize=${encodeURIComponent(prioritize)}`;
   return get(url);
+}
+
+/** Batch lookup — first sentence for each word in one POST request. */
+export function getWordSentencesBatch(words: string[], prioritize?: string): Promise<{ results: Record<string, WordSentence[]> }> {
+  let url = '/api/words/sentences/batch';
+  if (prioritize) url += `?prioritize=${encodeURIComponent(prioritize)}`;
+  return post(url, { words });
 }
 
 // ── Daily Words ──
@@ -488,4 +531,276 @@ export function saveTranslation(data: {
   extra_data?: string;
 }): Promise<TranslationCacheEntry> {
   return post<TranslationCacheEntry>('/api/translations', data);
+}
+
+// ── Card system types ──
+
+export interface CardMeta {
+  id: string;
+  name: string;
+  title: string;
+  motto: string;
+  rarity: string;
+  png: string;
+  keywords: string[];
+  vocab_signature: string[];
+  obtained: boolean;
+  season: number;
+}
+
+export interface DeckMeta {
+  season: number;
+  title: string;
+  subtitle?: string;
+  theme?: string;
+}
+
+export interface CardListResponse {
+  deck: DeckMeta;
+  cards: CardMeta[];
+  total: number;
+  obtained: number;
+}
+
+export interface DrawStatusResponse {
+  can_draw: boolean;
+  can_afford: boolean;
+  balance: number;
+  draw_cost: number;
+  new_words_since_last_draw: number;
+  min_new_words: number;
+  qualified_candidates: number;
+  min_qualified_cards: number;
+  candidates: DrawCandidate[];
+}
+
+export interface DrawCandidate {
+  card_id: string;
+  name: string;
+  match_score: number;
+  hits: number;
+  total: number;
+  title?: string;
+  motto?: string;
+  rarity?: string;
+  png?: string;
+}
+
+export interface DrawWord {
+  word: string;
+  deck: string;
+}
+
+export interface DrawResponse {
+  draw_id: string;
+  words: DrawWord[];
+  new_words_since_last_draw: number;
+  balance: number;
+  draw_cost: number;
+}
+
+export interface CurrencyBalance {
+  balance: number;
+  earned: number;
+  spent: number;
+}
+
+export interface CurrencyTransaction {
+  id: number;
+  amount: number;
+  balance_after: number;
+  source: string;
+  ref_id: string;
+  ref_summary: string;
+  created_at: number;
+}
+
+export interface EarningSource {
+  source: string;
+  total: number;
+  count: number;
+}
+
+export interface SyncResponse {
+  settled: number;
+  balance: number;
+}
+
+export interface DrawPickResponse {
+  success: boolean;
+  card: {
+    id: string;
+    name: string;
+    title: string;
+    motto: string;
+    rarity: string;
+    png: string;
+    keywords: string[];
+    match_score: number;
+  };
+}
+
+export interface UnlockResponse {
+  success: boolean;
+  card_id: string;
+  match_score: number;
+}
+
+// ── Card system API ──
+
+const CARD_IMG = API_BASE + '/api/cards/image';
+
+export function cardImageUrl(filename: string): string {
+  return `${CARD_IMG}/${filename}.png`;
+}
+
+export function getCardList(): Promise<CardListResponse> {
+  return get<CardListResponse>('/api/cards/list');
+}
+
+export function getDrawStatus(): Promise<DrawStatusResponse> {
+  return get<DrawStatusResponse>('/api/cards/draw/status');
+}
+
+export function performDraw(): Promise<DrawResponse> {
+  return post<DrawResponse>('/api/cards/draw', {});
+}
+
+export function pickDrawWord(drawId: string, word: string): Promise<DrawPickResponse> {
+  return post<DrawPickResponse>('/api/cards/draw/pick', { draw_id: drawId, word });
+}
+
+export function unlockCard(cardId: string, obtainedBy = 'draw'): Promise<UnlockResponse> {
+  return post<UnlockResponse>(`/api/cards/collection/${cardId}`, { obtained_by: obtainedBy });
+}
+
+// ── Currency API ──
+
+export function getCurrencyBalance(): Promise<CurrencyBalance> {
+  return get<CurrencyBalance>('/api/currency/balance');
+}
+
+export function getCurrencyTransactions(source?: string): Promise<{ transactions: CurrencyTransaction[]; total: number }> {
+  const params = source ? `?source=${source}` : '';
+  return get<{ transactions: CurrencyTransaction[]; total: number }>(`/api/currency/transactions${params}`);
+}
+
+export function getEarningToday(): Promise<{ date: string; sources: EarningSource[] }> {
+  return get<{ date: string; sources: EarningSource[] }>('/api/currency/earning-today');
+}
+
+export function syncCurrency(): Promise<SyncResponse> {
+  return post<SyncResponse>('/api/currency/sync', {});
+}
+
+// ── Poker API ──
+
+export interface PokerStatus {
+  can_play: boolean;
+  owned_cards_count: number;
+  balance: number;
+}
+
+export interface PlayableCard {
+  id: string;
+  name: string;
+  title: string;
+  rarity: string;
+  png: string;
+  keywords: string[];
+}
+
+export interface PokerCommunityWord {
+  word: string | null;
+  revealed: boolean;
+  index: number;
+}
+
+export interface PokerPlayerState {
+  id: number;
+  player_type: string;
+  total_bet: number;
+  round_bets: number[];
+  folded: boolean;
+  is_winner: boolean;
+  match_count: number | null;
+  card_id?: string | null;
+  card_name?: string | null;
+  card_rarity?: string | null;
+  keywords?: string[] | null;
+  balance_before?: number | null;
+  cards?: { card_id: string; name: string; rarity: string; png: string; keywords?: string[] }[];
+  scores?: number[];
+  hand?: { rank: number; name: string };
+}
+
+export interface PokerGameState {
+  game_id: number;
+  status: string;
+  phase: string;
+  round: number;
+  pot: number;
+  community_words: PokerCommunityWord[];
+  audio_words?: string[];
+  players: PokerPlayerState[];
+  human_player_id: number | null;
+  acting_player_id: number | null;
+  can_act: boolean;
+  current_bet: number;
+  total_actions?: number;
+  showdown?: {
+    results: {
+      player_id: number;
+      player_type: string;
+      card_name: string;
+      card_rarity: string;
+      card_png: string;
+      keywords: string[];
+      matches: number;
+      folded: boolean;
+      is_winner: boolean;
+      cards?: { card_id: string; name: string; rarity: string; png: string; keywords?: string[] }[];
+      scores?: number[];
+      hand?: { rank: number; name: string };
+    }[];
+    tie: boolean;
+    winner_player_id: number | null;
+  };
+}
+
+export interface PokerHistory {
+  game_id: number;
+  pot: number;
+  human_card: string | null;
+  is_win: boolean;
+  rounds: number;
+  completed_at: number;
+}
+
+export function getPokerStatus(): Promise<PokerStatus> {
+  return get<PokerStatus>('/api/game/poker/status');
+}
+
+export function getPlayableCards(): Promise<{ cards: PlayableCard[] }> {
+  return get<{ cards: PlayableCard[] }>('/api/game/poker/cards');
+}
+
+export function createPokerGame(): Promise<PokerGameState> {
+  return post<PokerGameState>('/api/game/poker/create', {});
+}
+
+export function getPokerGameState(gameId: number): Promise<PokerGameState> {
+  return get<PokerGameState>(`/api/game/poker/${gameId}`);
+}
+
+export function pokerAction(gameId: number, action: string, amount?: number): Promise<PokerGameState> {
+  return post<PokerGameState>(`/api/game/poker/${gameId}/action`, { action, amount: amount || 0 });
+}
+
+export function getPokerResult(gameId: number): Promise<PokerGameState> {
+  return get<PokerGameState>(`/api/game/poker/${gameId}/result`);
+}
+
+export function getPokerHistory(limit?: number): Promise<{ games: PokerHistory[] }> {
+  return get<{ games: PokerHistory[] }>(`/api/game/poker/history/all${limit ? `?limit=${limit}` : ''}`);
 }

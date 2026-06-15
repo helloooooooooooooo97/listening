@@ -38,7 +38,7 @@ class TranslationRepository:
         if existing:
             row_id = existing[0]
             self._conn.execute(
-                "UPDATE translations SET translated_text=?, extra_data=?, updated_at=datetime('now') WHERE id=?",
+                "UPDATE translations SET translated_text=?, extra_data=?, updated_at=unixepoch() WHERE id=?",
                 [data.translated_text, extra_json, row_id],
             )
         else:

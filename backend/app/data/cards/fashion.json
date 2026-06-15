@@ -1,0 +1,180 @@
+{
+    "season": 1,
+    "title": "Masters of Creation",
+    "subtitle": "Fashion & Art Legends",
+    "theme": "Collect legendary creators and unlock their stories through vocabulary mastery.",
+    "cards": [
+        {
+            "id": "chanel",
+            "name": "Coco Chanel",
+            "title": "The Woman Who Stole Men's Clothes",
+            "rarity": "R",
+            "png": "coco_chanel",
+            "keywords": [
+                "fashion",
+                "elegance",
+                "luxury",
+                "freedom",
+                "style"
+            ],
+            "motto": "Fashion fades. Freedom remains.",
+            "lore": {
+                "english": "History is full of people who followed the rules. Chanel became legendary because she ignored them. When women were trapped inside uncomfortable corsets, she looked at men's jackets and saw freedom. One day, surrounded by wealthy women covered in jewelry and decoration, she famously advised: 'Before you leave the house, look in the mirror and take one thing off.' In an era obsessed with excess, she made simplicity luxurious. Her obsession with the number five later inspired Chanel No.5, one of the most famous perfumes ever created. Chanel didn't simply change fashion. She changed how women saw themselves.",
+                "chinese": "历史上有许多人遵守规则，而香奈儿之所以传奇，是因为她无视规则。当女性被束腰束缚时，她从男装外套里看到了自由。有一次，她面对一群珠光宝气的贵妇说：'出门前照照镜子，然后拿掉一件饰品。' 在人人追求复杂和奢华的年代，她却让极简成为高级感。她对数字5近乎痴迷，这最终催生了传奇香水 Chanel No.5。香奈儿改变的不只是时尚，更是女性看待自己的方式。"
+            }
+        },
+        {
+            "id": "dior",
+            "name": "Christian Dior",
+            "title": "The Architect of Dreams",
+            "rarity": "R",
+            "png": "christain_dior",
+            "keywords": [
+                "beauty",
+                "dream",
+                "elegance",
+                "hope",
+                "design"
+            ],
+            "motto": "Beauty is hope wearing a dress.",
+            "lore": {
+                "english": "After World War II, the world was exhausted. Dior believed beauty could restore hope. His famous New Look collection shocked the fashion industry and reminded people that elegance still mattered. Behind his confident designs was a surprisingly superstitious man. Before major fashion shows, Dior often consulted astrologers and fortune tellers. Friends joked that he trusted the stars almost as much as his own sketches. Yet his dream-filled vision helped an entire generation imagine a brighter future.",
+                "chinese": "二战后的世界满目疮痍，而迪奥相信美能够治愈人心。他著名的 New Look 系列震惊了时尚界，也让人们重新相信优雅的力量。然而这位设计大师私下却极其迷信。每次重要时装秀前，他都会咨询占星师和算命师。朋友们开玩笑说，他对星星的信任几乎和对自己的设计一样多。正是这种浪漫理想主义，让整个时代重新学会做梦。"
+            }
+        },
+        {
+            "id": "ysl",
+            "name": "Yves Saint Laurent",
+            "title": "The Quiet Revolutionary",
+            "rarity": "SR",
+            "png": "yves_saint_laurent",
+            "keywords": [
+                "innovation",
+                "confidence",
+                "freedom",
+                "style",
+                "creativity"
+            ],
+            "motto": "Revolutions sometimes begin with a sketch.",
+            "lore": {
+                "english": "At just twenty-one years old, Yves Saint Laurent became the creative director of Dior, leaving the fashion world stunned. In public, he was shy and deeply uncomfortable with attention. Yet his designs challenged every convention. He introduced the women's tuxedo and transformed fashion into a language of personal freedom. His greatest contradiction was simple: the quieter he became, the louder his ideas grew.",
+                "chinese": "21岁时，圣罗兰接管 Dior，震惊整个法国时尚界。现实中的他害羞内向，不喜欢成为焦点；但他的设计却不断挑战传统。他创造了女性西装，把时尚变成表达自由的语言。他最大的矛盾在于：现实越安静，作品越大胆。"
+            }
+        },
+        {
+            "id": "mcqueen",
+            "name": "Alexander McQueen",
+            "title": "The Dark Poet",
+            "rarity": "SR",
+            "png": "alexander_mcqueen",
+            "keywords": [
+                "drama",
+                "emotion",
+                "rebellion",
+                "art",
+                "expression"
+            ],
+            "motto": "If they are comfortable, you are boring.",
+            "lore": {
+                "english": "McQueen never wanted people to simply admire his work. He wanted them to feel something. His runway shows looked like apocalyptic films, psychological experiments, or living nightmares. Fascinated by death, beauty, and human emotion, he transformed fashion into storytelling. While others designed clothes, McQueen designed experiences.",
+                "chinese": "麦昆从不满足于让观众喜欢他的作品。他希望观众被震撼。他的时装秀常常像末日电影、心理实验甚至噩梦现场。痴迷于死亡、美感和情绪表达的他，把时尚变成了一种叙事艺术。别人设计衣服，而麦昆设计的是体验。"
+            }
+        },
+        {
+            "id": "lagerfeld",
+            "name": "Karl Lagerfeld",
+            "title": "The Fashion Emperor",
+            "rarity": "SR",
+            "png": "karl_lagerfeld",
+            "keywords": [
+                "branding",
+                "luxury",
+                "identity",
+                "influence",
+                "leadership"
+            ],
+            "motto": "Style is a language spoken without words.",
+            "lore": {
+                "english": "Wearing dark sunglasses, a white ponytail, and a black suit, Karl Lagerfeld spent decades turning himself into a living logo. Yet his most famous relationship was not with a celebrity—it was with his cat, Choupette. The cat enjoyed private staff, luxury travel, and a lifestyle many humans could only dream about. Lagerfeld proved that image itself can become power.",
+                "chinese": "黑墨镜、白马尾、黑西装，拉格斐把自己活成了一个品牌。但他最出名的关系并不是与明星，而是与他的猫 Choupette。这只猫拥有私人保姆、专属摄影师和奢华生活。拉格斐证明了形象本身就能成为力量。"
+            }
+        },
+        {
+            "id": "warhol",
+            "name": "Andy Warhol",
+            "title": "The Prophet of Fame",
+            "rarity": "SR",
+            "png": "andy_warhol",
+            "keywords": [
+                "pop",
+                "media",
+                "culture",
+                "fame",
+                "creativity"
+            ],
+            "motto": "Everything is art if people cannot stop looking.",
+            "lore": {
+                "english": "Most people looked at soup cans and saw groceries. Warhol looked at them and saw art. Obsessed with recording everyday life, he carried tape recorders everywhere and archived conversations long before social media existed. His prediction that everyone would be famous for fifteen minutes now feels less like a joke and more like a description of the internet.",
+                "chinese": "大多数人看到的是罐头，而沃霍尔看到的是艺术。他痴迷记录生活，在社交媒体出现之前就随身带着录音机记录一切。他那句‘每个人都能成名15分钟’的预言，如今看起来更像互联网时代的真实写照。"
+            }
+        },
+        {
+            "id": "picasso",
+            "name": "Pablo Picasso",
+            "title": "The Rule Destroyer",
+            "rarity": "SSR",
+            "png": "pablo_picasso",
+            "keywords": [
+                "art",
+                "innovation",
+                "expression",
+                "freedom",
+                "cubism"
+            ],
+            "motto": "Master the rules. Then destroy them.",
+            "lore": {
+                "english": "Picasso mastered classical painting as a child. Then he spent the rest of his life destroying everything he had mastered. A famous story tells of a woman who asked him to draw something on a napkin. He spent thirty seconds sketching, then charged a fortune. When she protested, Picasso replied: 'No, it took me thirty years.'",
+                "chinese": "毕加索小时候就掌握了传统绘画技巧，但之后的一生都在不断推翻自己学会的一切。一次，一位女士请他在餐巾纸上画画。他只用了30秒就完成，然后索要高价。女士惊呼：‘你才画了30秒！’ 毕加索回答：‘不，我花了30年。’"
+            }
+        },
+        {
+            "id": "dali",
+            "name": "Salvador Dalí",
+            "title": "The King of Dreams",
+            "rarity": "SSR",
+            "png": "salvador_dali",
+            "keywords": [
+                "dream",
+                "surrealism",
+                "imagination",
+                "vision",
+                "fantasy"
+            ],
+            "motto": "Reality is merely a suggestion.",
+            "lore": {
+                "english": "Dalí loved imagination almost as much as he loved Salvador Dalí. To capture dream-like ideas, he developed a bizarre technique: he would sit in a chair holding a spoon above a metal plate. As he drifted to sleep, the spoon would fall, wake him up, and allow him to sketch the strange images he had just seen. Madness? Perhaps. Genius? Absolutely.",
+                "chinese": "达利热爱想象力，而他对自己的热爱几乎不亚于此。为了捕捉梦境灵感，他发明了一种奇怪的方法：手拿勺子坐在椅子上，当快睡着时，勺子掉到铁盘上发出巨响把自己惊醒，然后立刻记录梦境。看起来像疯子，但结果却创造了无数艺术经典。"
+            }
+        },
+        {
+            "id": "leonardo",
+            "name": "Leonardo da Vinci",
+            "title": "The Ultimate Creator",
+            "rarity": "UR",
+            "hidden": true,
+            "png": "leonardo_da_vinci",
+            "keywords": [
+                "curiosity",
+                "science",
+                "art",
+                "innovation",
+                "discovery"
+            ],
+            "motto": "Curiosity is humanity's ultimate superpower.",
+            "lore": {
+                "english": "Leonardo was a painter, scientist, engineer, inventor, anatomist, and philosopher. He was also one of history's greatest procrastinators. He would begin a painting, become fascinated by bird wings, then start studying flight. His notebooks jumped wildly between art, engineering, biology, and mathematics. Centuries later, the world realized that his curiosity was his true masterpiece.",
+                "chinese": "达芬奇既是画家、科学家，也是工程师、发明家和哲学家。但他同时还是历史上著名的拖延症患者。他画画画到一半会跑去研究鸟类，研究鸟类又转头设计飞行器。他的笔记本里经常在同一页上同时出现艺术、数学、生物和机械设计。数百年后，人们终于明白，他最大的作品其实是他的好奇心。"
+            }
+        }
+    ]
+}

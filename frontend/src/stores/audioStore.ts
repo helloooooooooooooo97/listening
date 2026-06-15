@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { AudioClip, ListeningLesson, LoopMode } from '../types/lesson';
 import { useSettingsStore } from './settingsStore';
-import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio, setSavedRate, applyPlaybackRate, safePlay } from '../lib/audioEngine';
+import { getAudio, switchSource, waitForReady, findSentenceIndex, preloadLessonAudio, setSavedRate, applyPlaybackRate, safePlay, getPreloadedLessonAudio } from '../lib/audioEngine';
 import { postPlayHistory, recordListenedWords } from '../lib/api';
 import { usePlaylistStore, type QueueItem } from './playlistStore';
 import { queueItemToClip } from '../lib/queueItems';
@@ -28,8 +28,12 @@ function flushTrack() {
   let id: string, title: string, words: any[] | undefined;
   if (m.kind === 'lesson') {
     id = m.lesson.id; title = m.lesson.title; words = m.lesson.words;
-  } else if (m.kind === 'clip' && m.lesson) {
-    id = m.lesson.id; title = m.lesson.title; words = m.lesson.words;
+  } else if (m.kind === 'clip') {
+    if (m.lesson) {
+      id = m.lesson.id; title = m.lesson.title; words = m.lesson.words;
+    } else {
+      id = m.clip.lessonId; title = m.clip.lessonTitle; words = undefined;
+    }
   } else {
     return;
   }
@@ -67,6 +71,8 @@ interface AudioState {
   playLesson: (lesson: ListeningLesson) => void;
   viewLesson: (lesson: ListeningLesson) => void;
   playClip: (clip: AudioClip, contextLesson?: ListeningLesson | null) => void;
+  /** Safari-safe: play synchronously in a user gesture when preloaded audio is ready. */
+  playClipInGesture: (clip: AudioClip, contextLesson?: ListeningLesson | null) => void;
   viewClip: (clip: AudioClip, contextLesson?: ListeningLesson | null) => void;
   togglePlay: () => void;
   seek: (time: number) => void;
@@ -275,6 +281,53 @@ export const useAudioStore = create<AudioState>((set, get) => {
         a.currentTime = clip.startTime;
         applyPlaybackRate(a, rate);
         safePlay(a);
+      });
+    },
+
+    playClipInGesture: (clip, contextLesson?) => {
+      const switched = switchSource(clip.lessonId, flushTrack);
+      const rate = get().playbackRate;
+      const volume = useSettingsStore.getState().settings.volume ?? 1;
+      const main = getAudio();
+      _clipEndHandled = false;
+      set({
+        mode: { kind: 'clip', clip, lesson: contextLesson ?? null },
+        loopCount: 0,
+        loopMode: 'clip',
+        playbackRate: rate,
+        isLoading: false,
+        error: null,
+      });
+
+      const startOn = (a: HTMLAudioElement) => {
+        a.currentTime = clip.startTime;
+        applyPlaybackRate(a, rate);
+        a.volume = volume;
+        void safePlay(a);
+      };
+
+      if (main.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+        startOn(main);
+        return;
+      }
+
+      const pool = getPreloadedLessonAudio(clip.lessonId);
+      if (pool && pool.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+        // Main needs reload after switchSource; pool is ready — play in gesture, hand off to main.
+        startOn(pool);
+        if (switched) set({ isLoading: true });
+        waitForReady(main, () => {
+          pool.pause();
+          set({ isLoading: false });
+          startOn(main);
+        });
+        return;
+      }
+
+      if (switched) set({ isLoading: true });
+      waitForReady(main, () => {
+        set({ isLoading: false });
+        startOn(main);
       });
     },
 

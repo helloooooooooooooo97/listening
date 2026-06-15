@@ -1,11 +1,20 @@
 import { useState } from 'react';
-import { HiSun, HiArrowPath, HiBookOpen, HiSparkles } from 'react-icons/hi2';
+import { HiSun, HiArrowPath, HiBookOpen, HiSparkles, HiPlay } from 'react-icons/hi2';
+import Spinner from '../ui/Spinner';
 import type { Difficulty } from './levelGenerator';
 
 interface GameLevelSelectProps {
-  onStart: (difficulty: Difficulty, source: string) => void;
+  onStart: (difficulty: Difficulty, source: string, difficultyFilter: string) => void;
   onBack: () => void;
+  onPlaySample?: (word: string) => void;
+  starting?: boolean;
 }
+
+const SAMPLE_WORDS: Record<string, string> = {
+  today: 'apple',
+  review: 'book',
+  all: 'hello',
+};
 
 const DIFF_ICONS = {
   easy: <span className="w-3 h-3 rounded-full bg-emerald-400 inline-block" />,
@@ -19,9 +28,10 @@ const SOURCE_ICONS: Record<string, React.ReactNode> = {
   all: <HiBookOpen size={13} />,
 };
 
-export default function GameLevelSelect({ onStart, onBack }: GameLevelSelectProps) {
+export default function GameLevelSelect({ onStart, onBack, onPlaySample, starting }: GameLevelSelectProps) {
   const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const [source, setSource] = useState('today');
+  const [difficultyFilter, setDifficultyFilter] = useState('');
 
   const difficulties: { key: Difficulty; label: string; desc: string; color: string }[] = [
     { key: 'easy', label: '简单', desc: '10 词 · 2 层 · 适合新手', color: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' },
@@ -33,6 +43,13 @@ export default function GameLevelSelect({ onStart, onBack }: GameLevelSelectProp
     { key: 'today', label: '今日单词' },
     { key: 'review', label: '待复习单词' },
     { key: 'all', label: '全部单词' },
+  ];
+
+  const wordDifficulties = [
+    { key: '', label: '全部' },
+    { key: 'easy', label: '简单' },
+    { key: 'medium', label: '中等' },
+    { key: 'hard', label: '困难' },
   ];
 
   return (
@@ -51,13 +68,37 @@ export default function GameLevelSelect({ onStart, onBack }: GameLevelSelectProp
           <div className="flex gap-3">
             {sources.map(s => (
               <button key={s.key} onClick={() => setSource(s.key)}
-                className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                className={`group flex items-center justify-center gap-1.5 flex-1 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                   source === s.key
                     ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
                     : 'bg-[var(--bg-tertiary)] text-tertiary hover:text-secondary'
                 }`}>
                 {SOURCE_ICONS[s.key]}
                 {s.label}
+                {onPlaySample && (
+                  <span onClick={e => { e.stopPropagation(); onPlaySample(SAMPLE_WORDS[s.key]); }}
+                    className="ml-1 opacity-0 group-hover:opacity-100 hover:text-secondary transition-opacity cursor-pointer"
+                    title="试听">
+                    <HiPlay size={10} />
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Word difficulty source filter */}
+        <div className="mb-6">
+          <p className="text-sm text-tertiary font-medium mb-3 uppercase tracking-wider">词汇难度</p>
+          <div className="grid grid-cols-4 gap-2">
+            {wordDifficulties.map(d => (
+              <button key={d.key || 'all'} onClick={() => setDifficultyFilter(d.key)}
+                className={`py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                  difficultyFilter === d.key
+                    ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
+                    : 'bg-[var(--bg-tertiary)] text-tertiary hover:text-secondary'
+                }`}>
+                {d.label}
               </button>
             ))}
           </div>
@@ -85,9 +126,11 @@ export default function GameLevelSelect({ onStart, onBack }: GameLevelSelectProp
             className="flex-1 py-3.5 rounded-xl text-base font-medium text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)] transition-colors cursor-pointer">
             返回
           </button>
-          <button onClick={() => onStart(difficulty, source)}
-            className="flex-1 py-3.5 rounded-xl text-base font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer flex items-center justify-center gap-1.5">
-            <HiSparkles size={16} /> 开始游戏
+          <button onClick={() => onStart(difficulty, source, difficultyFilter)}
+            disabled={starting}
+            className="flex-1 py-3.5 rounded-xl text-base font-semibold bg-[var(--accent)] on-accent hover:opacity-90 transition-opacity cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed">
+            {starting ? <Spinner size={16} /> : <HiSparkles size={16} />}
+            {starting ? '加载中...' : '开始游戏'}
           </button>
         </div>
       </div>

@@ -1,11 +1,12 @@
 """Progress API — dictation, play history, word progress, reviews."""
-from __future__ import annotations
 
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel
 
-from database import get_conn
+from database import get_conn, locked
 from repositories.progress_repo import ProgressRepository
+from services.currency_service import settle
+from services.word_difficulty_service import WordDifficultyService
 
 router = APIRouter(prefix="/api/progress", tags=["progress"])
 
@@ -42,13 +43,6 @@ class WordReviewIn(BaseModel):
     score: float
 
 
-class BatchReviewIn(BaseModel):
-    session_id: str
-    source: str = "review"
-    mode: str = "fill-in"
-    results: list[BatchReviewItem]
-
-
 class BatchReviewItem(BaseModel):
     word: str
     correct: bool = False
@@ -56,13 +50,22 @@ class BatchReviewItem(BaseModel):
     session_index: int = 0
 
 
+class BatchReviewIn(BaseModel):
+    session_id: str
+    source: str = "review"
+    mode: str = "fill-in"
+    results: list[BatchReviewItem]
+
+
 # ── Dictation ──
 
 
 @router.post("/dictation", status_code=201)
+@locked
 def add_dictation(data: DictationCreate, repo: ProgressRepository = Depends(get_repo)):
     repo.add_dictation(data.audio_id, data.audio_title, data.sentence_index, data.score, data.user_input, data.expected_text)
     repo.update_dictation_progress(data.audio_id, data.audio_title, data.score)
+    settle(get_conn())
     return {"ok": True}
 
 
@@ -75,9 +78,11 @@ def list_history(repo: ProgressRepository = Depends(get_repo)):
 
 
 @router.post("/play-history", status_code=201)
+@locked
 def add_history(data: PlayCreate, repo: ProgressRepository = Depends(get_repo)):
     repo.add_play_history(data.audio_id, data.audio_title, data.duration_seconds)
     repo.upsert_play_progress(data.audio_id, data.audio_title, data.duration_seconds)
+    settle(get_conn())
     return {"ok": True}
 
 
@@ -90,8 +95,10 @@ def list_word_progress(repo: ProgressRepository = Depends(get_repo)):
 
 
 @router.post("/words")
+@locked
 def set_word_known(data: WordKnownUpdate, repo: ProgressRepository = Depends(get_repo)):
     repo.set_word_known(data.word, data.known)
+    settle(get_conn())
     return {"ok": True}
 
 
@@ -99,12 +106,15 @@ def set_word_known(data: WordKnownUpdate, repo: ProgressRepository = Depends(get
 
 
 @router.post("/words/review", status_code=201)
+@locked
 def submit_review(data: WordReviewIn, repo: ProgressRepository = Depends(get_repo)):
     repo.add_review(data.word, data.score)
+    settle(get_conn())
     return {"ok": True}
 
 
 @router.post("/review/batch", status_code=201)
+@locked
 def submit_batch_review(data: BatchReviewIn, repo: ProgressRepository = Depends(get_repo)):
     """Batch-submit a review session: writes to review_history + updates word_progress."""
     result = repo.batch_review(
@@ -113,6 +123,7 @@ def submit_batch_review(data: BatchReviewIn, repo: ProgressRepository = Depends(
         mode=data.mode,
         results=[r.model_dump() for r in data.results],
     )
+    settle(get_conn())
     return result
 
 
@@ -129,13 +140,22 @@ def get_review_stats(repo: ProgressRepository = Depends(get_repo)):
 
 
 @router.get("/words/due")
-def due_words(limit: int = Query(default=20, ge=1, le=100), repo: ProgressRepository = Depends(get_repo)):
-    return {"words": repo.get_due_words(limit)}
+def due_words(
+    limit: int = Query(default=20, ge=1, le=100),
+    level: str = Query(default="", description="easy, medium, hard"),
+    repo: ProgressRepository = Depends(get_repo),
+):
+    WordDifficultyService(get_conn()).ensure_computed()
+    return {"words": repo.get_due_words(limit, level or None)}
 
 
 @router.get("/words/due-count")
-def due_words_count(repo: ProgressRepository = Depends(get_repo)):
-    return {"count": repo.get_due_words_count()}
+def due_words_count(
+    level: str = Query(default="", description="easy, medium, hard"),
+    repo: ProgressRepository = Depends(get_repo),
+):
+    WordDifficultyService(get_conn()).ensure_computed()
+    return {"count": repo.get_due_words_count(level or None)}
 
 
 # ── Daily Words ──
