@@ -45,6 +45,7 @@ interface GameStatsRecord {
   elapsed: number;
   win: boolean;
   source: string;
+  difficulty_filter: string;
   tools_used: { shuffle: number; undo: number; remove3: number };
   date: string;
 }
@@ -58,6 +59,7 @@ function saveGameStats(store: GameStore) {
     elapsed: store.elapsed,
     win: store.status === 'won',
     source: store.gameSource,
+    difficulty_filter: store.difficultyFilter,
     tools_used: { ...store.toolsUsed },
     date: new Date().toISOString(),
   };
@@ -116,8 +118,10 @@ export interface GameStore {
   toolsUsed: { shuffle: number; undo: number; remove3: number };
   /** Word source for this session (today / review / all) */
   gameSource: string;
+  /** Optional vocabulary difficulty filter for this session. */
+  difficultyFilter: string;
 
-  initGame: (allWords: string[], difficulty: Difficulty, source?: string) => boolean;
+  initGame: (allWords: string[], difficulty: Difficulty, source?: string, difficultyFilter?: string) => boolean;
   clickTile: (tileId: string) => void;
   useShuffle: () => void;
   useUndo: () => void;
@@ -159,10 +163,11 @@ export const useGameStore = create<GameStore>((set, get) => ({
   difficultyMessage: null,
   toolsUsed: { shuffle: 0, undo: 0, remove3: 0 },
   gameSource: 'all',
+  difficultyFilter: '',
 
   clearDifficultyMessage: () => set({ difficultyMessage: null }),
 
-  initGame: (allWords, difficulty, source = 'all') => {
+  initGame: (allWords, difficulty, source = 'all', difficultyFilter = '') => {
     const config = generateLevel(allWords, difficulty);
     if (!config) return false;
 
@@ -183,6 +188,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       lastMatchSuccess: false,
       toolsUsed: { shuffle: 0, undo: 0, remove3: 0 },
       gameSource: source,
+      difficultyFilter,
     });
 
     // Start timer

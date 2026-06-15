@@ -47,10 +47,10 @@ export default function GameView() {
     });
   }, []);
 
-  const tryStartGame = useCallback(async (words: string[], difficulty: Difficulty, source: string) => {
+  const tryStartGame = useCallback(async (words: string[], difficulty: Difficulty, source: string, difficultyFilter = '') => {
     setStartError(null);
     setPreloadProgress(0);
-    const ok = store.initGame(words, difficulty, source);
+    const ok = store.initGame(words, difficulty, source, difficultyFilter);
     if (!ok) {
       setStartError('单词不足，请选择其他来源或降低难度');
       return;
@@ -63,21 +63,26 @@ export default function GameView() {
     setPreloadProgress(100);
   }, [store]);
 
-  const handleStart = async (difficulty: Difficulty, source: string) => {
+  const handleStart = async (difficulty: Difficulty, source: string, difficultyFilter: string) => {
     setStarting(true);
     setStartError(null);
     try {
       if (source === 'today') {
-        const d = await getTodayWords();
-        await tryStartGame(d.words.map(w => w.word), difficulty, 'today');
+        const words = difficultyFilter
+          ? (await getWords({ collection: 'today_words', difficulty: difficultyFilter, limit: 500 })).words.map(w => w.word)
+          : (await getTodayWords()).words.map(w => w.word);
+        await tryStartGame(words, difficulty, 'today', difficultyFilter);
         return;
       }
       if (source === 'review') {
-        const d = await getDueWords(200);
-        await tryStartGame(d.words.map(w => w.word), difficulty, 'review');
+        const d = await getDueWords(200, difficultyFilter || undefined);
+        await tryStartGame(d.words.map(w => w.word), difficulty, 'review', difficultyFilter);
         return;
       }
-      await tryStartGame(allWords, difficulty, 'all');
+      const words = difficultyFilter
+        ? (await getWords({ difficulty: difficultyFilter, limit: 500 })).words.map(w => w.word)
+        : allWords;
+      await tryStartGame(words, difficulty, 'all', difficultyFilter);
     } catch {
       setStartError('加载失败，请检查网络后重试');
     } finally {
@@ -87,7 +92,7 @@ export default function GameView() {
 
   const handleReplay = useCallback(() => {
     const s = useGameStore.getState();
-    void tryStartGame(s.words, s.difficulty, s.gameSource);
+    void tryStartGame(s.words, s.difficulty, s.gameSource, s.difficultyFilter);
   }, [tryStartGame]);
 
   if (loading) {
@@ -145,7 +150,7 @@ export default function GameView() {
     return (
       <div className="h-full bg-[var(--bg-primary)] overflow-y-auto">
         <GameHeader onRestart={handleReplay} />
-        <div className="px-4 py-8">
+        <div className="px-4 pt-8 pb-8 md:pb-28">
           <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={handleTileClick} />
           <div className="mt-6">
             <SlotBar slot={store.slot} capacity={store.slotCapacity} />
@@ -201,7 +206,7 @@ export default function GameView() {
         <GameBoard tiles={store.tiles} inDegree={store.inDegree} onTileClick={handleTileClick} />
       </div>
 
-      <div className="pb-6 flex justify-center">
+      <div className="pb-6 md:pb-28 flex justify-center">
         <SlotBar
           slot={store.slot}
           capacity={store.slotCapacity}

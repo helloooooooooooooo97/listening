@@ -23,13 +23,15 @@ _lock = threading.Lock()
 
 
 def get_conn() -> sqlite3.Connection:
-    """Return the singleton connection (not thread-safe by itself — use the lock)."""
+    """Return the singleton connection (thread-safe initialization)."""
     global _conn
     if _conn is None:
-        _conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
-        _conn.row_factory = sqlite3.Row
-        _conn.execute("PRAGMA journal_mode=WAL")
-        _conn.execute("PRAGMA foreign_keys=ON")
+        with _lock:
+            if _conn is None:  # double-checked locking
+                _conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
+                _conn.row_factory = sqlite3.Row
+                _conn.execute("PRAGMA journal_mode=WAL")
+                _conn.execute("PRAGMA foreign_keys=ON")
     return _conn
 
 
@@ -189,6 +191,17 @@ def init_db():
             created_at INTEGER DEFAULT (unixepoch())
         );
         CREATE UNIQUE INDEX IF NOT EXISTS idx_fav_item ON favorites(item_id, item_type);
+
+        -- 单词难度分级
+        CREATE TABLE IF NOT EXISTS word_difficulty (
+            word TEXT PRIMARY KEY,
+            score REAL NOT NULL,
+            level TEXT NOT NULL CHECK(level IN ('easy','medium','hard')),
+            freq INTEGER DEFAULT 0,
+            length INTEGER DEFAULT 0,
+            updated_at INTEGER DEFAULT (unixepoch())
+        );
+        CREATE INDEX IF NOT EXISTS idx_wd_level ON word_difficulty(level);
     """)
     # Migration: add color column if not exists (for existing databases)
     try:
@@ -405,4 +418,3 @@ def init_db():
 
     # ── 自动导入卡牌数据 (幂等: 已存在的跳过, 新加的自动补入) ──
     _seed_card_data_if_needed(conn)
-

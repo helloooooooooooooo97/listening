@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import time
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -49,6 +50,25 @@ async def global_exception_handler(request: Request, exc: Exception):
 from routers import routers as router_list
 for r in router_list:
     app.include_router(r)
+
+
+@app.on_event("startup")
+def warm_word_sentence_cache():
+    start = time.perf_counter()
+    try:
+        from routers.words import _ensure_cache, _best_sentence_cache_by_word
+        from services.word_difficulty_service import WordDifficultyService
+        from database import get_conn
+        _ensure_cache()
+        difficulty_count = WordDifficultyService(get_conn()).ensure_computed()
+        logger.info(
+            "Word caches warmed: %s sentence entries, %s difficulty entries in %.2fs",
+            len(_best_sentence_cache_by_word or {}),
+            difficulty_count,
+            time.perf_counter() - start,
+        )
+    except Exception as exc:
+        logger.warning("Word sentence cache warmup skipped: %s", exc)
 
 
 @app.get("/api/health")

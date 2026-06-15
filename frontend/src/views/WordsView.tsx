@@ -6,7 +6,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { useFavoritesStore } from '../stores/favoritesStore';
 import { useAiStore } from '../stores/aiStore';
 import type { WordAnalysis } from '../types/lesson';
-import { getWords, getWordDetail, getKnownWords, setWordKnown, getDueWords, submitWordReview, getTodayWords, getTodayStats, getDictionaryEntry, type WordSummary, type WordDetail, type WordDictionary, type DueWord, type TodayWord, type TodayStats } from '../lib/api';
+import { getWords, getWordDetail, getKnownWords, setWordKnown, getDueWords, getDueWordsCount, submitWordReview, getTodayWords, getTodayStats, getDictionaryEntry, type WordSummary, type WordDetail, type WordDictionary, type DueWord, type TodayWord, type TodayStats, type WordDifficultyLevel } from '../lib/api';
 import { useWordAudio } from '../hooks/useWordAudio';
 import Spinner from '../components/ui/Spinner';
 import ReviewModal from '../components/words/ReviewModal';
@@ -32,6 +32,23 @@ function TagBadge({ tag }: { tag: string }) {
   );
 }
 
+const DIFFICULTY_META: Record<WordDifficultyLevel, { label: string; className: string; dot: string }> = {
+  easy: { label: 'Easy', className: 'bg-emerald-500/15 text-emerald-400', dot: 'bg-emerald-400' },
+  medium: { label: 'Medium', className: 'bg-amber-500/15 text-amber-400', dot: 'bg-amber-400' },
+  hard: { label: 'Hard', className: 'bg-rose-500/15 text-rose-400', dot: 'bg-rose-400' },
+};
+
+function DifficultyBadge({ level }: { level?: WordDifficultyLevel | null }) {
+  if (!level) return null;
+  const meta = DIFFICULTY_META[level];
+  return (
+    <span className={`inline-flex items-center gap-1 text-[9px] px-1.5 py-0.5 rounded font-semibold whitespace-nowrap ${meta.className}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${meta.dot}`} />
+      {meta.label}
+    </span>
+  );
+}
+
 // ── Shared tab content wrapper ──
 
 function TabContent({ loading, empty, emptyMessage, children }: { loading: boolean; empty: boolean; emptyMessage: string; children: React.ReactNode }) {
@@ -46,6 +63,7 @@ interface WordRowData {
   word: string;
   count: number;
   tags?: string[];
+  difficulty_level?: WordDifficultyLevel | null;
 }
 
 function WordRow({ item, selected, known, tags, isFavWord, hasAi, aiExpanded, aiWord, onSelect, onFav, onMarkKnown, onAi, onPlayWord }: {
@@ -64,6 +82,7 @@ function WordRow({ item, selected, known, tags, isFavWord, hasAi, aiExpanded, ai
         {tags && tags.length > 0 && (
           <span className="flex items-center gap-0.5">{tags.map(t => <TagBadge key={t} tag={t} />)}</span>
         )}
+        <DifficultyBadge level={item.difficulty_level} />
       </span>
       <span className="text-xs text-tertiary tabular-nums">{item.count}次</span>
       {onPlayWord && (
@@ -146,7 +165,10 @@ export default function WordsView() {
   const [categoryFilter, setCategoryFilter] = useState<Set<string>>(new Set());
   const [collectionFilter, setCollectionFilter] = useState<string>('');
   const [examFilter, setExamFilter] = useState<string>('');
+  const [difficultyFilter, setDifficultyFilter] = useState('');
   const [dueWords, setDueWords] = useState<DueWord[]>([]);
+  const [reviewDifficulty, setReviewDifficulty] = useState('');
+  const [reviewCounts, setReviewCounts] = useState<Record<string, number>>({});
   const [masteredWords, setMasteredWords] = useState<WordSummary[]>([]);
   const [masteredLoading, setMasteredLoading] = useState(false);
   const [dueWordsLoading, setDueWordsLoading] = useState(false);
@@ -166,7 +188,7 @@ export default function WordsView() {
 
   // Review modal state
   const [reviewOpen, setReviewOpen] = useState(false);
-  const [reviewWords, setReviewWords] = useState<{ word: string; source?: string }[]>([]);
+  const [reviewWords, setReviewWords] = useState<{ word: string; source?: string; difficultyLevel?: WordDifficultyLevel | null }[]>([]);
 
   // Load known words from API
   useEffect(() => {
@@ -212,11 +234,11 @@ export default function WordsView() {
   }, [tab, loadTodayData]);
 
   // Load all words
-  const loadWords = useCallback((query: string, sm: SortMode, off: number, append: boolean, cat?: string, coll?: string, exam?: string) => {
+  const loadWords = useCallback((query: string, sm: SortMode, off: number, append: boolean, cat?: string, coll?: string, exam?: string, diff?: string) => {
     if (off === 0) setLoading(true);
     else setLoadingMore(true);
     const order = sm === 'freq-asc' ? 'asc' : 'desc';
-    getWords({ sort: 'freq', order, limit: PAGE_SIZE, offset: off, q: query || undefined, category: cat, collection: coll, exam: exam || undefined })
+    getWords({ sort: 'freq', order, limit: PAGE_SIZE, offset: off, q: query || undefined, category: cat, collection: coll, exam: exam || undefined, difficulty: diff || undefined })
       .then(data => {
         setWords(prev => append ? [...prev, ...data.words] : data.words);
         setTotal(data.total);
@@ -230,11 +252,19 @@ export default function WordsView() {
   useEffect(() => {
     if (tab !== 'review') return;
     setDueWordsLoading(true);
-    getDueWords(200)
+    getDueWords(200, reviewDifficulty || undefined)
       .then(data => setDueWords(data.words))
       .catch(() => {})
       .finally(() => setDueWordsLoading(false));
-  }, [tab]);
+    Promise.all([
+      getDueWordsCount(),
+      getDueWordsCount('easy'),
+      getDueWordsCount('medium'),
+      getDueWordsCount('hard'),
+    ]).then(([all, easy, medium, hard]) => {
+      setReviewCounts({ all: all.count, easy: easy.count, medium: medium.count, hard: hard.count });
+    }).catch(() => {});
+  }, [tab, reviewDifficulty]);
 
   // Load mastered words
   useEffect(() => {
@@ -252,9 +282,9 @@ export default function WordsView() {
       setOffset(0);
       const cat = [...categoryFilter][0] || undefined;
       const coll = collectionFilter || undefined;
-      loadWords(search, sortMode, 0, false, cat, coll, examFilter || undefined);
+      loadWords(search, sortMode, 0, false, cat, coll, examFilter || undefined, difficultyFilter || undefined);
     }
-  }, [tab, sortMode, categoryFilter, collectionFilter, examFilter]);
+  }, [tab, sortMode, categoryFilter, collectionFilter, examFilter, difficultyFilter]);
 
   // Search — only debounce on actual search input change (tab/filter changes handled by the load effect above)
   useEffect(() => {
@@ -263,7 +293,7 @@ export default function WordsView() {
       setOffset(0);
       const cat = [...categoryFilter][0] || undefined;
       const coll = collectionFilter || undefined;
-      loadWords(search, sortMode, 0, false, cat, coll, examFilter || undefined);
+      loadWords(search, sortMode, 0, false, cat, coll, examFilter || undefined, difficultyFilter || undefined);
     }, 250);
     return () => clearTimeout(timer);
   }, [search]);
@@ -280,11 +310,11 @@ export default function WordsView() {
       if (entries[0].isIntersecting && !s.loading && !s.loadingMore && s.wordsLen < s.total) {
         const newOff = s.wordsLen;
         setOffset(newOff);
-        loadWords(search, sortMode, newOff, true, [...categoryFilter][0] || undefined, collectionFilter || undefined, examFilter || undefined);
+        loadWords(search, sortMode, newOff, true, [...categoryFilter][0] || undefined, collectionFilter || undefined, examFilter || undefined, difficultyFilter || undefined);
       }
     }, { rootMargin: '200px' });
     observerRef.current.observe(node);
-  }, [loadWords, search, sortMode, categoryFilter, collectionFilter, examFilter]);
+  }, [loadWords, search, sortMode, categoryFilter, collectionFilter, examFilter, difficultyFilter]);
 
   const toggleKnown = (word: string) => {
     const known = !knownWords.has(word);
@@ -356,13 +386,13 @@ export default function WordsView() {
   }, [todayWords, knownWords]);
 
   const openReviewFromDueWords = (due: DueWord[]) => {
-    setReviewWords(due.map(d => ({ word: d.word, source: '待复习' })));
+    setReviewWords(due.map(d => ({ word: d.word, source: '待复习', difficultyLevel: d.difficulty_level })));
     setReviewOpen(true);
   };
 
   const onReviewComplete = () => {
     // Refresh due words and today words after review
-    getDueWords(200)
+    getDueWords(200, reviewDifficulty || undefined)
       .then(data => setDueWords(data.words))
       .catch(() => {});
     getTodayWords().then(d => setTodayWords(d.words)).catch(() => {});
@@ -411,6 +441,23 @@ export default function WordsView() {
                     examFilter={examFilter}
                     onChange={handleFilterChange}
                   />
+                  <div className="flex items-center gap-1">
+                    {[
+                      { key: '', label: '全部' },
+                      { key: 'easy', label: '简单' },
+                      { key: 'medium', label: '中等' },
+                      { key: 'hard', label: '困难' },
+                    ].map(d => (
+                      <button key={d.key || 'all'} onClick={() => setDifficultyFilter(d.key)}
+                        className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                          difficultyFilter === d.key
+                            ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
+                            : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+                        }`}>
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
                 </>
               )}
               {/* Search (all + mastered tabs) */}
@@ -512,6 +559,24 @@ export default function WordsView() {
           {/* ─── Tab: 待复习 ─── */}
           {tab === 'review' && (
             <>
+              <div className="mb-3 flex items-center gap-1">
+                {[
+                  { key: '', label: '全部', count: reviewCounts.all },
+                  { key: 'easy', label: '简单', count: reviewCounts.easy },
+                  { key: 'medium', label: '中等', count: reviewCounts.medium },
+                  { key: 'hard', label: '困难', count: reviewCounts.hard },
+                ].map(d => (
+                  <button key={d.key || 'all'} onClick={() => setReviewDifficulty(d.key)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                      reviewDifficulty === d.key
+                        ? 'bg-[var(--accent)]/15 text-[var(--accent)]'
+                        : 'text-tertiary hover:text-secondary hover:bg-[var(--bg-hover)]'
+                    }`}>
+                    {d.label}
+                    {typeof d.count === 'number' && <span className="ml-1 tabular-nums opacity-70">{d.count}</span>}
+                  </button>
+                ))}
+              </div>
               {dueWordsLoading ? (
                 <div className="flex items-center justify-center py-16">
                   <Spinner size={20} />
@@ -539,6 +604,7 @@ export default function WordsView() {
                         data-word={d.word}
                         className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[var(--bg-hover)] transition-colors group">
                         <span className="flex-1 text-sm font-medium text-primary">{d.word}</span>
+                        <DifficultyBadge level={d.difficulty_level} />
                         <span className="text-xs text-tertiary tabular-nums">
                           {d.last_score != null && (
                             <span className={d.last_score < 60 ? 'text-red-400' : 'text-emerald-400'}>

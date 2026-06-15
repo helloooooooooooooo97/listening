@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { HiXMark, HiSparkles, HiBookOpen } from 'react-icons/hi2';
 import { submitBatchReview } from '../../lib/api';
+import type { WordDifficultyLevel } from '../../lib/api';
 import ReviewFillIn from './ReviewFillIn';
 import ReviewFlashcard from './ReviewFlashcard';
 
@@ -15,6 +16,7 @@ export interface ReviewResult {
 interface ReviewWord {
   word: string;
   source?: string;
+  difficultyLevel?: WordDifficultyLevel | null;
 }
 
 interface ReviewModalProps {
@@ -30,6 +32,12 @@ interface ReviewModalProps {
 function genSessionId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
+
+const DIFFICULTY_DOT: Record<WordDifficultyLevel, string> = {
+  easy: 'bg-emerald-400',
+  medium: 'bg-amber-400',
+  hard: 'bg-rose-400',
+};
 
 // ── Component ──
 
@@ -103,6 +111,9 @@ export default function ReviewModal({ open, onClose, words, mode: initialMode = 
         {!complete && (
           <div className="flex items-center justify-between px-6 pt-6 pb-0">
             <div className="flex items-center gap-2">
+              {current?.difficultyLevel && (
+                <span className={`w-2 h-2 rounded-full ${DIFFICULTY_DOT[current.difficultyLevel]}`} />
+              )}
               {words.length > 0 && words[0].source && (
                 <span className="text-[10px] px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-tertiary">
                   {words[0].source}{words.length > 1 && ` +${words.length - 1}`}

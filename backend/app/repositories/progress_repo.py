@@ -47,10 +47,11 @@ class ProgressRepository:
         self._conn.commit()
 
     def list_play_history(self, limit: int = 100) -> list[dict]:
-        rows = self._conn.execute(
+        cursor = self._conn.execute(
             "SELECT * FROM play_history ORDER BY played_at DESC LIMIT ?", [limit]
-        ).fetchall()
-        return [dict(r) for r in rows]
+        )
+        columns = [col[0] for col in cursor.description]
+        return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
     def upsert_play_progress(self, audio_id: str, audio_title: str, duration_seconds: float) -> None:
         """Update audio_progress total_seconds after a play event."""
@@ -116,7 +117,7 @@ class ProgressRepository:
         )
         self._conn.commit()
 
-    def get_due_words(self, limit: int = 20) -> list[dict]:
+    def get_due_words(self, limit: int = 20, level: str | None = None) -> list[dict]:
         """Return words due for review, sorted by urgency.
 
         Priority:
@@ -124,17 +125,34 @@ class ProgressRepository:
         2. Known words not reviewed recently (oldest reviewed_at first)
         3. Known words never reviewed (reviewed_count = 0)
         """
-        rows = self._conn.execute("""
-            SELECT word, reviewed_count, last_score, reviewed_at
-            FROM word_progress
-            WHERE known=1
+        level_clause = "AND wd.level=?" if level else ""
+        args: list[object] = [level] if level else []
+        args.append(limit)
+        cursor = self._conn.execute(f"""
+            SELECT wp.word, wp.reviewed_count, wp.last_score, wp.reviewed_at,
+                   wd.score AS difficulty_score, wd.level AS difficulty_level
+            FROM word_progress wp
+            LEFT JOIN word_difficulty wd ON wd.word = wp.word
+            WHERE wp.known=1 {level_clause}
             ORDER BY
-              CASE WHEN last_score IS NOT NULL AND last_score < 60 THEN 0 ELSE 1 END,
-              CASE WHEN last_score IS NOT NULL THEN last_score ELSE 100 END ASC,
-              reviewed_at ASC
+              CASE WHEN wp.last_score IS NOT NULL AND wp.last_score < 60 THEN 0 ELSE 1 END,
+              CASE WHEN wp.last_score IS NOT NULL THEN wp.last_score ELSE 100 END ASC,
+              wp.reviewed_at ASC
             LIMIT ?
-        """, [limit]).fetchall()
-        return [dict(r) for r in rows]
+        """, args)
+        columns = [col[0] for col in cursor.description]
+        return [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+    def get_due_words_count(self, level: str | None = None) -> int:
+        level_clause = "AND wd.level=?" if level else ""
+        args = [level] if level else []
+        row = self._conn.execute(f"""
+            SELECT COUNT(*) AS n
+            FROM word_progress wp
+            LEFT JOIN word_difficulty wd ON wd.word = wp.word
+            WHERE wp.known=1 {level_clause}
+        """, args).fetchone()
+        return row["n"] if row else 0
 
     # ── Daily Words ──
 
@@ -158,7 +176,7 @@ class ProgressRepository:
 
     def get_today_words(self) -> list[dict]:
         """Return today's listened words with progress info, sorted by frequency."""
-        return [dict(r) for r in self._conn.execute("""
+        cursor = self._conn.execute("""
             SELECT lw.word,
                    COUNT(DISTINCT lw.audio_id) AS audio_count,
                    GROUP_CONCAT(DISTINCT lw.audio_title) AS audio_titles,
@@ -170,7 +188,9 @@ class ProgressRepository:
             WHERE lw.listened_date = date('now')
             GROUP BY lw.word
             ORDER BY audio_count DESC, lw.word ASC
-        """).fetchall()]
+        """)
+        columns = [col[0] for col in cursor.description]
+        return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
     def get_today_stats(self) -> dict:
         """Return today's word stats: total words, audio count, reviewed count."""
@@ -192,15 +212,6 @@ class ProgressRepository:
             "audio_count": stats["audio_count"] if stats else 0,
             "reviewed_count": reviewed["reviewed_count"] if reviewed else 0,
         }
-
-    def get_due_words_count(self) -> int:
-        """Count of words due for review."""
-        row = self._conn.execute("""
-            SELECT COUNT(*) FROM word_progress
-            WHERE known=1
-              AND (last_score IS NULL OR last_score < 80)
-        """).fetchone()
-        return row[0] if row else 0
 
     # ── Batch Review ──
 
@@ -234,7 +245,7 @@ class ProgressRepository:
 
     def get_review_history(self, limit: int = 50) -> list[dict]:
         """Return recent review sessions, grouped by session_id."""
-        rows = self._conn.execute("""
+        cursor = self._conn.execute("""
             SELECT session_id, source, mode, COUNT(*) AS word_count,
                    SUM(correct) AS correct_count,
                    ROUND(AVG(score), 1) AS avg_score,
@@ -243,8 +254,9 @@ class ProgressRepository:
             GROUP BY session_id
             ORDER BY created_at DESC
             LIMIT ?
-        """, [limit]).fetchall()
-        return [dict(r) for r in rows]
+        """, [limit])
+        columns = [col[0] for col in cursor.description]
+        return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
     def get_review_stats(self) -> dict:
         """Return today's review stats and overall accuracy."""

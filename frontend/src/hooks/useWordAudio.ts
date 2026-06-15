@@ -61,7 +61,7 @@ export function primeHtmlAudio() {
 
 interface WordEntry { text: string; start: number; end: number; }
 const lessonWordCache = new Map<string, WordEntry[]>();
-const wordClipCache = new Map<string, AudioClip>();
+const wordClipCache = new Map<string, AudioClip | null>();
 const warmInFlight = new Map<string, Promise<void>>();
 
 function cleanWord(s: string): string {
@@ -122,13 +122,13 @@ async function buildWordClip(word: string, padding?: number): Promise<AudioClip 
   };
 }
 
-async function ensureWordClipCached(word: string, padding?: number): Promise<AudioClip | null> {
+export async function ensureWordClipCached(word: string, padding?: number): Promise<AudioClip | null> {
   const key = cleanWord(word);
   const cached = wordClipCache.get(key);
-  if (cached) return cached;
+  if (cached !== undefined) return cached;
 
-  const clip = await buildWordClip(word, padding);
-  if (clip) wordClipCache.set(key, clip);
+  const clip = await buildWordClip(word, padding).catch(() => null);
+  wordClipCache.set(key, clip);
   return clip;
 }
 

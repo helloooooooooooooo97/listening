@@ -355,7 +355,7 @@ export default function PokerTableView({
         />
 
         {/* Player positions + Community words */}
-        <div className="relative w-full max-w-4xl" style={{ minHeight: '400px' }}>
+        <div className="relative w-full max-w-4xl min-h-[440px] sm:min-h-[520px]">
           {isCompleted ? (
             <div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4">
               <p className="text-lg font-bold text-primary">🏆 +{potSize} IP</p>

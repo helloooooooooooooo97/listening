@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from database import get_conn, locked
 from repositories.progress_repo import ProgressRepository
 from services.currency_service import settle
+from services.word_difficulty_service import WordDifficultyService
 
 router = APIRouter(prefix="/api/progress", tags=["progress"])
 
@@ -139,13 +140,22 @@ def get_review_stats(repo: ProgressRepository = Depends(get_repo)):
 
 
 @router.get("/words/due")
-def due_words(limit: int = Query(default=20, ge=1, le=100), repo: ProgressRepository = Depends(get_repo)):
-    return {"words": repo.get_due_words(limit)}
+def due_words(
+    limit: int = Query(default=20, ge=1, le=100),
+    level: str = Query(default="", description="easy, medium, hard"),
+    repo: ProgressRepository = Depends(get_repo),
+):
+    WordDifficultyService(get_conn()).ensure_computed()
+    return {"words": repo.get_due_words(limit, level or None)}
 
 
 @router.get("/words/due-count")
-def due_words_count(repo: ProgressRepository = Depends(get_repo)):
-    return {"count": repo.get_due_words_count()}
+def due_words_count(
+    level: str = Query(default="", description="easy, medium, hard"),
+    repo: ProgressRepository = Depends(get_repo),
+):
+    WordDifficultyService(get_conn()).ensure_computed()
+    return {"count": repo.get_due_words_count(level or None)}
 
 
 # ── Daily Words ──

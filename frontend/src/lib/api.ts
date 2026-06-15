@@ -218,6 +218,8 @@ export interface WordSummary {
   word: string;
   count: number;
   tags?: string[];
+  difficulty_score?: number | null;
+  difficulty_level?: WordDifficultyLevel | null;
 }
 
 /** Full word detail with audio timestamps, fetched on demand. */
@@ -234,6 +236,17 @@ export interface WordDictionary {
   pronunciation: string;
   partOfSpeech: string;
   definition: string;
+  tags: string[];
+}
+
+export type WordDifficultyLevel = 'easy' | 'medium' | 'hard';
+
+export interface WordDifficulty {
+  word: string;
+  score: number;
+  level: WordDifficultyLevel;
+  freq: number;
+  length: number;
   tags: string[];
 }
 
@@ -294,6 +307,7 @@ export function getWords(params: {
   category?: string;
   collection?: string;
   exam?: string;
+  difficulty?: string;
 } = {}): Promise<{ total: number; words: WordSummary[] }> {
   const sp = new URLSearchParams();
   if (params.q) sp.set('q', params.q);
@@ -304,8 +318,21 @@ export function getWords(params: {
   if (params.category) sp.set('category', params.category);
   if (params.collection) sp.set('collection', params.collection);
   if (params.exam) sp.set('exam', params.exam);
+  if (params.difficulty) sp.set('difficulty', params.difficulty);
   const qs = sp.toString();
   return get(`/api/words${qs ? `?${qs}` : ''}`);
+}
+
+export function getWordDifficulty(level?: string, offset = 0, limit = 50): Promise<{ total: number; words: WordDifficulty[] }> {
+  const sp = new URLSearchParams();
+  if (level) sp.set('level', level);
+  sp.set('offset', String(offset));
+  sp.set('limit', String(limit));
+  return get(`/api/words/difficulty?${sp.toString()}`);
+}
+
+export function getWordDifficultyDetail(word: string): Promise<WordDifficulty> {
+  return get(`/api/words/difficulty/${encodeURIComponent(word)}`);
 }
 
 /** Fetch full word detail with lesson occurrences (audio timestamps). */
@@ -325,14 +352,23 @@ export interface DueWord {
   reviewed_count: number;
   last_score: number | null;
   reviewed_at: string;
+  difficulty_score?: number | null;
+  difficulty_level?: WordDifficultyLevel | null;
 }
 
-export function getDueWords(limit = 20): Promise<{ words: DueWord[] }> {
-  return get(`/api/progress/words/due?limit=${limit}`);
+export function getDueWords(limit = 20, level?: string): Promise<{ words: DueWord[] }> {
+  const sp = new URLSearchParams();
+  sp.set('limit', String(limit));
+  if (level) sp.set('level', level);
+  return get(`/api/progress/words/due?${sp.toString()}`);
 }
 
-export function getDueWordsCount(): Promise<{ count: number }> {
-  return get('/api/progress/words/due-count');
+export function getDueWordsByLevel(level: string, limit = 20): Promise<{ words: DueWord[] }> {
+  return getDueWords(limit, level);
+}
+
+export function getDueWordsCount(level?: string): Promise<{ count: number }> {
+  return get(`/api/progress/words/due-count${level ? `?level=${encodeURIComponent(level)}` : ''}`);
 }
 
 export function submitWordReview(word: string, score: number): Promise<{ ok: boolean }> {
@@ -372,6 +408,13 @@ export function getWordSentences(word: string, prioritize?: string): Promise<{ s
   let url = `/api/words/${encodeURIComponent(word)}/sentences`;
   if (prioritize) url += `?prioritize=${encodeURIComponent(prioritize)}`;
   return get(url);
+}
+
+/** Batch lookup — first sentence for each word in one POST request. */
+export function getWordSentencesBatch(words: string[], prioritize?: string): Promise<{ results: Record<string, WordSentence[]> }> {
+  let url = '/api/words/sentences/batch';
+  if (prioritize) url += `?prioritize=${encodeURIComponent(prioritize)}`;
+  return post(url, { words });
 }
 
 // ── Daily Words ──
